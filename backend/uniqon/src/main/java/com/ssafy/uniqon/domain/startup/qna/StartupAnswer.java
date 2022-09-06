@@ -1,5 +1,6 @@
 package com.ssafy.uniqon.domain.startup.qna;
 
+import com.ssafy.uniqon.domain.BaseEntity;
 import com.ssafy.uniqon.domain.Member.Member;
 import com.ssafy.uniqon.domain.startup.community.CommunityComment;
 import lombok.AllArgsConstructor;
@@ -14,7 +15,7 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @Entity
-public class StartupAnswer {
+public class StartupAnswer extends BaseEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "startup_answer_id")

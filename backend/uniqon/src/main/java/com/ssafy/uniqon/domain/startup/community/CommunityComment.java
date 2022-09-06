@@ -1,5 +1,6 @@
 package com.ssafy.uniqon.domain.startup.community;
 
+import com.ssafy.uniqon.domain.BaseEntity;
 import com.ssafy.uniqon.domain.Member.Member;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,7 +14,7 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @Entity
-public class CommunityComment {
+public class CommunityComment extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

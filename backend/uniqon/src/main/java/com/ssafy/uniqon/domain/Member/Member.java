@@ -1,5 +1,6 @@
 package com.ssafy.uniqon.domain.Member;
 
+import com.ssafy.uniqon.domain.BaseEntity;
 import com.ssafy.uniqon.domain.invest.Invest_history;
 import com.ssafy.uniqon.domain.startup.Startup;
 import com.ssafy.uniqon.domain.startup.StartupFavorite;
@@ -15,7 +16,7 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @Entity
-public class Member {
+public class Member extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

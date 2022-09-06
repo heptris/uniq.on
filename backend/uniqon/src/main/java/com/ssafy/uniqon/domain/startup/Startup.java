@@ -1,5 +1,6 @@
 package com.ssafy.uniqon.domain.startup;
 
+import com.ssafy.uniqon.domain.BaseEntity;
 import com.ssafy.uniqon.domain.Member.Member;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,7 +13,7 @@ import java.time.LocalDateTime;
 @Builder
 @AllArgsConstructor
 @Entity
-public class Startup {
+public class Startup extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

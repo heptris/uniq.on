@@ -1,11 +1,12 @@
 package com.ssafy.uniqon.domain.startup;
 
+import com.ssafy.uniqon.domain.BaseEntity;
 import com.ssafy.uniqon.domain.Member.Member;
 
 import javax.persistence.*;
 
 @Entity
-public class StartupFavorite {
+public class StartupFavorite extends BaseEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "startup_favorite_id")

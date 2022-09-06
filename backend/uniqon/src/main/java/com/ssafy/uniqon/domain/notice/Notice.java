@@ -1,5 +1,6 @@
 package com.ssafy.uniqon.domain.notice;
 
+import com.ssafy.uniqon.domain.BaseEntity;
 import com.ssafy.uniqon.domain.Member.Member;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,7 +12,7 @@ import javax.persistence.*;
 @Builder
 @AllArgsConstructor
 @Entity
-public class Notice {
+public class Notice extends BaseEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "notice_id")

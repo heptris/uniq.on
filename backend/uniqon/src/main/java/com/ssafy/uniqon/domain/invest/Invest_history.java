@@ -1,5 +1,6 @@
 package com.ssafy.uniqon.domain.invest;
 
+import com.ssafy.uniqon.domain.BaseEntity;
 import com.ssafy.uniqon.domain.Member.Member;
 import com.ssafy.uniqon.domain.startup.Startup;
 import lombok.AllArgsConstructor;
@@ -12,7 +13,7 @@ import javax.persistence.*;
 @Builder
 @AllArgsConstructor
 @Entity
-public class Invest_history {
+public class Invest_history extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
