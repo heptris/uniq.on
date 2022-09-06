@@ -2,9 +2,17 @@ package com.ssafy.uniqon.domain.startup;
 
 import com.ssafy.uniqon.domain.BaseEntity;
 import com.ssafy.uniqon.domain.Member.Member;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
+@NoArgsConstructor
+@Builder
+@AllArgsConstructor
+@Getter
 @Entity
 public class StartupFavorite extends BaseEntity {
 

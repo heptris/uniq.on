@@ -6,6 +6,7 @@ import com.ssafy.uniqon.domain.startup.Startup;
 import com.ssafy.uniqon.domain.startup.StartupFavorite;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -15,6 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 @AllArgsConstructor
+@Getter
 @Entity
 public class Member extends BaseEntity {
 

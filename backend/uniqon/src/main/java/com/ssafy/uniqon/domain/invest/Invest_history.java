@@ -5,6 +5,7 @@ import com.ssafy.uniqon.domain.Member.Member;
 import com.ssafy.uniqon.domain.startup.Startup;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -12,6 +13,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Builder
 @AllArgsConstructor
+@Getter
 @Entity
 public class Invest_history extends BaseEntity {
 

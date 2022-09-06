@@ -5,6 +5,7 @@ import com.ssafy.uniqon.domain.Member.Member;
 import com.ssafy.uniqon.domain.startup.Startup;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -14,10 +15,12 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 @AllArgsConstructor
+@Getter
 @Entity
 public class StartupCommunity extends BaseEntity {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "startup_community_id")
     private Long id;
 
