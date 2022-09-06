@@ -2,6 +2,7 @@ package com.ssafy.uniqon.domain.Member;
 
 import com.ssafy.uniqon.domain.invest.Invest_history;
 import com.ssafy.uniqon.domain.startup.Startup;
+import com.ssafy.uniqon.domain.startup.StartupFavorite;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
@@ -25,6 +26,9 @@ public class Member {
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<Invest_history> investHistoryList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+    private List<StartupFavorite> startupFavoriteList = new ArrayList<>();
 
     @Column(nullable = false, unique = true)
     private String walletAddress;

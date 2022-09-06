@@ -29,6 +29,8 @@ public class Startup {
 
     private String projectPdf;
 
+    private String title;
+
     private String description;
 
     private LocalDateTime endDate;
@@ -51,5 +53,8 @@ public class Startup {
 
     private String discordUrl;
 
-    private boolean isAccepted;
+    private String rejectReason;
+
+    @Enumerated(EnumType.STRING)
+    private EnrollStatus enrollStatus;
 }
