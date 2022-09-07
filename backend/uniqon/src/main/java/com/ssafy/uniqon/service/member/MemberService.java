@@ -1,6 +1,6 @@
 package com.ssafy.uniqon.service.member;
 
-import com.ssafy.uniqon.domain.Member.Member;
+import com.ssafy.uniqon.domain.member.Member;
 import com.ssafy.uniqon.repository.member.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

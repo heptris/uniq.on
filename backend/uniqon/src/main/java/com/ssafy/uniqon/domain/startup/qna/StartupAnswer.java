@@ -1,8 +1,7 @@
 package com.ssafy.uniqon.domain.startup.qna;
 
 import com.ssafy.uniqon.domain.BaseEntity;
-import com.ssafy.uniqon.domain.Member.Member;
-import com.ssafy.uniqon.domain.startup.community.CommunityComment;
+import com.ssafy.uniqon.domain.member.Member;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

@@ -1,7 +1,7 @@
 package com.ssafy.uniqon.domain.startup.community;
 
 import com.ssafy.uniqon.domain.BaseEntity;
-import com.ssafy.uniqon.domain.Member.Member;
+import com.ssafy.uniqon.domain.member.Member;
 import com.ssafy.uniqon.domain.startup.Startup;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

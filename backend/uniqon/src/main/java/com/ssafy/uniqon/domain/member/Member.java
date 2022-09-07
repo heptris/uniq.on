@@ -1,4 +1,4 @@
-package com.ssafy.uniqon.domain.Member;
+package com.ssafy.uniqon.domain.member;
 
 import com.ssafy.uniqon.domain.BaseEntity;
 import com.ssafy.uniqon.domain.invest.Invest_history;
