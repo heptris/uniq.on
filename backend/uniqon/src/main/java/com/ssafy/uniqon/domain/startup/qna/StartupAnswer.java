@@ -37,4 +37,15 @@ public class StartupAnswer extends BaseEntity {
 
     @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL)
     private List<StartupAnswer> children = new ArrayList<>();
+
+    private String answer;
+
+    // 부모 댓글 수정
+    public void updateParent(StartupAnswer parent) {
+        this.parent = parent;
+    }
+
+    public void changeId(Long startAnswerId) {
+        this.id = startAnswerId;
+    }
 }

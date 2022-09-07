@@ -4,6 +4,8 @@ import com.ssafy.uniqon.domain.BaseEntity;
 import com.ssafy.uniqon.domain.Member.Member;
 import com.ssafy.uniqon.domain.startup.Startup;
 import com.ssafy.uniqon.domain.startup.community.CommunityComment;
+import com.ssafy.uniqon.dto.startup.qna.StartupQuestionResDto;
+import com.ssafy.uniqon.dto.startup.qna.StartupQuestionUpdateReqDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -36,6 +38,25 @@ public class StartupQuestion extends BaseEntity {
     @Column(nullable = false)
     private String question;
 
-    @OneToMany(mappedBy = "startupQuestion")
+    @OneToMany(mappedBy = "startupQuestion", cascade = CascadeType.ALL)
     private List<StartupAnswer> startupAnswerList = new ArrayList<>();
+
+    public static StartupQuestionResDto of(StartupQuestion startupQuestion) {
+        StartupQuestionResDto startupQuestionResDto = StartupQuestionResDto.builder()
+                .question(startupQuestion.getQuestion())
+                .nickname(startupQuestion.getMember().getNickname())
+                .createDate(startupQuestion.getCreatedDate())
+                .startupQuestionId(startupQuestion.getId())
+                .build();
+        return startupQuestionResDto;
+    }
+
+    public void update(StartupQuestionUpdateReqDto startupQuestionUpdateReqDto) {
+        this.question = startupQuestionUpdateReqDto.getQuestion();
+    }
+
+    public void changeId(Long startupQuestionId) {
+        this.id = startupQuestionId;
+    }
+
 }
