@@ -21,7 +21,7 @@ public class StartupAnswerService {
     private final StartupAnswerRepository startupAnswerRepository;
 
     @Transactional
-    public void 답변저장(Long memberId, AnswerRequestDto answerRequestDto) {
+    public Long 답변저장(Long memberId, AnswerRequestDto answerRequestDto) {
         Member member = new Member();
         member.changeId(memberId);
 
@@ -46,6 +46,7 @@ public class StartupAnswerService {
         }
 
         startupAnswerRepository.save(startupAnswer);
+        return startupAnswer.getId();
     }
 
 }
