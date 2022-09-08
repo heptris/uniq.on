@@ -1,6 +1,6 @@
 package com.ssafy.uniqon.service.startup.qna;
 
-import com.ssafy.uniqon.domain.Member.Member;
+import com.ssafy.uniqon.domain.member.Member;
 import com.ssafy.uniqon.domain.startup.qna.StartupAnswer;
 import com.ssafy.uniqon.domain.startup.qna.StartupQuestion;
 import com.ssafy.uniqon.dto.startup.qna.AnswerRequestDto;
