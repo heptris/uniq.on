@@ -1,8 +1,7 @@
 package com.ssafy.uniqon.domain.startup.qna;
 
 import com.ssafy.uniqon.domain.BaseEntity;
-import com.ssafy.uniqon.domain.Member.Member;
-import com.ssafy.uniqon.domain.startup.community.CommunityComment;
+import com.ssafy.uniqon.domain.member.Member;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -37,4 +36,15 @@ public class StartupAnswer extends BaseEntity {
 
     @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL)
     private List<StartupAnswer> children = new ArrayList<>();
+
+    private String answer;
+
+    // 부모 댓글 수정
+    public void updateParent(StartupAnswer parent) {
+        this.parent = parent;
+    }
+
+    public void changeId(Long startAnswerId) {
+        this.id = startAnswerId;
+    }
 }
