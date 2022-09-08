@@ -39,4 +39,28 @@ public class StartupCommunity extends BaseEntity {
 
     @OneToMany(mappedBy = "startupCommunity")
     private List<CommunityComment> communityCommentList = new ArrayList<>();
+
+    public static StartupCommunity createStartupCommunity(String title, String content, Member member, Startup startup){
+        StartupCommunity startupCommunity = StartupCommunity.builder()
+                .title(title)
+                .content(content)
+                .build();
+        startupCommunity.addMember(member);
+        startupCommunity.addStartup(startup);
+        return startupCommunity;
+    }
+
+    public void addMember(Member member){
+        this.member = member;
+    }
+
+    public void addStartup(Startup startup){
+        this.startup = startup;
+    }
+
+    public void changePost(String title, String content){
+        this.title = title;
+        this.content = content;
+    }
+
 }

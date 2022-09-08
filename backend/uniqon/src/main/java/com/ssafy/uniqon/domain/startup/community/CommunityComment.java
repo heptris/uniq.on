@@ -40,4 +40,21 @@ public class CommunityComment extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
+
+    public static CommunityComment createCommunityComment(String content, StartupCommunity startupCommunity){
+        CommunityComment communityComment = CommunityComment.builder()
+                .content(content)
+                .build();
+
+        communityComment.addStartupCommunity(startupCommunity);
+        return communityComment;
+    }
+
+    public void addStartupCommunity(StartupCommunity startupCommunity){
+        this.startupCommunity = startupCommunity;
+    }
+
+    public void changeContent(String content){
+        this.content = content;
+    }
 }
