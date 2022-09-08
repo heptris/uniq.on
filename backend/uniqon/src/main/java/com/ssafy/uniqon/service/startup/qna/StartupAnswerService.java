@@ -4,13 +4,14 @@ import com.ssafy.uniqon.domain.member.Member;
 import com.ssafy.uniqon.domain.startup.qna.StartupAnswer;
 import com.ssafy.uniqon.domain.startup.qna.StartupQuestion;
 import com.ssafy.uniqon.dto.startup.qna.AnswerRequestDto;
-import com.ssafy.uniqon.dto.startup.qna.AnswerResponseDto;
+import com.ssafy.uniqon.dto.startup.qna.AnswerParentResponseDto;
 import com.ssafy.uniqon.repository.startup.qna.StartupAnswerRepository;
 import com.ssafy.uniqon.repository.startup.qna.StartupQuestionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Transactional(readOnly = true)
@@ -49,4 +50,7 @@ public class StartupAnswerService {
         return startupAnswer.getId();
     }
 
+    public List<AnswerParentResponseDto> 댓글조회(Long startupQuestionId) {
+        return startupAnswerRepository.findAnswerParentResponseDtoList(startupQuestionId);
+    }
 }

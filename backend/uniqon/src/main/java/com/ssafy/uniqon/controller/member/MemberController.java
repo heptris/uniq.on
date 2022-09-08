@@ -1,4 +1,4 @@
-package com.ssafy.uniqon.controller.Member;
+package com.ssafy.uniqon.controller.member;
 
 import com.ssafy.uniqon.dto.response.ResponseDto;
 import org.springframework.http.HttpStatus;

@@ -1,5 +1,6 @@
 package com.ssafy.uniqon.service.startup.qna;
 
+import com.google.gson.Gson;
 import com.ssafy.uniqon.domain.member.Member;
 import com.ssafy.uniqon.domain.member.MemberType;
 import com.ssafy.uniqon.domain.startup.Startup;
@@ -59,7 +60,10 @@ class StartupQuestionServiceTest {
     @Test
     public void 질문조회() {
         List<StartupQuestionResDto> list = startupQuestionService.질문조회(1L);
-        list.forEach(lst -> System.out.println(lst));
+        list.forEach(lst -> {
+            System.out.println(lst);
+        });
+
 
         assertThat(list.get(2).getQuestion()).isEqualTo("질문3");
     }

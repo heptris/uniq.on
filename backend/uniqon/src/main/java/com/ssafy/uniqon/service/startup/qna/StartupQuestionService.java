@@ -3,6 +3,8 @@ package com.ssafy.uniqon.service.startup.qna;
 import com.ssafy.uniqon.domain.startup.Startup;
 import com.ssafy.uniqon.domain.member.Member;
 import com.ssafy.uniqon.domain.startup.qna.StartupQuestion;
+import com.ssafy.uniqon.dto.response.CursorResult;
+import com.ssafy.uniqon.dto.startup.qna.AnswerParentResponseDto;
 import com.ssafy.uniqon.dto.startup.qna.StartupQuestionReqDto;
 import com.ssafy.uniqon.dto.startup.qna.StartupQuestionResDto;
 import com.ssafy.uniqon.dto.startup.qna.StartupQuestionUpdateReqDto;
@@ -10,6 +12,7 @@ import com.ssafy.uniqon.exception.ex.CustomException;
 import com.ssafy.uniqon.exception.ex.ErrorCode;
 import com.ssafy.uniqon.repository.startup.qna.StartupQuestionRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,6 +27,7 @@ import static com.ssafy.uniqon.exception.ex.ErrorCode.QUESTION_NOT_FOUND;
 public class StartupQuestionService {
 
     private final StartupQuestionRepository startupQuestionRepository;
+    private final StartupAnswerService startupAnswerService;
 
     @Transactional
     public Long 질문등록(Long memberId, StartupQuestionReqDto startupQuestionReqDto) {
@@ -44,11 +48,38 @@ public class StartupQuestionService {
     }
 
     public List<StartupQuestionResDto> 질문조회(Long startupId) {
-        List<StartupQuestion> startupQuestionList = startupQuestionRepository.findAllByStartupId(startupId);
-        List<StartupQuestionResDto> startupQuestionResDtoList = startupQuestionList.stream()
-                .map(startupQuestion -> new StartupQuestionResDto(startupQuestion))
-                .collect(Collectors.toList());
+//        List<StartupQuestion> startupQuestionList = startupQuestionRepository.findAllByStartupId(startupId);
+//        List<StartupQuestionResDto> startupQuestionResDtoList = startupQuestionList.stream()
+//                .map(startupQuestion -> new StartupQuestionResDto(startupQuestion))
+//                .collect(Collectors.toList());
+//
+//        startupQuestionResDtoList.forEach(startupQuestionResDto -> {
+//            List<AnswerParentResponseDto> answerParentResponseDtoList = startupAnswerService.댓글조회(startupQuestionResDto.getStartupQuestionId());
+//            startupQuestionResDto.changeParentResponseDto(answerParentResponseDtoList);
+//        });
+        List<StartupQuestionResDto> startupQuestionResDtoList = startupQuestionRepository.findStartupQuestionResDtoList(startupId);
+
         return startupQuestionResDtoList;
+    }
+
+    public CursorResult<StartupQuestionResDto> 질문조회페이징(Long startupId, Long cursorId, Pageable page) {
+
+        List<StartupQuestionResDto> questions = getQuestions(startupId, cursorId, page);
+        Long lastIdOfList = questions.isEmpty() ?
+                null : questions.get(questions.size() - 1).getStartupQuestionId();
+
+        return new CursorResult(questions, hasNext(startupId, lastIdOfList), lastIdOfList);
+    }
+
+    private List<StartupQuestionResDto> getQuestions(Long startupId, Long cursorId, Pageable page) {
+        return cursorId == null ?
+                this.startupQuestionRepository.findQuestionListDtoPage(startupId, page) :
+                this.startupQuestionRepository.findQuestionListDtoLessPage(startupId, cursorId, page);
+    }
+
+    private Boolean hasNext(Long startupId, Long cursorId) {
+        if (cursorId == null) return false;
+        return this.startupQuestionRepository.existsByIdLessThan(startupId, cursorId);
     }
 
     /** 테스트 용으로 하나 만듬 */

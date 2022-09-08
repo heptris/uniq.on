@@ -40,16 +40,6 @@ public class StartupQuestion extends BaseEntity {
     @OneToMany(mappedBy = "startupQuestion", cascade = CascadeType.ALL)
     private List<StartupAnswer> startupAnswerList = new ArrayList<>();
 
-    public static StartupQuestionResDto of(StartupQuestion startupQuestion) {
-        StartupQuestionResDto startupQuestionResDto = StartupQuestionResDto.builder()
-                .question(startupQuestion.getQuestion())
-                .nickname(startupQuestion.getMember().getNickname())
-                .createDate(startupQuestion.getCreatedDate())
-                .startupQuestionId(startupQuestion.getId())
-                .build();
-        return startupQuestionResDto;
-    }
-
     public void update(StartupQuestionUpdateReqDto startupQuestionUpdateReqDto) {
         this.question = startupQuestionUpdateReqDto.getQuestion();
     }
