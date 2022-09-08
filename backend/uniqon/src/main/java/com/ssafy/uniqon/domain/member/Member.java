@@ -33,10 +33,10 @@ public class Member extends BaseEntity {
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<StartupFavorite> startupFavoriteList = new ArrayList<>();
 
-    @Column(nullable = false, unique = true)
+//    @Column(nullable = false, unique = true)
     private String walletAddress;
 
-    @Column(nullable = false)
+//    @Column(nullable = false)
     private String password;
 
     @Column(unique = true)
@@ -47,4 +47,8 @@ public class Member extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     private MemberType memberType;
+
+    public void changeId(Long memberId) {
+        this.id = memberId;
+    }
 }

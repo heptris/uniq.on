@@ -1,8 +1,14 @@
 spring:
   profiles:
     include: data
+  output:
+    ansi:
+      enabled: always # 로그 색상 추가
   datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
+    driver-class-name: com.mysql.cj.jdbc.Driver # MySql 드라이버 설정
+  sql:
+    init:
+      mode: always
 
   jpa:
     hibernate:
@@ -11,7 +17,7 @@ spring:
       hibernate:
         format_sql: true
         default_batch_fetch_size: 1000
- #   defer-datasource-initialization: true
+    defer-datasource-initialization: true
 
 logging:
   level:

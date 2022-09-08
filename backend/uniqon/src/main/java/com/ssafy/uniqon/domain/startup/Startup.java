@@ -60,4 +60,8 @@ public class Startup extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     private EnrollStatus enrollStatus;
+
+    public void changeId(Long startupId) {
+        this.id = startupId;
+    }
 }
