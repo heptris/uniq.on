@@ -1,6 +1,7 @@
 package com.ssafy.uniqon.repository.startup.qna;
 
 import com.querydsl.core.types.Projections;
+import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.ssafy.uniqon.domain.startup.qna.QStartupQuestion;
 import com.ssafy.uniqon.dto.startup.qna.AnswerChildrenResponseDto;
@@ -25,35 +26,43 @@ public class StartupQuestionRepositoryImpl implements StartupQuestionRepositoryC
     }
 
     @Override
-    public List<StartupQuestionResDto> findStartupQuestionResDtoList(Long startupId) {
+    public List<StartupQuestionResDto> findStartupQuestionResDtoList(Long memberId, Long startupId) {
 
         List<StartupQuestionResDto> startupQuestionResDtoList = queryFactory.select(Projections.constructor(StartupQuestionResDto.class,
                         member.nickname,
                         member.id,
                         startupQuestion.createdDate,
                         startupQuestion.id,
-                        startupQuestion.question))
+                        startupQuestion.question,
+                        JPAExpressions.selectFrom(startupQuestion)
+                                .where(member.id.eq(memberId))
+                                .exists()
+                        ))
                 .from(startupQuestion)
                 .innerJoin(startupQuestion.member, member)
                 .where(startupQuestion.startup.id.eq(startupId))
                 .fetch();
 
         startupQuestionResDtoList.forEach(startupQuestionResDto -> {
-            startupQuestionResDto.changeParentResponseDto(findAnswerParentResponseDtoList(startupQuestionResDto.getStartupQuestionId()));
+            startupQuestionResDto.changeParentResponseDto(findAnswerParentResponseDtoList(memberId, startupQuestionResDto.getStartupQuestionId()));
         });
 
         return startupQuestionResDtoList;
     }
 
     @Override
-    public List<StartupQuestionResDto> findQuestionListDtoPage(Long startupId, Pageable page) {
+    public List<StartupQuestionResDto> findQuestionListDtoPage(Long memberId, Long startupId, Pageable page) {
 
         List<StartupQuestionResDto> startupQuestionResDtoList = queryFactory.select(Projections.constructor(StartupQuestionResDto.class,
                         member.nickname,
                         member.id,
                         startupQuestion.createdDate,
                         startupQuestion.id,
-                        startupQuestion.question))
+                        startupQuestion.question,
+                        JPAExpressions.selectFrom(startupQuestion)
+                                .where(member.id.eq(memberId))
+                                .exists()
+                        ))
                 .from(startupQuestion)
                 .innerJoin(startupQuestion.member, member)
                 .where(startupQuestion.startup.id.eq(startupId))
@@ -63,20 +72,24 @@ public class StartupQuestionRepositoryImpl implements StartupQuestionRepositoryC
                 .fetch();
 
         startupQuestionResDtoList.forEach(startupQuestionResDto -> {
-            startupQuestionResDto.changeParentResponseDto(findAnswerParentResponseDtoList(startupQuestionResDto.getStartupQuestionId()));
+            startupQuestionResDto.changeParentResponseDto(findAnswerParentResponseDtoList(memberId, startupQuestionResDto.getStartupQuestionId()));
         });
 
         return startupQuestionResDtoList;
     }
 
     @Override
-    public List<StartupQuestionResDto> findQuestionListDtoLessPage(Long startupId, Long cursorId, Pageable page) {
+    public List<StartupQuestionResDto> findQuestionListDtoLessPage(Long memberId, Long startupId, Long cursorId, Pageable page) {
         List<StartupQuestionResDto> startupQuestionResDtoList = queryFactory.select(Projections.constructor(StartupQuestionResDto.class,
                         member.nickname,
                         member.id,
                         startupQuestion.createdDate,
                         startupQuestion.id,
-                        startupQuestion.question))
+                        startupQuestion.question,
+                        JPAExpressions.selectFrom(startupQuestion)
+                                .where(member.id.eq(memberId))
+                                .exists()
+                ))
                 .from(startupQuestion)
                 .innerJoin(startupQuestion.member, member)
                 .where(startupQuestion.startup.id.eq(startupId).and(startupQuestion.id.lt(cursorId)))
@@ -86,21 +99,25 @@ public class StartupQuestionRepositoryImpl implements StartupQuestionRepositoryC
                 .fetch();
 
         startupQuestionResDtoList.forEach(startupQuestionResDto -> {
-            startupQuestionResDto.changeParentResponseDto(findAnswerParentResponseDtoList(startupQuestionResDto.getStartupQuestionId()));
+            startupQuestionResDto.changeParentResponseDto(findAnswerParentResponseDtoList(memberId, startupQuestionResDto.getStartupQuestionId()));
         });
 
         return startupQuestionResDtoList;
     }
 
     @Override
-    public List<AnswerParentResponseDto> findAnswerParentResponseDtoList(Long startupQuestionId) {
+    public List<AnswerParentResponseDto> findAnswerParentResponseDtoList(Long memberId, Long startupQuestionId) {
         List<AnswerParentResponseDto> answerParentResponseDtoList = queryFactory.select(Projections.constructor(AnswerParentResponseDto.class
                         , startupAnswer.id,
                         member.id,
                         member.nickname,
                         startupAnswer.answer,
                         startupAnswer.createdDate,
-                        startupAnswer.parent.id))
+                        startupAnswer.parent.id,
+                        JPAExpressions.selectFrom(startupAnswer)
+                                .where(member.id.eq(memberId))
+                                .exists()
+                ))
                 .from(startupAnswer)
                 .innerJoin(startupAnswer.member, member)
                 .innerJoin(startupAnswer.startupQuestion, startupQuestion)
@@ -114,7 +131,11 @@ public class StartupQuestionRepositoryImpl implements StartupQuestionRepositoryC
                         member.nickname,
                         startupAnswer.answer,
                         startupAnswer.createdDate,
-                        startupAnswer.parent.id))
+                        startupAnswer.parent.id,
+                        JPAExpressions.selectFrom(startupAnswer)
+                                .where(member.id.eq(memberId))
+                                .exists()
+                ))
                 .from(startupAnswer)
                 .innerJoin(startupAnswer.member, member)
                 .innerJoin(startupAnswer.startupQuestion, startupQuestion)

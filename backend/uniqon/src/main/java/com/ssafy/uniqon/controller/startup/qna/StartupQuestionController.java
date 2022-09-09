@@ -26,7 +26,7 @@ public class StartupQuestionController {
 
     @GetMapping("/{startupId}")
     public ResponseEntity getStartupQuestion(@PathVariable Long startupId) {
-        List<StartupQuestionResDto> startupQuestionResDtoList = startupQuestionService.질문조회(startupId);
+        List<StartupQuestionResDto> startupQuestionResDtoList = startupQuestionService.질문조회(1L, startupId);
         return new ResponseEntity(new ResponseDto(200, "질문 조회 성공", startupQuestionResDtoList),
                HttpStatus.OK);
     }
@@ -34,7 +34,7 @@ public class StartupQuestionController {
     @GetMapping("/{startupId}/page")
     public ResponseEntity getStartupQuestionPage(@PathVariable Long startupId, Long cursorId, Integer size) {
         if(size == null) size = DEFAULT_SIZE;
-        CursorResult<StartupQuestionResDto> questionCursorResult = startupQuestionService.질문조회페이징(startupId, cursorId
+        CursorResult<StartupQuestionResDto> questionCursorResult = startupQuestionService.질문조회페이징(1L, startupId, cursorId
                 , PageRequest.of(0, size));
         return new ResponseEntity(new ResponseDto(200, "질문 조회 성공", questionCursorResult),
                 HttpStatus.OK);

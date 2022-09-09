@@ -8,12 +8,12 @@ import java.util.List;
 
 public interface StartupQuestionRepositoryCustom {
 
-    List<StartupQuestionResDto> findStartupQuestionResDtoList(Long startupId);
+    List<StartupQuestionResDto> findStartupQuestionResDtoList(Long memberId, Long startupId);
 
-    List<StartupQuestionResDto> findQuestionListDtoPage(Long startupId, Pageable page);
+    List<StartupQuestionResDto> findQuestionListDtoPage(Long memberId, Long startupId, Pageable page);
 
-    List<StartupQuestionResDto> findQuestionListDtoLessPage(Long startupId, Long cursorId, Pageable page);
+    List<StartupQuestionResDto> findQuestionListDtoLessPage(Long memberId, Long startupId, Long cursorId, Pageable page);
 
 
-    List<AnswerParentResponseDto> findAnswerParentResponseDtoList(Long startupQuestionId);
+    List<AnswerParentResponseDto> findAnswerParentResponseDtoList(Long memberId, Long startupQuestionId);
 }

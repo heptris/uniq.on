@@ -59,7 +59,7 @@ class StartupQuestionServiceTest {
 
     @Test
     public void 질문조회() {
-        List<StartupQuestionResDto> list = startupQuestionService.질문조회(1L);
+        List<StartupQuestionResDto> list = startupQuestionService.질문조회(1L, 1L);
         list.forEach(lst -> {
             System.out.println(lst);
         });
@@ -82,7 +82,7 @@ class StartupQuestionServiceTest {
 
     @Test
     public void 질문삭제() {
-        startupQuestionService.질문삭제(6L);
+        startupQuestionService.질문삭제(1L);
     }
 
 }

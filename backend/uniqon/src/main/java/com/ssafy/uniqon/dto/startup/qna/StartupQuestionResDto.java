@@ -25,13 +25,17 @@ public class StartupQuestionResDto {
     private Long startupQuestionId;
     private String question;
 
+    private Boolean myQuestion;
+
     private List<AnswerParentResponseDto> answerParentResponseDtoList = new ArrayList<>();
-        public StartupQuestionResDto(String nickname, Long memberId, LocalDateTime createDate, Long startupQuestionId, String question) {
+        public StartupQuestionResDto(String nickname, Long memberId, LocalDateTime createDate,
+                                     Long startupQuestionId, String question, Boolean myQuestion) {
         this.nickname = nickname;
         this.memberId = memberId;
         this.createDate = createDate;
         this.startupQuestionId = startupQuestionId;
         this.question = question;
+        this.myQuestion = myQuestion;
     }
 
     public StartupQuestionResDto(StartupQuestion startupQuestion) {

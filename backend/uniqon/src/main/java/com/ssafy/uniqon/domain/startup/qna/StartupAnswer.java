@@ -47,4 +47,8 @@ public class StartupAnswer extends BaseEntity {
     public void changeId(Long startAnswerId) {
         this.id = startAnswerId;
     }
+
+    public void changeAnswer(String answer) {
+        this.answer = answer;
+    }
 }

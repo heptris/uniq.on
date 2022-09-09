@@ -47,7 +47,7 @@ public class StartupQuestionService {
         return startupQuestion.getId();
     }
 
-    public List<StartupQuestionResDto> 질문조회(Long startupId) {
+    public List<StartupQuestionResDto> 질문조회(Long memberId, Long startupId) {
 //        List<StartupQuestion> startupQuestionList = startupQuestionRepository.findAllByStartupId(startupId);
 //        List<StartupQuestionResDto> startupQuestionResDtoList = startupQuestionList.stream()
 //                .map(startupQuestion -> new StartupQuestionResDto(startupQuestion))
@@ -57,24 +57,24 @@ public class StartupQuestionService {
 //            List<AnswerParentResponseDto> answerParentResponseDtoList = startupAnswerService.댓글조회(startupQuestionResDto.getStartupQuestionId());
 //            startupQuestionResDto.changeParentResponseDto(answerParentResponseDtoList);
 //        });
-        List<StartupQuestionResDto> startupQuestionResDtoList = startupQuestionRepository.findStartupQuestionResDtoList(startupId);
+        List<StartupQuestionResDto> startupQuestionResDtoList = startupQuestionRepository.findStartupQuestionResDtoList(memberId, startupId);
 
         return startupQuestionResDtoList;
     }
 
-    public CursorResult<StartupQuestionResDto> 질문조회페이징(Long startupId, Long cursorId, Pageable page) {
+    public CursorResult<StartupQuestionResDto> 질문조회페이징(Long memberId, Long startupId, Long cursorId, Pageable page) {
 
-        List<StartupQuestionResDto> questions = getQuestions(startupId, cursorId, page);
+        List<StartupQuestionResDto> questions = getQuestions(memberId, startupId, cursorId, page);
         Long lastIdOfList = questions.isEmpty() ?
                 null : questions.get(questions.size() - 1).getStartupQuestionId();
 
         return new CursorResult(questions, hasNext(startupId, lastIdOfList), lastIdOfList);
     }
 
-    private List<StartupQuestionResDto> getQuestions(Long startupId, Long cursorId, Pageable page) {
+    private List<StartupQuestionResDto> getQuestions(Long memberId, Long startupId, Long cursorId, Pageable page) {
         return cursorId == null ?
-                this.startupQuestionRepository.findQuestionListDtoPage(startupId, page) :
-                this.startupQuestionRepository.findQuestionListDtoLessPage(startupId, cursorId, page);
+                this.startupQuestionRepository.findQuestionListDtoPage(memberId, startupId, page) :
+                this.startupQuestionRepository.findQuestionListDtoLessPage(memberId, startupId, cursorId, page);
     }
 
     private Boolean hasNext(Long startupId, Long cursorId) {

@@ -26,16 +26,20 @@ public class AnswerParentResponseDto {
     private LocalDateTime createDate;
     private Long parentId;
 
+    private Boolean myAnswer;
+
     @Builder.Default
     private List<AnswerChildrenResponseDto> answerChildren = new ArrayList<>();
 
-    public AnswerParentResponseDto(Long startupAnswerId, Long memberId, String nickname, String answer, LocalDateTime createDate, Long parentId) {
+    public AnswerParentResponseDto(Long startupAnswerId, Long memberId, String nickname,
+                                   String answer, LocalDateTime createDate, Long parentId, Boolean myAnswer) {
         this.startupAnswerId = startupAnswerId;
         this.memberId = memberId;
         this.nickname = nickname;
         this.answer = answer;
         this.createDate = createDate;
         this.parentId = parentId;
+        this.myAnswer = myAnswer;
     }
 
     public void changeChildren(List<AnswerChildrenResponseDto> answerChildrenResponseDtoList) {

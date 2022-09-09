@@ -3,8 +3,12 @@ package com.ssafy.uniqon.service.startup.qna;
 import com.ssafy.uniqon.domain.member.Member;
 import com.ssafy.uniqon.domain.startup.qna.StartupAnswer;
 import com.ssafy.uniqon.domain.startup.qna.StartupQuestion;
+import com.ssafy.uniqon.dto.startup.qna.AnswerDeleteRequestDto;
 import com.ssafy.uniqon.dto.startup.qna.AnswerRequestDto;
 import com.ssafy.uniqon.dto.startup.qna.AnswerParentResponseDto;
+import com.ssafy.uniqon.dto.startup.qna.AnswerUpdateRequestDto;
+import com.ssafy.uniqon.exception.ex.CustomException;
+import com.ssafy.uniqon.exception.ex.ErrorCode;
 import com.ssafy.uniqon.repository.startup.qna.StartupAnswerRepository;
 import com.ssafy.uniqon.repository.startup.qna.StartupQuestionRepository;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +17,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.ssafy.uniqon.exception.ex.ErrorCode.*;
 
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -50,7 +56,19 @@ public class StartupAnswerService {
         return startupAnswer.getId();
     }
 
-    public List<AnswerParentResponseDto> 댓글조회(Long startupQuestionId) {
-        return startupAnswerRepository.findAnswerParentResponseDtoList(startupQuestionId);
+//    public List<AnswerParentResponseDto> 댓글조회(Long startupQuestionId) {
+//        return startupAnswerRepository.findAnswerParentResponseDtoList(startupQuestionId);
+//    }
+
+    @Transactional
+    public void 답변수정(AnswerUpdateRequestDto answerUpdateRequestDto) {
+        StartupAnswer startupAnswer = startupAnswerRepository.findById(answerUpdateRequestDto.getStartupAnswerId())
+                .orElseThrow(() -> new CustomException(ANSWER_NOT_FOUND));
+        startupAnswer.changeAnswer(answerUpdateRequestDto.getAnswer());
+    }
+
+    @Transactional
+    public void 답변삭제(AnswerDeleteRequestDto answerDeleteRequestDto) {
+        startupAnswerRepository.deleteById(answerDeleteRequestDto.getStartupAnswerId());
     }
 }
