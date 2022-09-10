@@ -22,7 +22,6 @@ public class StartupCommunityResponseDetailDto {
     private List<CommunityCommentResponseDto> commentList;
     private LocalDateTime createdDate;
 
-//    @QueryProjection
     public StartupCommunityResponseDetailDto(String title, String content, String nickName, LocalDateTime createdDate){
         this.title = title;
         this.content = content;

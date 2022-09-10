@@ -31,16 +31,6 @@ public class StartupCommunityRepositoryImpl implements StartupCommunityRepositor
 
     @Override
     public Optional<StartupCommunityResponseDetailDto> findDetail(Long startupCommunityId, Long memberId) {
-//        Optional<StartupCommunityResponseDetailDto> detailDto = Optional.ofNullable(queryFactory.select(new QStartupCommunityResponseDetailDto(
-//                        startupCommunity.title,
-//                        startupCommunity.content,
-//                        startupCommunity.member.nickname,
-//                        startupCommunity.createdDate
-//                ))
-//                .from(startupCommunity)
-//                .innerJoin(startupCommunity.member, member)
-//                .where(startupCommunity.id.eq(startupCommunityId))
-//                .fetchOne());
         Optional<StartupCommunityResponseDetailDto> detailDto = Optional.ofNullable(queryFactory.select(Projections.constructor(StartupCommunityResponseDetailDto.class,
                         startupCommunity.title,
                         startupCommunity.content,
@@ -58,7 +48,7 @@ public class StartupCommunityRepositoryImpl implements StartupCommunityRepositor
 
         List<CommunityCommentResponseDto> comments =
                 queryFactory
-                        .select(new QCommunityCommentResponseDto(
+                        .select(Projections.constructor(CommunityCommentResponseDto.class,
                         communityComment.parent.id,
                         communityComment.id,
                         communityComment.content,
@@ -78,7 +68,7 @@ public class StartupCommunityRepositoryImpl implements StartupCommunityRepositor
 
         List<CommunityCommentChildrenResponseDto> childComments =
                 queryFactory
-                        .select(new QCommunityCommentChildrenResponseDto(
+                        .select(Projections.constructor(CommunityCommentChildrenResponseDto.class,
                         communityComment.parent.id,
                         communityComment.id,
                         communityComment.content,

@@ -25,7 +25,6 @@ public class CommunityCommentChildrenResponseDto {
     @JsonFormat(shape = Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
     private LocalDateTime updateDate;
 
-    @QueryProjection
     public CommunityCommentChildrenResponseDto(Long parentId, Long commentId, String content, String nickName, boolean myComment, LocalDateTime createdDate, LocalDateTime updateDate) {
         this.parentId = parentId;
         this.commentId = commentId;

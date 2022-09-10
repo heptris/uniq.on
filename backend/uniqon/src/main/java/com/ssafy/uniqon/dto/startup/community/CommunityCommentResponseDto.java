@@ -27,7 +27,6 @@ public class CommunityCommentResponseDto {
     private LocalDateTime updateDate;
     private List<CommunityCommentChildrenResponseDto> children = new ArrayList<>();
 
-    @QueryProjection
     public CommunityCommentResponseDto(Long parentId, Long commentId, String content, String nickName, boolean myComment, LocalDateTime createdDate, LocalDateTime updateDate){
         this.parentId = parentId;
         this.commentId = commentId;
