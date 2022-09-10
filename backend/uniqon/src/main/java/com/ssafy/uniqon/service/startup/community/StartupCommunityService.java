@@ -1,6 +1,6 @@
 package com.ssafy.uniqon.service.startup.community;
 
-import com.ssafy.uniqon.domain.Member.Member;
+import com.ssafy.uniqon.domain.member.Member;
 import com.ssafy.uniqon.domain.startup.Startup;
 import com.ssafy.uniqon.domain.startup.community.StartupCommunity;
 import com.ssafy.uniqon.dto.startup.community.StartupCommunityRequestDto;
@@ -9,7 +9,8 @@ import com.ssafy.uniqon.dto.startup.community.StartupCommunityResponseDetailDto;
 import com.ssafy.uniqon.dto.startup.community.StartupCommunityResponseListDto;
 import com.ssafy.uniqon.exception.ex.CustomException;
 import com.ssafy.uniqon.exception.ex.ErrorCode;
-import com.ssafy.uniqon.repository.startup.community.CommunityCommentRepository;
+import com.ssafy.uniqon.repository.member.MemberRepository;
+import com.ssafy.uniqon.repository.startup.StartupRepository;
 import com.ssafy.uniqon.repository.startup.community.StartupCommunityRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,7 +18,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Transactional
@@ -25,28 +25,32 @@ import java.util.Optional;
 public class StartupCommunityService {
 
     private final StartupCommunityRepository startupCommunityRepository;
+    private final MemberRepository memberRepository;
+    private final StartupRepository startupRepository;
 
     public List<StartupCommunityResponseListDto> communityList(Long startupId){
-        List<StartupCommunity> communityList = startupCommunityRepository.findAll();
+        List<StartupCommunity> communityList = startupCommunityRepository.findAllByStartupId(startupId);
         List<StartupCommunityResponseListDto> responseDtoList = new ArrayList<>();
 
         for(StartupCommunity sc : communityList){
-            responseDtoList.add(new StartupCommunityResponseListDto(sc.getTitle(), sc.getMember().getNickname(), sc.getCommunityCommentList().size(), null));
+            responseDtoList.add(new StartupCommunityResponseListDto(sc.getTitle(), sc.getMember().getNickname(), sc.getCommunityCommentList().size(), sc.getCreatedDate()));
         }
 
         return responseDtoList;
     }
 
     public void communityWrite(Long startupId, StartupCommunityRequestDto requestDto){
+
         Member member = new Member();
-        Startup startup = new Startup();
+        memberRepository.save(member);
+        Startup startup = startupRepository.findById(startupId).orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
         StartupCommunity startupCommunity =
                 StartupCommunity.createStartupCommunity(requestDto.getTitle(), requestDto.getContent(), member, startup);
         startupCommunityRepository.save(startupCommunity);
     }
 
     public void communityModify(Long startupId, Long communityId, StartupCommunityRequestModifyDto requestDto){
-        StartupCommunity startupCommunity = startupCommunityRepository.findById(requestDto.getStartupCommunityId()).orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
+        StartupCommunity startupCommunity = startupCommunityRepository.findById(communityId).orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
         startupCommunity.changePost(requestDto.getTitle(), requestDto.getContent());
     }
 
@@ -55,14 +59,8 @@ public class StartupCommunityService {
     }
 
     public StartupCommunityResponseDetailDto communityDetail(Long communityId){
-        StartupCommunity startupCommunity = startupCommunityRepository.findById(communityId).orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
-        StartupCommunityResponseDetailDto detailDto = new StartupCommunityResponseDetailDto(
-                startupCommunity.getTitle(),
-                startupCommunity.getContent(),
-                startupCommunity.getMember().getNickname(),
-                startupCommunity.getCommunityCommentList(),
-                null
-        );
+        Long memberId = 1L;
+        StartupCommunityResponseDetailDto detailDto = startupCommunityRepository.findDetail(communityId, memberId).orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
         return detailDto;
     }
 }

@@ -3,6 +3,7 @@ package com.ssafy.uniqon.controller.startup.community;
 import com.ssafy.uniqon.dto.response.ResponseDto;
 import com.ssafy.uniqon.dto.startup.community.StartupCommunityRequestDto;
 import com.ssafy.uniqon.dto.startup.community.StartupCommunityRequestModifyDto;
+import com.ssafy.uniqon.dto.startup.community.StartupCommunityResponseDetailDto;
 import com.ssafy.uniqon.dto.startup.community.StartupCommunityResponseListDto;
 import com.ssafy.uniqon.service.startup.community.StartupCommunityService;
 import lombok.RequiredArgsConstructor;
@@ -47,7 +48,8 @@ public class StartupCommunityController {
 
     @GetMapping("/community/detail/{communityId}")
     public ResponseEntity communityDetail(@PathVariable Long communityId){
-        return new ResponseEntity(new ResponseDto(200, "success", null), HttpStatus.OK);
+        StartupCommunityResponseDetailDto detailDto = startupCommunityService.communityDetail(communityId);
+        return new ResponseEntity(new ResponseDto(200, "success", detailDto), HttpStatus.OK);
     }
 
 

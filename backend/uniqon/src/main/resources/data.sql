@@ -29,3 +29,11 @@ values ('2022-09-07 21:15:53.559000000', '2022-09-07 21:15:53.559000000',4,  "�
        ('2022-09-07 21:15:58.559000000', '2022-09-07 21:15:58.559000000', 4, "답변5", null, 3),
        ('2022-09-07 21:15:59.559000000', '2022-09-07 21:15:59.559000000', 3, "답변6", 5, 3),
        ('2022-09-07 21:15:53.559000000', '2022-09-07 21:15:53.559000000', 4, "답변7", 6, 3);
+
+insert into startup_community (created_date, last_modified_date, content, title, member_id, startup_id)
+values (now(), now(), "Content Test", "Title Test", 1, 1);
+
+insert into community_comment (created_date, last_modified_date, content, member_id, parent_id, startup_community_id)
+values (now(), now(), "Content Test", 1, null, 1),
+       (now(), now(), "Content Test", 2, 1, 1),
+       (now(), now(), "Content Test", 3, 1, 1);

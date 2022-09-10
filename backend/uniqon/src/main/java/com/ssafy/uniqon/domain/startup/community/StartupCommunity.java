@@ -1,5 +1,6 @@
 package com.ssafy.uniqon.domain.startup.community;
 
+import com.querydsl.core.annotations.QueryInit;
 import com.ssafy.uniqon.domain.BaseEntity;
 import com.ssafy.uniqon.domain.member.Member;
 import com.ssafy.uniqon.domain.startup.Startup;
@@ -37,7 +38,8 @@ public class StartupCommunity extends BaseEntity {
     @JoinColumn(name = "startup_id")
     private Startup startup;
 
-    @OneToMany(mappedBy = "startupCommunity")
+    @Builder.Default
+    @OneToMany(mappedBy = "startupCommunity", cascade = CascadeType.ALL)
     private List<CommunityComment> communityCommentList = new ArrayList<>();
 
     public static StartupCommunity createStartupCommunity(String title, String content, Member member, Startup startup){

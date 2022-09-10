@@ -25,15 +25,17 @@ public class CommunityCommentController {
     }
     
     @PutMapping("/{communityId}/{commentId}")
-    public ResponseEntity communityUpdate(@PathVariable Long communityId,
+    public ResponseEntity communityModify(@PathVariable Long communityId,
                                           @PathVariable Long commentId,
                                           @RequestBody CommunityCommentRequestModifyDto requestModifyDto){
-        return new ResponseEntity(new ResponseDto(200, "success", null), HttpStatus.OK);
+        communityCommentService.commentModify(communityId, commentId, requestModifyDto);
+        return new ResponseEntity(new ResponseDto(200, "success", "댓글 수정 완료"), HttpStatus.OK);
     }
 
     @DeleteMapping("/{communityId}/{commentId}")
     public ResponseEntity communityDelete(@PathVariable Long communityId, @PathVariable Long commentId){
-        return new ResponseEntity(new ResponseDto(200, "success", null), HttpStatus.OK);
+        communityCommentService.commentDelete(communityId, commentId);
+        return new ResponseEntity(new ResponseDto(200, "success", "댓글 삭제 완료"), HttpStatus.OK);
     }
 
 }
