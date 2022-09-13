@@ -39,8 +39,7 @@ services:
     # volumes:
     #   - react_dist_vol:/app/dist
     command: |
-      yarn build
-      yarn start
+      yarn build && yarn start
 
   # spring:
   #   image: $BACK_IMAGE_NAME
