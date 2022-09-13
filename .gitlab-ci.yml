@@ -1,0 +1,93 @@
+# This file is a template, and might need editing before it works on your project.
+# To contribute improvements to CI/CD templates, please follow the Development guide at:
+# https://docs.gitlab.com/ee/development/cicd/templates.html
+# This specific template is located at:
+# https://gitlab.com/gitlab-org/gitlab/-/blob/master/lib/gitlab/ci/templates/Nodejs.gitlab-ci.yml
+
+# Official framework image. Look for the different tagged releases at:
+# https://hub.docker.com/r/library/node/tags/
+stages:
+  - spring-build
+  - spring-dockerize
+  - react-dockerize
+  - deploy
+
+# cache:
+#   paths:
+#     - node_modules/
+
+# spring-build:
+#   image: openjdk:8
+#   stage: spring-build
+#   script: |
+#     echo -e $BACK_APIKEY > ./backend/hool/src/main/resources/application-API-KEY.properties
+#     value=`cat ./backend/hool/src/main/resources/application-API-KEY.properties`
+#     echo "$value"
+#     cd backend/hool/
+#     chmod +x gradlew
+#     ./gradlew build -x test
+#   artifacts:
+#     paths:
+#       - ./backend/hool/build/libs/*.jar
+#     expire_in: 60 min
+#   only:
+#     - master
+#     - develop
+#     - feature/backend
+
+# spring-dockerize:
+#   image: docker:latest
+#   stage: spring-dockerize
+#   variables:
+#     DOCKER_TLS_CERTDIR: ""
+#   services:
+#     - docker:dind
+#   before_script: |
+#     cd backend/hool
+#     echo $BACK_DOCKER_HUB_PW | docker login -u $BACK_DOCKER_HUB_USER --password-stdin
+#   script: |
+#     docker build -t $BACK_IMAGE_NAME .
+#     docker push $BACK_IMAGE_NAME
+#   after_script: |
+#     docker logout
+#   only:
+#     - master
+#     - develop
+#     - feature/backend
+
+react-dockerize:
+  image: docker:latest
+  stage: react-dockerize
+  variables:
+    DOCKER_TLS_CERTDIR: ""
+  services:
+    - docker:dind
+  before_script: |
+    echo $FRONT_DOCKER_HUB_PW | docker login -u $FRONT_DOCKER_HUB_USER --password-stdin
+  script: |
+    echo -e $FRONT_DOTENV_LOCAL > ./frontend/.env.local
+    docker build -t $FRONT_IMAGE_NAME ./frontend/
+    docker push $FRONT_IMAGE_NAME
+  after_script: |
+    docker logout
+  only:
+    - master
+# deploy:
+#   image: docker:latest
+#   stage: deploy
+#   variables:
+#     DOCKER_TLS_CERTDIR: ""
+#   tags:
+#     - deployment
+#   before_script: |
+#     mkdir -p ~/.ssh
+#     eval $(ssh-agent -s)
+#     echo $SSH_KNOWN_HOSTS >> ~/.ssh/known_hosts
+#     chmod 644 ~/.ssh/known_hosts
+#     chmod 600 $SSH_KEY
+#     ssh-add $SSH_KEY
+#   script: |
+#     ssh ubuntu@"$DEPLOY_SERVER_IP" bash deploy.sh
+#   when: on_success
+#   only:
+#     - master
