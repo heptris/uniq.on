@@ -3,14 +3,14 @@ version: "3"
 volumes:
   mysql_db_vol: {}
   redis_cache_vol: {}
-  react_dist_vol: {}
+  # react_dist_vol: {}
 
 services:
   nginx:
     container_name: nginx
     image: nginx
     volumes:
-      - react_dist_vol:/data/client/dist
+      # - react_dist_vol:/data/client/dist
       - ./nginx/:/etc/nginx/conf.d/
       - ./data/certbot/conf:/etc/letsencrypt
       - ./data/certbot/www:/var/www/certbot
@@ -36,10 +36,11 @@ services:
   react:
     image: $FRONT_IMAGE_NAME
     container_name: react
-    volumes:
-      - react_dist_vol:/app/dist
+    # volumes:
+    #   - react_dist_vol:/app/dist
     command: |
-      next build
+      yarn build
+      yarn start
 
   spring:
     image: $BACK_IMAGE_NAME

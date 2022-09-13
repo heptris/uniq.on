@@ -72,22 +72,25 @@ react-dockerize:
     docker logout
   only:
     - master
-# deploy:
-#   image: docker:latest
-#   stage: deploy
-#   variables:
-#     DOCKER_TLS_CERTDIR: ""
-#   tags:
-#     - deployment
-#   before_script: |
-#     mkdir -p ~/.ssh
-#     eval $(ssh-agent -s)
-#     echo $SSH_KNOWN_HOSTS >> ~/.ssh/known_hosts
-#     chmod 644 ~/.ssh/known_hosts
-#     chmod 600 $SSH_KEY
-#     ssh-add $SSH_KEY
-#   script: |
-#     ssh ubuntu@"$DEPLOY_SERVER_IP" bash deploy.sh
-#   when: on_success
-#   only:
-#     - master
+    - develop
+
+deploy:
+  image: docker:latest
+  stage: deploy
+  variables:
+    DOCKER_TLS_CERTDIR: ""
+  tags:
+    - deploy
+  before_script: |
+    mkdir -p ~/.ssh
+    eval $(ssh-agent -s)
+    echo $SSH_KNOWN_HOSTS >> ~/.ssh/known_hosts
+    chmod 644 ~/.ssh/known_hosts
+    chmod 600 $SSH_KEY
+    ssh-add $SSH_KEY
+  script: |
+    ssh ubuntu@"$DEPLOY_SERVER_IP" sudo bash deploy.sh
+  when: on_success
+  only:
+    - master
+    - develop
