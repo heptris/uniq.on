@@ -38,10 +38,8 @@ services:
     container_name: react
     # volumes:
     #   - react_dist_vol:/app/dist
-    command: >
-      bash -c "
-      yarn build
-      && yarn start"
+    command: |
+      yarn start
 
   # spring:
   #   image: $BACK_IMAGE_NAME
