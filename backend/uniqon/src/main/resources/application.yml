@@ -5,6 +5,8 @@ spring:
     ansi:
       enabled: always # 로그 색상 추가
   datasource:
+    url: jdbc:mysql://localhost:3306/uniqon?allowPublicKeyRetrieval=true&useSSL=false&useUnicode=true&serverTimezone=Asia/Seoul
+    username: uniqon
     driver-class-name: com.mysql.cj.jdbc.Driver # MySql 드라이버 설정
   sql:
     init:
