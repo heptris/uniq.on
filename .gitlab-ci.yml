@@ -73,6 +73,7 @@ react-dockerize:
   only:
     - master
     - develop
+    - frontend
 
 deploy:
   image: docker:latest
@@ -94,3 +95,4 @@ deploy:
   only:
     - master
     - develop
+    - frontend
