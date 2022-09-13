@@ -22,7 +22,7 @@ services:
       - 80
       - 443
     depends_on:
-      - spring
+      # - spring
       - react
 
   certbot:
@@ -39,40 +39,39 @@ services:
     # volumes:
     #   - react_dist_vol:/app/dist
     command: |
-      yarn build
-      yarn start
+      yarn build && yarn start
 
-  spring:
-    image: $BACK_IMAGE_NAME
-    container_name: spring
-    restart: always
-    ports:
-      - 8080:8080
-    depends_on:
-      - mysql
-      - redis
-    environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/${MYSQL_DATABASE}?useSSL=false&serverTimezone=UTC&useLegacyDatetimeCode=false&allowPublicKeyRetrieval=true
-      SPRING_DATASOURCE_USERNAME: root
-      SPRING_DATASOURCE_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+  # spring:
+  #   image: $BACK_IMAGE_NAME
+  #   container_name: spring
+  #   restart: always
+  #   ports:
+  #     - 8080:8080
+  #   depends_on:
+  #     - mysql
+  #     - redis
+  #   environment:
+  #     SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/${MYSQL_DATABASE}?useSSL=false&serverTimezone=UTC&useLegacyDatetimeCode=false&allowPublicKeyRetrieval=true
+  #     SPRING_DATASOURCE_USERNAME: root
+  #     SPRING_DATASOURCE_PASSWORD: ${MYSQL_ROOT_PASSWORD}
 
-  redis:
-    image: redis
-    container_name: redis
-    volumes:
-      - redis_cache_vol:/data
-    expose:
-      - 6379
+  # redis:
+  #   image: redis
+  #   container_name: redis
+  #   volumes:
+  #     - redis_cache_vol:/data
+  #   expose:
+  #     - 6379
 
-  mysql:
-    image: mysql:8.0.29
-    container_name: mysql
-    environment:
-      - MYSQL_DATABASE=${MYSQL_DATABASE}
-      - MYSQL_ROOT_HOST=%
-      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
-    command: ['--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci']
-    volumes:
-      - mysql_db_vol:/var/lib/mysql
-    expose:
-      - 3306
+  # mysql:
+  #   image: mysql:8.0.29
+  #   container_name: mysql
+  #   environment:
+  #     - MYSQL_DATABASE=${MYSQL_DATABASE}
+  #     - MYSQL_ROOT_HOST=%
+  #     - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+  #   command: ['--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci']
+  #   volumes:
+  #     - mysql_db_vol:/var/lib/mysql
+  #   expose:
+  #     - 3306
