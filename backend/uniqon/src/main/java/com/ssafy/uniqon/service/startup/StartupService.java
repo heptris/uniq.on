@@ -8,7 +8,6 @@ import com.ssafy.uniqon.dto.startup.StartupRequestDto;
 import com.ssafy.uniqon.exception.ex.CustomException;
 import com.ssafy.uniqon.dto.startup.StartupResponseListDto;
 import com.ssafy.uniqon.dto.startup.StartupSearchCondition;
-
 import com.ssafy.uniqon.repository.startup.StartupRepository;
 import com.ssafy.uniqon.service.s3.AwsS3Service;
 import lombok.RequiredArgsConstructor;
@@ -44,23 +43,23 @@ public class StartupService {
         member.changeId(memberId);
 
         Startup startup = Startup.builder()
-           //     .description(startupRequestDto.getDescription())
+                .description(startupRequestDto.getDescription())
                 .startupName(startupRequestDto.getStartupName())
-//                .managerEmail(startupRequestDto.getManagerEmail())
-//                .managerName(startupRequestDto.getManagerName())
-//                .managerNumber(startupRequestDto.getManagerNumber())
-//                .goalPrice(startupRequestDto.getGoalPrice())
-//                .endDate(startupRequestDto.getEndDate())
-//                .discordUrl(startupRequestDto.getDiscordUrl())
-//                .title(startupRequestDto.getTitle())
-//                .nftCount(startupRequestDto.getNftCount())
+                .managerEmail(startupRequestDto.getManagerEmail())
+                .managerName(startupRequestDto.getManagerName())
+                .managerNumber(startupRequestDto.getManagerNumber())
+                .goalPrice(startupRequestDto.getGoalPrice())
+                .endDate(startupRequestDto.getEndDate())
+                .discordUrl(startupRequestDto.getDiscordUrl())
+                .title(startupRequestDto.getTitle())
+                .nftCount(startupRequestDto.getNftCount())
                 .member(member)
                 .investCount(0)
                 .isFinished(false)
                 .enrollStatus(PENDING)
                 .isGoal(false)
                 .curTotalPrice(0)
-//                .pricePerNft(startupRequestDto.getGoalPrice() / startupRequestDto.getNftCount())
+                .pricePerNft(startupRequestDto.getGoalPrice() / startupRequestDto.getNftCount())
                 .build();
 
 
