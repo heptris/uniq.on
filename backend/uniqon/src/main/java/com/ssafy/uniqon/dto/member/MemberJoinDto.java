@@ -38,7 +38,7 @@ public class MemberJoinDto {
     @NotBlank(message = "이메일은 필수 입력값입니다.")
     private String email;
 
-    @NotBlank(message = "회원 유형은 필수 입력값입니다.")
+//    @NotBlank(message = "회원 유형은 필수 입력값입니다.")
     private MemberType memberType;
 
     public Member toMember(PasswordEncoder passwordEncoder){

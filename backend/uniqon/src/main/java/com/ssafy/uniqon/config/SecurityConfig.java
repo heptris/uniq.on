@@ -37,7 +37,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         // CSRF 설정 Disable
         http.csrf().disable()
                 .httpBasic().disable()
-                //   .addFilter(corsConfig.corsFilter())
                 .cors().configurationSource(corsConfigurationSource())
                 .and()
                 // exception handling 할 때 우리가 만든 클래스를 추가
