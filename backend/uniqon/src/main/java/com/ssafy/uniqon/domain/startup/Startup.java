@@ -68,4 +68,12 @@ public class Startup extends BaseEntity {
     public void changeId(Long startupId) {
         this.id = startupId;
     }
+
+    public void changeBusinessPlan(String businessPlan) {
+        this.businessPlan = businessPlan;
+    }
+
+    public void changeImageNft(String imageNft) {
+        this.imageNft = imageNft;
+    }
 }

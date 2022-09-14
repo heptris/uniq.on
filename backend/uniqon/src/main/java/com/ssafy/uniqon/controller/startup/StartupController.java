@@ -22,11 +22,12 @@ public class StartupController {
     private final StartupService startupService;
 
     @PostMapping("/regist")
-    public ResponseEntity startupRegist(@RequestPart StartupRequestDto startupRequestDto, @RequestPart("business_plan") MultipartFile business_plan,
-                                        @RequestPart("nft_image") MultipartFile nft_image,
-                                        @RequestPart("project_pdf") MultipartFile road_map) {
+    public ResponseEntity startupRegist(@RequestPart StartupRequestDto startupRequestDto,
+                                        @RequestPart(value = "business_plan", required = false) MultipartFile business_plan,
+                                        @RequestPart(value = "nft_image", required = false) MultipartFile nft_image,
+                                        @RequestPart(value = "project_pdf", required = false) MultipartFile road_map) {
         Long memberId = 5L;
-        startupService.investRegist(memberId, startupRequestDto, business_plan, nft_image, project_pdf);
+        startupService.investRegist(memberId, startupRequestDto, business_plan, nft_image, road_map);
         return ResponseEntity.status(HttpStatus.CREATED).body(
                 new ResponseDto(HttpStatus.CREATED.value(), "투자 등록 완료", null)
         );
