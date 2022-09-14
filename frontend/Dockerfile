@@ -4,6 +4,9 @@ WORKDIR /app
 
 ADD . .
 
-RUN yarn
+RUN yarn install
+RUN yarn build
 
-CMD ["yarn", "dev"]
+EXPOSE 3000
+
+CMD ["yarn", "start"]
