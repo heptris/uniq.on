@@ -33,7 +33,6 @@ spring-build:
   only:
     - master
     - develop
-    - backend
 
 spring-dockerize:
   image: docker:latest
@@ -53,7 +52,6 @@ spring-dockerize:
   only:
     - master
     - develop
-    - backend
 
 react-dockerize:
   image: docker:latest
@@ -94,4 +92,3 @@ deploy:
   only:
     - master
     - develop
-    - backend
