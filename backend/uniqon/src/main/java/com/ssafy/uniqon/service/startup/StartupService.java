@@ -4,6 +4,7 @@ import com.ssafy.uniqon.domain.member.Member;
 import com.ssafy.uniqon.domain.s3.AwsS3;
 import com.ssafy.uniqon.domain.startup.EnrollStatus;
 import com.ssafy.uniqon.domain.startup.Startup;
+import com.ssafy.uniqon.dto.startup.StartupDetailResponseDto;
 import com.ssafy.uniqon.dto.startup.StartupRequestDto;
 import com.ssafy.uniqon.exception.ex.CustomException;
 import com.ssafy.uniqon.dto.startup.StartupResponseListDto;
@@ -43,23 +44,23 @@ public class StartupService {
         member.changeId(memberId);
 
         Startup startup = Startup.builder()
-                .description(startupRequestDto.getDescription())
+//                .description(startupRequestDto.getDescription())
                 .startupName(startupRequestDto.getStartupName())
-                .managerEmail(startupRequestDto.getManagerEmail())
-                .managerName(startupRequestDto.getManagerName())
-                .managerNumber(startupRequestDto.getManagerNumber())
-                .goalPrice(startupRequestDto.getGoalPrice())
-                .endDate(startupRequestDto.getEndDate())
-                .discordUrl(startupRequestDto.getDiscordUrl())
-                .title(startupRequestDto.getTitle())
-                .nftCount(startupRequestDto.getNftCount())
+//                .managerEmail(startupRequestDto.getManagerEmail())
+//                .managerName(startupRequestDto.getManagerName())
+//                .managerNumber(startupRequestDto.getManagerNumber())
+//                .goalPrice(startupRequestDto.getGoalPrice())
+//                .endDate(startupRequestDto.getEndDate())
+//                .discordUrl(startupRequestDto.getDiscordUrl())
+//                .title(startupRequestDto.getTitle())
+//                .nftCount(startupRequestDto.getNftCount())
                 .member(member)
                 .investCount(0)
                 .isFinished(false)
                 .enrollStatus(PENDING)
                 .isGoal(false)
                 .curTotalPrice(0)
-                .pricePerNft(startupRequestDto.getGoalPrice() / startupRequestDto.getNftCount())
+ //               .pricePerNft(startupRequestDto.getGoalPrice() / startupRequestDto.getNftCount())
                 .build();
 
 
@@ -91,5 +92,13 @@ public class StartupService {
 
     public Page<StartupResponseListDto> startupList(StartupSearchCondition condition, Pageable pageable){
         return startupRepository.search(condition, pageable);
+    }
+
+    /**
+     * 스타트업 상세정보 조회
+     */
+    public StartupDetailResponseDto startupDetail(Long startupId) {
+
+        return null;
     }
 }
