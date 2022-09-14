@@ -8,7 +8,6 @@ spring:
     url: jdbc:mysql://localhost:3306/uniqon?allowPublicKeyRetrieval=true&useSSL=false&useUnicode=true&serverTimezone=Asia/Seoul
     username: uniqon
     driver-class-name: com.mysql.cj.jdbc.Driver # MySql 드라이버 설정
-    password: ${MYSQL_PASSWORD}
   sql:
     init:
       mode: always
