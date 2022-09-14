@@ -6,9 +6,14 @@ import com.ssafy.uniqon.domain.startup.EnrollStatus;
 import com.ssafy.uniqon.domain.startup.Startup;
 import com.ssafy.uniqon.dto.startup.StartupRequestDto;
 import com.ssafy.uniqon.exception.ex.CustomException;
+import com.ssafy.uniqon.dto.startup.StartupResponseListDto;
+import com.ssafy.uniqon.dto.startup.StartupSearchCondition;
+
 import com.ssafy.uniqon.repository.startup.StartupRepository;
 import com.ssafy.uniqon.service.s3.AwsS3Service;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -83,5 +88,9 @@ public class StartupService {
             savedStartup.changeImageNft(nft_image_url);
         }
         return savedStartup.getId();
+    }
+
+    public Page<StartupResponseListDto> startupList(StartupSearchCondition condition, Pageable pageable){
+        return startupRepository.search(condition, pageable);
     }
 }
