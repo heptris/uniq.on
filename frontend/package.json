@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.19.0",
+    "@emotion/babel-plugin": "^11.10.2",
     "@emotion/react": "^11.10.4",
     "@emotion/styled": "^11.10.4",
     "@reduxjs/toolkit": "^1.8.5",
