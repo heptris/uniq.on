@@ -28,7 +28,7 @@ spring-build:
     ./gradlew build -x test
   artifacts:
     paths:
-      - ./backend/hool/build/libs/*.jar
+      - ./backend/uniqon/build/libs/*.jar
     expire_in: 60 min
   only:
     - master
