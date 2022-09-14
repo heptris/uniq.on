@@ -7,7 +7,7 @@ values (now(), now(), "aa@naver.com", "INVESTOR", "AAA", "aaa", "1234", "0XA"),
 
 insert into startup (created_date, last_modified_date, description, business_plan, cur_total_price
                     , discord_url, end_date, enroll_status, goal_price, image_nft, invest_count, is_finished, is_goal, nft_count
-                    , price_per_nft, project_pdf, reject_reason, startup_name, title, member_id)
+                    , price_per_nft, road_map, reject_reason, startup_name, title, member_id)
 values (now(), now(), "startup D입니다", null, 0, null,
         null, null, 0, null, 0, false, false, 0, 0, null, null, null, "startup D", 4),
        (now(), now(), "startup E입니다", null, 0, null,

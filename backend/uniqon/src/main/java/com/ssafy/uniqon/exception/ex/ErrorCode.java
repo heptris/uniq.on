@@ -7,6 +7,8 @@ import lombok.Getter;
 @Getter
 public enum ErrorCode {
 
+    FILE_UPLOAD_ERROR(400, "파일 업로드 에러"),
+
     // 401
     INVALID_REFRESH_TOKEN(401, "유효하지 않은 RefreshToken 입니다."),
     INVALID_ACCESS_TOKEN(401, "유효하지 않은 accessToken 입니다."),
