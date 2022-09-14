@@ -12,48 +12,46 @@ stages:
   - react-dockerize
   - deploy
 
-# cache:
-#   paths:
-#     - node_modules/
+ cache:
+   paths:
+     - node_modules/
 
-# spring-build:
-#   image: openjdk:8
-#   stage: spring-build
-#   script: |
-#     echo -e $BACK_APIKEY > ./backend/hool/src/main/resources/application-API-KEY.properties
-#     value=`cat ./backend/hool/src/main/resources/application-API-KEY.properties`
-#     echo "$value"
-#     cd backend/hool/
-#     chmod +x gradlew
-#     ./gradlew build -x test
-#   artifacts:
-#     paths:
-#       - ./backend/hool/build/libs/*.jar
-#     expire_in: 60 min
-#   only:
-#     - master
-#     - develop
-#     - feature/backend
+ spring-build:
+   image: openjdk:8
+   stage: spring-build
+   script: |
+     echo -e $BACK_APIKEY > ./backend/hool/src/main/resources/application-API-KEY.properties
+     value=`cat ./backend/uniqon/src/main/resources/application-API-KEY.properties`
+     echo "$value"
+     cd backend/uniqon/
+     chmod +x gradlew
+     ./gradlew build -x test
+   artifacts:
+     paths:
+       - ./backend/hool/build/libs/*.jar
+     expire_in: 60 min
+   only:
+     - master
+     - develop
 
-# spring-dockerize:
-#   image: docker:latest
-#   stage: spring-dockerize
-#   variables:
-#     DOCKER_TLS_CERTDIR: ""
-#   services:
-#     - docker:dind
-#   before_script: |
-#     cd backend/hool
-#     echo $BACK_DOCKER_HUB_PW | docker login -u $BACK_DOCKER_HUB_USER --password-stdin
-#   script: |
-#     docker build -t $BACK_IMAGE_NAME .
-#     docker push $BACK_IMAGE_NAME
-#   after_script: |
-#     docker logout
-#   only:
-#     - master
-#     - develop
-#     - feature/backend
+ spring-dockerize:
+   image: docker:latest
+   stage: spring-dockerize
+   variables:
+     DOCKER_TLS_CERTDIR: ""
+   services:
+     - docker:dind
+   before_script: |
+     cd backend/uniqon
+     echo $BACK_DOCKER_HUB_PW | docker login -u $BACK_DOCKER_HUB_USER --password-stdin
+   script: |
+     docker build -t $BACK_IMAGE_NAME .
+     docker push $BACK_IMAGE_NAME
+   after_script: |
+     docker logout
+   only:
+     - master
+     - develop
 
 react-dockerize:
   image: docker:latest
