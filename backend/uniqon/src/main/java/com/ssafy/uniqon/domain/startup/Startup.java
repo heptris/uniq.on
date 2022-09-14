@@ -28,9 +28,13 @@ public class Startup extends BaseEntity {
 
     private String startupName;
 
+    private String managerName; // 담당자 이름
+    private String managerEmail; // 담당자 이메일
+    private String managerNumber; // 담당자 연락처
+
     private String businessPlan;
 
-    private String projectPdf;
+    private String roadMap;
 
     private String title;
 
