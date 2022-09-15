@@ -38,13 +38,13 @@ public class StartupController {
     }
 
     @GetMapping
-    public ResponseEntity startupList(String title, String startupName, Integer offset, Integer page) {
-        PageRequest of = PageRequest.of(page, offset);
-        StartupSearchCondition condition = StartupSearchCondition.builder()
-                .startupName(startupName)
-                .title(title)
-                .build();
-        Page<StartupResponseListDto> startupList = startupService.startupList(condition, of);
+    public ResponseEntity startupList(@RequestParam(required = false) String title,
+                                      @RequestParam(required = false) String startupName,
+                                      @RequestParam Integer size,
+                                      @RequestParam Integer page){
+        Pageable pageable = Pageable.ofSize(size).withPage(page);
+        StartupSearchCondition condition = new StartupSearchCondition(title, startupName);
+        Page<StartupResponseListDto> startupList = startupService.startupList(condition, pageable);
         return ResponseEntity.status(HttpStatus.OK).body(
                 new ResponseDto(HttpStatus.OK.value(), "스타트업 목록 조회", startupList)
         );
