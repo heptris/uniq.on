@@ -11,6 +11,7 @@ import com.ssafy.uniqon.exception.ex.CustomException;
 import com.ssafy.uniqon.exception.ex.CustomValidationException;
 import com.ssafy.uniqon.repository.member.MemberRepository;
 import com.ssafy.uniqon.service.auth.AuthService;
+import com.ssafy.uniqon.service.member.MemberService;
 import com.ssafy.uniqon.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -30,8 +31,7 @@ import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.ssafy.uniqon.exception.ex.ErrorCode.MEMBER_EMAIL_NOT_FOUND;
-import static com.ssafy.uniqon.exception.ex.ErrorCode.NOT_EQUAL_PASSWORD;
+import static com.ssafy.uniqon.exception.ex.ErrorCode.*;
 
 @RestController
 @Slf4j
@@ -41,6 +41,7 @@ public class AuthController {
 
 
     private final AuthService authService;
+    private final MemberService memberService;
 
     @PostMapping("/signup")
     public ResponseEntity<?> signup(@RequestBody @Valid MemberJoinDto memberJoinDto, BindingResult bindingResult){
@@ -75,12 +76,20 @@ public class AuthController {
                 authService.reissue(tokenRequestDto)), HttpStatus.OK);
     }
 
-    @GetMapping("logout")
+    @GetMapping("/logout")
     public ResponseEntity logout(HttpServletRequest request){
         String accessToken = request.getHeader("Authorization").substring(7);
         authService.logout(accessToken);
         return new ResponseEntity<>(new ResponseDto<>(200, "로그아웃 완료", null), HttpStatus.OK);
     }
 
+    @GetMapping("/{nickname}/check")
+    public ResponseEntity checkNickName(@PathVariable("nickname") String nickName){
+        if(memberService.existsByNickname(nickName)){
+            throw new CustomException(ALREADY_USED_NICKNAME);
+        }else{
+            return new ResponseEntity<>(new ResponseDto<String>(200,"success","사용가능한 닉네임입니다"), HttpStatus.OK);
+        }
+    }
 
 }
