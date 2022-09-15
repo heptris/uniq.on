@@ -18,7 +18,6 @@ public class StartupDetailResponseDto {
     private String startupName;
     private String title;
     private String description;
-    private String nftImageUrl;
     private Integer nftCount; // 발행 개수
     private Double goalRate; // 달성률
     private Double pricePerNft; // 발행가
@@ -26,6 +25,7 @@ public class StartupDetailResponseDto {
 
     // 사업계획서
     private String businessPlan;
+    private String businessPlanImg;
 
     // 로드맵
     private String roadMap;
@@ -39,12 +39,12 @@ public class StartupDetailResponseDto {
         this.startupName = startup.getStartupName();
         this.title = startup.getTitle();
         this.description = startup.getDescription();
-        this.nftImageUrl = startup.getImageNft();
         this.nftCount = startup.getNftCount();
         this.goalRate = new Double(startup.getInvestCount()) / startup.getNftCount() * 100;
         this.pricePerNft = startup.getPricePerNft();
         this.endDate = startup.getEndDate();
         this.businessPlan = startup.getBusinessPlan();
+        this.businessPlanImg = startup.getBusinessPlanImg();
         this.roadMap = startup.getRoadMap();
         this.imageNft = startup.getImageNft();
     }

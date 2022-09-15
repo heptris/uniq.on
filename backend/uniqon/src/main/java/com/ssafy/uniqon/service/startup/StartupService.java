@@ -54,23 +54,23 @@ public class StartupService {
         member.changeId(memberId);
 
         Startup startup = Startup.builder()
-//                .description(startupRequestDto.getDescription())
+                .description(startupRequestDto.getDescription())
                 .startupName(startupRequestDto.getStartupName())
-//                .managerEmail(startupRequestDto.getManagerEmail())
-//                .managerName(startupRequestDto.getManagerName())
-//                .managerNumber(startupRequestDto.getManagerNumber())
-//                .goalPrice(startupRequestDto.getGoalPrice())
-//                .endDate(startupRequestDto.getEndDate())
-//                .discordUrl(startupRequestDto.getDiscordUrl())
-//                .title(startupRequestDto.getTitle())
-//                .nftCount(startupRequestDto.getNftCount())
+                .managerEmail(startupRequestDto.getManagerEmail())
+                .managerName(startupRequestDto.getManagerName())
+                .managerNumber(startupRequestDto.getManagerNumber())
+                .goalPrice(startupRequestDto.getGoalPrice())
+                .endDate(startupRequestDto.getEndDate())
+                .discordUrl(startupRequestDto.getDiscordUrl())
+                .title(startupRequestDto.getTitle())
+                .nftCount(startupRequestDto.getNftCount())
                 .member(member)
                 .investCount(0)
                 .isFinished(false)
                 .enrollStatus(PENDING)
                 .isGoal(false)
                 .curTotalPrice(new Double(0))
- //               .pricePerNft(startupRequestDto.getGoalPrice() / startupRequestDto.getNftCount())
+                .pricePerNft(startupRequestDto.getGoalPrice() / startupRequestDto.getNftCount())
                 .build();
 
 
@@ -131,7 +131,7 @@ public class StartupService {
         );
 
         StartupDetailResponseDto startupDetailResponseDto = new StartupDetailResponseDto(startup);
-        return null;
+        return startupDetailResponseDto;
     }
 
 
