@@ -5,6 +5,7 @@ import com.ssafy.uniqon.dto.response.CursorResult;
 import com.ssafy.uniqon.dto.response.ResponseDto;
 import com.ssafy.uniqon.dto.startup.qna.StartupQuestionResDto;
 import com.ssafy.uniqon.service.startup.qna.StartupQuestionService;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
@@ -24,6 +25,7 @@ public class StartupQuestionController {
     private static final int DEFAULT_SIZE = 2;
     private final StartupQuestionService startupQuestionService;
 
+    @ApiOperation(value = "스타트업 qna 조회")
     @GetMapping("/{startupId}")
     public ResponseEntity getStartupQuestion(@PathVariable Long startupId) {
         List<StartupQuestionResDto> startupQuestionResDtoList = startupQuestionService.질문조회(1L, startupId);
@@ -31,6 +33,7 @@ public class StartupQuestionController {
                HttpStatus.OK);
     }
 
+    @ApiOperation(value = "스타트업 qna 페이징 조회")
     @GetMapping("/{startupId}/page")
     public ResponseEntity getStartupQuestionPage(@PathVariable Long startupId, Long cursorId, Integer size) {
         if(size == null) size = DEFAULT_SIZE;
