@@ -1,5 +1,4 @@
 package com.ssafy.uniqon.service.startup;
-
 import com.ssafy.uniqon.domain.member.Member;
 import com.ssafy.uniqon.domain.s3.AwsS3;
 import com.ssafy.uniqon.domain.startup.EnrollStatus;
@@ -12,13 +11,23 @@ import com.ssafy.uniqon.dto.startup.StartupSearchCondition;
 import com.ssafy.uniqon.repository.startup.StartupRepository;
 import com.ssafy.uniqon.service.s3.AwsS3Service;
 import lombok.RequiredArgsConstructor;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.rendering.ImageType;
+import org.apache.pdfbox.rendering.PDFRenderer;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.ssafy.uniqon.domain.startup.EnrollStatus.*;
 import static com.ssafy.uniqon.exception.ex.ErrorCode.FILE_UPLOAD_ERROR;
@@ -45,24 +54,25 @@ public class StartupService {
         member.changeId(memberId);
 
         Startup startup = Startup.builder()
-//                .description(startupRequestDto.getDescription())
+                .description(startupRequestDto.getDescription())
                 .startupName(startupRequestDto.getStartupName())
-//                .managerEmail(startupRequestDto.getManagerEmail())
-//                .managerName(startupRequestDto.getManagerName())
-//                .managerNumber(startupRequestDto.getManagerNumber())
-//                .goalPrice(startupRequestDto.getGoalPrice())
-//                .endDate(startupRequestDto.getEndDate())
-//                .discordUrl(startupRequestDto.getDiscordUrl())
-//                .title(startupRequestDto.getTitle())
-//                .nftCount(startupRequestDto.getNftCount())
+                .managerEmail(startupRequestDto.getManagerEmail())
+                .managerName(startupRequestDto.getManagerName())
+                .managerNumber(startupRequestDto.getManagerNumber())
+                .goalPrice(startupRequestDto.getGoalPrice())
+                .endDate(startupRequestDto.getEndDate())
+                .discordUrl(startupRequestDto.getDiscordUrl())
+                .title(startupRequestDto.getTitle())
+                .nftCount(startupRequestDto.getNftCount())
                 .member(member)
                 .investCount(0)
                 .isFinished(false)
                 .enrollStatus(PENDING)
                 .isGoal(false)
                 .curTotalPrice(new Double(0))
- //               .pricePerNft(startupRequestDto.getGoalPrice() / startupRequestDto.getNftCount())
+                .pricePerNft(startupRequestDto.getGoalPrice() / startupRequestDto.getNftCount())
                 .build();
+
 
 
         Startup savedStartup = startupRepository.save(startup);
@@ -76,6 +86,11 @@ public class StartupService {
 
             String business_plan_url = awsS3.getPath();
             savedStartup.changeBusinessPlan(business_plan_url);
+
+            if("application/pdf".equals(business_plan.getContentType())) {
+                String imgUrl = awsS3Service.pdfToImg(business_plan);
+                savedStartup.changeBusinessPlanImg(imgUrl);
+            }
         }
 
         if (nft_image != null) {
@@ -88,6 +103,18 @@ public class StartupService {
             String nft_image_url = awsS3.getPath();
             savedStartup.changeImageNft(nft_image_url);
         }
+
+        if (road_map != null) {
+            try {
+                awsS3 = awsS3Service.upload(road_map, "startup");
+            }catch (IOException e){
+                throw new CustomException(FILE_UPLOAD_ERROR);
+            }
+
+            String roadMapUrl = awsS3.getPath();
+            savedStartup.changeRoadMap(roadMapUrl);
+        }
+
         return savedStartup.getId();
     }
 
@@ -104,6 +131,8 @@ public class StartupService {
         );
 
         StartupDetailResponseDto startupDetailResponseDto = new StartupDetailResponseDto(startup);
-        return null;
+        return startupDetailResponseDto;
     }
+
+
 }

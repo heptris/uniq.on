@@ -13,10 +13,10 @@ public enum ErrorCode {
     INVALID_REFRESH_TOKEN(401, "유효하지 않은 RefreshToken 입니다."),
     INVALID_ACCESS_TOKEN(401, "유효하지 않은 accessToken 입니다."),
     EXPIRED_ACCESS_TOKEN(401, "만료된 accessToken 입니다."),
+    INVALID_ACCESS_MEMBER(401, "유효하지 않은 Member 입니다."),
     NOT_EQUAL_PASSWORD(400, "비밀번호가 서로 일치하지 않습니다"),
 
     // 404 NOT FOUND 잘못된 리소스 접근
-
     MEMBER_NOT_FOUND(404, "존재하지 않은 회원 ID 입니다."),
     MEMBER_EMAIL_NOT_FOUND(404, "존재하지 않은 이메일입니다."),
     MEMBER_NICKNAME_NOT_FOUND(404, "존재하지 않은 닉네임입니다."),
