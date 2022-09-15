@@ -3,6 +3,8 @@ import { ButtonProps } from "@/types/props";
 
 import { css } from "@emotion/react";
 
+import { convex } from "@/styles/index";
+
 /**
  * @params
  * @return
@@ -16,17 +18,20 @@ function Button<T extends ElementType = "button">(
 
   return (
     <Component
-      css={css({
-        backgroundColor: "#2258ed",
-        border: "0",
-        borderRadius: "8px",
-        padding: "0.5rem 1rem",
-        color: "#fff",
-        ":hover": {
-          cursor: "pointer",
-          backgroundColor: "#1e4cc1",
-        },
-      })}
+      css={css`
+        background-color: #2258ed;
+        border: 0;
+        border-radius: 8px;
+        padding: 0.8rem 1.2rem;
+        color: #fff;
+        font-weight: bold;
+        ${convex}
+
+        &:hover {
+          cursor: pointer;
+          background-color: #1e4cc1;
+        }
+      `}
       ref={ref}
       {...props}
     />
