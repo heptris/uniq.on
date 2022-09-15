@@ -110,28 +110,8 @@ public class StartupService {
         );
 
         StartupDetailResponseDto startupDetailResponseDto = new StartupDetailResponseDto(startup);
-    //    pdftoImage(startupDetailResponseDto.getBusinessPlan());
         return null;
     }
 
-//    public void pdftoImage(String pdfSource) {
-//        File file2 = new File(pdfSource);//어떤 경로의 어떤 파일을 읽을것인지 설정하고 해당 파일객체 생성
-//        try {
-//            PDDocument document = PDDocument.load(file2);//pdf문서 객체 생성
-//            int pageCount = document.getNumberOfPages();//pdf의 페이지 수
-//            PDFRenderer pdfRenderer = new PDFRenderer(document);
-//
-//            for(int i=0;i<pageCount;i++)
-//            {
-//                BufferedImage imageObj = pdfRenderer.renderImageWithDPI(i, 300, ImageType.RGB);//pdf파일의 페이지를돌면서 이미지 파일 변환
-//                File outputfile = new File(uploadPath +"/" + System.currentTimeMillis() + "_" +
-//                        fb.getOriginalFilename().substring(0,fb.getOriginalFilename().length()-4) + ".jpg");//파일이름 변경(.pdf->.jpg)
-//
-//                ImageIO.write(imageObj, "jpg", outputfile);//변환한 파일 업로드
-//            }
-//
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
+
 }
