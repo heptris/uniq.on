@@ -1,6 +1,10 @@
 import { ElementType, Ref, forwardRef } from "react";
-import { TextProps } from "@/types/index";
+import { TextProps } from "@/types/props";
 
+/**
+ * @params
+ * @return
+ */
 function Text<T extends ElementType = "span">(
   { typography = "content", as, ...props }: TextProps<T>,
   ref: Ref<any>
