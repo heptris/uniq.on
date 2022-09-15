@@ -3,20 +3,13 @@ package com.ssafy.uniqon.service.startup.qna;
 import com.ssafy.uniqon.domain.member.Member;
 import com.ssafy.uniqon.domain.startup.qna.StartupAnswer;
 import com.ssafy.uniqon.domain.startup.qna.StartupQuestion;
-import com.ssafy.uniqon.dto.startup.qna.AnswerDeleteRequestDto;
 import com.ssafy.uniqon.dto.startup.qna.AnswerRequestDto;
-import com.ssafy.uniqon.dto.startup.qna.AnswerParentResponseDto;
 import com.ssafy.uniqon.dto.startup.qna.AnswerUpdateRequestDto;
 import com.ssafy.uniqon.exception.ex.CustomException;
-import com.ssafy.uniqon.exception.ex.ErrorCode;
 import com.ssafy.uniqon.repository.startup.qna.StartupAnswerRepository;
-import com.ssafy.uniqon.repository.startup.qna.StartupQuestionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static com.ssafy.uniqon.exception.ex.ErrorCode.*;
 
@@ -28,18 +21,21 @@ public class StartupAnswerService {
     private final StartupAnswerRepository startupAnswerRepository;
 
     @Transactional
-    public Long 답변저장(Long memberId, AnswerRequestDto answerRequestDto) {
+    public Long 답변저장(Long memberId, Long startupQuestionId, AnswerRequestDto answerRequestDto) {
         Member member = new Member();
         member.changeId(memberId);
 
         StartupQuestion startupQuestion = new StartupQuestion();
-        startupQuestion.changeId(answerRequestDto.getStartupQuestionId());
+        startupQuestion.changeId(startupQuestionId);
 
         StartupAnswer parent = null;
         // 자식 댓글일 경우
         if (answerRequestDto.getParentId() != null) {
+            StartupAnswer startupAnswer = startupAnswerRepository.findById(answerRequestDto.getParentId())
+                    .orElseThrow(() -> new CustomException(ANSWER_NOT_FOUND));
+            Long id = startupAnswer.getParent() == null ? startupAnswer.getId() : startupAnswer.getParent().getId();
             parent = new StartupAnswer();
-            parent.changeId(answerRequestDto.getParentId());
+            parent.changeId(id);
         }
 
         StartupAnswer startupAnswer = StartupAnswer.builder()
@@ -61,14 +57,24 @@ public class StartupAnswerService {
 //    }
 
     @Transactional
-    public void 답변수정(AnswerUpdateRequestDto answerUpdateRequestDto) {
-        StartupAnswer startupAnswer = startupAnswerRepository.findById(answerUpdateRequestDto.getStartupAnswerId())
+    public void 답변수정(Long memberId, Long startupAnswerId, AnswerUpdateRequestDto answerUpdateRequestDto) {
+        StartupAnswer startupAnswer = startupAnswerRepository.findById(startupAnswerId)
                 .orElseThrow(() -> new CustomException(ANSWER_NOT_FOUND));
-        startupAnswer.changeAnswer(answerUpdateRequestDto.getAnswer());
+        if (startupAnswer.getMember().getId().equals(memberId)) {
+            startupAnswer.changeAnswer(answerUpdateRequestDto.getAnswer());
+        } else {
+            throw new CustomException(INVALID_ACCESS_MEMBER);
+        }
     }
 
     @Transactional
-    public void 답변삭제(AnswerDeleteRequestDto answerDeleteRequestDto) {
-        startupAnswerRepository.deleteById(answerDeleteRequestDto.getStartupAnswerId());
+    public void 답변삭제(Long memberId, Long startupAnswerId) {
+        StartupAnswer startupAnswer = startupAnswerRepository.findById(startupAnswerId)
+                .orElseThrow(() -> new CustomException(ANSWER_NOT_FOUND));
+        if (startupAnswer.getMember().getId().equals(memberId)) {
+            startupAnswerRepository.deleteById(startupAnswerId);
+        } else {
+            throw new CustomException(INVALID_ACCESS_MEMBER);
+        }
     }
 }

@@ -37,17 +37,15 @@ class StartupQuestionServiceTest {
     @Test
     public void 질문등록() {
         StartupQuestionReqDto startupQuestionReqDto = StartupQuestionReqDto.builder()
-                .startupId(1L)
                 .question("a가 무슨뜻인가요?")
                 .build();
 
         StartupQuestionReqDto startupQuestionReqDto2 = StartupQuestionReqDto.builder()
-                .startupId(1L)
                 .question("a가 무슨뜻인가요? - 2")
                 .build();
 
-        Long startupQuestionId = startupQuestionService.질문등록(1L, startupQuestionReqDto);
-        Long startupQuestionId2 = startupQuestionService.질문등록(2L, startupQuestionReqDto2);
+        Long startupQuestionId = startupQuestionService.질문등록(1L,1L,  startupQuestionReqDto);
+        Long startupQuestionId2 = startupQuestionService.질문등록(2L, 1L, startupQuestionReqDto2);
 
         StartupQuestionResDto startupQuestionResDto1 = startupQuestionService.질문하나조회(startupQuestionId);
         StartupQuestionResDto startupQuestionResDto2 = startupQuestionService.질문하나조회(startupQuestionId2);
@@ -63,26 +61,22 @@ class StartupQuestionServiceTest {
         list.forEach(lst -> {
             System.out.println(lst);
         });
-
-
-        assertThat(list.get(2).getQuestion()).isEqualTo("질문3");
     }
 
     @Test
     public void 질문수정() {
         StartupQuestionUpdateReqDto startupQuestionUpdateReqDto = StartupQuestionUpdateReqDto.builder()
-                .startupQuestionId(1L)
                 .question("update question")
                 .build();
 
-        startupQuestionService.질문수정(startupQuestionUpdateReqDto);
+        startupQuestionService.질문수정(1L, 1L, startupQuestionUpdateReqDto);
         StartupQuestionResDto startupQuestionResDto = startupQuestionService.질문하나조회(1L);
         assertThat(startupQuestionResDto.getQuestion()).isEqualTo(startupQuestionUpdateReqDto.getQuestion());
     }
 
     @Test
     public void 질문삭제() {
-        startupQuestionService.질문삭제(1L);
+        startupQuestionService.질문삭제(1L, 1L);
     }
 
 }

@@ -23,10 +23,15 @@ public class StartupDetailResponseDto {
     private Double goalRate; // 달성률
     private Double pricePerNft; // 발행가
     private LocalDateTime endDate;
-    
+
     // 사업계획서
-    
+    private String businessPlan;
+
     // 로드맵
+    private String roadMap;
+
+    // nft image
+    private String imageNft;
 
 
     public StartupDetailResponseDto(Startup startup) {
@@ -39,5 +44,8 @@ public class StartupDetailResponseDto {
         this.goalRate = new Double(startup.getInvestCount()) / startup.getNftCount() * 100;
         this.pricePerNft = startup.getPricePerNft();
         this.endDate = startup.getEndDate();
+        this.businessPlan = startup.getBusinessPlan();
+        this.roadMap = startup.getRoadMap();
+        this.imageNft = startup.getImageNft();
     }
 }

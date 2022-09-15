@@ -4,6 +4,7 @@ import com.ssafy.uniqon.dto.startup.StartupRequestDto;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
@@ -37,9 +38,5 @@ class StartupServiceTest {
 
     }
 
-    @Test
-    public void 테스트() {
-        System.out.println(new Double(4) / 5 * 100);
-    }
 
 }

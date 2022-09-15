@@ -13,12 +13,14 @@ import com.ssafy.uniqon.exception.ex.ErrorCode;
 import com.ssafy.uniqon.repository.startup.qna.StartupQuestionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.ssafy.uniqon.exception.ex.ErrorCode.INVALID_ACCESS_MEMBER;
 import static com.ssafy.uniqon.exception.ex.ErrorCode.QUESTION_NOT_FOUND;
 
 @Transactional(readOnly = true)
@@ -30,12 +32,12 @@ public class StartupQuestionService {
     private final StartupAnswerService startupAnswerService;
 
     @Transactional
-    public Long 질문등록(Long memberId, StartupQuestionReqDto startupQuestionReqDto) {
+    public Long 질문등록(Long memberId, Long startupId, StartupQuestionReqDto startupQuestionReqDto) {
         Member member = new Member();
         member.changeId(memberId);
 
         Startup startup = new Startup();
-        startup.changeId(startupQuestionReqDto.getStartupId());
+        startup.changeId(startupId);
 
         StartupQuestion startupQuestion = StartupQuestion.builder()
                 .member(member)
@@ -92,14 +94,24 @@ public class StartupQuestionService {
     }
 
     @Transactional
-    public void 질문수정(StartupQuestionUpdateReqDto startupQuestionUpdateReqDto) {
-        StartupQuestion startupQuestion = startupQuestionRepository.findById(startupQuestionUpdateReqDto.getStartupQuestionId())
+    public void 질문수정(Long memberId, Long startupQuestionId, StartupQuestionUpdateReqDto startupQuestionUpdateReqDto) {
+        StartupQuestion startupQuestion = startupQuestionRepository.findById(startupQuestionId)
                 .orElseThrow(() -> new CustomException(QUESTION_NOT_FOUND));
-        startupQuestion.update(startupQuestionUpdateReqDto);
+        if (startupQuestion.getMember().getId().equals(memberId)) {
+            startupQuestion.update(startupQuestionUpdateReqDto);
+        } else {
+            throw new CustomException(INVALID_ACCESS_MEMBER);
+        }
     }
 
     @Transactional
-    public void 질문삭제(Long startupQuestionId) {
-        startupQuestionRepository.deleteById(startupQuestionId);
+    public void 질문삭제(Long memberId, Long startupQuestionId) {
+        StartupQuestion startupQuestion = startupQuestionRepository.findById(startupQuestionId)
+                .orElseThrow(() -> new CustomException(QUESTION_NOT_FOUND));
+        if (startupQuestion.getMember().getId().equals(memberId)) {
+            startupQuestionRepository.deleteById(startupQuestionId);
+        } else {
+            throw new CustomException(INVALID_ACCESS_MEMBER);
+        }
     }
 }

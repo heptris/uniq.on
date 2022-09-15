@@ -7,6 +7,7 @@ import com.ssafy.uniqon.dto.startup.StartupSearchCondition;
 import com.ssafy.uniqon.service.startup.StartupService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -37,8 +38,13 @@ public class StartupController {
     }
 
     @GetMapping
-    public ResponseEntity startupList(@RequestBody StartupSearchCondition condition, Pageable pageable){
-        Page<StartupResponseListDto> startupList = startupService.startupList(condition, pageable);
+    public ResponseEntity startupList(String title, String startupName, Integer offset, Integer page) {
+        PageRequest of = PageRequest.of(page, offset);
+        StartupSearchCondition condition = StartupSearchCondition.builder()
+                .startupName(startupName)
+                .title(title)
+                .build();
+        Page<StartupResponseListDto> startupList = startupService.startupList(condition, of);
         return ResponseEntity.status(HttpStatus.OK).body(
                 new ResponseDto(HttpStatus.OK.value(), "스타트업 목록 조회", startupList)
         );
