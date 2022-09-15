@@ -44,19 +44,19 @@ public class Startup extends BaseEntity {
 
     private String imageNft;
 
-    private int goalPrice;
+    private Double goalPrice;
 
-    private double curTotalPrice;
+    private Double curTotalPrice;
 
-    private int nftCount;
+    private Integer nftCount;
 
-    private int investCount;
+    private Integer investCount;
 
     private double pricePerNft;
 
-    private boolean isFinished;
+    private Boolean isFinished;
 
-    private boolean isGoal;
+    private Boolean isGoal;
 
     private String discordUrl;
 

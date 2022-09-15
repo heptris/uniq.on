@@ -22,6 +22,7 @@ public enum ErrorCode {
     MEMBER_NICKNAME_NOT_FOUND(404, "존재하지 않은 닉네임입니다."),
     QUESTION_NOT_FOUND(404, "존재하지 않은 Question ID 입니다."),
     ANSWER_NOT_FOUND(404, "존재하지 않은 Answer ID 입니다."),
+    STARTUP_NOT_FOUND(404, "존재하지 않은 Startup ID 입니다."),
 
     //409 CONFLICT 중복된 리소스
     ALREADY_SAVED_MEMBER(409, "이미 가입되어 있는 회원입니다."),
