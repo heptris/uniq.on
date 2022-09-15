@@ -1,9 +1,9 @@
 insert into member (created_date, last_modified_date, email, member_type, name, nickname, password, wallet_address)
-values (now(), now(), "aa@naver.com", "INVESTOR", "AAA", "aaa", "1234", "0XA"),
-       (now(), now(), "bb@naver.com", "INVESTOR", "BBB", "bbb", "1234", "0XB"),
-       (now(), now(), "cc@naver.com", "INVESTOR", "CCC", "ccc", "1234", "0XC"),
-       (now(), now(), "dd@naver.com", "STARTUP", "DDD", "ddd", "1234", "0XD"),
-       (now(), now(), "ee@naver.com", "STARTUP", "EEE", "eee", "1234", "0XE");
+values (now(), now(), "aa@naver.com", "INVESTOR", "AAA", "aaa", "$2a$10$Fq/c/lgxWYldTv/t.aQEjOcpiOqbZcqAUJnvCQx78wjbh6E3oUXpG", "0XA"),
+       (now(), now(), "bb@naver.com", "INVESTOR", "BBB", "bbb", "$2a$10$Fq/c/lgxWYldTv/t.aQEjOcpiOqbZcqAUJnvCQx78wjbh6E3oUXpG", "0XB"),
+       (now(), now(), "cc@naver.com", "INVESTOR", "CCC", "ccc", "$2a$10$Fq/c/lgxWYldTv/t.aQEjOcpiOqbZcqAUJnvCQx78wjbh6E3oUXpG", "0XC"),
+       (now(), now(), "dd@naver.com", "STARTUP", "DDD", "ddd", "$2a$10$Fq/c/lgxWYldTv/t.aQEjOcpiOqbZcqAUJnvCQx78wjbh6E3oUXpG", "0XD"),
+       (now(), now(), "ee@naver.com", "STARTUP", "EEE", "eee", "$2a$10$Fq/c/lgxWYldTv/t.aQEjOcpiOqbZcqAUJnvCQx78wjbh6E3oUXpG", "0XE");
 
 insert into startup (created_date, last_modified_date, description, business_plan, cur_total_price
                     , discord_url, end_date, enroll_status, goal_price, image_nft, invest_count, is_finished, is_goal, nft_count
