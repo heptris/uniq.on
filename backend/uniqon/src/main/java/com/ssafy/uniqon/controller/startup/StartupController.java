@@ -19,7 +19,7 @@ import javax.xml.ws.Response;
 
 
 @RequiredArgsConstructor
-@RequestMapping("/startup")
+@RequestMapping("/api/startup")
 @RestController
 public class StartupController {
 

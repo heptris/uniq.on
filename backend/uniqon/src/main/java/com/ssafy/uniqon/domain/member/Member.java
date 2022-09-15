@@ -54,4 +54,9 @@ public class Member extends BaseEntity {
     public void changeId(Long memberId) {
         this.id = memberId;
     }
+
+    public void updateMember(String password, String nickname){
+        this.password = password;
+        this.nickname = nickname;
+    }
 }
