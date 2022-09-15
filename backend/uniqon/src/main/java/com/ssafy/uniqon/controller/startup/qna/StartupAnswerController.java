@@ -13,7 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
-@RequestMapping("/api/startup/answer")
+@RequestMapping("/api/invest/answer")
 @RestController
 public class StartupAnswerController {
 
