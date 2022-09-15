@@ -14,8 +14,7 @@ public class MemberService {
     private final MemberRepository memberRepository;
 
     @Transactional
-    public Long 회원가입(Member member) {
-        memberRepository.save(member);
-        return member.getId();
+    public boolean existsByNickname(String nickName){
+        return memberRepository.existsByNickname(nickName);
     }
 }
