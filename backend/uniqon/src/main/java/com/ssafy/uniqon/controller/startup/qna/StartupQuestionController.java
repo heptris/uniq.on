@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RequiredArgsConstructor
-@RequestMapping("/api/startup/qna")
+@RequestMapping("/startup/qna")
 @RestController
 public class StartupQuestionController {
 

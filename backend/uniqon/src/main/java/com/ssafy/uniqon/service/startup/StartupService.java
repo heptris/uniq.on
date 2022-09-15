@@ -22,6 +22,7 @@ import java.io.IOException;
 
 import static com.ssafy.uniqon.domain.startup.EnrollStatus.*;
 import static com.ssafy.uniqon.exception.ex.ErrorCode.FILE_UPLOAD_ERROR;
+import static com.ssafy.uniqon.exception.ex.ErrorCode.STARTUP_NOT_FOUND;
 
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -59,7 +60,7 @@ public class StartupService {
                 .isFinished(false)
                 .enrollStatus(PENDING)
                 .isGoal(false)
-                .curTotalPrice(0)
+                .curTotalPrice(new Double(0))
  //               .pricePerNft(startupRequestDto.getGoalPrice() / startupRequestDto.getNftCount())
                 .build();
 
@@ -98,7 +99,11 @@ public class StartupService {
      * 스타트업 상세정보 조회
      */
     public StartupDetailResponseDto startupDetail(Long startupId) {
+        Startup startup = startupRepository.findById(startupId).orElseThrow(
+                () -> new CustomException(STARTUP_NOT_FOUND)
+        );
 
+        StartupDetailResponseDto startupDetailResponseDto = new StartupDetailResponseDto(startup);
         return null;
     }
 }

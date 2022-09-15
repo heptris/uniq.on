@@ -37,5 +37,9 @@ class StartupServiceTest {
 
     }
 
+    @Test
+    public void 테스트() {
+        System.out.println(new Double(4) / 5 * 100);
+    }
 
 }
