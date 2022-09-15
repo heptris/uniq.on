@@ -32,7 +32,10 @@ public class Startup extends BaseEntity {
     private String managerEmail; // 담당자 이메일
     private String managerNumber; // 담당자 연락처
 
+    @Lob
     private String businessPlan;
+    @Lob
+    private String businessPlanImg;
 
     private String roadMap;
 
@@ -73,7 +76,14 @@ public class Startup extends BaseEntity {
         this.businessPlan = businessPlan;
     }
 
+    public void changeBusinessPlanImg(String businessPlanImg){
+        this.businessPlanImg = businessPlanImg;
+    }
+
     public void changeImageNft(String imageNft) {
         this.imageNft = imageNft;
+    }
+    public void changeRoadMap(String roadMap){
+        this.roadMap = roadMap;
     }
 }
