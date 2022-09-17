@@ -6,10 +6,13 @@ import { convex } from "@/styles/utils";
 
 /**
  * @params
- * @return
+ * `size`: `fit` | `full`
+ *
+ * `type`: `purple` | `blue`
+ * @return `HTMLButtonElement`
  */
 function Button<T extends ElementType = "button">(
-  { as, ...props }: ButtonProps<T>,
+  { size = "fit", type = "purple", as, ...props }: ButtonProps<T>,
   ref: Ref<any>
 ) {
   const target = as ?? "button";
@@ -20,17 +23,22 @@ function Button<T extends ElementType = "button">(
   return (
     <Component
       css={css`
-        background-color: ${theme.colors.emphasisColor};
+        background-color: ${type === "purple"
+          ? theme.colors.mainColor
+          : theme.colors.emphasisColor};
         border: 0;
         border-radius: 8px;
         padding: 0.8rem 1.2rem;
         color: ${theme.colors.txtMainColor};
         font-weight: bold;
+        width: ${size === "full" ? "100%" : "fit-content"};
         ${convex}
 
         &:hover {
           cursor: pointer;
-          background-color: #1e4cc1;
+          background-color: ${type === "purple"
+            ? "var(--purple500)"
+            : "var(--blue900)"};
         }
       `}
       ref={ref}
