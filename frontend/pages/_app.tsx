@@ -3,11 +3,11 @@ import "@/styles/palette.css";
 import type { AppProps } from "next/app";
 
 import { ThemeProvider } from "@emotion/react";
-import { darkTheme } from "@/styles/theme";
+import { uniqonThemes } from "@/styles/theme";
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <ThemeProvider theme={darkTheme}>
+    <ThemeProvider theme={uniqonThemes.darkTheme}>
       <Component {...pageProps} />
     </ThemeProvider>
   );
