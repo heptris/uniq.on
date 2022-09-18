@@ -40,7 +40,7 @@ function Navbar({ children }: { children: React.ReactNode }) {
       >
         <div className="container">
           {isLogin ? (
-            <h1>
+            <h1 className="navicon">
               <FontAwesomeIcon
                 icon={faBell}
                 css={css`
@@ -63,23 +63,23 @@ function Navbar({ children }: { children: React.ReactNode }) {
             </h1>
           )}
 
-          <h1>
-            <h5
+          <div className="navicon">
+            <h1
               css={css`
                 color: ${theme.colors.mainColor};
                 font-weight: bold;
               `}
             >
               uniq
-            </h5>
-            <h5
+            </h1>
+            <h1
               css={css`
                 color: ${theme.colors.txtMainColor};
                 font-weight: bold;
               `}
             >
               .on
-            </h5>
+            </h1>
             <Image
               src={logo}
               alt="logo"
@@ -90,7 +90,7 @@ function Navbar({ children }: { children: React.ReactNode }) {
                 position: absolute;
               `}
             />
-          </h1>
+          </div>
 
           <nav
             className={active ? "main-navigation active" : "main-navigation"}
@@ -115,7 +115,7 @@ function Navbar({ children }: { children: React.ReactNode }) {
           </button>
         </div>
       </Header>
-      <main className="hero-bg">{children}</main>
+      <main>{children}</main>
     </>
   );
 }
@@ -139,7 +139,7 @@ const Header = styled.header<{ isToggled: boolean }>`
     position: relative;
   }
 
-  h1 {
+  .navicon {
     display: flex;
     align-items: flex-end;
     position: relative;
@@ -149,9 +149,8 @@ const Header = styled.header<{ isToggled: boolean }>`
       cursor: pointer;
     }
   }
-  h5 {
+  h1 {
     margin: 0;
-    margin-left: 0px;
   }
   span {
     width: 100%;
