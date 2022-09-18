@@ -73,7 +73,7 @@ describe("Button", () => {
 
   //   expect(button).toHaveStyleRule(
   //     "background-color",
-  //     darkTheme.colors.mainColor
+  //     darkTheme.color.background.main
   //   );
   // });
 });

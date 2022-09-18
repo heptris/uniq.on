@@ -1,15 +1,14 @@
 import { render, screen } from "@testing-library/react";
-import { ThemeProvider } from "@emotion/react";
-import { darkTheme } from "@/styles/theme";
 
+import MyApp from "../__fixtures__/_app";
 import Home from "@/pages/index";
 
 describe("Home", () => {
   it("renders a heading", () => {
     render(
-      <ThemeProvider theme={darkTheme}>
+      <MyApp>
         <Home />
-      </ThemeProvider>
+      </MyApp>
     );
 
     const heading = screen.getByRole("heading", {
