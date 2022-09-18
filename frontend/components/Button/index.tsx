@@ -2,7 +2,7 @@ import { ElementType, Ref, forwardRef } from "react";
 import { ButtonProps } from "@/types/props";
 
 import { css, useTheme } from "@emotion/react";
-import { convex } from "@/styles/utils";
+import { cssConvex } from "@/styles/utils";
 
 /**
  * @params
@@ -26,7 +26,7 @@ function Button<T extends ElementType = "button">(
         padding: 0.8rem 1.2rem;
         color: ${theme.colors.txtMainColor};
         font-weight: bold;
-        ${convex}
+        ${cssConvex}
 
         &:hover {
           cursor: pointer;
