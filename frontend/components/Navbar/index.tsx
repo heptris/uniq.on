@@ -31,7 +31,6 @@ function Navbar({ children }: { children: React.ReactNode }) {
   return (
     <>
       <Header
-        isToggled={isToggled}
         theme={theme}
         css={css`
           background-color: ${theme.colors.cardItemBgColor};
@@ -53,7 +52,7 @@ function Navbar({ children }: { children: React.ReactNode }) {
                 css={css`
                   width: 7px;
                   color: ${theme.colors.failColor};
-                  transform: translate(-6px, -2px);
+                  transform: translate(-6px, -12px);
                 `}
               />
             </h1>
@@ -63,33 +62,35 @@ function Navbar({ children }: { children: React.ReactNode }) {
             </h1>
           )}
 
-          <div className="navicon">
-            <h1
+          <div
+            className="navicon"
+            css={css`
+              transform: translate(-50%);
+            `}
+          >
+            <div
               css={css`
-                color: ${theme.colors.mainColor};
                 font-weight: bold;
-              `}
-            >
-              uniq
-            </h1>
-            <h1
-              css={css`
-                color: ${theme.colors.txtMainColor};
-                font-weight: bold;
-              `}
-            >
-              .on
-            </h1>
-            <Image
-              src={logo}
-              alt="logo"
-              width={50}
-              height={70}
-              css={css`
-                transform: translate(0, -2px);
+                font-size: 25px;
                 position: absolute;
               `}
-            />
+            >
+              <span
+                css={css`
+                  color: ${theme.colors.mainColor};
+                `}
+              >
+                uniq
+              </span>
+              .on
+            </div>
+            <div
+              css={css`
+                transform: translate(100%, 3px);
+              `}
+            >
+              <Image src={logo} alt="logo" width={50} height={70} />
+            </div>
           </div>
 
           <nav
@@ -120,7 +121,7 @@ function Navbar({ children }: { children: React.ReactNode }) {
   );
 }
 
-const Header = styled.header<{ isToggled: boolean }>`
+const Header = styled.header`
   position: absolute;
   top: 0;
   left: 0;
@@ -141,8 +142,8 @@ const Header = styled.header<{ isToggled: boolean }>`
 
   .navicon {
     display: flex;
+    justify-content: center;
     align-items: flex-end;
-    position: relative;
     margin: 0;
     z-index: 3;
     &:hover {
@@ -151,9 +152,6 @@ const Header = styled.header<{ isToggled: boolean }>`
   }
   h1 {
     margin: 0;
-  }
-  span {
-    width: 100%;
   }
 
   a {
@@ -199,7 +197,7 @@ const Header = styled.header<{ isToggled: boolean }>`
       padding: 80px 20px;
       width: 100%;
       height: 100vh;
-      background-color: rgba(14, 25, 38, 0.9);
+      background-color: ${(props) => props.theme.colors.cardItemBgColor};
       opacity: 0;
       visibility: hidden;
       transform: translateX(100%);
