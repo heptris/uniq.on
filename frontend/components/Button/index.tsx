@@ -1,7 +1,8 @@
 import { ElementType, Ref, forwardRef } from "react";
 import { ButtonProps } from "@/types/props";
 
-import { css, useTheme } from "@emotion/react";
+import { useTheme } from "@emotion/react";
+import { css } from "@emotion/css";
 import { cssFontFamily, cssConvex } from "@/styles/utils";
 
 /**
@@ -22,7 +23,7 @@ function Button<T extends ElementType = "button">(
 
   return (
     <Component
-      css={css`
+      className={css`
         background-color: ${type === "purple"
           ? theme.color.background.main
           : theme.color.background.emphasis};
