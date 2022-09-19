@@ -34,40 +34,12 @@ function Navbar({ children }: { children: React.ReactNode }) {
         `}
       >
         <div className="container">
-          {isLogin ? (
-            <h1 className="navicon">
-              <FontAwesomeIcon
-                icon={faBell}
-                css={css`
-                  width: 24px;
-                  color: ${theme.colors.txtMainColor};
-                `}
-              />
-              <FontAwesomeIcon
-                icon={faCircle}
-                css={css`
-                  width: 7px;
-                  color: ${theme.colors.failColor};
-                  transform: translate(-6px, -12px);
-                `}
-              />
-            </h1>
-          ) : (
-            <h1>
-              <FontAwesomeIcon icon={faUser} />
-            </h1>
-          )}
-
-          <div
-            className="navicon"
-            css={css`
-              transform: translate(-50%);
-            `}
-          >
+          <div className="navicon">
             <div
               css={css`
+                margin-bottom: 5px;
                 font-weight: bold;
-                font-size: 25px;
+                font-size: 27px;
                 position: absolute;
               `}
             >
@@ -82,34 +54,69 @@ function Navbar({ children }: { children: React.ReactNode }) {
             </div>
             <div
               css={css`
-                transform: translate(100%, 3px);
+                transform: translate(300%, -5px);
               `}
             >
-              <Image src={logo} alt="logo" width={50} height={70} />
+              <Image src={logo} alt="logo" width={30} height={40} />
             </div>
           </div>
-
-          <nav
-            className={active ? "main-navigation active" : "main-navigation"}
+          <div
+            css={css`
+              display: flex;
+              align-items: center;
+            `}
           >
-            <a href="#">{isLogin ? "마이페이지" : "로그인"}</a>
-            <a href="#">투자리스트</a>
-            <a href="#">투자신청</a>
-            <a href="#">자주하는질문</a>
-          </nav>
-          <button className="more-btn" onClick={toggleHandler}>
-            <FontAwesomeIcon
-              className="icon"
-              icon={!active ? faBars : faTimes}
+            {isLogin ? (
+              <div className="navicon">
+                <FontAwesomeIcon
+                  icon={faBell}
+                  css={css`
+                    width: 19px;
+                    color: ${theme.colors.txtMainColor};
+                  `}
+                />
+                <FontAwesomeIcon
+                  icon={faCircle}
+                  css={css`
+                    width: 7px;
+                    color: ${theme.colors.failColor};
+                    transform: translate(-6px, -12px);
+                  `}
+                />
+              </div>
+            ) : (
+              <div>
+                <FontAwesomeIcon icon={faUser} />
+              </div>
+            )}
+            <nav
+              className={active ? "main-navigation active" : "main-navigation"}
+            >
+              <a href="#">{isLogin ? "마이페이지" : "로그인"}</a>
+              <a href="#">투자리스트</a>
+              <a href="#">투자신청</a>
+              <a href="#">자주하는질문</a>
+            </nav>
+            <button
+              className="more-btn"
+              onClick={toggleHandler}
               css={css`
-                width: 24px;
-                color: ${theme.colors.txtMainColor};
-                &:hover {
-                  cursor: pointer;
-                }
+                margin-left: 1rem;
               `}
-            />
-          </button>
+            >
+              <FontAwesomeIcon
+                className="icon"
+                icon={!active ? faBars : faTimes}
+                css={css`
+                  width: 24px;
+                  color: ${theme.colors.txtMainColor};
+                  &:hover {
+                    cursor: pointer;
+                  }
+                `}
+              />
+            </button>
+          </div>
         </div>
       </Header>
       <main>{children}</main>
@@ -138,16 +145,12 @@ const Header = styled.header`
 
   .navicon {
     display: flex;
-    justify-content: center;
     align-items: flex-end;
     margin: 0;
     z-index: 3;
     &:hover {
       cursor: pointer;
     }
-  }
-  h1 {
-    margin: 0;
   }
 
   a {
