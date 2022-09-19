@@ -29,8 +29,8 @@ function Navbar({ children }: { children: React.ReactNode }) {
       <Header
         theme={theme}
         css={css`
-          background-color: ${theme.colors.cardItemBgColor};
-          color: ${theme.colors.txtMainColor};
+          background-color: ${theme.color.background.card};
+          color: ${theme.color.text.main};
         `}
       >
         <div className="container">
@@ -45,7 +45,7 @@ function Navbar({ children }: { children: React.ReactNode }) {
             >
               <span
                 css={css`
-                  color: ${theme.colors.mainColor};
+                  color: ${theme.color.background.main};
                 `}
               >
                 uniq
@@ -72,14 +72,14 @@ function Navbar({ children }: { children: React.ReactNode }) {
                   icon={faBell}
                   css={css`
                     width: 19px;
-                    color: ${theme.colors.txtMainColor};
+                    color: ${theme.color.text.main};
                   `}
                 />
                 <FontAwesomeIcon
                   icon={faCircle}
                   css={css`
                     width: 7px;
-                    color: ${theme.colors.failColor};
+                    color: ${theme.color.status.fail};
                     transform: translate(-6px, -12px);
                   `}
                 />
@@ -109,7 +109,7 @@ function Navbar({ children }: { children: React.ReactNode }) {
                 icon={!active ? faBars : faTimes}
                 css={css`
                   width: 24px;
-                  color: ${theme.colors.txtMainColor};
+                  color: ${theme.color.text.main};
                   &:hover {
                     cursor: pointer;
                   }
@@ -157,7 +157,7 @@ const Header = styled.header`
     font-size: 16px;
     text-decoration: none;
     &:hover {
-      color: ${(props) => props.theme.colors.txtSubColor};
+      color: ${(props) => props.theme.color.text.sub};
     }
   }
 
@@ -196,7 +196,7 @@ const Header = styled.header`
       padding: 80px 20px;
       width: 100%;
       height: 100vh;
-      background-color: ${(props) => props.theme.colors.cardItemBgColor};
+      background-color: ${(props) => props.theme.color.background.card};
       opacity: 0;
       visibility: hidden;
       transform: translateX(100%);
