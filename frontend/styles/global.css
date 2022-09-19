@@ -48,7 +48,7 @@ a {
 }
 
 code {
-  background: #fafafa;
+  background: var(--ink800);
   border-radius: 5px;
   padding: 0.75rem;
   font-size: 1.1rem;

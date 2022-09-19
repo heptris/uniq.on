@@ -1,51 +1,63 @@
-import Head from 'next/head'
-import Image from 'next/image'
+import Head from "next/head";
+import Image from "next/image";
 
-import styles from '@/pages/index.module.css'
+import styles from "@/pages/index.module.css";
+
+import Button from "@/components/Button";
+import Text from "@/components/Text";
+import Container from "@/components/Container";
+import Grid from "@/components/Grid";
 
 export default function Home() {
   return (
-    <div className={styles.container}>
+    <Container>
       <Head>
         <title>Create Next App</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <main>
-        <h1 className={styles.title}>
+        <Text as="h1" className={styles.title}>
           Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
+        </Text>
 
-        <p className={styles.description}>
+        <Text as="p" className={styles.description}>
           Get started by editing <code>pages/index.js</code>
-        </p>
+        </Text>
+        <Button type={"blue"}>상세 페이지 이동</Button>
 
-        <div className={styles.grid}>
+        <Grid>
           <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
+            <Text as="h3">Documentation &rarr;</Text>
+            <Text as="p">
+              Find in-depth information about Next.js features and API.
+            </Text>
           </a>
 
           <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
+            <Text as="h3">Learn &rarr;</Text>
+            <Text as="p">
+              Learn about Next.js in an interactive course with quizzes!
+            </Text>
           </a>
 
           <a
             href="https://github.com/vercel/next.js/tree/canary/examples"
             className={styles.card}
           >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
+            <Text as="h3">Examples &rarr;</Text>
+            <Text as="p">
+              Discover and deploy boilerplate example Next.js projects.
+            </Text>
           </a>
 
           <a href="https://vercel.com/new" className={styles.card}>
-            <h3>Deploy &rarr;</h3>
-            <p>
+            <Text as="h3">Deploy &rarr;</Text>
+            <Text as="p">
               Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
+            </Text>
           </a>
-        </div>
+        </Grid>
       </main>
 
       <footer className={styles.footer}>
@@ -54,12 +66,12 @@ export default function Home() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Powered by{' '}
+          Powered by{" "}
           <span className={styles.logo}>
             <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
           </span>
         </a>
       </footer>
-    </div>
-  )
+    </Container>
+  );
 }
