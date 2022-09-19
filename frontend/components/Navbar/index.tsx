@@ -15,15 +15,11 @@ import styled from "@emotion/styled";
 import Image from "next/image";
 import logo from "assets/logo.png";
 import React, { useState } from "react";
-export type HeaderType = {
-  isToggled: boolean;
-};
+
 function Navbar({ children }: { children: React.ReactNode }) {
-  const [isToggled, setIsToggled] = useState(false);
   const [isLogin, setIsLogin] = useState(true);
   const [active, setActive] = useState(false);
   const toggleHandler = () => {
-    setIsToggled(!isToggled);
     setActive(!active);
   };
 
@@ -104,7 +100,7 @@ function Navbar({ children }: { children: React.ReactNode }) {
           <button className="more-btn" onClick={toggleHandler}>
             <FontAwesomeIcon
               className="icon"
-              icon={!isToggled ? faBars : faTimes}
+              icon={!active ? faBars : faTimes}
               css={css`
                 width: 24px;
                 color: ${theme.colors.txtMainColor};
