@@ -1,7 +1,12 @@
-/**
- * @params
- * @return
- */
+import React, {
+  ComponentPropsWithoutRef,
+  forwardRef,
+  Ref,
+  useState,
+} from "react";
+import Image from "next/image";
+import logo from "assets/logo.png";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBars,
@@ -12,11 +17,15 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { css, useTheme } from "@emotion/react";
 import styled from "@emotion/styled";
-import Image from "next/image";
-import logo from "assets/logo.png";
-import React, { useState } from "react";
 
-function Navbar({ children }: { children: React.ReactNode }) {
+/**
+ * @params
+ * @return `HTMLHeaderElement`
+ */
+function Navbar(
+  { ...props }: ComponentPropsWithoutRef<"header">,
+  ref: Ref<any>
+) {
   const [isLogin, setIsLogin] = useState(true);
   const [active, setActive] = useState(false);
   const toggleHandler = () => {
@@ -25,112 +34,113 @@ function Navbar({ children }: { children: React.ReactNode }) {
 
   const theme = useTheme();
   return (
-    <>
-      <Header
-        theme={theme}
-        css={css`
-          background-color: ${theme.color.background.card};
-          color: ${theme.color.text.main};
-        `}
-      >
-        <div className="container">
-          <div className="navicon">
-            <div
+    <Header theme={theme} ref={ref} {...props}>
+      <div className="container">
+        <div className="nav-icon">
+          <div
+            css={css`
+              margin-bottom: 5px;
+              font-weight: bold;
+              font-size: 27px;
+              position: absolute;
+            `}
+          >
+            <span
               css={css`
-                margin-bottom: 5px;
-                font-weight: bold;
-                font-size: 27px;
-                position: absolute;
+                color: ${theme.color.background.main};
               `}
             >
-              <span
-                css={css`
-                  color: ${theme.color.background.main};
-                `}
-              >
-                uniq
-              </span>
-              .on
-            </div>
-            <div
-              css={css`
-                transform: translate(300%, -5px);
-              `}
-            >
-              <Image src={logo} alt="logo" width={30} height={40} />
-            </div>
+              uniq
+            </span>
+            .on
           </div>
           <div
             css={css`
-              display: flex;
-              align-items: center;
+              transform: translate(300%, -5px);
             `}
           >
-            {isLogin ? (
-              <div className="navicon">
-                <FontAwesomeIcon
-                  icon={faBell}
-                  css={css`
-                    width: 19px;
-                    color: ${theme.color.text.main};
-                  `}
-                />
-                <FontAwesomeIcon
-                  icon={faCircle}
-                  css={css`
-                    width: 7px;
-                    color: ${theme.color.status.fail};
-                    transform: translate(-6px, -12px);
-                  `}
-                />
-              </div>
-            ) : (
-              <div>
-                <FontAwesomeIcon icon={faUser} />
-              </div>
-            )}
-            <nav
-              className={active ? "main-navigation active" : "main-navigation"}
-            >
-              <a href="#">{isLogin ? "마이페이지" : "로그인"}</a>
-              <a href="#">투자리스트</a>
-              <a href="#">투자신청</a>
-              <a href="#">자주하는질문</a>
-            </nav>
-            <button
-              className="more-btn"
-              onClick={toggleHandler}
+            <Image src={logo} alt="logo" width={30} height={40} />
+          </div>
+        </div>
+        <div
+          css={css`
+            display: flex;
+            align-items: center;
+          `}
+        >
+          <nav
+            className={active ? "main-navigation active" : "main-navigation"}
+          >
+            <a href="#">{isLogin ? "마이페이지" : "로그인"}</a>
+            <a href="#">투자리스트</a>
+            <a href="#">투자신청</a>
+            <a href="#">자주하는질문</a>
+          </nav>
+          {isLogin ? (
+            <div
+              className="nav-icon"
               css={css`
-                margin-left: 1rem;
+                padding-left: 50px;
               `}
             >
               <FontAwesomeIcon
-                className="icon"
-                icon={!active ? faBars : faTimes}
+                icon={faBell}
                 css={css`
-                  width: 24px;
+                  width: 19px;
                   color: ${theme.color.text.main};
                   &:hover {
-                    cursor: pointer;
+                    color: ${theme.color.text.hover};
                   }
                 `}
               />
-            </button>
-          </div>
+              <FontAwesomeIcon
+                icon={faCircle}
+                css={css`
+                  width: 7px;
+                  color: ${theme.color.status.fail};
+                  transform: translate(-6px, -12px);
+                `}
+              />
+            </div>
+          ) : (
+            <div>
+              <FontAwesomeIcon icon={faUser} />
+            </div>
+          )}
+          <button
+            className="more-btn"
+            onClick={toggleHandler}
+            css={css`
+              margin-left: 1rem;
+            `}
+          >
+            <FontAwesomeIcon
+              className="icon"
+              icon={!active ? faBars : faTimes}
+              css={css`
+                width: 24px;
+                color: ${theme.color.text.main};
+                &:hover {
+                  cursor: pointer;
+                }
+              `}
+            />
+          </button>
         </div>
-      </Header>
-      <main>{children}</main>
-    </>
+      </div>
+    </Header>
   );
 }
 
 const Header = styled.header`
+  background-color: ${({ theme }) => theme.color.background.card};
+  color: ${({ theme }) => theme.color.text.main};
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 80px;
-  padding: 20px 0;
+  padding: 20px 10px;
   z-index: 3;
 
   .container {
@@ -143,21 +153,22 @@ const Header = styled.header`
     position: relative;
   }
 
-  .navicon {
+  .nav-icon {
     display: flex;
     align-items: flex-end;
     margin: 0;
     z-index: 3;
     &:hover {
       cursor: pointer;
+      color: ${({ theme }) => theme.color.text.hover};
     }
   }
 
   a {
-    font-size: 16px;
+    font-size: 18px;
     text-decoration: none;
     &:hover {
-      color: ${(props) => props.theme.color.text.sub};
+      color: ${({ theme }) => theme.color.text.hover};
     }
   }
 
@@ -166,7 +177,7 @@ const Header = styled.header`
   }
 
   .main-navigation a {
-    margin-left: 20px;
+    margin-left: 50px;
   }
 
   .main-navigation a.active {
@@ -182,13 +193,6 @@ const Header = styled.header`
     padding: 0;
     height: 80px;
 
-    h1 {
-      display: flex;
-    }
-    h1 img {
-      top: 20px;
-      height: 16px;
-    }
     .main-navigation {
       position: fixed;
       top: 0;
@@ -236,10 +240,14 @@ const Header = styled.header`
       width: 24px;
       height: 24px;
       margin: 0 auto;
+      &:hover {
+        color: ${({ theme }) => theme.color.text.hover};
+      }
     }
   }
 
   @media screen and(max-width:480px) {
   }
 `;
-export default Navbar;
+
+export default forwardRef(Navbar) as typeof Navbar;
