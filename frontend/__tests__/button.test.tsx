@@ -2,7 +2,7 @@ import { getByTestId, render } from "@testing-library/react";
 import { matchers } from "@emotion/jest";
 
 import MyApp from "../__fixtures__/_app";
-// import { darkTheme } from "../__fixtures__/theme";
+import { uniqonThemes } from "@/styles/theme";
 import Button from "@/components/Button";
 
 expect.extend(matchers);
@@ -32,7 +32,7 @@ describe("Button", () => {
     expect(button).toHaveTextContent("Invite");
   });
 
-  it("renders a button can receive props", () => {
+  it("renders a button can receive HTMLButtonElement props", () => {
     const { container } = render(
       <MyApp>
         <Button
@@ -50,30 +50,28 @@ describe("Button", () => {
     `);
   });
 
-  // it("renders a button can change its size", () => {
-  //   const { container } = render(
-  //     <MyApp>
-  //       <Button data-testid="btn" size={"full"}>
-  //         test
-  //       </Button>
-  //     </MyApp>
-  //   );
-  //   const button = screen.getByText("test");
+  it("renders a button can change its size", () => {
+    const { container } = render(
+      <MyApp>
+        <Button data-testid="btn" size={"full"} />
+      </MyApp>
+    );
+    const button = getByTestId(container, "btn");
 
-  //   expect(button).toHaveStyleRule("border", "0");
-  // });
+    expect(button).toHaveStyleRule("border", "0");
+  });
 
-  // it("renders a button can change its type", () => {
-  //   const { container } = render(
-  //     <MyApp>
-  //       <Button data-testid="btn" size={"fit"} type={"purple"} />
-  //     </MyApp>
-  //   );
-  //   const button = getByTestId(container, "btn");
+  it("renders a button can change its type", () => {
+    const { container } = render(
+      <MyApp>
+        <Button data-testid="btn" size={"fit"} type={"purple"} />
+      </MyApp>
+    );
+    const button = getByTestId(container, "btn");
 
-  //   expect(button).toHaveStyleRule(
-  //     "background-color",
-  //     darkTheme.color.background.main
-  //   );
-  // });
+    expect(button).toHaveStyleRule(
+      "background-color",
+      uniqonThemes.darkTheme.color.background.main
+    );
+  });
 });
