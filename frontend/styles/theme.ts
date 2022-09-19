@@ -13,6 +13,7 @@ export interface UniqonTheme {
     text: {
       main: string;
       sub: string;
+      hover: string;
     };
     status: {
       success: string;
@@ -34,6 +35,7 @@ const darkTheme: UniqonTheme = {
     text: {
       main: "var(--white)",
       sub: "var(--ink600)",
+      hover: 'var(--ink200)',
     },
     status: {
       success: "var(--vividGreen)",
