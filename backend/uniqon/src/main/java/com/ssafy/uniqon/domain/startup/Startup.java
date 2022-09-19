@@ -86,4 +86,17 @@ public class Startup extends BaseEntity {
     public void changeRoadMap(String roadMap){
         this.roadMap = roadMap;
     }
+
+    public void investCountIncrement() {
+        this.investCount += 1;
+    }
+
+    public void changeCurTotalPrice() {
+        this.curTotalPrice += this.pricePerNft;
+    }
+
+    public void changeIsGoal() {
+        this.isGoal = Boolean.TRUE;
+    }
+
 }

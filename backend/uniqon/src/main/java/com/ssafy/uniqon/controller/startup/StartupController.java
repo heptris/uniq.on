@@ -25,7 +25,7 @@ public class StartupController {
     public ResponseEntity startupRegist(@RequestPart StartupRequestDto startupRequestDto,
                                         @RequestPart(value = "business_plan", required = false) MultipartFile business_plan,
                                         @RequestPart(value = "nft_image", required = false) MultipartFile nft_image,
-                                        @RequestPart(value = "project_pdf", required = false) MultipartFile road_map) {
+                                        @RequestPart(value = "road_map", required = false) MultipartFile road_map) {
         Long memberId = SecurityUtil.getCurrentMemberId();
         startupService.investRegist(memberId, startupRequestDto, business_plan, nft_image, road_map);
         return ResponseEntity.status(HttpStatus.CREATED).body(

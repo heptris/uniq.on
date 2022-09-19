@@ -20,15 +20,15 @@ class CommunityCommentServiceTest {
     @Autowired
     private CommunityCommentRepository communityCommentRepository;
 
-    @Test
-    public void 댓글등록(){
-        CommunityCommentRequestDto requestDto = CommunityCommentRequestDto.builder()
-                .content("댓글 등록 Test")
-                .build();
-        communityCommentService.commentWrite(1L, requestDto);
-
-        assertThat(communityCommentRepository.findById(2L).get().getContent()).isEqualTo("댓글 등록 Test");
-    }
+//    @Test
+//    public void 댓글등록(){
+//        CommunityCommentRequestDto requestDto = CommunityCommentRequestDto.builder()
+//                .content("댓글 등록 Test")
+//                .build();
+//        communityCommentService.commentWrite(1L, requestDto);
+//
+//        assertThat(communityCommentRepository.findById(2L).get().getContent()).isEqualTo("댓글 등록 Test");
+//    }
 
     @Test
     public void 댓글수정(){

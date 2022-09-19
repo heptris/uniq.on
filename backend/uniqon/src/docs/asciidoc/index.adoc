@@ -1,0 +1,15 @@
+= REST Docs 문서 만들기 (글의 제목)
+backtony.github.io(부제)
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left // toc (Table Of Contents)를 문서의 좌측에 두기
+:toclevels: 2
+:sectlinks:
+
+[[Startup-API]]
+== Startup API
+
+[[Startup-상세-조회]]
+=== Startup 상세 조회
+operation::startup-controller-test/스타트업_상세_정보[snippets='http-request,path-parameters,http-response,response-fields']

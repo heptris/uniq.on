@@ -29,27 +29,27 @@ class StartupCommunityServiceTest {
         assertThat(communityList.get(0).getCommentsCount()).isEqualTo(3);
     }
 
-    @Test
-    public void 글등록(){
-        StartupCommunityRequestDto requestDto = StartupCommunityRequestDto.builder()
-                .title("글 등록 Title Test")
-                .content("글 등록 Content Test")
-                .build();
-        startupCommunityService.communityWrite(1L, requestDto);
+//    @Test
+//    public void 글등록(){
+//        StartupCommunityRequestDto requestDto = StartupCommunityRequestDto.builder()
+//                .title("글 등록 Title Test")
+//                .content("글 등록 Content Test")
+//                .build();
+//        startupCommunityService.communityWrite(1L, requestDto);
+//
+//        assertThat(startupCommunityService.communityList(1L).get(1).getTitle()).isEqualTo("글 등록 Title Test");
+//    }
 
-        assertThat(startupCommunityService.communityList(1L).get(1).getTitle()).isEqualTo("글 등록 Title Test");
-    }
-
-    @Test
-    public void 글수정(){
-        StartupCommunityRequestModifyDto requestDto = StartupCommunityRequestModifyDto.builder()
-                .title("글 수정 Title Test")
-                .content("글 수정 Content Test")
-                .build();
-        startupCommunityService.communityModify(1L, 1L, requestDto);
-
-        assertThat(startupCommunityService.communityList(1L).get(0).getTitle()).isEqualTo("글 수정 Title Test");
-    }
+//    @Test
+//    public void 글수정(){
+//        StartupCommunityRequestModifyDto requestDto = StartupCommunityRequestModifyDto.builder()
+//                .title("글 수정 Title Test")
+//                .content("글 수정 Content Test")
+//                .build();
+//        startupCommunityService.communityModify(1L, 1L, requestDto);
+//
+//        assertThat(startupCommunityService.communityList(1L).get(0).getTitle()).isEqualTo("글 수정 Title Test");
+//    }
 
     @Test
     public void 글삭제(){

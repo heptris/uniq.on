@@ -73,8 +73,6 @@ public class StartupService {
                 .pricePerNft(startupRequestDto.getGoalPrice() / startupRequestDto.getNftCount())
                 .build();
 
-
-
         Startup savedStartup = startupRepository.save(startup);
         AwsS3 awsS3 = new AwsS3();
         if (business_plan != null) {

@@ -1,5 +1,6 @@
 package com.ssafy.uniqon.dto.startup;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.ssafy.uniqon.domain.startup.Startup;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -21,6 +22,7 @@ public class StartupDetailResponseDto {
     private Integer nftCount; // 발행 개수
     private Double goalRate; // 달성률
     private Double pricePerNft; // 발행가
+    @JsonFormat(pattern = "yyyy-MM-dd HH")
     private LocalDateTime endDate;
 
     // 사업계획서
