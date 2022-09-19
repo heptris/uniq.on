@@ -1,7 +1,8 @@
 import { ElementType, Ref, forwardRef } from "react";
 import { ButtonProps } from "@/types/props";
 
-import { css } from "@emotion/react";
+import { css, useTheme } from "@emotion/react";
+import { cssConvex } from "@/styles/utils";
 
 /**
  * @params
@@ -14,19 +15,24 @@ function Button<T extends ElementType = "button">(
   const target = as ?? "button";
   const Component = target;
 
+  const theme = useTheme();
+
   return (
     <Component
-      css={css({
-        backgroundColor: "#2258ed",
-        border: "0",
-        borderRadius: "8px",
-        padding: "0.5rem 1rem",
-        color: "#fff",
-        ":hover": {
-          cursor: "pointer",
-          backgroundColor: "#1e4cc1",
-        },
-      })}
+      css={css`
+        background-color: ${theme.colors.emphasisColor};
+        border: 0;
+        border-radius: 8px;
+        padding: 0.8rem 1.2rem;
+        color: ${theme.colors.txtMainColor};
+        font-weight: bold;
+        ${cssConvex}
+
+        &:hover {
+          cursor: pointer;
+          background-color: #1e4cc1;
+        }
+      `}
       ref={ref}
       {...props}
     />
