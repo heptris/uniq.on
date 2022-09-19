@@ -1,6 +1,6 @@
 import { UniqonTheme } from "@/styles/theme";
 
-export const darkTheme: UniqonTheme = {
+const darkTheme = {
   name: "DarkTheme",
   color: {
     background: {
