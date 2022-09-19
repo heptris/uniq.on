@@ -1,12 +1,12 @@
 import { ElementType, forwardRef, Ref } from "react";
-import { AlertProps } from "@/types/props";
+import { CardProps } from "@/types/props";
 
 /**
  * @params
  * @return
  */
-function Alert<T extends ElementType = "div">(
-  { as, ...props }: AlertProps<T>,
+function Card<T extends ElementType = "div">(
+  { as, ...props }: CardProps<T>,
   ref: Ref<any>
 ) {
   const target = as ?? "div";
@@ -15,4 +15,4 @@ function Alert<T extends ElementType = "div">(
   return <Component ref={ref} {...props} />;
 }
 
-export default forwardRef(Alert) as typeof Alert;
+export default forwardRef(Card) as typeof Card;

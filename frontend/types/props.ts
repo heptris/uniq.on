@@ -19,3 +19,33 @@ export type ButtonProps<T extends ElementType> = OverridableProps<
   T,
   ButtonBaseProps
 >;
+
+export type ContainerBaseProps = {};
+export type ContainerProps<T extends ElementType> = OverridableProps<
+  T,
+  ContainerBaseProps
+>;
+
+export type GridBaseProps = {};
+export type GridProps<T extends ElementType> = OverridableProps<
+  T,
+  GridBaseProps
+>;
+
+export type CardBaseProps = {};
+export type CardProps<T extends ElementType> = OverridableProps<
+  T,
+  CardBaseProps
+>;
+
+export type AvatarBaseProps = {};
+export type AvatarProps<T extends ElementType> = OverridableProps<
+  T,
+  AvatarBaseProps
+>;
+
+export type AlertBaseProps = {};
+export type AlertProps<T extends ElementType> = OverridableProps<
+  T,
+  AlertBaseProps
+>;
