@@ -133,7 +133,7 @@ function Navbar(
 }
 
 const Header = styled.header`
-  background-color: ${({ theme }) => theme.color.background.card};
+  background-color: ${({ theme }) => theme.color.background.page};
   color: ${({ theme }) => theme.color.text.main};
   position: fixed;
   top: 0;
@@ -142,6 +142,7 @@ const Header = styled.header`
   height: 80px;
   padding: 20px 10px;
   z-index: 3;
+  border-bottom: 1px solid ${({ theme }) => theme.color.background.item};
 
   .container {
     display: flex;
@@ -167,6 +168,7 @@ const Header = styled.header`
   a {
     font-size: 18px;
     text-decoration: none;
+    font-weight: 500;
     &:hover {
       color: ${({ theme }) => theme.color.text.hover};
     }
