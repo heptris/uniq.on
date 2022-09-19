@@ -1,13 +1,15 @@
 import { ElementType, forwardRef, Ref } from "react";
 import { GridProps } from "@/types/props";
-import { css } from "@emotion/react";
+
+import { css } from "@emotion/css";
 
 /**
  * @params
- * @return
+ * `column`: `mono` | `double`
+ * @return `HTMLDivElement`
  */
 function Grid<T extends ElementType = "div">(
-  { as, ...props }: GridProps<T>,
+  { column = "mono", as, ...props }: GridProps<T>,
   ref: Ref<any>
 ) {
   const target = as ?? "div";
@@ -15,18 +17,22 @@ function Grid<T extends ElementType = "div">(
 
   return (
     <Component
-      css={css`
+      className={css`
         display: flex;
         align-items: center;
         justify-content: center;
         flex-wrap: wrap;
 
         max-width: 800px;
-        margin-top: 3rem;
 
         @media (max-width: 600px) {
           width: 100%;
           flex-direction: column;
+          ${column === "double" &&
+          `
+            display: grid;
+            grid-template-columns: repeat(2, 50%);
+          `}
         }
       `}
       ref={ref}
