@@ -11,7 +11,10 @@ export type TextProps<T extends ElementType> = OverridableProps<
   TextBaseProps
 >;
 
-export type ButtonBaseProps = {};
+export type ButtonBaseProps = {
+  size?: "fit" | "full";
+  type?: "purple" | "blue";
+};
 export type ButtonProps<T extends ElementType> = OverridableProps<
   T,
   ButtonBaseProps

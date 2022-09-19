@@ -2,14 +2,17 @@ import { ElementType, Ref, forwardRef } from "react";
 import { ButtonProps } from "@/types/props";
 
 import { css, useTheme } from "@emotion/react";
-import { cssConvex } from "@/styles/utils";
+import { cssFontFamily, cssConvex } from "@/styles/utils";
 
 /**
  * @params
- * @return
+ * `size`: `fit` | `full`
+ *
+ * `type`: `purple` | `blue`
+ * @return `HTMLButtonElement`
  */
 function Button<T extends ElementType = "button">(
-  { as, ...props }: ButtonProps<T>,
+  { size = "fit", type = "purple", as, ...props }: ButtonProps<T>,
   ref: Ref<any>
 ) {
   const target = as ?? "button";
@@ -20,17 +23,31 @@ function Button<T extends ElementType = "button">(
   return (
     <Component
       css={css`
-        background-color: ${theme.colors.emphasisColor};
+        background-color: ${type === "purple"
+          ? theme.color.background.main
+          : theme.color.background.emphasis};
         border: 0;
         border-radius: 8px;
         padding: 0.8rem 1.2rem;
-        color: ${theme.colors.txtMainColor};
-        font-weight: bold;
+        color: ${theme.color.text.main};
+        font-weight: 500;
+        font-size: 0.875rem;
+        width: ${size === "full" ? "100%" : "fit-content"};
+        transition: background-color 0.3s ease 0s, color 0.3s ease 0s,
+          transform 0.3s ease 0s, box-shadow 0.3s ease 0s;
+        ${cssFontFamily}
         ${cssConvex}
 
         &:hover {
           cursor: pointer;
-          background-color: #1e4cc1;
+          background-color: ${type === "purple"
+            ? "var(--purple500)"
+            : "var(--blue900)"};
+        }
+        &:active {
+          background-color: ${type === "purple"
+            ? "var(--purple500)"
+            : "var(--blue900)"};
         }
       `}
       ref={ref}
