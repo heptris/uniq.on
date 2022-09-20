@@ -22,7 +22,6 @@ export default function Home() {
         <Text as="h1">
           Welcome to <a href="https://nextjs.org">Next.js!</a>
         </Text>
-        <SelectTab />
         <Text as="p">
           Get started by editing <code>pages/index.js</code>
         </Text>
