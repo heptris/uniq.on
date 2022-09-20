@@ -25,7 +25,6 @@ function Container<T extends ElementType = "section">(
         padding: 0 0.5rem;
         display: flex;
         flex-direction: column;
-        justify-content: center;
         align-items: center;
       `}
       ref={ref}
