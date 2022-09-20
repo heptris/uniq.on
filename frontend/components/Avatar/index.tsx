@@ -7,15 +7,16 @@ import { css } from "@emotion/css";
 
 /**
  * @params
- * `imagePath`: `string`
+ * `image`: `string` | `StaticImageData`
  *
  * `outline`: `boolean`
  * @return `ReactElement`
  */
 function Avatar<T extends ElementType = "div">(
-  { imagePath, outline = true, as, ...props }: AvatarProps<T>,
+  props: AvatarProps<T>,
   ref: Ref<any>
 ) {
+  const { image, outline = true, as, ...rest } = props;
   const target = as ?? "div";
   const Component = target;
 
@@ -34,9 +35,9 @@ function Avatar<T extends ElementType = "div">(
         filter: drop-shadow(0 0 10px ${theme.color.background.item});
       `}
       ref={ref}
-      {...props}
+      {...rest}
     >
-      <Image src={imagePath} />
+      <Image src={image} />
     </Component>
   );
 }
