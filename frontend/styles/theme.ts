@@ -20,6 +20,9 @@ export interface UniqonTheme {
       fail: string;
       disabled: string;
     };
+    border: {
+      main: string;
+    };
   };
 }
 const darkTheme: UniqonTheme = {
@@ -35,12 +38,15 @@ const darkTheme: UniqonTheme = {
     text: {
       main: "var(--white)",
       sub: "var(--ink600)",
-      hover: 'var(--ink200)',
+      hover: "var(--ink200)",
     },
     status: {
       success: "var(--vividGreen)",
       fail: "var(--vividPink)",
       disabled: "var(--ink500)",
+    },
+    border: {
+      main: "var(--ink600)",
     },
   },
 };
