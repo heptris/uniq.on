@@ -9,6 +9,11 @@ const createJestConfig = nextJest({
 const customJestConfig = {
   setupFilesAfterEnv: ["<rootDir>/jest.setup.ts"],
   moduleNameMapper: {
+    // Handling Static Assets
+    "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$":
+      "<rootDir>/__mocks__/fileMock.js",
+    "\\.(css|less)$": "<rootDir>/__mocks__/styleMock.js",
+
     // Handle module aliases (this will be automatically configured for you soon)
     "^@/api/(.*)$": "<rootDir>/api/$1",
     "^@/components/(.*)$": "<rootDir>/components/$1",
