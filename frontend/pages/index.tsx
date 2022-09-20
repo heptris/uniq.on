@@ -7,6 +7,7 @@ import Container from "@/components/Container";
 import Grid from "@/components/Grid";
 import Navbar from "@/components/Navbar";
 import Card from "@/components/Card";
+import SelectTab from "@/components/SelectTab";
 
 export default function Home() {
   return (
@@ -21,7 +22,7 @@ export default function Home() {
         <Text as="h1">
           Welcome to <a href="https://nextjs.org">Next.js!</a>
         </Text>
-
+        <SelectTab />
         <Text as="p">
           Get started by editing <code>pages/index.js</code>
         </Text>
