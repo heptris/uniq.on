@@ -21,7 +21,7 @@ public class InvestHistoryRepositoryImpl implements InvestHistoryRepositoryCusto
     @Override
     public List<Invest_history> findByInvestingInvestHistoryList(Long startupId) {
         List<Invest_history> investHistoryList = queryFactory.selectFrom(invest_history)
-                .where(invest_history.investStatus.eq(InvestStatus.INVESTING).and(invest_history.id.eq(startupId)))
+                .where(invest_history.investStatus.eq(InvestStatus.INVESTING).and(invest_history.startup.id.eq(startupId)))
                 .fetch();
         return investHistoryList;
     }

@@ -26,5 +26,5 @@ public class Alarm extends BaseEntity {
 
     private String content;
 
-    private boolean isRead;
+    private Boolean isRead;
 }

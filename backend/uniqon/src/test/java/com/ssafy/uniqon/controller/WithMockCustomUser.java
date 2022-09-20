@@ -1,0 +1,17 @@
+package com.ssafy.uniqon.controller;
+
+import com.ssafy.uniqon.domain.member.MemberType;
+import org.springframework.security.test.context.support.WithSecurityContext;
+
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+
+@Retention(RetentionPolicy.RUNTIME)
+@WithSecurityContext(factory = WithMockCustomUserSecurityContextFactory.class)
+public @interface WithMockCustomUser {
+
+    String username() default "1";
+
+    String grade() default "ADMIN";
+
+}

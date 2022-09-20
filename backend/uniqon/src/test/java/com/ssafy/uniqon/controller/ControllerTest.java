@@ -19,7 +19,4 @@ public abstract class ControllerTest {
 
     @Autowired protected MockMvc mockMvc;
 
-    protected String createJson(Object dto) throws JsonProcessingException {
-        return objectMapper.writeValueAsString(dto);
-    }
 }

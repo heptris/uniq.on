@@ -4,7 +4,11 @@ import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import com.ssafy.uniqon.domain.invest.InvestStatus;
+import com.ssafy.uniqon.domain.invest.QInvest_history;
+import com.ssafy.uniqon.domain.member.QMember;
 import com.ssafy.uniqon.domain.startup.QStartup;
+import com.ssafy.uniqon.domain.startup.Startup;
 import com.ssafy.uniqon.dto.startup.StartupResponseListDto;
 import com.ssafy.uniqon.dto.startup.StartupSearchCondition;
 import org.springframework.data.domain.Page;
@@ -13,7 +17,9 @@ import org.springframework.data.domain.Pageable;
 
 import javax.persistence.EntityManager;
 import java.util.List;
+import java.util.stream.Collectors;
 
+import static com.ssafy.uniqon.domain.invest.QInvest_history.*;
 import static com.ssafy.uniqon.domain.startup.QStartup.startup;
 
 public class StartupRepositoryImpl implements StartupRepositoryCustom{
@@ -47,6 +53,14 @@ public class StartupRepositoryImpl implements StartupRepositoryCustom{
                 .fetchCount();
 
         return new PageImpl<>(contents, pageable, total);
+    }
+
+    @Override
+    public List<Startup> findByInvestingStartupList() {
+        return queryFactory.selectFrom(startup)
+                .innerJoin(startup.investHistoryList, invest_history)
+                .where(invest_history.investStatus.eq(InvestStatus.INVESTING))
+                .fetch().stream().distinct().collect(Collectors.toList());
     }
 
 
