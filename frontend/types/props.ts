@@ -26,7 +26,9 @@ export type ContainerProps<T extends ElementType> = OverridableProps<
   ContainerBaseProps
 >;
 
-export type GridBaseProps = {};
+export type GridBaseProps = {
+  column?: "mono" | "double";
+};
 export type GridProps<T extends ElementType> = OverridableProps<
   T,
   GridBaseProps
