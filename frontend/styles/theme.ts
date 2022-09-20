@@ -10,6 +10,10 @@ export interface UniqonTheme {
       card: string;
       item: string;
     };
+    hover: {
+      main: string;
+      emphasis: string;
+    };
     text: {
       main: string;
       sub: string;
@@ -35,9 +39,13 @@ const darkTheme: UniqonTheme = {
       card: "var(--ink800)",
       item: "var(--ink700)",
     },
+    hover: {
+      main: "var(--purple500)",
+      emphasis: "var(--blue900)",
+    },
     text: {
       main: "var(--white)",
-      sub: "var(--ink600)",
+      sub: "var(--ink300)",
       hover: "var(--ink200)",
     },
     status: {
