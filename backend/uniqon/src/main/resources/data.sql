@@ -45,3 +45,17 @@ values (now(), now(), "INVESTING", 1, 1),
        (now(), now(), "INVESTING", 3, 1),
        (now(), now(), "INVESTING", 1, 2),
        (now(), now(), "INVESTING", 2, 2);
+
+insert into alarm  (created_date, last_modified_date, content, is_read, member_id)
+values (now(), now(), "예약한 펀딩이 성공했습니다 !!", false, 1),
+       (now(), now(), "예약한 펀딩이 실패했습니다 !!", false, 1),
+       (now(), now(), "예약한 펀딩이 성공했습니다 !!", false, 2),
+       (now(), now(), "예약한 펀딩이 실패했습니다 !!", true, 2),
+       (now(), now(), "예약한 펀딩이 실패했습니다 !!", false, 3),
+       (now(), now(), "예약한 펀딩이 성공했습니다 !!", false, 4),
+       (now(), now(), "SSF를 입금하시겠습니까 ?", false, 4),
+       (now(), now(), "예약한 펀딩이 성공했습니다 !!", true, 5),
+       (now(), now(), "예약한 펀딩이 실패했습니다 !!", false, 5),
+       (now(), now(), "예약한 펀딩이 성공했습니다 !!", false, 6),
+       (now(), now(), "SSF를 입금하시겠습니까 ?", true, 6),
+       (now(), now(), "입금이 완료되었습니다 !!", false, 6);
