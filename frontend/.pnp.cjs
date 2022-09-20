@@ -40,6 +40,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@emotion/react", "virtual:dc3fc578bfa5e06182a4d2be39ede0bc5b74940b1ffe0d70c26892ab140a4699787750fba175dc306292e80b4aa2c8c5f68c2a821e69b2c37e360c0dff36ff66#npm:11.10.4"],\
             ["@emotion/styled", "virtual:dc3fc578bfa5e06182a4d2be39ede0bc5b74940b1ffe0d70c26892ab140a4699787750fba175dc306292e80b4aa2c8c5f68c2a821e69b2c37e360c0dff36ff66#npm:11.10.4"],\
             ["@fortawesome/fontawesome-svg-core", "npm:6.2.0"],\
+            ["@fortawesome/free-brands-svg-icons", "npm:6.2.0"],\
             ["@fortawesome/free-solid-svg-icons", "npm:6.2.0"],\
             ["@fortawesome/react-fontawesome", "virtual:dc3fc578bfa5e06182a4d2be39ede0bc5b74940b1ffe0d70c26892ab140a4699787750fba175dc306292e80b4aa2c8c5f68c2a821e69b2c37e360c0dff36ff66#npm:0.2.0"],\
             ["@reduxjs/toolkit", "virtual:dc3fc578bfa5e06182a4d2be39ede0bc5b74940b1ffe0d70c26892ab140a4699787750fba175dc306292e80b4aa2c8c5f68c2a821e69b2c37e360c0dff36ff66#npm:1.8.5"],\
@@ -3135,6 +3136,16 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/unplugged/@fortawesome-fontawesome-svg-core-npm-6.2.0-01966a37cc/node_modules/@fortawesome/fontawesome-svg-core/",\
           "packageDependencies": [\
             ["@fortawesome/fontawesome-svg-core", "npm:6.2.0"],\
+            ["@fortawesome/fontawesome-common-types", "npm:6.2.0"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["@fortawesome/free-brands-svg-icons", [\
+        ["npm:6.2.0", {\
+          "packageLocation": "./.yarn/unplugged/@fortawesome-free-brands-svg-icons-npm-6.2.0-86f5d08ea7/node_modules/@fortawesome/free-brands-svg-icons/",\
+          "packageDependencies": [\
+            ["@fortawesome/free-brands-svg-icons", "npm:6.2.0"],\
             ["@fortawesome/fontawesome-common-types", "npm:6.2.0"]\
           ],\
           "linkType": "HARD"\
@@ -9690,6 +9701,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@emotion/react", "virtual:dc3fc578bfa5e06182a4d2be39ede0bc5b74940b1ffe0d70c26892ab140a4699787750fba175dc306292e80b4aa2c8c5f68c2a821e69b2c37e360c0dff36ff66#npm:11.10.4"],\
             ["@emotion/styled", "virtual:dc3fc578bfa5e06182a4d2be39ede0bc5b74940b1ffe0d70c26892ab140a4699787750fba175dc306292e80b4aa2c8c5f68c2a821e69b2c37e360c0dff36ff66#npm:11.10.4"],\
             ["@fortawesome/fontawesome-svg-core", "npm:6.2.0"],\
+            ["@fortawesome/free-brands-svg-icons", "npm:6.2.0"],\
             ["@fortawesome/free-solid-svg-icons", "npm:6.2.0"],\
             ["@fortawesome/react-fontawesome", "virtual:dc3fc578bfa5e06182a4d2be39ede0bc5b74940b1ffe0d70c26892ab140a4699787750fba175dc306292e80b4aa2c8c5f68c2a821e69b2c37e360c0dff36ff66#npm:0.2.0"],\
             ["@reduxjs/toolkit", "virtual:dc3fc578bfa5e06182a4d2be39ede0bc5b74940b1ffe0d70c26892ab140a4699787750fba175dc306292e80b4aa2c8c5f68c2a821e69b2c37e360c0dff36ff66#npm:1.8.5"],\
