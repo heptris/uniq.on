@@ -7,5 +7,5 @@ export const cssFontFamily = `
     "Segoe UI Symbol", sans-serif;
 `;
 export const cssConvex = `
-  box-shadow: inset -1px 1px 2px var(--whiteOpacity600), inset 1px -1px 2px var(--greyOpacity800);
+  box-shadow: inset -1px 1px 2px var(--whiteOpacity300), inset 1px -1px 2px var(--greyOpacity800);
 `;

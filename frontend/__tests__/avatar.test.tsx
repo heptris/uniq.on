@@ -9,7 +9,7 @@ import { uniqonThemes } from "@/styles/theme";
 describe("Avatar", () => {
   const { container } = render(
     <MyApp>
-      <Avatar imagePath={img as unknown as string} data-testid="avatar" />
+      <Avatar image={img} data-testid="avatar" />
     </MyApp>
   );
   const avatar = getByTestId(container, "avatar");
@@ -23,11 +23,7 @@ describe("Avatar", () => {
   it("renders a avatar change its outline", () => {
     const { container } = render(
       <MyApp>
-        <Avatar
-          imagePath={img as unknown as string}
-          outline={false}
-          data-testid="avatar"
-        />
+        <Avatar image={img} outline={false} data-testid="avatar" />
       </MyApp>
     );
     const avatar = getByTestId(container, "avatar");

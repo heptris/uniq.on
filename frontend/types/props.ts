@@ -2,9 +2,10 @@
 
 import { ElementType } from "react";
 import { OverridableProps } from "@/types/utils";
+import { StaticImageData } from "next/image";
 
 export type TextBaseProps = {
-  typography?: string;
+  typography?: "content";
 };
 export type TextProps<T extends ElementType> = OverridableProps<
   T,
@@ -14,6 +15,7 @@ export type TextProps<T extends ElementType> = OverridableProps<
 export type ButtonBaseProps = {
   size?: "fit" | "full";
   type?: "purple" | "blue";
+  disabled?: boolean;
 };
 export type ButtonProps<T extends ElementType> = OverridableProps<
   T,
@@ -41,7 +43,7 @@ export type CardProps<T extends ElementType> = OverridableProps<
 >;
 
 export type AvatarBaseProps = {
-  imagePath: string;
+  image: string | StaticImageData;
   outline?: boolean;
 };
 export type AvatarProps<T extends ElementType> = OverridableProps<

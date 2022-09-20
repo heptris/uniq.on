@@ -10,23 +10,43 @@ import { cssFontFamily, cssConvex } from "@/styles/utils";
  * `size`: `fit` | `full`
  *
  * `type`: `purple` | `blue`
+ *
+ * `disabled`: `boolean`
  * @return `HTMLButtonElement`
  */
 function Button<T extends ElementType = "button">(
-  { size = "fit", type = "purple", as, ...props }: ButtonProps<T>,
+  props: ButtonProps<T>,
   ref: Ref<any>
 ) {
+  const {
+    size = "fit",
+    type = "purple",
+    disabled = false,
+    as,
+    ...rest
+  } = props;
   const target = as ?? "button";
   const Component = target;
 
   const theme = useTheme();
+  const colorMap = {
+    background: {
+      purple: theme.color.background.main,
+      blue: theme.color.background.emphasis,
+      disabled: theme.color.status.disabled,
+    },
+    hover: {
+      purple: theme.color.hover.main,
+      blue: theme.color.hover.emphasis,
+    },
+  };
 
   return (
     <Component
       className={css`
-        background-color: ${type === "purple"
-          ? theme.color.background.main
-          : theme.color.background.emphasis};
+        background-color: ${disabled === false
+          ? colorMap.background[type]
+          : colorMap.background.disabled};
         border: 0;
         border-radius: 8px;
         padding: 0.8rem 1.2rem;
@@ -39,20 +59,16 @@ function Button<T extends ElementType = "button">(
         ${cssFontFamily}
         ${cssConvex}
 
-        &:hover {
-          cursor: pointer;
-          background-color: ${type === "purple"
-            ? "var(--purple500)"
-            : "var(--blue900)"};
+        &:not([disabled]):hover,
+        &:not([disabled]):active {
+          background-color: ${colorMap.hover[type]};
         }
-        &:active {
-          background-color: ${type === "purple"
-            ? "var(--purple500)"
-            : "var(--blue900)"};
+        &:not([disabled]):hover {
+          cursor: pointer;
         }
       `}
       ref={ref}
-      {...props}
+      {...rest}
     />
   );
 }

@@ -1,21 +1,19 @@
 import { ElementType, forwardRef, Ref } from "react";
-import Image from "next/image";
 import { CardProps } from "@/types/props";
 
 import { useTheme } from "@emotion/react";
 import { css } from "@emotion/css";
 import { cssConvex } from "@/styles/utils";
 
-import Text from "@/components/Text";
-
 /**
- * @params
- * @return
+ * @props
+ * @return `ReactElement`
  */
 function Card<T extends ElementType = "div">(
-  { as, ...props }: CardProps<T>,
+  props: CardProps<T>,
   ref: Ref<any>
 ) {
+  const { as, children, ...rest } = props;
   const target = as ?? "div";
   const Component = target;
 
@@ -27,24 +25,25 @@ function Card<T extends ElementType = "div">(
         width: 100%;
         height: 10rem;
         border-radius: 8px;
-        padding: 0 2rem;
+        position: relative;
         background-color: ${theme.color.background.card};
-
-        ${cssConvex}
       `}
       ref={ref}
-      {...props}
+      {...rest}
     >
-      <Text as="h2" role="name">
-        test
-      </Text>
-      <Text as="h1" role="title">
-        Title test
-      </Text>
-      <Text as="h3" role="date">
-        2022.09.07
-      </Text>
-      <Image src="" />
+      <div
+        className={css`
+          width: 100%;
+          height: 100%;
+          border-radius: inherit;
+          background-color: transparent;
+          position: absolute;
+          z-index: 9950;
+
+          ${cssConvex}
+        `}
+      />
+      {children}
     </Component>
   );
 }
