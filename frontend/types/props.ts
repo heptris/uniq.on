@@ -54,3 +54,9 @@ export type AlertProps<T extends ElementType> = OverridableProps<
   T,
   AlertBaseProps
 >;
+
+export type SelectTabBaseProps = {};
+export type SelectTabProps<T extends ElementType> = OverridableProps<
+  T,
+  AlertBaseProps
+>;
