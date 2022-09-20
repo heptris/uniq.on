@@ -17,6 +17,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { css, useTheme } from "@emotion/react";
 import styled from "@emotion/styled";
+import Link from "next/link";
 
 /**
  * @params
@@ -83,24 +84,28 @@ function Navbar(
                 padding-left: 50px;
               `}
             >
-              <FontAwesomeIcon
-                icon={faBell}
-                css={css`
-                  width: 19px;
-                  color: ${theme.color.text.main};
-                  &:hover {
-                    color: ${theme.color.text.hover};
-                  }
-                `}
-              />
-              <FontAwesomeIcon
-                icon={faCircle}
-                css={css`
-                  width: 7px;
-                  color: ${theme.color.status.fail};
-                  transform: translate(-6px, -12px);
-                `}
-              />
+              <Link href="/alarm">
+                <FontAwesomeIcon
+                  icon={faBell}
+                  css={css`
+                    width: 19px;
+                    color: ${theme.color.text.main};
+                    &:hover {
+                      color: ${theme.color.text.hover};
+                    }
+                  `}
+                />
+              </Link>
+              <Link href="/alarm">
+                <FontAwesomeIcon
+                  icon={faCircle}
+                  css={css`
+                    width: 7px;
+                    color: ${theme.color.status.fail};
+                    transform: translate(-6px, -12px);
+                  `}
+                />
+              </Link>
             </div>
           ) : (
             <div>

@@ -7,6 +7,7 @@ import { cssConvex } from "@/styles/utils";
 type SelectTabProps = {
   color?: string;
   menus?: string[];
+  func(val: string): void;
 };
 
 /**
@@ -17,11 +18,13 @@ type SelectTabProps = {
 function SelectTab<T extends ElementType = "div">({
   color = "purple",
   menus = ["보유중인NFT", "구매예약", "관심목록", "투자신청내역"],
+  func,
 }: SelectTabProps) {
-  const [select, setSelect] = useState("");
+  const [select, setSelect] = useState(menus[0]);
   const theme = useTheme();
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSelect(e.target.value);
+    func(e.target.value);
   };
   return (
     <SelectWapper theme={theme} color={color}>
@@ -58,7 +61,7 @@ const SelectWapper = styled.div`
     }
   }
   .box {
-    width: 20%;
+    width: 25%;
     height: 2.5rem;
     border-radius: 2.5rem;
     transition: all 250ms ease;
@@ -76,6 +79,7 @@ const SelectWapper = styled.div`
       left: 0;
       right: 0;
       font-size: 0.8rem;
+      padding: 0 5px;
       user-select: none;
       color: ${({ theme }) => theme.color.text.main};
     }
