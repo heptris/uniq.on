@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ssafy.uniqon.config.RestDocsConfig;
 import com.ssafy.uniqon.config.SecurityConfig;
 import com.ssafy.uniqon.controller.RestDocsTestSupport;
+import com.ssafy.uniqon.controller.WithMockCustomUser;
 import com.ssafy.uniqon.domain.startup.Startup;
 import com.ssafy.uniqon.dto.startup.StartupDetailResponseDto;
 import com.ssafy.uniqon.dto.startup.StartupRequestDto;
@@ -22,10 +23,13 @@ import org.springframework.context.annotation.FilterType;
 import org.springframework.context.annotation.Import;
 import org.springframework.data.jpa.mapping.JpaMetamodelMappingContext;
 import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 
 import static com.ssafy.uniqon.config.RestDocsConfig.field;
@@ -36,18 +40,17 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
-import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
-import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
+import static org.springframework.restdocs.request.RequestDocumentation.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(controllers = StartupController.class, excludeFilters = { //!Added!
         @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = SecurityConfig.class)})
 class StartupControllerTest extends RestDocsTestSupport {
 
+    private String accessToken = "accessToken";
     @MockBean
     private StartupService startupService;
-
-    private String accessToken = "accessToken";
 
     @DisplayName(value = "스타트업 상세정보")
     @WithMockUser
@@ -55,7 +58,7 @@ class StartupControllerTest extends RestDocsTestSupport {
     public void 스타트업_상세_정보() throws Exception {
 
         StartupDetailResponseDto startupDetailResponseDto = StartupDetailResponseDto.builder()
-                .description("스타트업1 상세정보 글입니다.")
+                .description("스타트업1 상세 정보 글입니다.")
                 .startupId(1L)
                 .startupName("스타트업1")
                 .title("스타트업1 제목")
@@ -106,7 +109,7 @@ class StartupControllerTest extends RestDocsTestSupport {
     }
 
     @DisplayName(value = "스타트업 등록")
-    @WithMockUser
+    @WithMockCustomUser
     @Test
     public void 스타트업_등록() throws Exception {
         StartupRequestDto startupRequestDto = StartupRequestDto.builder()
@@ -121,18 +124,40 @@ class StartupControllerTest extends RestDocsTestSupport {
                 .description("test")
                 .title("test")
                 .build();
+        String requestDtoJson = objectMapper.writeValueAsString(startupRequestDto);
+        MockMultipartFile request = new MockMultipartFile("startupRequestDto", "jsondata",
+                "application/json", requestDtoJson.getBytes(StandardCharsets.UTF_8));
 
+        MockMultipartFile businessPlan = new MockMultipartFile("business_plan", "business_plan.pdf",
+                "application/pdf", "<<pdf file>>".getBytes(StandardCharsets.UTF_8));
+
+        MockMultipartFile nftImage = new MockMultipartFile("nft_image", "nft_image.jpeg",
+                "image/jpeg", "<<jpeg data>>".getBytes(StandardCharsets.UTF_8));
+
+        MockMultipartFile roadMap = new MockMultipartFile("road_map", "road_map.jpeg",
+                "image/jpeg", "<<jpeg data>>".getBytes(StandardCharsets.UTF_8));
+
+        given(startupService.investRegist(1L, startupRequestDto, businessPlan, nftImage, roadMap))
+                .willReturn(1L);
         mockMvc.perform(
-                        post("/api/invest/regist")
+                        multipart("/api/invest/regist")
+                                .file(request)
+                                .file(businessPlan)
+                                .file(nftImage)
+                                .file(roadMap)
                                 .header("Authorization", "Bearer " + accessToken)
-                                .contentType(MediaType.APPLICATION_JSON)
-                                .content(objectMapper.writeValueAsString(startupRequestDto))
-                )
-                .andExpect(status().isOk())
+                                )
+                .andExpect(status().isCreated())
                 .andDo(
                         restDocs.document(
+                                requestParts(
+                                        partWithName("business_plan").description("사업계획서 pdf"),
+                                        partWithName("nft_image").description("NFT 이미지"),
+                                        partWithName("road_map").description("스타트업 로드맵"),
+                                        partWithName("startupRequestDto").description("스타트업 등록 요청 폼")
+                                ),
                                 requestPartFields("startupRequestDto",
-                                        fieldWithPath("startupName").description("startupName").attributes(field("constraints", "길이 10 이하")),
+                                        fieldWithPath("startupName").description("startupName").optional().attributes(field("constraints", "길이 10 이하")),
                                         fieldWithPath("managerName").description("managerName").attributes(field("constraints", "길이 10 이하")),
                                         fieldWithPath("managerEmail").description("managerEmail").attributes(field("constraints", "길이 10 이하")),
                                         fieldWithPath("managerNumber").description("managerNumber").attributes(field("constraints", "길이 10 이하")),
@@ -142,7 +167,7 @@ class StartupControllerTest extends RestDocsTestSupport {
                                         fieldWithPath("discordUrl").description("discordUrl").attributes(field("constraints", "길이 10 이하")),
                                         fieldWithPath("description").description("description").attributes(field("constraints", "길이 10 이하")),
                                         fieldWithPath("title").description("title").attributes(field("constraints", "길이 10 이하"))
-                                        ),
+                                ),
                                 responseFields(
                                         fieldWithPath("status").description("status"),
                                         fieldWithPath("message").description("message"),

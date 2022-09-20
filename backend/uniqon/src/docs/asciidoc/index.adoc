@@ -13,3 +13,7 @@ backtony.github.io(부제)
 [[Startup-상세-조회]]
 === Startup 상세 조회
 operation::startup-controller-test/스타트업_상세_정보[snippets='http-request,path-parameters,http-response,response-fields']
+
+[[Startup-등록]]
+=== Startup 등록
+operation::startup-controller-test/스타트업_등록[snippets='http-request,request-part-startupRequestDto-fields,http-response,response-fields']
