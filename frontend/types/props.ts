@@ -38,7 +38,10 @@ export type CardProps<T extends ElementType> = OverridableProps<
   CardBaseProps
 >;
 
-export type AvatarBaseProps = {};
+export type AvatarBaseProps = {
+  imagePath: string;
+  outline?: boolean;
+};
 export type AvatarProps<T extends ElementType> = OverridableProps<
   T,
   AvatarBaseProps
