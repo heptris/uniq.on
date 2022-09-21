@@ -39,23 +39,26 @@ function Navbar(
     <Header theme={theme} ref={ref} {...props}>
       <div className="container">
         <div className="nav-icon">
-          <div
-            css={css`
-              margin-bottom: 5px;
-              font-weight: bold;
-              font-size: 27px;
-              position: absolute;
-            `}
-          >
-            <span
+          <Link href="/">
+            <div
               css={css`
-                color: ${theme.color.background.main};
+                margin-bottom: 5px;
+                font-weight: bold;
+                font-size: 27px;
+                position: absolute;
               `}
             >
-              uniq
-            </span>
-            .on
-          </div>
+              <span
+                css={css`
+                  color: ${theme.color.background.main};
+                `}
+              >
+                uniq
+              </span>
+              .on
+            </div>
+          </Link>
+
           <div
             css={css`
               transform: translate(300%, -5px);
