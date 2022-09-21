@@ -7,35 +7,34 @@ import { uniqonThemes } from "@/styles/theme";
 expect.extend(matchers);
 
 describe("Alert", () => {
-  it("renders success", () => {
-    const testId = "success";
-    const { container } = render(
+  const renderAlert = (isSuccess: boolean, testId: string, message?: string) =>
+    render(
       <MyApp>
-        <Alert isSuccess={true} data-testid={testId} />
+        <Alert isSuccess={isSuccess} data-testid={testId} message={message} />
       </MyApp>
     );
-    expect(getByTestId(container, testId)).toHaveStyleRule(
+
+  it("renders success with default msg", () => {
+    const testId = "success";
+    const { container } = renderAlert(true, testId);
+    const alert = getByTestId(container, testId);
+    expect(alert).toHaveStyleRule(
       "background-color",
       uniqonThemes.darkTheme.color.status.success
     );
+    expect(alert).toHaveTextContent("404 에러 잘못된 요청입니다.");
   });
+
   it("renders success with text", () => {
     const msg = "로그인 성공";
     const testId = "successWithTxt";
-    const { container } = render(
-      <MyApp>
-        <Alert isSuccess={true} data-testid={testId} />
-      </MyApp>
-    );
+    const { container } = renderAlert(true, testId, msg);
     expect(getByTestId(container, testId)).toHaveTextContent(msg);
   });
+
   it("renders fail", () => {
     const testId = "fail";
-    const { container } = render(
-      <MyApp>
-        <Alert isSuccess={false} data-testid={testId} />
-      </MyApp>
-    );
+    const { container } = renderAlert(false, testId);
     expect(getByTestId(container, testId)).toHaveStyleRule(
       "background-color",
       uniqonThemes.darkTheme.color.status.fail
