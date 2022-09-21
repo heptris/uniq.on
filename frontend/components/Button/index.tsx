@@ -1,8 +1,7 @@
 import { ElementType, Ref, forwardRef } from "react";
 import { ButtonProps } from "@/types/props";
 
-import { useTheme } from "@emotion/react";
-import { css } from "@emotion/css";
+import { css, useTheme } from "@emotion/react";
 import { cssFontFamily, cssConvex } from "@/styles/utils";
 
 /**
@@ -43,7 +42,7 @@ function Button<T extends ElementType = "button">(
 
   return (
     <Component
-      className={css`
+      css={css`
         background-color: ${disabled === false
           ? colorMap.background[type]
           : colorMap.background.disabled};

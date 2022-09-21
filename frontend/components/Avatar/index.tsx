@@ -2,8 +2,7 @@ import { ElementType, forwardRef, Ref } from "react";
 import Image from "next/image";
 import { AvatarProps } from "@/types/props";
 
-import { useTheme } from "@emotion/react";
-import { css } from "@emotion/css";
+import { css, useTheme } from "@emotion/react";
 
 /**
  * @params
@@ -24,7 +23,7 @@ function Avatar<T extends ElementType = "div">(
 
   return (
     <Component
-      className={css`
+      css={css`
         width: 5rem;
         height: 5rem;
         border-radius: 8px;
