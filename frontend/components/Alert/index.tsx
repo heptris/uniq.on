@@ -7,7 +7,10 @@ import { useTheme } from "@emotion/react";
 
 /**
  * @params
- * @return
+ * isSuccess : boolean
+ *
+ * message : string
+ * @return ReactElement
  */
 function Alert<T extends ElementType = "div">(
   {
