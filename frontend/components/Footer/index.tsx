@@ -39,10 +39,13 @@ function Footer() {
           font-size: 0.9rem;
         }
         .infolist p {
-          cursor: pointer;
+          &:hover {
+            color: ${theme.color.text.hover};
+            cursor: pointer;
+          }
         }
         @media screen and (max-width: 768px) {
-          height: 17rem;
+          height: 18rem;
           .infolist {
             margin: 0 1.3rem;
           }
@@ -51,7 +54,7 @@ function Footer() {
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            line-height: 120%;
+            line-height: 130%;
           }
           .slash {
             visibility: hidden;
@@ -66,7 +69,7 @@ function Footer() {
           flex-direction: row;
           justify-content: center;
           align-items: flex-start;
-          margin: 1rem 0;
+          margin: 1rem 0 2rem;
         `}
       >
         <div className="infolist">
