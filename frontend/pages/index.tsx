@@ -8,6 +8,7 @@ import Grid from "@/components/Grid";
 import Navbar from "@/components/Navbar";
 import Card from "@/components/Card";
 import SelectTab from "@/components/SelectTab";
+import Footer from "@/components/Footer";
 
 export default function Home() {
   return (
@@ -59,18 +60,7 @@ export default function Home() {
         </Grid>
       </main>
 
-      <footer>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{" "}
-          <span>
-            <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
-          </span>
-        </a>
-      </footer>
+      <Footer />
     </Container>
   );
 }
