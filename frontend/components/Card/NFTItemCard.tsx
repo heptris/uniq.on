@@ -1,9 +1,8 @@
 import { ElementType, forwardRef, Ref } from "react";
 import Image, { StaticImageData } from "next/image";
 
-import { useTheme } from "@emotion/react";
+import { css, useTheme } from "@emotion/react";
 import styled from "@emotion/styled";
-import { css } from "@emotion/css";
 import { faEthereum } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -51,7 +50,7 @@ function NFTItemCard<T extends ElementType = "div">(
       <InfoContainer>
         <Text
           role="token-name"
-          className={css`
+          css={css`
             font-weight: 600;
           `}
         >
@@ -59,7 +58,7 @@ function NFTItemCard<T extends ElementType = "div">(
         </Text>
         <Text
           role="corp-name"
-          className={css`
+          css={css`
             color: ${theme.color.text.sub};
             font-size: 0.7rem;
             margin-bottom: 0.5rem;
@@ -70,7 +69,7 @@ function NFTItemCard<T extends ElementType = "div">(
         <Text
           as="div"
           role="price"
-          className={css`
+          css={css`
             display: flex;
             align-items: center;
             font-weight: 500;
@@ -79,7 +78,7 @@ function NFTItemCard<T extends ElementType = "div">(
           `}
         >
           <FontAwesomeIcon
-            className={css`
+            css={css`
               width: 0.6rem;
               margin-right: 0.5rem;
             `}
@@ -89,11 +88,20 @@ function NFTItemCard<T extends ElementType = "div">(
         </Text>
         <Text
           role="status"
-          className={css`
+          css={css`
             font-size: 0.8rem;
           `}
         >
-          {status} {progress}%
+          {progress && (
+            <ProgressBar
+              css={css`
+                margin-right: 10px;
+              `}
+              progress={progress}
+              type={"blue"}
+            />
+          )}
+          {progress}%
         </Text>
       </InfoContainer>
     </Card>

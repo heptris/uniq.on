@@ -1,9 +1,8 @@
 import { ElementType, forwardRef, Ref } from "react";
 import { StaticImageData } from "next/image";
 
-import { useTheme } from "@emotion/react";
+import { css, useTheme } from "@emotion/react";
 import styled from "@emotion/styled";
-import { css } from "@emotion/css";
 
 import { Combine } from "@/types/utils";
 import { CardProps } from "@/types/props";
@@ -55,7 +54,7 @@ function CorporationCard<T extends ElementType = "div">(
         <Text
           as="h2"
           role="corp-name"
-          className={css`
+          css={css`
             color: ${theme.color.text.sub};
             font-size: 0.7rem;
           `}
@@ -65,7 +64,7 @@ function CorporationCard<T extends ElementType = "div">(
         <Text
           as="h1"
           role="title"
-          className={css`
+          css={css`
             font-size: 1.2rem;
             font-weight: 600;
           `}
@@ -75,7 +74,7 @@ function CorporationCard<T extends ElementType = "div">(
         <Text
           as="h3"
           role="date"
-          className={css`
+          css={css`
             color: ${theme.color.text.sub};
             font-size: 0.7rem;
           `}
@@ -84,10 +83,19 @@ function CorporationCard<T extends ElementType = "div">(
         </Text>
         <Text
           role="status"
-          className={css`
+          css={css`
             font-size: 0.8rem;
           `}
         >
+          {progress && (
+            <ProgressBar
+              css={css`
+                margin-right: 10px;
+              `}
+              progress={progress}
+              type={"blue"}
+            />
+          )}
           {progress}%
         </Text>
       </InfoContainer>
