@@ -146,7 +146,7 @@ const Header = styled.header`
   width: 100%;
   height: 80px;
   padding: 20px 10px;
-  z-index: 3;
+  z-index: 9960;
   border-bottom: 1px solid ${({ theme }) => theme.color.background.item};
 
   .container {
@@ -163,7 +163,7 @@ const Header = styled.header`
     display: flex;
     align-items: flex-end;
     margin: 0;
-    z-index: 3;
+    z-index: 9960;
     &:hover {
       cursor: pointer;
       color: ${({ theme }) => theme.color.text.hover};
@@ -232,7 +232,7 @@ const Header = styled.header`
 
     .more-btn {
       display: block;
-      z-index: 3;
+      z-index: 9960;
       right: 12px;
       top: 8px;
       width: 40px;
