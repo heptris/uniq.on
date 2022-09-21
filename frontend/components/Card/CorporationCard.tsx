@@ -10,6 +10,7 @@ import { CardProps } from "@/types/props";
 import Card from "@/components/Card";
 import Text from "@/components/Text";
 import Avatar from "@/components/Avatar";
+import ProgressBar from "../ProgressBar";
 
 type CorporationCardProps = {
   corpName: string;
@@ -86,8 +87,20 @@ function CorporationCard<T extends ElementType = "div">(
           role="status"
           className={css`
             font-size: 0.8rem;
+            display: flex;
+            justify-content: start;
+            align-items: center;
           `}
         >
+          {progress && (
+            <ProgressBar
+              className={css`
+                margin-right: 10px;
+              `}
+              progress={progress}
+              type={"blue"}
+            />
+          )}
           {progress}%
         </Text>
       </InfoContainer>
