@@ -1,7 +1,7 @@
 /* 추상화된 컴포넌트들의 props 타입 */
 
-import { ElementType } from "react";
-import { OverridableProps } from "@/types/utils";
+import { ElementType, ReactElement } from "react";
+import { CombineElementProps, OverridableProps } from "@/types/utils";
 import { StaticImageData } from "next/image";
 
 export type TextBaseProps = {
@@ -61,4 +61,24 @@ export type SelectTabBaseProps = {};
 export type SelectTabProps<T extends ElementType> = OverridableProps<
   T,
   AlertBaseProps
+>;
+
+export type ProgressBarBaseProps = {
+  progress: number;
+  maxProgress?: number;
+  type?: "purple" | "blue";
+};
+export type ProgressBarProps<T extends ElementType> = CombineElementProps<
+  T,
+  ProgressBarBaseProps
+>;
+
+export type ModalBaseProps = {
+  isOpen: boolean;
+  onSubmit: () => void;
+  onCancel: () => void;
+};
+export type ModalProps<T extends ElementType> = OverridableProps<
+  T,
+  ModalBaseProps
 >;

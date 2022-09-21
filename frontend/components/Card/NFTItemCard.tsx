@@ -10,6 +10,7 @@ import { Combine } from "@/types/utils";
 import { CardProps } from "@/types/props";
 import Card from "@/components/Card";
 import Text from "@/components/Text";
+import ProgressBar from "@/components/ProgressBar";
 
 type NFTItemCardProps = {
   nftImage: string | StaticImageData;
@@ -90,6 +91,9 @@ function NFTItemCard<T extends ElementType = "div">(
           role="status"
           css={css`
             font-size: 0.8rem;
+            display: flex;
+            justify-content: start;
+            align-items: center;
           `}
         >
           {progress && (

@@ -9,3 +9,6 @@ export const cssFontFamily = `
 export const cssConvex = `
   box-shadow: inset -1px 1px 2px var(--whiteOpacity300), inset 1px -1px 2px var(--greyOpacity800);
 `;
+export const cssConcave = `
+  box-shadow: inset 1px -1px 2px var(--whiteOpacity300), inset -1px 1px 2px var(--greyOpacity800);
+`;

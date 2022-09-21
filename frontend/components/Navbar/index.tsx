@@ -14,6 +14,7 @@ import {
   faCircle,
   faTimes,
   faUser,
+  faWallet,
 } from "@fortawesome/free-solid-svg-icons";
 import { css, useTheme } from "@emotion/react";
 import styled from "@emotion/styled";
@@ -27,7 +28,7 @@ function Navbar(
   { ...props }: ComponentPropsWithoutRef<"header">,
   ref: Ref<any>
 ) {
-  const [isLogin, setIsLogin] = useState(true);
+  const [isLogin, setIsLogin] = useState(false);
   const [active, setActive] = useState(false);
   const toggleHandler = () => {
     setActive(!active);
@@ -38,23 +39,26 @@ function Navbar(
     <Header theme={theme} ref={ref} {...props}>
       <div className="container">
         <div className="nav-icon">
-          <div
-            css={css`
-              margin-bottom: 5px;
-              font-weight: bold;
-              font-size: 27px;
-              position: absolute;
-            `}
-          >
-            <span
+          <Link href="/">
+            <div
               css={css`
-                color: ${theme.color.background.main};
+                margin-bottom: 5px;
+                font-weight: bold;
+                font-size: 27px;
+                position: absolute;
               `}
             >
-              uniq
-            </span>
-            .on
-          </div>
+              <span
+                css={css`
+                  color: ${theme.color.background.main};
+                `}
+              >
+                uniq
+              </span>
+              .on
+            </div>
+          </Link>
+
           <div
             css={css`
               transform: translate(300%, -5px);
@@ -72,7 +76,11 @@ function Navbar(
           <nav
             className={active ? "main-navigation active" : "main-navigation"}
           >
-            <a href="#">{isLogin ? "마이페이지" : "로그인"}</a>
+            {isLogin ? (
+              <Link href="/mypage">마이페이지</Link>
+            ) : (
+              <Link href="/login">로그인</Link>
+            )}
             <a href="#">투자리스트</a>
             <a href="#">투자신청</a>
             <a href="#">자주하는질문</a>
@@ -108,8 +116,25 @@ function Navbar(
               </Link>
             </div>
           ) : (
-            <div>
-              <FontAwesomeIcon icon={faUser} />
+            <div
+              css={css`
+                display: flex;
+                justify-content: center;
+                &:hover {
+                  color: ${theme.color.text.hover};
+                  cursor: pointer;
+                }
+              `}
+            >
+              <Link href="/login">
+                <FontAwesomeIcon
+                  icon={faWallet}
+                  css={css`
+                    width: 19px;
+                    margin-left: 2rem;
+                  `}
+                />
+              </Link>
             </div>
           )}
           <button
@@ -146,7 +171,7 @@ const Header = styled.header`
   width: 100%;
   height: 80px;
   padding: 20px 10px;
-  z-index: 3;
+  z-index: 9960;
   border-bottom: 1px solid ${({ theme }) => theme.color.background.item};
 
   .container {
@@ -163,7 +188,7 @@ const Header = styled.header`
     display: flex;
     align-items: flex-end;
     margin: 0;
-    z-index: 3;
+    z-index: 9960;
     &:hover {
       cursor: pointer;
       color: ${({ theme }) => theme.color.text.hover};
@@ -232,7 +257,7 @@ const Header = styled.header`
 
     .more-btn {
       display: block;
-      z-index: 3;
+      z-index: 9960;
       right: 12px;
       top: 8px;
       width: 40px;
