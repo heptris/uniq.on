@@ -22,7 +22,10 @@
     "next": "latest",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
-    "react-refresh": "^0.14.0"
+    "react-refresh": "^0.14.0",
+    "web-vitals": "^3.0.2",
+    "web3": "^1.8.0",
+    "web3-utils": "^1.8.0"
   },
   "devDependencies": {
     "@emotion/css": "^11.10.0",
