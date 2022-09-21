@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import { css } from "@emotion/css";
 import { useTheme } from "@emotion/react";
 import Button from "@/components/Button";
+import Footer from "@/components/Footer";
 
 const dummyData = {
   checked: [
@@ -84,7 +85,6 @@ export default function alarm() {
                     flex-direction: column;
                     justify-content: center;
                     width: 80%;
-                    padding-right: 0.5rem;
                   `}
                 >
                   <p
@@ -113,17 +113,7 @@ export default function alarm() {
         </>
       </div>
 
-      <footer>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <span>
-            <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
-          </span>
-        </a>
-      </footer>
+      <Footer />
     </Container>
   );
 }
