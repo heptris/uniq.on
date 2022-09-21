@@ -35,6 +35,12 @@ spring:
       max-file-size: 5MB
       max-request-size: 5MB
 
+ethereum:
+  server:
+    ip: localhost
+    port: 7545
+  contract:
+    address: "0xE765ac275D87F4201b0a453617Ed6717aEe5e540"
 
 
 logging:
