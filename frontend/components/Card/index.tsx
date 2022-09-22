@@ -1,8 +1,7 @@
 import { ElementType, forwardRef, Ref } from "react";
 import { CardProps } from "@/types/props";
 
-import { useTheme } from "@emotion/react";
-import { css } from "@emotion/css";
+import { css, useTheme } from "@emotion/react";
 import { cssConvex } from "@/styles/utils";
 
 /**
@@ -21,7 +20,7 @@ function Card<T extends ElementType = "div">(
 
   return (
     <Component
-      className={css`
+      css={css`
         width: 100%;
         height: 10rem;
         border-radius: 8px;
@@ -32,7 +31,7 @@ function Card<T extends ElementType = "div">(
       {...rest}
     >
       <div
-        className={css`
+        css={css`
           width: 100%;
           height: 100%;
           border-radius: inherit;

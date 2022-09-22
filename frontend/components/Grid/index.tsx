@@ -1,7 +1,7 @@
 import { ElementType, forwardRef, Ref } from "react";
 import { GridProps } from "@/types/props";
 
-import { css } from "@emotion/css";
+import { css } from "@emotion/react";
 
 /**
  * @params
@@ -17,7 +17,7 @@ function Grid<T extends ElementType = "div">(
 
   return (
     <Component
-      className={css`
+      css={css`
         display: flex;
         align-items: center;
         justify-content: center;
