@@ -9,6 +9,7 @@ import { css } from "@emotion/css";
 import { useTheme } from "@emotion/react";
 import Button from "@/components/Button";
 import Footer from "@/components/Footer";
+import Layout from "@/components/Layout";
 
 const dummyData = {
   checked: [
@@ -48,72 +49,56 @@ export default function alarm() {
   }, [select]);
 
   return (
-    <Container>
-      <Navbar />
-      <div
-        className={css`
-          width: 100%;
-          padding: 2rem 0;
-          flex: 1 1;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-        `}
-      >
-        <>
-          <SelectTab func={selectHandler} menus={menus} />
-          {(checked ? dummyData.checked : dummyData.unchecked).map(
-            (alarm: { text: any; date: any }) => (
-              <div
+    <Layout>
+      <SelectTab func={selectHandler} menus={menus} />
+      {(checked ? dummyData.checked : dummyData.unchecked).map(
+        (alarm: { text: any; date: any }) => (
+          <div
+            className={css`
+              display: flex;
+              flex-direction: row;
+              justify-content: center;
+              align-items: center;
+              width: 100%;
+              height: 6rem;
+              margin-top: 2rem;
+              padding: 0 0.5rem;
+              border-radius: 10px;
+              background-color: ${theme.color.background.item};
+              color: ${theme.color.text.main};
+            `}
+          >
+            <div
+              className={css`
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                width: 80%;
+              `}
+            >
+              <p
                 className={css`
-                  display: flex;
-                  flex-direction: row;
-                  justify-content: center;
-                  align-items: center;
-                  width: 100%;
-                  height: 6rem;
-                  margin-top: 2rem;
-                  padding: 0 0.5rem;
-                  border-radius: 10px;
-                  background-color: ${theme.color.background.item};
-                  color: ${theme.color.text.main};
+                  margin-bottom: 0.5rem;
+                  overflow: hidden;
+                  text-overflow: ellipsis;
+                  line-height: 1.2em;
                 `}
               >
-                <div
-                  className={css`
-                    display: flex;
-                    flex-direction: column;
-                    justify-content: center;
-                    width: 80%;
-                  `}
-                >
-                  <p
-                    className={css`
-                      margin-bottom: 0.5rem;
-                      overflow: hidden;
-                      text-overflow: ellipsis;
-                      line-height: 1.2em;
-                    `}
-                  >
-                    {alarm.text}
-                  </p>
-                  <p
-                    className={css`
-                      font-size: 0.8rem;
-                      color: ${theme.color.text.hover};
-                    `}
-                  >
-                    {alarm.date}
-                  </p>
-                </div>
-                <Button>확인</Button>
-              </div>
-            )
-          )}
-        </>
-      </div>
-
-      <Footer />
-    </Container>
+                {alarm.text}
+              </p>
+              <p
+                className={css`
+                  font-size: 0.8rem;
+                  color: ${theme.color.text.hover};
+                `}
+              >
+                {alarm.date}
+              </p>
+            </div>
+            <Button>확인</Button>
+          </div>
+        )
+      )}
+    </Layout>
   );
 }
