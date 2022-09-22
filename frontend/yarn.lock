@@ -1539,24 +1539,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@emotion/css@npm:^11.10.0":
-  version: 11.10.0
-  resolution: "@emotion/css@npm:11.10.0"
-  dependencies:
-    "@emotion/babel-plugin": ^11.10.0
-    "@emotion/cache": ^11.10.0
-    "@emotion/serialize": ^1.1.0
-    "@emotion/sheet": ^1.2.0
-    "@emotion/utils": ^1.2.0
-  peerDependencies:
-    "@babel/core": ^7.0.0
-  peerDependenciesMeta:
-    "@babel/core":
-      optional: true
-  checksum: 677b90607a9525d0f18f4b13e1e781ed04a7878f25fb20174c06c24d5022bf9a206406980be717e82a362fdea01a8ae97248934877292112a7df0af136fe90f9
-  languageName: node
-  linkType: hard
-
 "@emotion/hash@npm:^0.9.0":
   version: 0.9.0
   resolution: "@emotion/hash@npm:0.9.0"
@@ -7148,7 +7130,6 @@ next@latest:
   dependencies:
     "@babel/runtime": ^7.19.0
     "@emotion/babel-plugin": ^11.10.2
-    "@emotion/css": ^11.10.0
     "@emotion/jest": ^11.10.0
     "@emotion/react": ^11.10.4
     "@emotion/styled": ^11.10.4
