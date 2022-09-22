@@ -2,8 +2,7 @@ import Button from "@/components/Button";
 import Container from "@/components/Container";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
-import { css } from "@emotion/css";
-import { useTheme } from "@emotion/react";
+import { useTheme, css } from "@emotion/react";
 
 export default function login() {
   const theme = useTheme();
@@ -11,7 +10,7 @@ export default function login() {
     <Container>
       <Navbar />
       <div
-        className={css`
+        css={css`
           width: 100%;
           padding: 2rem 0;
           flex: 1 1;
@@ -23,14 +22,14 @@ export default function login() {
         `}
       >
         <div
-          className={css`
+          css={css`
             margin: 4rem 0rem 5rem;
             font-weight: bold;
             font-size: 40px;
           `}
         >
           <span
-            className={css`
+            css={css`
               color: ${theme.color.background.main};
             `}
           >
@@ -39,7 +38,7 @@ export default function login() {
           .on
         </div>
         <div
-          className={css`
+          css={css`
             margin-bottom: 5rem;
             border: solid 1px ${theme.color.text.main};
             padding: 1rem;

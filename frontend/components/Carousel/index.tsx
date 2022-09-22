@@ -1,7 +1,6 @@
 import Image from "next/image";
 
-import { css } from "@emotion/css";
-import { useTheme } from "@emotion/react";
+import { css, useTheme } from "@emotion/react";
 import { useEffect, useRef, useState } from "react";
 import mainimg1 from "assets/mainimg1.jpeg";
 import mainimg2 from "assets/mainimg2.jpeg";
@@ -42,7 +41,7 @@ export default function Carousel() {
 
   return (
     <div
-      className={css`
+      css={css`
         width: 100%;
         padding: 2rem 0;
         flex: 1 1;

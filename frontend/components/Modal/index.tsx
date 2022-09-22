@@ -1,7 +1,6 @@
 import { ElementType } from "react";
 
-import { css, keyframes } from "@emotion/css";
-import { useTheme } from "@emotion/react";
+import { useTheme, css, keyframes } from "@emotion/react";
 
 import { ModalProps } from "@/types/props";
 
@@ -30,7 +29,7 @@ function ModalContainer({ ...props }) {
   const { onCancel } = props;
   return (
     <div
-      className={css`
+      css={css`
         position: fixed;
         z-index: 1000;
         left: 0;
@@ -65,7 +64,7 @@ function ModalContent({
 
   return (
     <Component
-      className={css`
+      css={css`
         position: fixed;
         overflow: hidden;
         z-index: 1010;

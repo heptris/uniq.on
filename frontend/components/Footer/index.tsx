@@ -1,7 +1,7 @@
 import React from "react";
+import { css, useTheme } from "@emotion/react";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { css } from "@emotion/css";
-import { useTheme } from "@emotion/react";
 import { faCopyright } from "@fortawesome/free-solid-svg-icons";
 
 /**
@@ -12,7 +12,7 @@ function Footer() {
   const theme = useTheme();
   return (
     <footer
-      className={css`
+      css={css`
         width: 100%;
         height: 15rem;
         display: flex;
@@ -63,7 +63,7 @@ function Footer() {
       `}
     >
       <div
-        className={css`
+        css={css`
           width: 100%;
           display: flex;
           flex-direction: row;
@@ -87,7 +87,7 @@ function Footer() {
         </div>
       </div>
       <div
-        className={css`
+        css={css`
           display: flex;
           flex-direction: column;
           justify-content: center;
@@ -112,7 +112,7 @@ function Footer() {
           <span> Email hanndrednine@gmail.com</span>
         </div>
         <div
-          className={css`
+          css={css`
             display: flex;
             flex-direction: row;
             justify-content: center;
@@ -123,7 +123,7 @@ function Footer() {
         >
           <p>COPYRIGHT</p>
           <FontAwesomeIcon
-            className={css`
+            css={css`
               width: 15px;
               margin: 0 0.2rem 0.5rem;
             `}
