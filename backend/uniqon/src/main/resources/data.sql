@@ -59,3 +59,7 @@ values (now(), now(), "예약한 펀딩이 성공했습니다 !!", false, 1),
        (now(), now(), "예약한 펀딩이 성공했습니다 !!", false, 6),
        (now(), now(), "SSF를 입금하시겠습니까 ?", true, 6),
        (now(), now(), "입금이 완료되었습니다 !!", false, 6);
+
+insert into startup_favorite (created_date, last_modified_date, is_fav, member_id, startup_id)
+values (now(), now(), true, 1, 1),
+       (now(), now(), false, 1, 2);

@@ -1,5 +1,6 @@
 package com.ssafy.uniqon.service.startup;
 
+import com.ssafy.uniqon.dto.startup.StartupDetailResponseDto;
 import com.ssafy.uniqon.dto.startup.StartupRequestDto;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.rendering.ImageType;
@@ -42,7 +43,12 @@ class StartupServiceTest {
                 .nftCount(20)
                 .title("스타트업 test title")
                 .build();
+    }
 
+    @Test
+    public void 투자상세정보() {
+        StartupDetailResponseDto startupDetailResponseDto = startupService.startupDetail(2L, 1L);
+        System.out.println(startupDetailResponseDto);
     }
 
 }

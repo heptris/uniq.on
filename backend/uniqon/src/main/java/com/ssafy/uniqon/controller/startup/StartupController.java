@@ -48,9 +48,22 @@ public class StartupController {
 
     @GetMapping("/{startupId}")
     public ResponseEntity startupDetail(@PathVariable Long startupId) {
-        StartupDetailResponseDto startupDetailResponseDto = startupService.startupDetail(startupId);
+        Long memberId = SecurityUtil.getCurrentMemberId();
+        StartupDetailResponseDto startupDetailResponseDto = startupService.startupDetail(memberId, startupId);
         return ResponseEntity.status(HttpStatus.OK).body(
                 new ResponseDto(HttpStatus.OK.value(), "스타트업 상세정보", startupDetailResponseDto)
+        );
+    }
+
+    /**
+     * 관심 목록 등록 / 해제
+     */
+    @GetMapping("/{startupId}/favorite")
+    public ResponseEntity startupFavorite(@PathVariable Long startupId) {
+        Long memberId = SecurityUtil.getCurrentMemberId();
+        startupService.startupFavoriteToggle(memberId, startupId);
+        return ResponseEntity.status(HttpStatus.OK).body(
+                new ResponseDto(HttpStatus.OK.value(), "스타트업 관심 목록 등록 / 해제", null)
         );
     }
 }

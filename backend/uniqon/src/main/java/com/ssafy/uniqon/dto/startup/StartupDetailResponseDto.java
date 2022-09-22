@@ -35,6 +35,7 @@ public class StartupDetailResponseDto {
     // nft image
     private String imageNft;
 
+    private Boolean isFav;
 
     public StartupDetailResponseDto(Startup startup) {
         this.startupId = startup.getId();

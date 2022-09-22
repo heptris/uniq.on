@@ -28,8 +28,8 @@ public class BasicServiceTest {
         basicService.setPot(100);
     }
 
-    @Test
-    public void create() throws InterruptedException, ExecutionException, IOException {
-        basicService.create("0xE9FF62Cc98Ff6cDA925F2730966A2536dEaB8C28", "https://ipfs.io/ipfs/QmR7K5JJsbCSCBmNw9xtN9AHh46WfuUochcNgUaj2Zxi9d");
-    }
+//    @Test
+//    public void create() throws InterruptedException, ExecutionException, IOException {
+//        basicService.create("0xE9FF62Cc98Ff6cDA925F2730966A2536dEaB8C28", "https://ipfs.io/ipfs/QmR7K5JJsbCSCBmNw9xtN9AHh46WfuUochcNgUaj2Zxi9d");
+//    }
 }

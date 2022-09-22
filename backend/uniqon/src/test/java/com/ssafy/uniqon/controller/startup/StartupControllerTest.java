@@ -53,7 +53,7 @@ class StartupControllerTest extends RestDocsTestSupport {
     private StartupService startupService;
 
     @DisplayName(value = "스타트업 상세정보")
-    @WithMockUser
+    @WithMockCustomUser
     @Test
     public void 스타트업_상세_정보() throws Exception {
 
@@ -65,6 +65,7 @@ class StartupControllerTest extends RestDocsTestSupport {
                 .nftCount(10)
                 .goalRate(0.0)
                 .pricePerNft(10.0)
+                .isFav(Boolean.FALSE)
                 .endDate(LocalDateTime.now().plusDays(3))
                 .businessPlan("https://uniqon-bucket.s3.ap-northeast-2.amazonaws.com/startup/4cfd6171-b839-404a-94e9-615e3cc93402uniqon%EB%B8%94%EB%A1%9D%EC%B2%B4%EC%9D%B8_%EC%A1%B0%EC%98%81%EB%8F%84%EB%A9%98%ED%86%A0%EB%8B%98.pdf")
                 .businessPlanImg("https://uniqon-bucket.s3.ap-northeast-2.amazonaws.com/startup/e95ca4c9-b7c3-4f8a-87da-e718a97c2926uniqonuniqon%EB%B8%94%EB%A1%9D%EC%B2%B4%EC%9D%B8_%EC%A1%B0%EC%98%81%EB%8F%84%EB%A9%98%ED%86%A0%EB%8B%98.jpg")
@@ -73,7 +74,7 @@ class StartupControllerTest extends RestDocsTestSupport {
                 .build();
 
 
-        given(startupService.startupDetail(1L)).willReturn(startupDetailResponseDto);
+        given(startupService.startupDetail(1L, 1L)).willReturn(startupDetailResponseDto);
 
         mockMvc.perform(
                         get("/api/invest/{startupId}", 1L)
@@ -97,6 +98,7 @@ class StartupControllerTest extends RestDocsTestSupport {
                                         fieldWithPath("data.nftCount").description("startup nftCount"),
                                         fieldWithPath("data.pricePerNft").description("startup pricePerNft"),
                                         fieldWithPath("data.goalRate").description("startup goalRate"),
+                                        fieldWithPath("data.isFav").description("isFav"),
                                         fieldWithPath("data.pricePerNft").description("startup pricePerNft"),
                                         fieldWithPath("data.endDate").description("startup endDate"),
                                         fieldWithPath("data.businessPlan").description("startup businessPlan"),
