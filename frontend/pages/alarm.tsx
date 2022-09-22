@@ -1,14 +1,10 @@
 import Image from "next/image";
 
-import Container from "@/components/Container";
-import Navbar from "@/components/Navbar";
 import SelectTab from "@/components/SelectTab";
 
 import { useEffect, useState } from "react";
-import { css } from "@emotion/css";
-import { useTheme } from "@emotion/react";
+import { useTheme, css } from "@emotion/react";
 import Button from "@/components/Button";
-import Footer from "@/components/Footer";
 import Layout from "@/components/Layout";
 
 const dummyData = {
@@ -54,7 +50,7 @@ export default function alarm() {
       {(checked ? dummyData.checked : dummyData.unchecked).map(
         (alarm: { text: any; date: any }) => (
           <div
-            className={css`
+            css={css`
               display: flex;
               flex-direction: row;
               justify-content: center;
@@ -69,7 +65,7 @@ export default function alarm() {
             `}
           >
             <div
-              className={css`
+              css={css`
                 display: flex;
                 flex-direction: column;
                 justify-content: center;
@@ -77,7 +73,7 @@ export default function alarm() {
               `}
             >
               <p
-                className={css`
+                css={css`
                   margin-bottom: 0.5rem;
                   overflow: hidden;
                   text-overflow: ellipsis;
@@ -87,7 +83,7 @@ export default function alarm() {
                 {alarm.text}
               </p>
               <p
-                className={css`
+                css={css`
                   font-size: 0.8rem;
                   color: ${theme.color.text.hover};
                 `}

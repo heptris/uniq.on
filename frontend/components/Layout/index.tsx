@@ -1,8 +1,7 @@
 import Container from "../Container";
 import Footer from "../Footer";
 import Navbar from "../Navbar";
-import { css } from "@emotion/css";
-import { useTheme } from "@emotion/react";
+import { useTheme, css } from "@emotion/react";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const theme = useTheme();
@@ -10,7 +9,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     <Container>
       <Navbar />
       <div
-        className={css`
+        css={css`
           width: 100%;
           padding: 2rem 0;
           flex: 1 1;
