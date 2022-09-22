@@ -10,9 +10,9 @@ insert into startup (created_date, last_modified_date, description, business_pla
                     , discord_url, end_date, enroll_status, goal_price, image_nft, invest_count, is_finished, is_goal, nft_count
                     , price_per_nft, road_map, reject_reason, startup_name, title, member_id)
 values (now(), now(), "startup D입니다", null, 0, null,
-        now() + 5, null, 10, null, 0, false, false, 0, 0, null, null, null, "startup D", 4),
+        now(), null, 10, null, 0, false, false, 0, 0, null, null, null, "startup D", 4),
        (now(), now(), "startup E입니다", null, 0, null,
-        now() + 5, null, 10, null, 0, false, false, 0, 0, null, null, null, "startup E", 5);
+        now(), null, 10, null, 0, false, false, 0, 0, null, null, null, "startup E", 5);
 
 insert into startup_question (created_date, last_modified_date, question, member_id, startup_id)
 values (now(), now(), "질문1", 1, 1),
