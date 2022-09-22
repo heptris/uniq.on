@@ -203,20 +203,20 @@ const Header = styled.header`
     .main-navigation {
       position: fixed;
       top: 0;
-      right: 0;
+      right: -100%;
       padding: 80px 20px;
       width: 100%;
       height: 100vh;
       background-color: ${(props) => props.theme.color.background.card};
       opacity: 0;
       visibility: hidden;
-      transform: translateX(100%);
+      transform: translateX(0%);
       transition: 0.3s;
     }
     .main-navigation.active {
       opacity: 1;
       visibility: visible;
-      transform: translateX(0);
+      transform: translateX(-100%);
       transition: 0.3s;
     }
 
