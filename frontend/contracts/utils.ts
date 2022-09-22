@@ -5,7 +5,7 @@ import { AbiItem } from "web3-utils";
 
 const contracts = {
   useWeb3: () => {
-    const [web3, setWeb3] = useState<Web3 | undefined>(undefined);
+    const [web3, setWeb3] = useState<Web3>();
     const [mintUniqonTokenContract, setMintUniqonTokenContract] =
       useState<Contract>();
     const [saleUniqonTokenContract, setSaleUniqonTokenContract] =
@@ -23,13 +23,13 @@ const contracts = {
     const getMint = (networkId: number) => {
       if (!web3) return;
 
-      const mintContractJSON = require("./mintUniqonToken.json");
-      const mintUniqonTokenContractAbi: AbiItem = mintContractJSON.abi;
-      const mintUniqonTokenContractAddress: string =
+      const mintContractJSON = require("./MintUniqonToken.json");
+      const mintUniqonTokenContractAbi: AbiItem[] = mintContractJSON.abi;
+      const mintUniqonTokenContractAccount: string =
         mintContractJSON.networks[networkId].address;
       const contractInstance = new web3.eth.Contract(
         mintUniqonTokenContractAbi,
-        mintUniqonTokenContractAddress
+        mintUniqonTokenContractAccount
       );
       setMintUniqonTokenContract(contractInstance);
     };
@@ -37,13 +37,13 @@ const contracts = {
     const getSale = (networkId: number) => {
       if (!web3) return;
 
-      const saleContractJSON = require("./saleUniqonToken.json");
-      const saleUniqonTokenContractAbi: AbiItem = saleContractJSON.abi;
-      const saleUniqonTokenContractAddress: string =
+      const saleContractJSON = require("./SaleUniqonToken.json");
+      const saleUniqonTokenContractAbi: AbiItem[] = saleContractJSON.abi;
+      const saleUniqonTokenContractAccount: string =
         saleContractJSON.networks[networkId].address;
       const contractInstance = new web3.eth.Contract(
         saleUniqonTokenContractAbi,
-        saleUniqonTokenContractAddress
+        saleUniqonTokenContractAccount
       );
       setSaleUniqonTokenContract(contractInstance);
     };
@@ -63,9 +63,9 @@ const contracts = {
   },
 
   useAccount: () => {
-    const [account, setAccount] = useState("");
+    const [account, _setAccount] = useState("");
 
-    const getAccount = async () => {
+    const setAccount = async () => {
       if (!window.ethereum) {
         alert("Metamask를 설치해주세요!");
         throw new Error("Metamask is not installed.");
@@ -80,14 +80,14 @@ const contracts = {
         });
       if (!(accounts && Array.isArray(accounts))) return;
 
-      setAccount(accounts[0]);
+      _setAccount(accounts[0]);
     };
 
     useEffect(() => {
-      getAccount();
+      setAccount();
     }, []);
 
-    return { account };
+    return { account, setAccount };
   },
 };
 
