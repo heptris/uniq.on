@@ -18,6 +18,7 @@ const customJestConfig = {
     "^@/api/(.*)$": "<rootDir>/api/$1",
     "^@/assets/(.*)$": "<rootDir>/assets/$1",
     "^@/components/(.*)$": "<rootDir>/components/$1",
+    "^@/contracts/(.*)$": "<rootDir>/contracts/$1",
     "^@/pages/(.*)$": "<rootDir>/pages/$1",
     "^@/styles/(.*)$": "<rootDir>/styles/$1",
     "^@/types/(.*)$": "<rootDir>/types/$1",

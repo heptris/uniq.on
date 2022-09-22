@@ -20,6 +20,7 @@
       "@/api/*": ["api/*"],
       "@/assets/*": ["assets/*"],
       "@/components/*": ["components/*"],
+      "@/contracts/*": ["contracts/*"],
       "@/pages/*": ["pages/*"],
       "@/styles/*": ["styles/*"],
       "@/types/*": ["types/*"]
