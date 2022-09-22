@@ -1,6 +1,6 @@
 import { ElementType, forwardRef, Ref } from "react";
 
-import { css } from "@emotion/css";
+import { css } from "@emotion/react";
 
 import { AlertProps } from "@/types/props";
 import { useTheme } from "@emotion/react";
@@ -29,7 +29,7 @@ function Alert<T extends ElementType = "div">(
   return (
     <Component
       ref={ref}
-      className={css`
+      css={css`
         background-color: ${isSuccess
           ? color.status.success
           : color.status.fail};

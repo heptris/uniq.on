@@ -1,6 +1,5 @@
 import React, { ElementType, forwardRef, Ref, useState } from "react";
 import { useTheme } from "@emotion/react";
-import { css } from "@emotion/css";
 import styled from "@emotion/styled";
 import { cssConvex } from "@/styles/utils";
 
