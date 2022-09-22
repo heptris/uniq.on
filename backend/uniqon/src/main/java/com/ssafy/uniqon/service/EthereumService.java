@@ -31,7 +31,7 @@ public class EthereumService {
 
     private String from = "0xE9FF62Cc98Ff6cDA925F2730966A2536dEaB8C28";
 
-    private String contract = "0xE765ac275D87F4201b0a453617Ed6717aEe5e540";
+    private String contract = "0x2aD0b3914014E547C02eA1813099d5Dd9b592eA1";
 
     // hardcording because of testing
     private String pwd = "72cbfe67f76393dac3102496a314423732e1da0fd252f900e24ae81338d712d4";
@@ -75,9 +75,9 @@ public class EthereumService {
             throws IOException, InterruptedException, ExecutionException {
 
         // 1. Account Lock 해제
-        PersonalUnlockAccount personalUnlockAccount = web3j.personalUnlockAccount(from, pwd).send();
+//        PersonalUnlockAccount personalUnlockAccount = web3j.personalUnlockAccount(from, pwd).send();
 
-        if (personalUnlockAccount.accountUnlocked()) { // unlock 일때
+//        if (personalUnlockAccount.accountUnlocked()) { // unlock 일때
 
             //2. account에 대한 nonce값 가져오기.
             EthGetTransactionCount ethGetTransactionCount = web3j.ethGetTransactionCount(
@@ -101,10 +101,10 @@ public class EthereumService {
             Thread.sleep(5000);
 
             return transactionHash;
-        }
-        else {
-            throw new PersonalLockException("check ethereum personal Lock");
-        }
+//        }
+//        else {
+//            throw new PersonalLockException("check ethereum personal Lock");
+//        }
     }
 
     public TransactionReceipt getReceipt(String transactionHash) throws IOException {
