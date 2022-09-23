@@ -81,7 +81,9 @@ function Navbar(
             ) : (
               <Link href="/login">로그인</Link>
             )}
-            <a href="#">투자리스트</a>
+            <Link href="/list">
+              <a href="#">투자리스트</a>
+            </Link>
             <a href="#">투자신청</a>
             <a href="#">자주하는질문</a>
           </nav>
