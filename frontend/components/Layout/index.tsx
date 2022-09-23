@@ -6,12 +6,15 @@ import { useTheme, css } from "@emotion/react";
 export default function Layout({ children }: { children: React.ReactNode }) {
   const theme = useTheme();
   return (
-    <Container>
+    <Container
+      css={css`
+        padding: 0;
+      `}
+    >
       <Navbar />
       <div
         css={css`
           width: 100%;
-          padding: 2rem 0;
           flex: 1 1;
           display: flex;
           flex-direction: column;
