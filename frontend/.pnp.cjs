@@ -45,6 +45,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fortawesome/react-fontawesome", "virtual:dc3fc578bfa5e06182a4d2be39ede0bc5b74940b1ffe0d70c26892ab140a4699787750fba175dc306292e80b4aa2c8c5f68c2a821e69b2c37e360c0dff36ff66#npm:0.2.0"],\
             ["@reduxjs/toolkit", "virtual:dc3fc578bfa5e06182a4d2be39ede0bc5b74940b1ffe0d70c26892ab140a4699787750fba175dc306292e80b4aa2c8c5f68c2a821e69b2c37e360c0dff36ff66#npm:1.8.5"],\
             ["@tanstack/react-query", "virtual:dc3fc578bfa5e06182a4d2be39ede0bc5b74940b1ffe0d70c26892ab140a4699787750fba175dc306292e80b4aa2c8c5f68c2a821e69b2c37e360c0dff36ff66#npm:4.3.4"],\
+            ["@testing-library/dom", "npm:8.18.1"],\
             ["@testing-library/jest-dom", "npm:5.16.4"],\
             ["@testing-library/react", "virtual:dc3fc578bfa5e06182a4d2be39ede0bc5b74940b1ffe0d70c26892ab140a4699787750fba175dc306292e80b4aa2c8c5f68c2a821e69b2c37e360c0dff36ff66#npm:13.2.0"],\
             ["@testing-library/user-event", "virtual:dc3fc578bfa5e06182a4d2be39ede0bc5b74940b1ffe0d70c26892ab140a4699787750fba175dc306292e80b4aa2c8c5f68c2a821e69b2c37e360c0dff36ff66#npm:14.2.0"],\
@@ -3901,6 +3902,21 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["pretty-format", "npm:27.5.1"]\
           ],\
           "linkType": "HARD"\
+        }],\
+        ["npm:8.18.1", {\
+          "packageLocation": "./.yarn/cache/@testing-library-dom-npm-8.18.1-59f24b2394-432a7da2bb.zip/node_modules/@testing-library/dom/",\
+          "packageDependencies": [\
+            ["@testing-library/dom", "npm:8.18.1"],\
+            ["@babel/code-frame", "npm:7.18.6"],\
+            ["@babel/runtime", "npm:7.19.0"],\
+            ["@types/aria-query", "npm:4.2.2"],\
+            ["aria-query", "npm:5.0.2"],\
+            ["chalk", "npm:4.1.2"],\
+            ["dom-accessibility-api", "npm:0.5.14"],\
+            ["lz-string", "npm:1.4.4"],\
+            ["pretty-format", "npm:27.5.1"]\
+          ],\
+          "linkType": "HARD"\
         }]\
       ]],\
       ["@testing-library/jest-dom", [\
@@ -3960,7 +3976,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/__virtual__/@testing-library-user-event-virtual-37664f8795/0/cache/@testing-library-user-event-npm-14.2.0-84217e47a5-b34f19bbfe.zip/node_modules/@testing-library/user-event/",\
           "packageDependencies": [\
             ["@testing-library/user-event", "virtual:dc3fc578bfa5e06182a4d2be39ede0bc5b74940b1ffe0d70c26892ab140a4699787750fba175dc306292e80b4aa2c8c5f68c2a821e69b2c37e360c0dff36ff66#npm:14.2.0"],\
-            ["@testing-library/dom", null],\
+            ["@testing-library/dom", "npm:8.18.1"],\
             ["@types/testing-library__dom", null]\
           ],\
           "packagePeers": [\
@@ -9706,6 +9722,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fortawesome/react-fontawesome", "virtual:dc3fc578bfa5e06182a4d2be39ede0bc5b74940b1ffe0d70c26892ab140a4699787750fba175dc306292e80b4aa2c8c5f68c2a821e69b2c37e360c0dff36ff66#npm:0.2.0"],\
             ["@reduxjs/toolkit", "virtual:dc3fc578bfa5e06182a4d2be39ede0bc5b74940b1ffe0d70c26892ab140a4699787750fba175dc306292e80b4aa2c8c5f68c2a821e69b2c37e360c0dff36ff66#npm:1.8.5"],\
             ["@tanstack/react-query", "virtual:dc3fc578bfa5e06182a4d2be39ede0bc5b74940b1ffe0d70c26892ab140a4699787750fba175dc306292e80b4aa2c8c5f68c2a821e69b2c37e360c0dff36ff66#npm:4.3.4"],\
+            ["@testing-library/dom", "npm:8.18.1"],\
             ["@testing-library/jest-dom", "npm:5.16.4"],\
             ["@testing-library/react", "virtual:dc3fc578bfa5e06182a4d2be39ede0bc5b74940b1ffe0d70c26892ab140a4699787750fba175dc306292e80b4aa2c8c5f68c2a821e69b2c37e360c0dff36ff66#npm:13.2.0"],\
             ["@testing-library/user-event", "virtual:dc3fc578bfa5e06182a4d2be39ede0bc5b74940b1ffe0d70c26892ab140a4699787750fba175dc306292e80b4aa2c8c5f68c2a821e69b2c37e360c0dff36ff66#npm:14.2.0"],\
