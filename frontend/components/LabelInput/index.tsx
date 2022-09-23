@@ -9,7 +9,7 @@ import { LabelInputProps } from "@/types/props";
  * @return ReactElement
  */
 function LabelInput<T extends ElementType = "input">(
-  { as, placeholder, labelText, textValue, ...props }: LabelInputProps<T>,
+  { as, placeholder, labelText, value, onChange, ...props }: LabelInputProps<T>,
   ref: Ref<any>
 ) {
   const target = as ?? "input";
@@ -29,7 +29,8 @@ function LabelInput<T extends ElementType = "input">(
       `}
       placeholder={placeholder}
       id={labelText}
-      value={textValue}
+      value={value}
+      onChange={onChange}
       {...props}
     />
   );
