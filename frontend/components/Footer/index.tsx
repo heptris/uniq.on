@@ -4,6 +4,8 @@ import { css, useTheme } from "@emotion/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCopyright } from "@fortawesome/free-solid-svg-icons";
 
+import Text from "@/components/Text";
+
 /**
  * @params
  * @return
@@ -96,16 +98,20 @@ function Footer() {
         `}
       >
         <div className="coinfo">
-          <span>
-            주식회사 유니크온 <span className="slash">|</span>
+          <span
+            css={css`
+              font-size: 1.5rem;
+              font-weight: 700;
+              margin-bottom: 2rem;
+            `}
+          >
+            Uniq.on <span className="slash">|</span>
           </span>
           <span>
-            {" "}
             A507 안호진 박상태 신은정 이승호 전한울 한승재{" "}
             <span className="slash">|</span>
           </span>
           <span>
-            {" "}
             서울특별시 강남구 테헤란로 212 (역삼동){" "}
             <span className="slash">|</span>
           </span>
@@ -129,7 +135,7 @@ function Footer() {
             `}
             icon={faCopyright}
           />
-          <p> Uniq.On ALL RIGHTS RESERVED</p>
+          <p> Uniq.on ALL RIGHTS RESERVED</p>
         </div>
       </div>
     </footer>
