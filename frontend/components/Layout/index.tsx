@@ -6,7 +6,11 @@ import { useTheme, css } from "@emotion/react";
 export default function Layout({ children }: { children: React.ReactNode }) {
   const theme = useTheme();
   return (
-    <Container>
+    <Container
+      css={css`
+        padding: 0;
+      `}
+    >
       <Navbar />
       <div
         css={css`
