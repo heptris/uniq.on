@@ -91,16 +91,24 @@ function CorporationCard<T extends ElementType = "div">(
             align-items: center;
           `}
         >
-          {progress && (
-            <ProgressBar
-              css={css`
-                margin-right: 10px;
-              `}
-              progress={progress}
-              type={"blue"}
-            />
+          {progress !== undefined && (
+            <>
+              <ProgressBar
+                css={css`
+                  margin-right: 10px;
+                `}
+                progress={progress}
+                type={"blue"}
+              />
+              <Text
+                css={css`
+                  font-size: 0.7rem;
+                `}
+              >
+                {progress}%
+              </Text>
+            </>
           )}
-          {progress}%
         </Text>
       </InfoContainer>
       <Avatar
