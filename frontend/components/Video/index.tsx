@@ -1,4 +1,6 @@
+import { cssConvex } from "@/styles/utils";
 import { css, useTheme } from "@emotion/react";
+import Button from "../Button";
 
 export default function Video() {
   const theme = useTheme();
@@ -9,6 +11,10 @@ export default function Video() {
         width: 100%;
         height: 100vh;
         overflow: hidden;
+        @media screen and (max-width: 768px) {
+          width: 100%;
+          height: 75vh;
+        }
       `}
     >
       <div
@@ -17,9 +23,6 @@ export default function Video() {
           width: 100%;
           height: 100vh;
           z-index: 1;
-          @media screen and (max-width: 768px) {
-            width: 300%;
-          }
         `}
       >
         <video
@@ -35,77 +38,101 @@ export default function Video() {
           <source src="/videos/main1.mp4" type="video/mp4" />
         </video>
       </div>
+
       <div
         css={css`
-          height: 100%;
+          width: 80rem;
+          height: 100vh;
+          padding: 17rem 2rem;
+          position: absolute;
+          z-index: 1;
+
+          @media screen and (max-width: 768px) {
+            width: 100%;
+            height: auto;
+            padding: 20px;
+            top: 15rem;
+          }
         `}
       >
-        <div
+        <h2
           css={css`
-            width: 520px;
-            height: 100vh;
-            padding: 240px 20px;
-            position: absolute;
-            right: 0;
-            top: 0;
-            z-index: 1;
+            color: ${theme.color.text.main};
+            font-size: 6rem;
+            line-height: 1.25;
+            font-weight: lighter;
+            margin-bottom: 3rem;
+            @media screen and (max-width: 768px) {
+              font-size: 3rem;
+            }
           `}
         >
-          <h2
+          유니크한 NFT를 구매해보세요.
+        </h2>
+        <h3
+          css={css`
+            color: ${theme.color.text.main};
+            font-size: 2rem;
+            line-height: 1.25;
+            margin-bottom: 1.5rem;
+            @media screen and (max-width: 768px) {
+              font-size: 1.5rem;
+            }
+          `}
+        >
+          누구나 쉽게 NFT에 투자하고{" "}
+          <br
             css={css`
+              display: none;
+              @media screen and (max-width: 768px) {
+                display: block;
+              }
+            `}
+          />
+          투자받는 것이 가능한 곳
+        </h3>
+        <p
+          css={css`
+            color: ${theme.color.text.main};
+            font-size: 1.5rem;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            @media screen and (max-width: 768px) {
+              font-size: 1rem;
+            }
+          `}
+        >
+          스타트업과 투자자가 NFT를 기반으로 소통하며 상생하는 플랫폼입니다.
+        </p>
+        <div>
+          <Button
+            css={css`
+              display: inline-block;
               color: ${theme.color.text.main};
-              font-size: 64px;
-              line-height: 1.25;
-              font-weight: lighter;
-              margin-bottom: 40px;
+              font-weight: bold;
+              padding: 0.8rem 1.3rem;
+              margin-right: 1rem;
+              border-radius: 2rem;
+              background-color: ${theme.color.background.main};
+              ${cssConvex}
             `}
           >
-            유니크한 NFT를 구매해보세요.
-          </h2>
-          <h3
+            투자받기
+          </Button>
+          <Button
             css={css`
+              display: inline-block;
               color: ${theme.color.text.main};
-              font-size: 24px;
-              line-height: 1.25;
-              margin-bottom: 20px;
+              font-weight: bold;
+              padding: 0.8rem 1.3rem;
+              border-radius: 2rem;
+              background-color: ${theme.color.background.page};
+              border: 1px solid ${theme.color.background.main};
+              ${cssConvex}
             `}
           >
-            누구나 쉽게 NFT 투자하고 투자받는 것이 가능한 곳
-          </h3>
-          <p
-            css={css`
-              color: ${theme.color.text.main};
-              font-size: 16px;
-              line-height: 1.8;
-              margin-bottom: 20px;
-            `}
-          >
-            스타트업과 투자자가 NFT를 기반으로 소통하며 상생하는 플랫폼입니다.
-          </p>
-          <div>
-            <a
-              css={css`
-                display: inline-block;
-                color: ${theme.color.text.main};
-                font-weight: bold;
-                padding: 12px 20px;
-                border-radius: 24px;
-                background-color: ${theme.color.background.main};
-              `}
-              href="#"
-            >
-              투자받기
-            </a>
-            <a
-              css={css`
-                background-color: ${theme.color.background.page};
-                border: 1px solid ${theme.color.background.main};
-              `}
-              href="#"
-            >
-              투자하기
-            </a>
-          </div>
+            투자하기
+          </Button>
         </div>
       </div>
     </div>
