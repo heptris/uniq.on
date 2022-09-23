@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCopyright } from "@fortawesome/free-solid-svg-icons";
 
 import Text from "@/components/Text";
+import Link from "next/link";
 
 /**
  * @params
@@ -31,8 +32,12 @@ function Footer() {
             Investment
           </Text>
           <ul>
-            <Text as="li">투자리스트</Text>
-            <Text as="li">투자신청</Text>
+            <Link href="/list">
+              <Text as="li">투자리스트</Text>
+            </Link>
+            <Link href="/apply">
+              <Text as="li">투자신청</Text>
+            </Link>
           </ul>
         </InfoItem>
         <InfoItem>
