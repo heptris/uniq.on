@@ -22,6 +22,7 @@ function Grid<T extends ElementType = "div">(
         align-items: center;
         justify-content: center;
         flex-wrap: wrap;
+        row-gap: 0.5rem;
 
         max-width: 800px;
 
@@ -32,6 +33,7 @@ function Grid<T extends ElementType = "div">(
           `
             display: grid;
             grid-template-columns: repeat(2, 50%);
+            column-gap: 0.5rem;
           `}
         }
       `}
