@@ -25,10 +25,8 @@ import java.util.List;
 @RequiredArgsConstructor
 @Service
 public class StartupInvestService {
-
     private final StartupRepository startupRepository;
     private final InvestHistoryRepository investHistoryRepository;
-
     private final AlarmRepository alarmRepository;
 
     @Transactional
@@ -69,39 +67,61 @@ public class StartupInvestService {
                 startup -> {
                     if (startup.getEndDate().isBefore(LocalDateTime.now())) { // 마감일 지났을 때
                         startup.changeIsFinish();   // 투자 마감 표시
+                        List<Invest_history> investHistoryList = investHistoryRepository.findByInvestingInvestHistoryList(startup.getId());
                         if (startup.getIsGoal()) { // 목표금액 달성 했을 경우
-                            // 스타트업 NFT토큰 발행
-                            log.info("목표 금액 달성!! NFT 토큰 발행");
-                            // 투자자 NFT토큰 구매
-
-                            // 알람 생성
-                            List<Invest_history> investHistoryList = investHistoryRepository.findByInvestingInvestHistoryList(startup.getId());
+                            // 알람 생성 (투자자에게 보내는 알람)
                             investHistoryList.forEach(invest_history -> {
-                                // 알람 생성
                                 Member member = new Member();
                                 member.changeId(invest_history.getMember().getId());
                                 Alarm alarm = Alarm.builder()
-                                        .content("목표금액 달성했습니다. 투자 완료 확인해주십시오")
+                                        .content(startup.getStartupName() + "이 NFT 발행을 진행 중에 있습니다. 잠시만 기다려 주세요!!")
                                         .isRead(Boolean.FALSE)
+                                        .startupId(startup.getId())
                                         .member(member)
                                         .build();
                                 alarmList.add(alarm);
                             });
+
+                            // 알람 생성 (스타트업에게만 보내는 알람)
+                            Member memberStartup = new Member();
+                            memberStartup.changeId(startup.getMember().getId());
+
+                            Alarm alarmToStartup = Alarm.builder()
+                                    .member(memberStartup)
+                                    .isRead(Boolean.FALSE)
+                                    .startupId(startup.getId())
+                                    .content(startup.getStartupName() + " 투자 유치에 성공했습니다. NFT 토큰을 발급해주세요")
+                                    .build();
+                            alarmList.add(alarmToStartup);
+
                         } else { // 목표금액 달성하지 못했을 경우
-                            List<Invest_history> investHistoryList = investHistoryRepository.findByInvestingInvestHistoryList(startup.getId());
                             investHistoryList.forEach(invest_history -> {
                                 invest_history.changeInvestStatus(InvestStatus.CANCELED);
-                                
-                                // 알람 생성
+
+                                // 알람 생성 (투자자에게 보내는 알람)
                                 Member member = new Member();
                                 member.changeId(invest_history.getMember().getId());
                                 Alarm alarm = Alarm.builder()
-                                        .content("목표금액 달성에 실패하여 투자에 실패했습니다.")
+                                        .content(startup.getStartupName() + " 투자 예약에 실패했습니다.")
                                         .isRead(Boolean.FALSE)
+                                        .startupId(startup.getId())
                                         .member(member)
                                         .build();
                                 alarmList.add(alarm);
+
                             });
+                            // 알람 생성(스타트업에게 보내는 알람)
+                            Member memberStartup = new Member();
+                            memberStartup.changeId(startup.getMember().getId());
+
+                            Alarm alarmToStartup = Alarm.builder()
+                                    .member(memberStartup)
+                                    .isRead(Boolean.FALSE)
+                                    .startupId(startup.getId())
+                                    .content(startup.getStartupName() + " 투자 유치에 실패했습니다.")
+                                    .build();
+                            alarmList.add(alarmToStartup);
+
                         } // end of else
                     }
                 }

@@ -11,6 +11,7 @@ import com.ssafy.uniqon.dto.startup.StartupResponseListDto;
 import com.ssafy.uniqon.dto.startup.StartupSearchCondition;
 import com.ssafy.uniqon.repository.startup.StartupRepository;
 import com.ssafy.uniqon.repository.startup.fav.StartupFavoriteRepository;
+// import com.ssafy.uniqon.service.ipfs.IpfsService;
 import com.ssafy.uniqon.service.s3.AwsS3Service;
 import lombok.RequiredArgsConstructor;
 import org.apache.pdfbox.pdmodel.PDDocument;
@@ -44,6 +45,8 @@ public class StartupService {
     private final StartupRepository startupRepository;
     private final StartupFavoriteRepository startupFavoriteRepository;
     private final AwsS3Service awsS3Service;
+
+ //   private final IpfsService ipfsService;
 
     @Transactional
     public Long 투자등록(Startup startup) {
@@ -105,6 +108,8 @@ public class StartupService {
             String nft_image_url = awsS3.getPath();
             savedStartup.changeImageNft(nft_image_url);
         }
+//        String idToken = ipfsService.saveFile(nft_image);
+//        System.out.println(idToken);
 
         if (road_map != null) {
             try {

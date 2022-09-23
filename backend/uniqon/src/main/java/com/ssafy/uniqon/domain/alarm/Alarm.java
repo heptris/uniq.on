@@ -17,7 +17,7 @@ import javax.persistence.*;
 public class Alarm extends BaseEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JoinColumn(name = "alarm_id")
+    @Column(name = "alarm_id")
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -27,6 +27,8 @@ public class Alarm extends BaseEntity {
     private String content;
 
     private Boolean isRead;
+
+    private Long startupId;
 
     public void changeIsRead(){
         this.isRead = true;

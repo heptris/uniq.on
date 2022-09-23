@@ -12,4 +12,5 @@ public interface StartupRepositoryCustom {
     Page<StartupResponseListDto> search(StartupSearchCondition condition, Pageable pageable);
 
     List<Startup> findByInvestingStartupList();
+
 }

@@ -7,7 +7,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.concurrent.ExecutionException;
 
-import com.example.contract.SsafyNFT;
+import com.example.MintUniqonToken;
 import org.springframework.stereotype.Service;
 import org.web3j.abi.TypeReference;
 import org.web3j.abi.datatypes.Address;
@@ -93,9 +93,9 @@ public class BasicService{
 
     void balanceOf() throws Exception {
 
-        String ERC20_CONTRACT_ADDRESS = "0x2aD0b3914014E547C02eA1813099d5Dd9b592eA1";
-        String USER_ADDRESS = "0xE9FF62Cc98Ff6cDA925F2730966A2536dEaB8C28";
-        String USER_PRIVATE_KEY = "72cbfe67f76393dac3102496a314423732e1da0fd252f900e24ae81338d712d4"; // 사용자의 개인키
+        String ERC20_CONTRACT_ADDRESS = "0x0622875b58bC12de953D3F1fb7C8Ef32Cc46CCfD";
+        String USER_ADDRESS = "0xF7246cf0D87361C013139837DF2b4D68DF482F70";
+        String USER_PRIVATE_KEY = "711a21bdca78391d9ae4b311adc1e9002afe3d458d9c4d63b1050516c12dde31"; // 사용자의 개인키
         long TX_END_CHECK_DURATION = 3000;
         int TX_END_CHECK_RETRY = 3;
 
@@ -110,22 +110,22 @@ public class BasicService{
         );
 
         // 위에서 생성한 Wrapper의 이름 SsafyNFT
-        SsafyNFT erc20 = SsafyNFT.load(ERC20_CONTRACT_ADDRESS, web3j, manager, gasProvider);
+        MintUniqonToken erc20 = MintUniqonToken.load(ERC20_CONTRACT_ADDRESS, web3j, manager, gasProvider);
         BigInteger balance = erc20.balanceOf(USER_ADDRESS).send();
 
         System.out.println(balance);
     }
 
     void transfer() throws Exception {
-        String ERC20_CONTRACT_ADDRESS = "0x6F41b06946AF120a011422e7131C6866dE87eE83";
+        String ERC20_CONTRACT_ADDRESS = "0x0622875b58bC12de953D3F1fb7C8Ef32Cc46CCfD";
 
         // ERC20을 보내는 사용자
         // 내가 상대방에게 보내는 상황이다.
-        String USER_ADDRESS = "0xE9FF62Cc98Ff6cDA925F2730966A2536dEaB8C28";
-        String USER_PRIVATE_KEY = "72cbfe67f76393dac3102496a314423732e1da0fd252f900e24ae81338d712d4";
+        String USER_ADDRESS = "0xF7246cf0D87361C013139837DF2b4D68DF482F70";
+        String USER_PRIVATE_KEY = "711a21bdca78391d9ae4b311adc1e9002afe3d458d9c4d63b1050516c12dde31";
 
         // ERC20을 받는 사용자
-        String RECEIVER_ADDRESS = "0x4A47157B92CDe869f5B0cCE4364CFC3030006dAb";
+        String RECEIVER_ADDRESS = "0xca889D93C95De06D4ab224E13e2Dee84B96c2Bab";
 
         // 트랜잭션 처리에 대한 변수값 -> 기본적으로 3000, 3을 할당한다.
         // 네트워크 상황에 따라 변경가능하다.
@@ -134,7 +134,7 @@ public class BasicService{
 
         // 이전에 만든 프라이빗 네트워크에서 사용한 CHAIN ID가 필요하다.
         // 트랜잭션을 블록에 작성하는 경우에는 필수적이나, 조회하는 경우에는 써도 되고 안써도 된다.
-        long CHAIN_ID = 56;
+        long CHAIN_ID = 1337;
 
         String amount = "10"; // ERC20 10개를 RECEIVER_ADDRESS에 전송
 
@@ -149,7 +149,7 @@ public class BasicService{
                 new PollingTransactionReceiptProcessor(web3j, TX_END_CHECK_DURATION, TX_END_CHECK_RETRY)
         );
 
-        SsafyNFT erc20 = SsafyNFT.load(ERC20_CONTRACT_ADDRESS, web3j, manager, gasProvider);
+        MintUniqonToken erc20 = MintUniqonToken.load(ERC20_CONTRACT_ADDRESS, web3j, manager, gasProvider);
         erc20.transferFrom(USER_ADDRESS, RECEIVER_ADDRESS, new BigInteger(amount)).send();
     }
 

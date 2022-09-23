@@ -29,12 +29,12 @@ import org.web3j.protocol.http.HttpService;
 @Component
 public class EthereumService {
 
-    private String from = "0xdb264f26F89c23CA82e5fEe8Fb54c4645bC41581";
+    private String from = "0xF7246cf0D87361C013139837DF2b4D68DF482F70";
 
-    private String contract = "0xd9145CCE52D386f254917e481eB44e9943F39138";
+    private String contract = "0x0622875b58bC12de953D3F1fb7C8Ef32Cc46CCfD";
 
     // hardcording because of testing
-    private String pwd = "2e3dda448ce268be6bffeb7274a34cde626b5e2589f1b3bcda1a6b5e654b2a48";
+    private String pwd = "711a21bdca78391d9ae4b311adc1e9002afe3d458d9c4d63b1050516c12dde31";
 
     private Admin web3j = null;
 
