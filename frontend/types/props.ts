@@ -85,3 +85,11 @@ export type ModalProps<T extends ElementType> = OverridableProps<
   T,
   ModalBaseProps
 >;
+
+export type LabelInputBaseProps = {
+  labelText?: string;
+};
+export type LabelInputProps<T extends ElementType> = OverridableProps<
+  T,
+  LabelInputBaseProps
+>;
