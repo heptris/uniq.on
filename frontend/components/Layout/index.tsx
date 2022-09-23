@@ -11,7 +11,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <div
         css={css`
           width: 100%;
-          padding: 2rem 0;
           flex: 1 1;
           display: flex;
           flex-direction: column;
