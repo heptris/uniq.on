@@ -85,3 +85,8 @@ export type ModalProps<T extends ElementType> = OverridableProps<
   T,
   ModalBaseProps
 >;
+
+export type CarouselItem = { image: string | StaticImageData };
+export type CarouselProps = {
+  items: CarouselItem[];
+};
