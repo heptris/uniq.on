@@ -17,23 +17,26 @@ expect.extend(matchers);
 describe("LabelInput", () => {
   const renderLabelInput = (
     testId: string,
-    placeholderText?: string,
+    value: string,
+    onChange: React.ChangeEventHandler,
+    placeholder?: string,
     labelText?: string
   ) =>
     render(
       <MyApp>
         <LabelInput
           data-testid={testId}
-          placeholder={placeholderText}
+          placeholder={placeholder}
           labelText={labelText}
-          textValue={""}
+          value={value}
+          onChange={onChange}
         />
       </MyApp>
     );
 
   it("renders without label", () => {
     const testId = "inp-w/o-lbl";
-    const { container } = renderLabelInput(testId);
+    const { container } = renderLabelInput(testId, "", () => {});
     const input = getByTestId(container, testId);
     expect(input).toBeInTheDocument();
   });
@@ -41,7 +44,7 @@ describe("LabelInput", () => {
   it("renders with placeholder text", () => {
     const plchldr = "placeHolder Text";
     const testId = "inp-w/-plchldr";
-    renderLabelInput(testId, plchldr);
+    renderLabelInput(testId, "", () => {}, plchldr);
     const input = screen.getByPlaceholderText(plchldr);
     expect(input).toBeInTheDocument();
     expect(input).toHaveStyle(
@@ -53,7 +56,7 @@ describe("LabelInput", () => {
   it("renders with label", () => {
     const labelText = "label Text";
     const testId = "inp-w/-label";
-    renderLabelInput(testId, "", labelText);
+    renderLabelInput(testId, "", () => {}, "", labelText);
     const inputNode = screen.getByLabelText(labelText);
     expect(inputNode).toBeInTheDocument();
   });
@@ -64,6 +67,8 @@ describe("LabelInput", () => {
     const plchldr = "placeholder text to disappear";
     const { getByPlaceholderText, getByText, container } = renderLabelInput(
       testId,
+      "",
+      () => {},
       plchldr,
       labelText
     );
@@ -83,6 +88,8 @@ describe("LabelInput", () => {
     const plchldr = "placeholder text to disappear";
     const { getByPlaceholderText } = renderLabelInput(
       testId,
+      "",
+      () => {},
       plchldr,
       labelText
     );
@@ -99,5 +106,23 @@ describe("LabelInput", () => {
     //   `2px solid ${uniqonThemes.darkTheme.color.border.main}`
     // );
     // expect(getByPlaceholderText(plchldr).focus()).toBe();
+  });
+
+  it("value changed when typing events", () => {
+    const testId = "inp-typed";
+
+    const onChange = jest.fn();
+
+    let value = "";
+
+    const { getByTestId, getByDisplayValue } = renderLabelInput(
+      testId,
+      value,
+      (e) => onChange(e)
+    );
+    const inputNode = getByTestId(testId);
+    // fireEvent.change(inputNode, { target: { value: "123" } });
+    // expect(getByDisplayValue("123") === inputNode).toBe(true);
+    expect(inputNode).toHaveTextContent(value);
   });
 });
