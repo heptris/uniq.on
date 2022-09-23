@@ -5,7 +5,7 @@ import { useTheme, css } from "@emotion/react";
 export default function login() {
   const theme = useTheme();
   return (
-    <Layout>
+    <>
       <div
         css={css`
           margin: 4rem 0rem 5rem;
@@ -33,6 +33,6 @@ export default function login() {
         input 들어갈곳(지갑을 연결해주세요)
       </div>
       <Button>지갑 연결하기</Button>
-    </Layout>
+    </>
   );
 }

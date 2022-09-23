@@ -53,13 +53,7 @@ export default function Home() {
   ];
 
   return (
-    <Layout css={css``}>
-      <Head>
-        <title>Uniq.on</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
-      <Navbar />
+    <>
       <Carousel items={carouselItems} />
       <PageHeader>
         <Text
@@ -106,7 +100,7 @@ export default function Home() {
           />
         ))}
       </Grid>
-    </Layout>
+    </>
   );
 }
 
