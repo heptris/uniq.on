@@ -1,173 +1,87 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.4;
 
-import "./access/Ownable.sol";
-import "./token/ERC20/ERC20.sol";
-import "./token/ERC721/ERC721.sol";
+pragma solidity ^0.8.0;
 
-/**
- * PJT Ⅲ - Req.1-SC1 SaleFactory 구현
- * 상태 변수나 함수의 시그니처, 이벤트는 구현에 따라 변경할 수 있습니다.
- */
-contract SaleFactory is Ownable {
-    address public admin;
-    address[] public sales;
+import "./MintUniqonToken.sol";
 
-    event NewSale(
-        address indexed _saleContract,
-        address indexed _owner,
-        uint256 _workId
-    );
+contract SaleFactory {
+    MintUniqonToken public mintUniqonTokenAddress;
 
-    constructor() {
-        admin = msg.sender;
+    constructor(address _mintUniqonTokenAddress) {
+        mintUniqonTokenAddress = MintUniqonToken(_mintUniqonTokenAddress);
     }
 
-    /**
-     * @dev 반드시 구현해야하는 함수입니다. 
-     */
-    function createSale(
-        uint256 itemId,
-        uint256 minPrice,
-        uint256 purchasePrice,
-        uint256 startTime,
-        uint256 endTime,
-        address currencyAddress,
-        address nftAddress
-    ) public returns (address) {
-        // TODO
+    mapping(uint256 => uint256) public uniqonTokenPrices;
+
+    uint256[] public onSaleUniqonToken;
+
+    function setForSaleUniqonToken(uint256 _uniqonTokenId, uint256 _price)
+        public
+    {
+        address uniqonTokenOwner = mintUniqonTokenAddress.ownerOf(
+            _uniqonTokenId
+        );
+
+        require(
+            uniqonTokenOwner == msg.sender,
+            "Caller is not uniqonToken owner."
+        );
+        require(_price > 0, "Price is zero is lower.");
+        require(
+            uniqonTokenPrices[_uniqonTokenId] == 0,
+            "This uniqon token is already on sale."
+        );
+        require(
+            mintUniqonTokenAddress.isApprovedForAll(uniqonTokenOwner, address(this)),
+            "Uniqon token owner did not approve token."
+        );
+
+        // 가격을 prices에 매핑
+        uniqonTokenPrices[_uniqonTokenId] = _price;
+
+        // 토큰 아이디로 판매중 토큰 배열에 저장
+        onSaleUniqonToken.push(_uniqonTokenId);
     }
 
-    function allSales() public view returns (address[] memory) {
-        return sales;
-    }
-}
+    function purchaseUniqonToken(uint256 _uniqonTokenId) public payable {
+        uint256 price = uniqonTokenPrices[_uniqonTokenId];
+        address uniqonTokenOwner = mintUniqonTokenAddress.ownerOf(_uniqonTokenId);
 
-/**
- *  PJT Ⅲ - Req.1-SC2) Sale 구현
- */
-contract Sale {
-    // 생성자에 의해 정해지는 값
-    address public seller;
-    address public buyer;
-    address admin;
-    uint256 public saleStartTime;
-    uint256 public saleEndTime;
-    uint256 public minPrice;
-    uint256 public purchasePrice;
-    uint256 public tokenId;
-    address public currencyAddress;
-    address public nftAddress;
-    bool public ended;
+        require(price > 0, "This uniqon token not sale.");
+        require(price <= msg.value, "Caller sent lower than price.");
+        require(
+            uniqonTokenOwner != msg.sender,
+            "Caller is uniqon token owner."
+        );
 
-    // 현재 최고 입찰 상태
-    address public highestBidder;
-    uint256 public highestBid;
+        payable(uniqonTokenOwner).transfer(msg.value);
+        mintUniqonTokenAddress.safeTransferFrom(
+            uniqonTokenOwner,
+            msg.sender,
+            _uniqonTokenId
+        );
 
-    IERC20 public erc20Contract;
-    IERC721 public erc721Constract;
+        uniqonTokenPrices[_uniqonTokenId] = 0;
 
-    event HighestBidIncereased(address bidder, uint256 amount);
-    event SaleEnded(address winner, uint256 amount);
-
-    constructor(
-        address _admin,
-        address _seller,
-        uint256 _tokenId,
-        uint256 _minPrice,
-        uint256 _purchasePrice,
-        uint256 startTime,
-        uint256 endTime,
-        address _currencyAddress,
-        address _nftAddress
-    ) {
-        require(_minPrice > 0);
-        tokenId = _tokenId;
-        minPrice = _minPrice;
-        purchasePrice = _purchasePrice;
-        seller = _seller;
-        admin = _admin;
-        saleStartTime = startTime;
-        saleEndTime = endTime;
-        currencyAddress = _currencyAddress;
-        nftAddress = _nftAddress;
-        ended = false;
-        erc20Contract = IERC20(_currencyAddress);
-        erc721Constract = IERC721(_nftAddress);
+        for (uint256 i = 0; i < onSaleUniqonToken.length; i++) {
+            if (uniqonTokenPrices[onSaleUniqonToken[i]] == 0) {
+                onSaleUniqonToken[i] = onSaleUniqonToken[
+                    onSaleUniqonToken.length - 1
+                ];
+                onSaleUniqonToken.pop();
+            }
+        }
     }
 
-    function bid(uint256 bid_amount) public {
-        // TODO
-    }
-
-    function purchase() public {
-        // TODO 
-    }
-
-    function confirmItem() public {
-        // TODO 
-    }
-    
-    function cancelSales() public {
-        // TODO
-    }
-
-    function getTimeLeft() public view returns (int256) {
-        return (int256)(saleEndTime - block.timestamp);
-    }
-
-    function getSaleInfo()
+    function getTokenPrice(uint256 _uniqonTokenId)
         public
         view
-        returns (
-            uint256,
-            uint256,
-            uint256,
-            uint256,
-            uint256,
-            address,
-            uint256,
-            address,
-            address
-        )
+        returns (uint256)
     {
-        return (
-            saleStartTime,
-            saleEndTime,
-            minPrice,
-            purchasePrice,
-            tokenId,
-            highestBidder,
-            highestBid,
-            currencyAddress,
-            nftAddress
-        );
+        return uniqonTokenPrices[_uniqonTokenId];
     }
 
-    function getHighestBid() public view returns(uint256){
-        return highestBid;
-    }
-
-    // internal 혹은 private 함수 선언시 아래와 같이 _로 시작하도록 네이밍합니다.
-    function _end() internal {
-        ended = true;
-    }
-
-    function _getCurrencyAmount() private view returns (uint256) {
-        return erc20Contract.balanceOf(msg.sender);
-    }
-
-    // modifier를 사용하여 함수 동작 조건을 재사용하는 것을 권장합니다. 
-    modifier onlySeller() {
-        require(msg.sender == seller, "Sale: You are not seller.");
-        _;
-    }
-
-    modifier onlyAfterStart() {
-        require(
-            block.timestamp >= saleStartTime,
-            "Sale: This sale is not started."
-        );
-        _;
+    function getOnSaleUniqonToken() public view returns (uint256[] memory) {
+        return onSaleUniqonToken;
     }
 }

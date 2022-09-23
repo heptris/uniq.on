@@ -36,6 +36,6 @@ contract MintUniqonToken is ERC721Enumerable{
         _tokenIds += 1;
         _mint(to, _tokenIds);
         // emit createNFT(_tokenIds+1, to); // block에 저장 + print 기능
-        // return _tokenIds+1;
+        return _tokenIds;
     }
 }
