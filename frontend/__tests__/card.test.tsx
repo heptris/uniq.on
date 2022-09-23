@@ -45,7 +45,7 @@ describe("Card", () => {
         <NFTItemCard
           data-testid="nft-item-card"
           nftImage={nft}
-          tokenName={"testTitle #199"}
+          tokenId={199}
           corpName={"Tester"}
           price={1}
           status={"망함"}
@@ -56,7 +56,7 @@ describe("Card", () => {
     const nftItemCard = getByTestId(container, "nft-item-card");
 
     expect(nftItemCard).toBeInTheDocument();
-    expect(nftItemCard).toHaveTextContent("testTitle");
+    expect(nftItemCard).toHaveTextContent("Tester #199");
     expect(nftItemCard).toHaveTextContent("Tester");
     // expect(nftItemCard).toHaveTextContent("망함");
     expect(nftItemCard).toHaveTextContent("1");
