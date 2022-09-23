@@ -6,15 +6,15 @@ import styled from "@emotion/styled";
 import { faEthereum } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import { Combine } from "@/types/utils";
-import { CardProps } from "@/types/props";
+import type { Combine } from "@/types/utils";
+import type { CardProps } from "@/types/props";
 import Card from "@/components/Card";
 import Text from "@/components/Text";
 import ProgressBar from "@/components/ProgressBar";
 
 type NFTItemCardProps = {
   nftImage: string | StaticImageData;
-  tokenName: string;
+  tokenId: number;
   corpName: string;
   price?: number;
   status?: string;
@@ -25,7 +25,7 @@ type NFTItemCardProps = {
  * @props
  * `nftImage`: `string` | `StaticImageData`
  *
- * `tokenName`: `string`
+ * `tokenId`: `string`
  *
  * `corpName`: `string`
  *
@@ -40,14 +40,20 @@ function NFTItemCard<T extends ElementType = "div">(
   props: Combine<NFTItemCardProps, CardProps<T>>,
   ref: Ref<any>
 ) {
-  const { nftImage, tokenName, corpName, price, status, progress, ...rest } =
+  const { nftImage, tokenId, corpName, price, status, progress, ...rest } =
     props;
 
   const theme = useTheme();
 
   return (
     <Card style={{ height: "20rem" }} ref={ref} {...rest}>
-      <Image src={nftImage} style={{ width: "100%", height: "width" }} />
+      <Image
+        src={nftImage}
+        css={css`
+          width: 100%;
+          height: width;
+        `}
+      />
       <InfoContainer>
         <Text
           role="token-name"
@@ -55,7 +61,7 @@ function NFTItemCard<T extends ElementType = "div">(
             font-weight: 600;
           `}
         >
-          {tokenName}
+          {corpName} #{tokenId}
         </Text>
         <Text
           role="corp-name"
@@ -96,16 +102,24 @@ function NFTItemCard<T extends ElementType = "div">(
             align-items: center;
           `}
         >
-          {progress && (
-            <ProgressBar
-              css={css`
-                margin-right: 10px;
-              `}
-              progress={progress}
-              type={"blue"}
-            />
+          {progress !== undefined && (
+            <>
+              <ProgressBar
+                css={css`
+                  margin-right: 10px;
+                `}
+                progress={progress}
+                type={"blue"}
+              />
+              <Text
+                css={css`
+                  font-size: 0.7rem;
+                `}
+              >
+                {progress}%
+              </Text>
+            </>
           )}
-          {progress}%
         </Text>
       </InfoContainer>
     </Card>
