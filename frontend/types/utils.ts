@@ -10,3 +10,15 @@ export type CombineElementProps<T extends ElementType, K = unknown> = Combine<
 export type OverridableProps<T extends ElementType, K = unknown> = {
   as?: T;
 } & CombineElementProps<T, K>;
+
+export type ColorMap = {
+  background: {
+    purple: string;
+    blue: string;
+    disabled?: string;
+  };
+  hover?: {
+    purple: string;
+    blue: string;
+  };
+};

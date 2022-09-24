@@ -4,14 +4,8 @@ import { useTheme } from "@emotion/react";
 import styled from "@emotion/styled";
 
 import type { ProgressBarProps } from "@/types/props";
+import type { ColorMap } from "@/types/utils";
 import { cssConcave, cssConvex } from "@/styles/utils";
-
-type ColorMap = {
-  background: {
-    purple: string;
-    blue: string;
-  };
-};
 
 /**
  * @props
