@@ -31,8 +31,8 @@ function SelectTab<T extends ElementType = "div">(
   return (
     <>
       <SelectTabContainer colorMap={colorMap} type={type} ref={ref} {...rest}>
-        {menus.map((menu) => (
-          <label>
+        {menus.map((menu, i) => (
+          <label key={i}>
             <input
               type="radio"
               value={menu}
