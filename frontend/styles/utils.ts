@@ -12,3 +12,5 @@ export const cssConvex = `
 export const cssConcave = `
   box-shadow: inset 1px -1px 2px var(--whiteOpacity300), inset -1px 1px 2px var(--greyOpacity800);
 `;
+export const minTabletWidth = `min-width: 600px`;
+export const minDesktopWidth = `min-width: 900px`;

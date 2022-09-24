@@ -10,6 +10,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import type { CarouselProps } from "@/types/props";
+import { minDesktopWidth, minTabletWidth } from "@/styles/utils";
 
 function Carousel(props: CarouselProps) {
   const items = useRef(props.items);
@@ -44,6 +45,7 @@ function Carousel(props: CarouselProps) {
             <Image
               src={item.image}
               layout={"fill"}
+              objectFit={"cover"}
               alt={`Carousel Image${i}`}
             />
           </SlideItem>
@@ -55,6 +57,10 @@ function Carousel(props: CarouselProps) {
         css={css`
           top: 50%;
           left: 0;
+
+          @media (${minDesktopWidth}) {
+            left: 1rem;
+          }
         `}
       >
         <StyledFontAwesomeIcon icon={faChevronCircleLeft} />
@@ -65,6 +71,10 @@ function Carousel(props: CarouselProps) {
         css={css`
           top: 50%;
           right: 0;
+
+          @media (${minDesktopWidth}) {
+            right: 1rem;
+          }
         `}
       >
         <StyledFontAwesomeIcon icon={faChevronCircleRight} />
@@ -82,13 +92,17 @@ const CarouselContainer = styled.div`
   position: relative;
   color: ${({ theme }) => theme.color.text.main};
   border-bottom: 1px solid ${({ theme }) => theme.color.border.main};
+
+  @media (${minTabletWidth}) {
+    height: 55vh;
+  }
 `;
 const BluredBackground = styled.div`
   position: absolute;
   transform: translate(-50%, -50%);
   transform: scale(2.2);
   width: 100vw;
-  height: 30rem;
+  height: 55vh;
   top: 0;
   left: 0;
   display: flex;
@@ -101,8 +115,11 @@ const Slide = styled.div`
   flex-direction: row;
   width: 300vw;
   height: 27rem;
-
   transition: margin-left 0.3s ease 0s;
+
+  @media (${minTabletWidth}) {
+    height: 50vh;
+  }
 `;
 const SlideItem = styled.div`
   position: relative;
@@ -112,11 +129,17 @@ const SlideItem = styled.div`
   height: 27rem;
   border-radius: 16px;
   overflow: hidden;
+
+  @media (${minTabletWidth}) {
+    height: 50vh;
+  }
 `;
 const SlideButton = styled.button`
+  width: fit-content;
   position: absolute;
   background-color: transparent;
   border: 0;
+  transform: translate(0, -50%);
 
   &:hover,
   &:active {
@@ -133,7 +156,6 @@ const SlideButton = styled.button`
 const StyledFontAwesomeIcon = styled(FontAwesomeIcon)`
   width: 2rem;
   color: ${({ theme }) => theme.color.text.sub};
-  transform: translate(0, -50%);
 `;
 
 export default Carousel;

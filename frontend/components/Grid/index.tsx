@@ -2,6 +2,7 @@ import { ElementType, forwardRef, Ref } from "react";
 import { GridProps } from "@/types/props";
 
 import { css } from "@emotion/react";
+import { minDesktopWidth, minTabletWidth } from "@/styles/utils";
 
 /**
  * @params
@@ -18,22 +19,24 @@ function Grid<T extends ElementType = "div">(
   return (
     <Component
       css={css`
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-wrap: wrap;
-        row-gap: 0.5rem;
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(1, 1fr);
+        gap: 2vw;
+        ${column === "double" &&
+        `
+          grid-template-columns: repeat(2, 1fr);
+        `}
 
-        max-width: 800px;
-
-        @media (max-width: 600px) {
-          width: 100%;
-          flex-direction: column;
+        @media (${minTabletWidth}) {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        @media (${minDesktopWidth}) {
+          grid-template-columns: repeat(3, 1fr);
+          gap: 1vw;
           ${column === "double" &&
           `
-            display: grid;
-            grid-template-columns: repeat(2, 50%);
-            column-gap: 0.5rem;
+          grid-template-columns: repeat(4, 1fr);
           `}
         }
       `}
