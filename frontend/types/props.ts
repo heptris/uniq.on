@@ -97,7 +97,10 @@ export type LabelInputProps<T extends ElementType> = OverridableProps<
   LabelInputBaseProps
 >;
 
-export type CarouselItem = { image: string | StaticImageData };
+export type CarouselItem = {
+  corpName: string;
+  image: string | StaticImageData;
+};
 export type CarouselProps = {
   items: CarouselItem[];
 };

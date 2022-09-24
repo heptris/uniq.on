@@ -22,12 +22,15 @@ export default function InvestmentList() {
   const { account, setAccount } = contracts.useAccount();
   const carouselItems: CarouselItem[] = [
     {
+      corpName: "RENGA",
       image: nft1,
     },
     {
+      corpName: "DigiDaigaku",
       image: nft2,
     },
     {
+      corpName: "Hume Genesis",
       image: nft3,
     },
   ];

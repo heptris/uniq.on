@@ -12,36 +12,64 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import type { CarouselProps } from "@/types/props";
 import { minDesktopWidth, minTabletWidth } from "@/styles/utils";
 
+const useInterval = (callback: Function, delay: number) => {
+  const savedCallback = useRef<Function>();
+  useEffect(() => {
+    savedCallback.current = callback;
+  }, [callback]);
+
+  useEffect(() => {
+    function tick() {
+      if (!savedCallback.current) return;
+      savedCallback.current();
+    }
+    if (delay !== null) {
+      let id = setInterval(tick, delay);
+      return () => clearInterval(id);
+    }
+  }, [delay]);
+};
+
+/**
+ *
+ * @param items CarouselItem[]
+ * @returns ReactElement
+ */
 function Carousel(props: CarouselProps) {
-  const items = useRef(props.items);
+  const items = props.items;
 
-  const [current, setCurrent] = useState(0);
+  const [currentIdx, setCurrentIdx] = useState(0);
   const [style, setStyle] = useState({
-    marginLeft: `-${current * 100}vw`,
+    marginLeft: `-${currentIdx * 100}vw`,
   });
-  const itemSize = useRef(items.current.length);
+  const itemSize = useRef(items.length);
 
-  const moveSlide = (i: number) => {
-    let nextIndex = current + i;
+  const moveSlide = (di: number) => {
+    setCurrentIdx((currentIdx) => {
+      let nextIndex = currentIdx + di;
+      if (nextIndex < 0) nextIndex = itemSize.current - 1;
+      else if (nextIndex >= itemSize.current) nextIndex = 0;
 
-    if (nextIndex < 0) nextIndex = itemSize.current - 1;
-    else if (nextIndex >= itemSize.current) nextIndex = 0;
-
-    setCurrent(nextIndex);
+      return nextIndex;
+    });
   };
 
   useEffect(() => {
-    setStyle({ marginLeft: `-${current * 100}vw` });
-  }, [current]);
+    setStyle({ marginLeft: `-${currentIdx * 100}vw` });
+  }, [currentIdx]);
+  useInterval(() => {
+    moveSlide(1);
+  }, 10000);
 
   return (
     <CarouselContainer>
       <BluredBackground>
-        <Image src={items.current[current].image} />
+        <Image src={items[currentIdx].image} />
       </BluredBackground>
       <Slide style={style}>
-        {items.current.map((item, i) => (
+        {items.map((item, i) => (
           <SlideItem key={i}>
+            <CorporationName>{item.corpName}</CorporationName>
             <Image
               src={item.image}
               layout={"fill"}
@@ -133,6 +161,18 @@ const SlideItem = styled.div`
   @media (${minTabletWidth}) {
     height: 50vh;
   }
+`;
+const CorporationName = styled.p`
+  position: absolute;
+  left: 3%;
+  bottom: 10%;
+  padding: 0.3rem 1rem;
+  border-radius: 8px;
+  font-size: 3rem;
+  font-weight: 700;
+  z-index: 50;
+  color: ${({ theme }) => theme.color.text.main};
+  backdrop-filter: blur(20px);
 `;
 const SlideButton = styled.button`
   width: fit-content;
