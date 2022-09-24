@@ -20,6 +20,7 @@ function Container<T extends ElementType = "section">(
   return (
     <Component
       css={css`
+        position: relative;
         background-color: ${theme.color.background.page};
         min-height: 100vh;
         margin-top: 80px;
