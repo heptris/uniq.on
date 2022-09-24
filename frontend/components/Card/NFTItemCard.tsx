@@ -46,14 +46,10 @@ function NFTItemCard<T extends ElementType = "div">(
   const theme = useTheme();
 
   return (
-    <Card style={{ height: "20rem" }} ref={ref} {...rest}>
-      <Image
-        src={nftImage}
-        css={css`
-          width: 100%;
-          height: width;
-        `}
-      />
+    <Card style={{ height: "fit-content" }} ref={ref} {...rest}>
+      <ImageContainer>
+        <Image src={nftImage} layout={"fill"} objectFit={"cover"} />
+      </ImageContainer>
       <InfoContainer>
         <Text
           role="token-name"
@@ -131,6 +127,12 @@ const InfoContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+`;
+const ImageContainer = styled.div`
+  position: relative;
+  display: block;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
 `;
 
 export default forwardRef(NFTItemCard) as typeof NFTItemCard;

@@ -22,9 +22,10 @@ function Card<T extends ElementType = "div">(
     <Component
       css={css`
         width: 100%;
-        height: 10rem;
+        height: fit-content;
         border-radius: 8px;
         position: relative;
+        overflow: hidden;
         background-color: ${theme.color.background.card};
       `}
       ref={ref}
