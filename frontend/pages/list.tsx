@@ -4,9 +4,9 @@ import { css } from "@emotion/react";
 import styled from "@emotion/styled";
 
 import corp from "@/assets/corps/1.png";
-import nft1 from "assets/nfts/2.png";
-import nft2 from "assets/nfts/3.png";
-import nft3 from "assets/nfts/4.png";
+import nft1 from "@/assets/nfts/2.png";
+import nft2 from "@/assets/nfts/3.png";
+import nft3 from "@/assets/nfts/4.png";
 
 import type { Corp } from "@/types/api_responses";
 import type { CarouselItem } from "@/types/props";
@@ -15,7 +15,7 @@ import Navbar from "@/components/Navbar";
 import CorporationCard from "@/components/Card/CorporationCard";
 import Layout from "@/components/Layout";
 import Carousel from "@/components/Carousel";
-import contracts from "contracts/utils";
+import contracts from "@/contracts/utils";
 import SelectTab from "@/components/SelectTab";
 
 export default function InvestmentList() {

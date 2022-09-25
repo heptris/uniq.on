@@ -59,5 +59,5 @@ const darkTheme: UniqonTheme = {
   },
 };
 export const uniqonThemes = {
-  darkTheme: darkTheme,
+  darkTheme,
 };

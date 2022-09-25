@@ -6,7 +6,7 @@ import React, {
   useState,
 } from "react";
 import Image from "next/image";
-import logo from "assets/logo.png";
+import logo from "@/assets/logo.png";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
