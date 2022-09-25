@@ -13,14 +13,27 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
+    "jsxImportSource": "@emotion/react",
     "incremental": true,
     "baseUrl": ".",
     "paths": {
-      "@/components/*": ["components/*"],
+      "@/*": ["src/*"],
+      "@/api/*": ["src/api/*"],
+      "@/assets/*": ["src/assets/*"],
+      "@/components/*": ["src/components/*"],
+      "@/contracts/*": ["src/contracts/*"],
       "@/pages/*": ["pages/*"],
-      "@/styles/*": ["styles/*"]
+      "@/styles/*": ["src/styles/*"],
+      "@/types/*": ["src/types/*"],
+      "@/hooks/*": ["src/hooks/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "types.d.ts"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "types.d.ts",
+    "./jest.setup.ts"
+  ],
   "exclude": ["node_modules"]
 }
