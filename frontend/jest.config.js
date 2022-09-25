@@ -15,6 +15,7 @@ const customJestConfig = {
     "\\.(css|less)$": "<rootDir>/__mocks__/styleMock.js",
 
     // Handle module aliases (this will be automatically configured for you soon)
+    "^@/(.*)$": "<rootDir>/src/$1",
     "^@/api/(.*)$": "<rootDir>/api/$1",
     "^@/assets/(.*)$": "<rootDir>/assets/$1",
     "^@/components/(.*)$": "<rootDir>/components/$1",
@@ -22,6 +23,7 @@ const customJestConfig = {
     "^@/pages/(.*)$": "<rootDir>/pages/$1",
     "^@/styles/(.*)$": "<rootDir>/styles/$1",
     "^@/types/(.*)$": "<rootDir>/types/$1",
+    "^@/hooks/(.*)$": "<rootDir>/hooks/$1",
   },
   testEnvironment: "jest-environment-jsdom",
 };
