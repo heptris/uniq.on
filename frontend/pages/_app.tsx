@@ -12,7 +12,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
   return (
     <ThemeProvider theme={uniqonThemes.darkTheme}>
       <Head>
-        <title>Uniq.on</title>
+        <title>uniq.on | NFT를 통한 스타트업 투자 플랫폼</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Layout>

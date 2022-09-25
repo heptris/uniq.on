@@ -7,6 +7,7 @@ export type Member = {
   name: string;
   walletAddress: string;
   nickname: string;
+  profileImage: string | StaticImageData;
   email: string;
   memberType: "ADMIN" | "USER";
 };

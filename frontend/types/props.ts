@@ -60,10 +60,13 @@ export type AlertProps<T extends ElementType> = OverridableProps<
   AlertBaseProps
 >;
 
-export type SelectTabBaseProps = {};
-export type SelectTabProps<T extends ElementType> = OverridableProps<
+export type SelectTabBaseProps = {
+  menus: string[];
+  type?: "purple" | "blue";
+};
+export type SelectTabProps<T extends ElementType> = CombineElementProps<
   T,
-  AlertBaseProps
+  SelectTabBaseProps
 >;
 
 export type ProgressBarBaseProps = {
@@ -94,7 +97,10 @@ export type LabelInputProps<T extends ElementType> = OverridableProps<
   LabelInputBaseProps
 >;
 
-export type CarouselItem = { image: string | StaticImageData };
+export type CarouselItem = {
+  corpName: string;
+  image: string | StaticImageData;
+};
 export type CarouselProps = {
   items: CarouselItem[];
 };

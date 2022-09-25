@@ -2,6 +2,7 @@ import React, {
   ComponentPropsWithoutRef,
   forwardRef,
   Ref,
+  useEffect,
   useState,
 } from "react";
 import Image from "next/image";
@@ -13,12 +14,13 @@ import {
   faBell,
   faCircle,
   faTimes,
-  faUser,
+  faCircleUser,
   faWallet,
 } from "@fortawesome/free-solid-svg-icons";
 import { css, useTheme } from "@emotion/react";
 import styled from "@emotion/styled";
 import Link from "next/link";
+import contracts from "@/contracts/utils";
 
 /**
  * @params
@@ -28,11 +30,17 @@ function Navbar(
   { ...props }: ComponentPropsWithoutRef<"header">,
   ref: Ref<any>
 ) {
-  const [isLogin, setIsLogin] = useState(false);
+  const [isLoggedIn, setIsLogin] = useState(true);
   const [active, setActive] = useState(false);
   const toggleHandler = () => {
     setActive(!active);
   };
+
+  const { account, setAccount } = contracts.useAccount();
+  useEffect(() => {
+    if (!account) setIsLogin(false);
+    else setIsLogin(true);
+  }, [account]);
 
   const theme = useTheme();
   return (
@@ -76,29 +84,38 @@ function Navbar(
           <nav
             className={active ? "main-navigation active" : "main-navigation"}
           >
-            {isLogin ? (
-              <Link href="/mypage">마이페이지</Link>
-            ) : (
-              <Link href="/login">로그인</Link>
-            )}
             <Link href="/list">
               <a href="#">투자리스트</a>
             </Link>
             <a href="#">투자신청</a>
             <a href="#">자주하는질문</a>
           </nav>
-          {isLogin ? (
+          {isLoggedIn ? (
             <div
               className="nav-icon"
               css={css`
                 padding-left: 50px;
               `}
             >
+              <Link href="/mypage">
+                <FontAwesomeIcon
+                  icon={faCircleUser}
+                  css={css`
+                    width: 1.5rem;
+                    color: ${theme.color.text.main};
+                    margin-right: 2rem;
+
+                    &:hover {
+                      color: ${theme.color.text.hover};
+                    }
+                  `}
+                />
+              </Link>
               <Link href="/alarm">
                 <FontAwesomeIcon
                   icon={faBell}
                   css={css`
-                    width: 19px;
+                    width: 1.3rem;
                     color: ${theme.color.text.main};
                     &:hover {
                       color: ${theme.color.text.hover};

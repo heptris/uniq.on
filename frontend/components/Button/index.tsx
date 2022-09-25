@@ -1,8 +1,10 @@
 import { ElementType, Ref, forwardRef } from "react";
-import { ButtonProps } from "@/types/props";
+import type { ButtonProps } from "@/types/props";
 
 import { css, useTheme } from "@emotion/react";
 import { cssFontFamily, cssConvex } from "@/styles/utils";
+
+import type { ColorMap } from "@/types/utils";
 
 /**
  * @params
@@ -28,7 +30,7 @@ function Button<T extends ElementType = "button">(
   const Component = target;
 
   const theme = useTheme();
-  const colorMap = {
+  const colorMap: ColorMap = {
     background: {
       purple: theme.color.background.main,
       blue: theme.color.background.emphasis,
@@ -60,7 +62,7 @@ function Button<T extends ElementType = "button">(
 
         &:not([disabled]):hover,
         &:not([disabled]):active {
-          background-color: ${colorMap.hover[type]};
+          background-color: ${colorMap.hover && colorMap.hover[type]};
         }
         &:not([disabled]):hover {
           cursor: pointer;

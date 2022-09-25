@@ -17,13 +17,15 @@
     "incremental": true,
     "baseUrl": ".",
     "paths": {
+      "@/*": ["src/*"],
       "@/api/*": ["api/*"],
       "@/assets/*": ["assets/*"],
       "@/components/*": ["components/*"],
       "@/contracts/*": ["contracts/*"],
       "@/pages/*": ["pages/*"],
       "@/styles/*": ["styles/*"],
-      "@/types/*": ["types/*"]
+      "@/types/*": ["types/*"],
+      "@/hooks/*": ["hooks/*"]
     }
   },
   "include": [
