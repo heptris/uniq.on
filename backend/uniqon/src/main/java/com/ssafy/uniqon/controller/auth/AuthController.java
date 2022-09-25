@@ -6,10 +6,12 @@ import com.ssafy.uniqon.dto.member.MemberJoinDto;
 import com.ssafy.uniqon.dto.member.MemberLoginDto;
 import com.ssafy.uniqon.dto.response.ResponseDto;
 import com.ssafy.uniqon.dto.token.TokenDto;
+import com.ssafy.uniqon.dto.token.TokenRequestDto;
 import com.ssafy.uniqon.exception.ex.CustomException;
 import com.ssafy.uniqon.exception.ex.CustomValidationException;
 import com.ssafy.uniqon.repository.member.MemberRepository;
 import com.ssafy.uniqon.service.auth.AuthService;
+import com.ssafy.uniqon.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -20,11 +22,10 @@ import org.springframework.security.core.Authentication;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.Map;
@@ -38,10 +39,8 @@ import static com.ssafy.uniqon.exception.ex.ErrorCode.NOT_EQUAL_PASSWORD;
 @RequiredArgsConstructor
 public class AuthController {
 
-    private final AuthenticationManagerBuilder authenticationManagerBuilder;
+
     private final AuthService authService;
-    private final MemberRepository memberRepository;
-    private final TokenProvider tokenProvider;
 
     @PostMapping("/signup")
     public ResponseEntity<?> signup(@RequestBody @Valid MemberJoinDto memberJoinDto, BindingResult bindingResult){
@@ -63,23 +62,24 @@ public class AuthController {
         }
     }
 
-    @Transactional
-    public TokenDto login(MemberLoginDto memberLoginDto) throws RuntimeException{
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody MemberLoginDto memberLoginDto) {
+        TokenDto token = authService.login(memberLoginDto);
+        return new ResponseEntity<ResponseDto>(new ResponseDto<>(200, "로그인 성공",
+                token), HttpStatus.OK);
+    }
 
-        // 1. Login ID/PW 를 기반으로 AuthenticationToken 생성
-        UsernamePasswordAuthenticationToken authenticationToken = memberLoginDto.toAuthentication();
+    @PostMapping("/reissue")
+    public ResponseEntity<?> reissue(@RequestBody TokenRequestDto tokenRequestDto){
+        return new ResponseEntity<ResponseDto>(new ResponseDto<>(200, "토큰 재발행",
+                authService.reissue(tokenRequestDto)), HttpStatus.OK);
+    }
 
-        Member member = memberRepository.findByEmail(memberLoginDto.getEmail()).orElseThrow(() ->
-                new CustomException(MEMBER_EMAIL_NOT_FOUND));
-
-        // 2. 실제로 검증 (사용자 비밀번호 체크) 이 이루어지는 부분
-        //    authenticate 메서드가 실행이 될 때 CustomUserDetailsService 에서 만들었던 loadUserByUsername 메서드가 실행됨
-        Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
-
-        // 3. 인증 정보를 기반으로 JWT 토큰 생성
-        TokenDto tokenDto = tokenProvider.generateTokenDto(authentication);
-        // 5. 토큰 발급
-        return tokenDto;
+    @GetMapping("logout")
+    public ResponseEntity logout(HttpServletRequest request){
+        String accessToken = request.getHeader("Authorization").substring(7);
+        authService.logout(accessToken);
+        return new ResponseEntity<>(new ResponseDto<>(200, "로그아웃 완료", null), HttpStatus.OK);
     }
 
 

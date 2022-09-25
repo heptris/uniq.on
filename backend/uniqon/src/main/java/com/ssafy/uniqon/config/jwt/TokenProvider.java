@@ -129,6 +129,7 @@ public class TokenProvider {
         }
     }
 
+    // redis에 refreshtoken 비교
     public void checkRefreshToken(String memberId, String refreshToken) {
         String redisRT = redisService.getValues(memberId);
         if (!refreshToken.equals(redisRT)) {

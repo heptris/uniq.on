@@ -32,25 +32,24 @@ stages:
 #     - develop
 #     - feature/backend
 
-# spring-dockerize:
-#   image: docker:latest
-#   stage: spring-dockerize
-#   variables:
-#     DOCKER_TLS_CERTDIR: ""
-#   services:
-#     - docker:dind
-#   before_script: |
-#     cd backend/hool
-#     echo $BACK_DOCKER_HUB_PW | docker login -u $BACK_DOCKER_HUB_USER --password-stdin
-#   script: |
-#     docker build -t $BACK_IMAGE_NAME .
-#     docker push $BACK_IMAGE_NAME
-#   after_script: |
-#     docker logout
-#   only:
-#     - master
-#     - develop
-#     - feature/backend
+spring-dockerize:
+  image: docker:latest
+  stage: spring-dockerize
+  variables:
+    DOCKER_TLS_CERTDIR: ""
+  services:
+    - docker:dind
+  before_script: |
+    cd backend/uniqon
+    echo $BACK_DOCKER_HUB_PW | docker login -u $BACK_DOCKER_HUB_USER --password-stdin
+  script: |
+    docker build -t $BACK_IMAGE_NAME .
+    docker push $BACK_IMAGE_NAME
+  after_script: |
+    docker logout
+  only:
+    - master
+    - develop
 
 react-test:
   image: node:16.16
