@@ -102,7 +102,7 @@ function Footer() {
 
 const FooterContainer = styled.footer`
   border: 0;
-  margin: 3rem 0 0 0;
+  margin: 10rem 0 0 0;
   width: 100vw;
   height: 50rem;
   display: flex;
