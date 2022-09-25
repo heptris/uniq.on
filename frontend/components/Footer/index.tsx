@@ -44,7 +44,9 @@ function Footer() {
             <Link href="/list">
               <Text as="li">투자리스트</Text>
             </Link>
-            <Text as="li">투자신청</Text>
+            <Link href="/apply">
+              <Text as="li">투자신청</Text>
+            </Link>
           </ul>
         </InfoItem>
         <InfoItem>

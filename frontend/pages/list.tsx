@@ -66,13 +66,7 @@ export default function InvestmentList() {
   ];
 
   return (
-    <Layout css={css``}>
-      <Head>
-        <title>Uniq.on</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
-      <Navbar />
+    <>
       <Carousel items={carouselItems} />
       {/* <PageHeader>
         <Text
@@ -125,7 +119,7 @@ export default function InvestmentList() {
           />
         ))}
       </Grid>
-    </Layout>
+    </>
   );
 }
 

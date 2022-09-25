@@ -11,7 +11,6 @@ import nft2 from "@/assets/nfts/2.png";
 import nft3 from "@/assets/nfts/3.png";
 
 import type { Member } from "@/types/api_responses";
-import Layout from "@/components/Layout";
 import Avatar from "@/components/Avatar";
 import Text from "@/components/Text";
 import Grid from "@/components/Grid";
@@ -56,7 +55,7 @@ function MyPage() {
   ];
 
   return (
-    <Layout>
+    <>
       <Background />
       <ProfileContainer>
         <Avatar
@@ -123,7 +122,7 @@ function MyPage() {
           />
         ))}
       </Grid>
-    </Layout>
+    </>
   );
 }
 

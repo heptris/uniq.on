@@ -1,5 +1,6 @@
 import { cssConvex } from "@/styles/utils";
 import { css, useTheme } from "@emotion/react";
+import Link from "next/link";
 import Button from "../Button";
 
 export default function Video() {
@@ -105,34 +106,38 @@ export default function Video() {
           스타트업과 투자자가 NFT를 기반으로 소통하며 상생하는 플랫폼입니다.
         </p>
         <div>
-          <Button
-            css={css`
-              display: inline-block;
-              color: ${theme.color.text.main};
-              font-weight: bold;
-              padding: 0.8rem 1.3rem;
-              margin-right: 1rem;
-              border-radius: 2rem;
-              background-color: ${theme.color.background.main};
-              ${cssConvex}
-            `}
-          >
-            투자받기
-          </Button>
-          <Button
-            css={css`
-              display: inline-block;
-              color: ${theme.color.text.main};
-              font-weight: bold;
-              padding: 0.8rem 1.3rem;
-              border-radius: 2rem;
-              background-color: ${theme.color.background.page};
-              border: 1px solid ${theme.color.background.main};
-              ${cssConvex}
-            `}
-          >
-            투자하기
-          </Button>
+          <Link href="/apply">
+            <Button
+              css={css`
+                display: inline-block;
+                color: ${theme.color.text.main};
+                font-weight: bold;
+                padding: 0.8rem 1.3rem;
+                margin-right: 1rem;
+                border-radius: 2rem;
+                background-color: ${theme.color.background.main};
+                ${cssConvex}
+              `}
+            >
+              투자받기
+            </Button>
+          </Link>
+          <Link href="/list">
+            <Button
+              css={css`
+                display: inline-block;
+                color: ${theme.color.text.main};
+                font-weight: bold;
+                padding: 0.8rem 1.3rem;
+                border-radius: 2rem;
+                background-color: ${theme.color.background.page};
+                border: 1px solid ${theme.color.background.main};
+                ${cssConvex}
+              `}
+            >
+              투자하기
+            </Button>
+          </Link>
         </div>
       </div>
     </div>

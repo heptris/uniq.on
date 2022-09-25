@@ -45,7 +45,7 @@ export default function alarm() {
   }, [select]);
 
   return (
-    <Layout>
+    <>
       <SelectTab func={selectHandler} menus={menus} />
       {(checked ? dummyData.checked : dummyData.unchecked).map(
         (alarm: { text: any; date: any }) => (
@@ -95,6 +95,6 @@ export default function alarm() {
           </div>
         )
       )}
-    </Layout>
+    </>
   );
 }

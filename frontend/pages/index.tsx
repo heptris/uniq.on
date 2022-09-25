@@ -2,9 +2,5 @@ import Layout from "@/components/Layout";
 import Video from "@/components/Video";
 
 export default function Home() {
-  return (
-    <Layout>
-      <Video />
-    </Layout>
-  );
+  return <Video />;
 }
