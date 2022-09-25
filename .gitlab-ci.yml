@@ -27,30 +27,11 @@ spring-build:
     cd backend/uniqon/
     chmod +x gradlew
     ./gradlew build -x test
-artifacts:
+  artifacts:
     paths:
       - ./backend/uniqon/build/libs/*.jar
     expire_in: 60 min
   only:
-    - master
-    - develop
-
-spring-dockerize:
-  image: docker:latest
-  stage: spring-dockerize
-  variables:
-    DOCKER_TLS_CERTDIR: ""
-  services:
-    - docker:dind
-  before_script: |
-    cd backend/uniqon
-    echo $BACK_DOCKER_HUB_PW | docker login -u $BACK_DOCKER_HUB_USER --password-stdin
-script: |
-    docker build -t $BACK_IMAGE_NAME .
-    docker push $BACK_IMAGE_NAME
-after_script: |
-    docker logout
-only:
     - master
     - develop
 
