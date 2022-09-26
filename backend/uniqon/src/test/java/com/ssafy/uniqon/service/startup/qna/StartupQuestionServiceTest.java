@@ -63,16 +63,16 @@ class StartupQuestionServiceTest {
         });
     }
 
-    @Test
-    public void 질문수정() {
-        StartupQuestionUpdateReqDto startupQuestionUpdateReqDto = StartupQuestionUpdateReqDto.builder()
-                .question("update question")
-                .build();
-
-        startupQuestionService.질문수정(1L, 1L, startupQuestionUpdateReqDto);
-        StartupQuestionResDto startupQuestionResDto = startupQuestionService.질문하나조회(1L);
-        assertThat(startupQuestionResDto.getQuestion()).isEqualTo(startupQuestionUpdateReqDto.getQuestion());
-    }
+//    @Test
+//    public void 질문수정() {
+//        StartupQuestionUpdateReqDto startupQuestionUpdateReqDto = StartupQuestionUpdateReqDto.builder()
+//                .question("update question")
+//                .build();
+//
+//        startupQuestionService.질문수정(1L, 1L, startupQuestionUpdateReqDto);
+//        StartupQuestionResDto startupQuestionResDto = startupQuestionService.질문하나조회(1L);
+//        assertThat(startupQuestionResDto.getQuestion()).isEqualTo(startupQuestionUpdateReqDto.getQuestion());
+//    }
 
     @Test
     public void 질문삭제() {

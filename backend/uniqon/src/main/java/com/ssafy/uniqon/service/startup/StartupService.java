@@ -3,12 +3,15 @@ import com.ssafy.uniqon.domain.member.Member;
 import com.ssafy.uniqon.domain.s3.AwsS3;
 import com.ssafy.uniqon.domain.startup.EnrollStatus;
 import com.ssafy.uniqon.domain.startup.Startup;
+import com.ssafy.uniqon.domain.startup.StartupFavorite;
 import com.ssafy.uniqon.dto.startup.StartupDetailResponseDto;
 import com.ssafy.uniqon.dto.startup.StartupRequestDto;
 import com.ssafy.uniqon.exception.ex.CustomException;
 import com.ssafy.uniqon.dto.startup.StartupResponseListDto;
 import com.ssafy.uniqon.dto.startup.StartupSearchCondition;
 import com.ssafy.uniqon.repository.startup.StartupRepository;
+import com.ssafy.uniqon.repository.startup.fav.StartupFavoriteRepository;
+// import com.ssafy.uniqon.service.ipfs.IpfsService;
 import com.ssafy.uniqon.service.s3.AwsS3Service;
 import lombok.RequiredArgsConstructor;
 import org.apache.pdfbox.pdmodel.PDDocument;
@@ -28,6 +31,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static com.ssafy.uniqon.domain.startup.EnrollStatus.*;
 import static com.ssafy.uniqon.exception.ex.ErrorCode.FILE_UPLOAD_ERROR;
@@ -39,7 +43,10 @@ import static com.ssafy.uniqon.exception.ex.ErrorCode.STARTUP_NOT_FOUND;
 public class StartupService {
 
     private final StartupRepository startupRepository;
+    private final StartupFavoriteRepository startupFavoriteRepository;
     private final AwsS3Service awsS3Service;
+
+ //   private final IpfsService ipfsService;
 
     @Transactional
     public Long 투자등록(Startup startup) {
@@ -73,8 +80,6 @@ public class StartupService {
                 .pricePerNft(startupRequestDto.getGoalPrice() / startupRequestDto.getNftCount())
                 .build();
 
-
-
         Startup savedStartup = startupRepository.save(startup);
         AwsS3 awsS3 = new AwsS3();
         if (business_plan != null) {
@@ -103,6 +108,8 @@ public class StartupService {
             String nft_image_url = awsS3.getPath();
             savedStartup.changeImageNft(nft_image_url);
         }
+//        String idToken = ipfsService.saveFile(nft_image);
+//        System.out.println(idToken);
 
         if (road_map != null) {
             try {
@@ -125,14 +132,38 @@ public class StartupService {
     /**
      * 스타트업 상세정보 조회
      */
-    public StartupDetailResponseDto startupDetail(Long startupId) {
+    public StartupDetailResponseDto startupDetail(Long memberId, Long startupId) {
         Startup startup = startupRepository.findById(startupId).orElseThrow(
                 () -> new CustomException(STARTUP_NOT_FOUND)
         );
-
         StartupDetailResponseDto startupDetailResponseDto = new StartupDetailResponseDto(startup);
+        Optional<StartupFavorite> startupFavorite = startupFavoriteRepository.findByMemberIdAndStartupId(memberId, startupId);
+        if (startupFavorite.isPresent()) {
+            startupDetailResponseDto.setIsFav(startupFavorite.get().getIsFav());
+        } else {
+            startupDetailResponseDto.setIsFav(Boolean.FALSE);
+        }
         return startupDetailResponseDto;
     }
 
+    @Transactional
+    public void startupFavoriteToggle(Long memberId, Long startupId) {
+        Optional<StartupFavorite> startupFavoriteOptional = startupFavoriteRepository.findByMemberIdAndStartupId(memberId, startupId);
+        if (startupFavoriteOptional.isPresent()) {
+            StartupFavorite startupFavorite = startupFavoriteOptional.get();
+            startupFavorite.toggle();
+        } else {
+            Member member = new Member();
+            member.changeId(memberId);
+            Startup startup = new Startup();
+            startup.changeId(startupId);
+            StartupFavorite startupFavorite = StartupFavorite.builder()
+                    .member(member)
+                    .startup(startup)
+                    .isFav(Boolean.TRUE)
+                    .build();
+            startupFavoriteRepository.save(startupFavorite);
+        }
+    }
 
 }

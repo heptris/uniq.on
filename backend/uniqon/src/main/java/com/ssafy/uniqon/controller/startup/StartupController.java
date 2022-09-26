@@ -6,6 +6,7 @@ import com.ssafy.uniqon.dto.startup.StartupResponseListDto;
 import com.ssafy.uniqon.dto.startup.StartupSearchCondition;
 import com.ssafy.uniqon.service.startup.StartupService;
 import com.ssafy.uniqon.util.SecurityUtil;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -21,11 +22,12 @@ public class StartupController {
 
     private final StartupService startupService;
 
+    @ApiOperation(value = "스타트업 투자 등록(by 스타트업)")
     @PostMapping("/regist")
     public ResponseEntity startupRegist(@RequestPart StartupRequestDto startupRequestDto,
                                         @RequestPart(value = "business_plan", required = false) MultipartFile business_plan,
                                         @RequestPart(value = "nft_image", required = false) MultipartFile nft_image,
-                                        @RequestPart(value = "project_pdf", required = false) MultipartFile road_map) {
+                                        @RequestPart(value = "road_map", required = false) MultipartFile road_map) {
         Long memberId = SecurityUtil.getCurrentMemberId();
         startupService.investRegist(memberId, startupRequestDto, business_plan, nft_image, road_map);
         return ResponseEntity.status(HttpStatus.CREATED).body(
@@ -33,6 +35,7 @@ public class StartupController {
         );
     }
 
+    @ApiOperation(value = "스타트업 투자 리스트")
     @GetMapping
     public ResponseEntity startupList(@RequestParam(required = false) String title,
                                       @RequestParam(required = false) String startupName,
@@ -46,11 +49,26 @@ public class StartupController {
         );
     }
 
+    @ApiOperation(value = "스타트업 상세정보")
     @GetMapping("/{startupId}")
     public ResponseEntity startupDetail(@PathVariable Long startupId) {
-        StartupDetailResponseDto startupDetailResponseDto = startupService.startupDetail(startupId);
+        Long memberId = SecurityUtil.getCurrentMemberId();
+        StartupDetailResponseDto startupDetailResponseDto = startupService.startupDetail(memberId, startupId);
         return ResponseEntity.status(HttpStatus.OK).body(
                 new ResponseDto(HttpStatus.OK.value(), "스타트업 상세정보", startupDetailResponseDto)
+        );
+    }
+
+    /**
+     * 관심 목록 등록 / 해제
+     */
+    @ApiOperation(value = "스타트업 관심목록 등록/해제")
+    @GetMapping("/{startupId}/favorite")
+    public ResponseEntity startupFavorite(@PathVariable Long startupId) {
+        Long memberId = SecurityUtil.getCurrentMemberId();
+        startupService.startupFavoriteToggle(memberId, startupId);
+        return ResponseEntity.status(HttpStatus.OK).body(
+                new ResponseDto(HttpStatus.OK.value(), "스타트업 관심 목록 등록 / 해제", null)
         );
     }
 }

@@ -27,9 +27,7 @@ import static com.ssafy.uniqon.exception.ex.ErrorCode.QUESTION_NOT_FOUND;
 @RequiredArgsConstructor
 @Service
 public class StartupQuestionService {
-
     private final StartupQuestionRepository startupQuestionRepository;
-    private final StartupAnswerService startupAnswerService;
 
     @Transactional
     public Long 질문등록(Long memberId, Long startupId, StartupQuestionReqDto startupQuestionReqDto) {
@@ -70,7 +68,7 @@ public class StartupQuestionService {
         Long lastIdOfList = questions.isEmpty() ?
                 null : questions.get(questions.size() - 1).getStartupQuestionId();
 
-        return new CursorResult(questions, hasNext(startupId, lastIdOfList), lastIdOfList);
+         return new CursorResult(questions, hasNext(startupId, lastIdOfList), lastIdOfList);
     }
 
     private List<StartupQuestionResDto> getQuestions(Long memberId, Long startupId, Long cursorId, Pageable page) {

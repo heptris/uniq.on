@@ -43,9 +43,9 @@ class StartupAnswerServiceTest {
 
     }
 
-    @Test
-    public void 답변삭제() {
-        startupAnswerService.답변삭제(4L, 1L);
-    }
+//    @Test
+//    public void 답변삭제() {
+//        startupAnswerService.답변삭제(4L, 1L);
+//    }
 
 }

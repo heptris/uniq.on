@@ -22,7 +22,7 @@ public class StartupRequestDto {
     private String managerNumber;
 
     private Double goalPrice; // 희망 모집 금액
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH")
     private LocalDateTime endDate; // 투자 마감일
     private Integer nftCount; // 토큰 발행 개수
     private String discordUrl;
