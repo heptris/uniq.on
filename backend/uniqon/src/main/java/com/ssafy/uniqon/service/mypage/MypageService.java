@@ -26,7 +26,7 @@ public class MypageService {
         List<Alarm> allAlarmList = alarmRepository.findAllByMemberId(memberId);
         List<AlarmDto> alarmDtoList = new ArrayList<>();
         for (Alarm alarm : allAlarmList) {
-            alarmDtoList.add(new AlarmDto(alarm.getId(), alarm.getContent(), alarm.getIsRead()));
+            alarmDtoList.add(new AlarmDto(alarm.getId(), alarm.getContent(), alarm.getIsRead(),alarm.getTokenId(), alarm.getInvestCount()));
         }
 
         return alarmDtoList;
@@ -38,7 +38,7 @@ public class MypageService {
         List<Alarm> alarmList = alarmRepository.findAllByMemberIdAndIsRead(memberId, false);
         List<AlarmDto> alarmDtoList = new ArrayList<>();
         for (Alarm alarm : alarmList) {
-            alarmDtoList.add(new AlarmDto(alarm.getId(), alarm.getContent(), alarm.getIsRead()));
+            alarmDtoList.add(new AlarmDto(alarm.getId(), alarm.getContent(), alarm.getIsRead(),alarm.getTokenId(), alarm.getInvestCount()));
         }
 
         return alarmDtoList;

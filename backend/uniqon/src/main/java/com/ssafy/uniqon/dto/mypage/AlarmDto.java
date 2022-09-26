@@ -1,5 +1,6 @@
 package com.ssafy.uniqon.dto.mypage;
 
+import com.ssafy.uniqon.domain.alarm.Alarm;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,5 +15,9 @@ public class AlarmDto {
     private String content;
 
     private boolean isRead;
+
+    private Integer tokenId;
+
+    private Integer investCount;
 
 }

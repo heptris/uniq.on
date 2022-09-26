@@ -90,6 +90,7 @@ public class StartupInvestService {
                                     .member(memberStartup)
                                     .isRead(Boolean.FALSE)
                                     .startupId(startup.getId())
+                                    .investCount(startup.getInvestCount())
                                     .content(startup.getStartupName() + " 투자 유치에 성공했습니다. NFT 토큰을 발급해주세요")
                                     .build();
                             alarmList.add(alarmToStartup);

@@ -25,10 +25,13 @@ public class Alarm extends BaseEntity {
     private Member member;
 
     private String content;
-
     private Boolean isRead;
 
     private Long startupId;
+
+    private Integer investCount;
+
+    private Integer tokenId;
 
     public void changeIsRead(){
         this.isRead = true;
