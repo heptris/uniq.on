@@ -33,7 +33,7 @@ function Navbar(
 ) {
   const [isLoggedIn, setIsLogin] = useState(true);
   const [active, setActive] = useState(false);
-  const toggleHandler = () => {
+  const activeHandler = () => {
     setActive(!active);
   };
 
@@ -50,7 +50,7 @@ function Navbar(
       <HeaderContainer>
         <HeaderIcon>
           <Link href="/">
-            <LogoText>
+            <LogoText onClick={activeHandler}>
               <Text
                 css={css`
                   color: ${theme.color.background.main};
@@ -61,7 +61,7 @@ function Navbar(
               .on
             </LogoText>
           </Link>
-          <LogoImage>
+          <LogoImage onClick={activeHandler}>
             <Image src={logo} alt="logo" width={30} height={40} />
           </LogoImage>
         </HeaderIcon>
@@ -70,17 +70,17 @@ function Navbar(
             className={active ? "main-navigation active" : "main-navigation"}
           >
             <Link href="/list">
-              <Text css={ListTextStyle({ theme })} onClick={toggleHandler}>
+              <Text css={ListTextStyle({ theme })} onClick={activeHandler}>
                 투자리스트
               </Text>
             </Link>
             <Link href="/apply">
-              <Text css={ListTextStyle({ theme })} onClick={toggleHandler}>
+              <Text css={ListTextStyle({ theme })} onClick={activeHandler}>
                 투자신청
               </Text>
             </Link>
             <Link href="/question">
-              <Text css={ListTextStyle({ theme })} onClick={toggleHandler}>
+              <Text css={ListTextStyle({ theme })} onClick={activeHandler}>
                 자주하는질문
               </Text>
             </Link>
@@ -93,6 +93,7 @@ function Navbar(
             >
               <Link href="/mypage">
                 <FontAwesomeIcon
+                  onClick={activeHandler}
                   icon={faCircleUser}
                   css={css`
                     width: 1.5rem;
@@ -107,6 +108,7 @@ function Navbar(
               </Link>
               <Link href="/alarm">
                 <FontAwesomeIcon
+                  onClick={activeHandler}
                   icon={faBell}
                   css={css`
                     width: 1.3rem;
@@ -119,6 +121,7 @@ function Navbar(
               </Link>
               <Link href="/alarm">
                 <FontAwesomeIcon
+                  onClick={activeHandler}
                   icon={faCircle}
                   css={css`
                     width: 7px;
@@ -132,6 +135,7 @@ function Navbar(
             <HeaderIcon>
               <Link href="/login">
                 <FontAwesomeIcon
+                  onClick={activeHandler}
                   icon={faWallet}
                   css={css`
                     width: 19px;
@@ -143,7 +147,7 @@ function Navbar(
           )}
           <MoreBtn
             className="more-btn"
-            onClick={toggleHandler}
+            onClick={activeHandler}
             css={css`
               margin-left: 1rem;
             `}
