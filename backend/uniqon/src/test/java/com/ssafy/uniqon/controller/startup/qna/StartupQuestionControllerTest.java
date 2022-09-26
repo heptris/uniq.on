@@ -6,10 +6,7 @@ import com.ssafy.uniqon.controller.WithMockCustomUser;
 import com.ssafy.uniqon.controller.startup.StartupController;
 import com.ssafy.uniqon.dto.response.CursorResult;
 import com.ssafy.uniqon.dto.startup.StartupDetailResponseDto;
-import com.ssafy.uniqon.dto.startup.qna.AnswerChildrenResponseDto;
-import com.ssafy.uniqon.dto.startup.qna.AnswerParentResponseDto;
-import com.ssafy.uniqon.dto.startup.qna.StartupQuestionReqDto;
-import com.ssafy.uniqon.dto.startup.qna.StartupQuestionResDto;
+import com.ssafy.uniqon.dto.startup.qna.*;
 import com.ssafy.uniqon.service.startup.qna.StartupQuestionService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -31,8 +28,7 @@ import static com.ssafy.uniqon.config.RestDocsConfig.field;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.restdocs.request.RequestDocumentation.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -182,6 +178,46 @@ class StartupQuestionControllerTest extends RestDocsTestSupport {
                                 fieldWithPath("data.values.[].answerParentResponseDtoList.[].answerChildren.[].myAnswer").description("myAnswer")
                         )
                 ));
+    }
+
+    @DisplayName(value = "스타트업 question 수정")
+    @WithMockCustomUser
+    @Test
+    public void 스타트업_질문_수정() throws Exception {
+        StartupQuestionUpdateReqDto questionUpdateReqDto = new StartupQuestionUpdateReqDto("update");
+
+        mockMvc.perform(
+                        put("/api/invest/question/{startupQuestionId}", 1L).
+                                header("Authorization", "Bearer " + accessToken)
+                                .content(objectMapper.writeValueAsString(questionUpdateReqDto))
+                                .contentType(MediaType.APPLICATION_JSON)
+                ).andExpect(status().isOk())
+                .andDo(
+                        restDocs.document(
+                                pathParameters(parameterWithName("startupQuestionId").description("스타트업 question ID")),
+                                requestFields(
+                                        fieldWithPath("question").description("스타트업에 대한 질문").type(JsonFieldType.STRING).attributes(field(
+                                                "constraints", "길이 100 이하"
+                                        ))
+                                )
+                        )
+                );
+    }
+
+    @DisplayName(value = "스타트업 question 삭제")
+    @WithMockCustomUser
+    @Test
+    public void 스타트업_질문_삭제() throws Exception {
+        mockMvc.perform(
+                        delete("/api/invest/question/{startupQuestionId}", 1L)
+                                .header("Authorization", "Bearer " + accessToken)
+                                .contentType(MediaType.APPLICATION_JSON)
+                ).andExpect(status().isOk())
+                .andDo(
+                        restDocs.document(
+                                pathParameters(parameterWithName("startupQuestionId").description("스타트업 question ID"))
+                        )
+                );
     }
 
 }

@@ -73,7 +73,6 @@ class StartupControllerTest extends RestDocsTestSupport {
                 .imageNft("https://uniqon-bucket.s3.ap-northeast-2.amazonaws.com/startup/671c1f1b-e6f2-4c0b-af82-ada8ffc3ff3buniqon5dc267300fefd2738de6.jpg")
                 .build();
 
-
         given(startupService.startupDetail(1L, 1L)).willReturn(startupDetailResponseDto);
 
         mockMvc.perform(
@@ -148,7 +147,7 @@ class StartupControllerTest extends RestDocsTestSupport {
                                 .file(nftImage)
                                 .file(roadMap)
                                 .header("Authorization", "Bearer " + accessToken)
-                                )
+                )
                 .andExpect(status().isCreated())
                 .andDo(
                         restDocs.document(
@@ -178,5 +177,28 @@ class StartupControllerTest extends RestDocsTestSupport {
                         )
                 );
 
+    }
+
+    @DisplayName(value = "스타트업 즐겨찾기 등록")
+    @WithMockCustomUser
+    @Test
+    public void 스타트업_즐겨찾기() throws Exception {
+
+        mockMvc.perform(
+                        get("/api/invest/{startupId}/favorite", 1L)
+                                .header("Authorization", "Bearer " + accessToken)
+                                .contentType(MediaType.APPLICATION_JSON)
+                )
+                .andExpect(status().isOk())
+                .andDo(
+                        restDocs.document(
+                                pathParameters(
+                                        parameterWithName("startupId").description("Startup ID")
+                                ), responseFields( // response 필드 정보 입력
+                                        fieldWithPath("status").description("status"),
+                                        fieldWithPath("message").description("message"),
+                                        fieldWithPath("data").description("data")
+                                )
+                        ));
     }
 }
