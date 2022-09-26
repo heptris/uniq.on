@@ -1,4 +1,4 @@
-package com.ssafy.uniqon.dto.mypage;
+package com.ssafy.uniqon.dto.alarm;
 
 import com.ssafy.uniqon.domain.alarm.Alarm;
 import lombok.AllArgsConstructor;
