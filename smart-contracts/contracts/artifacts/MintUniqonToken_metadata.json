@@ -90,18 +90,12 @@
 				"inputs": [
 					{
 						"indexed": true,
-						"internalType": "uint256",
-						"name": "_tokenId",
-						"type": "uint256"
-					},
-					{
-						"indexed": true,
-						"internalType": "address",
-						"name": "_owner",
-						"type": "address"
+						"internalType": "string",
+						"name": "tokenURI",
+						"type": "string"
 					}
 				],
-				"name": "createNFT",
+				"name": "showTokenURI",
 				"type": "event"
 			},
 			{
@@ -215,6 +209,25 @@
 						"internalType": "uint256[]",
 						"name": "",
 						"type": "uint256[]"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "owner",
+						"type": "address"
+					}
+				],
+				"name": "getOwnedTokens",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
 					}
 				],
 				"stateMutability": "view",
@@ -642,11 +655,11 @@
 	},
 	"sources": {
 		"contracts/MintUniqonToken.sol": {
-			"keccak256": "0x3921a9c3aef31621ca5eeacc7a9fb80487e194e960062deb2a839d2519b1b46f",
+			"keccak256": "0xb2c7d0305b71cdb70dee789f64f7509ff272cf3bac68137f221f21244b0699b2",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://488e84e0b9017223b1cb16542176a01b45e79b72c8acd965bf0a27a400595eac",
-				"dweb:/ipfs/QmSkkwn2ysvYYiaUVq5pigu5khTeuDnupZ4kqt3oMRgH67"
+				"bzz-raw://1cfd9c9afe73e4c302442e72e13c8b2131e1c71c5ace6fbe651942d02199710e",
+				"dweb:/ipfs/QmfBAtVCQWcvCnzjYGQiSEFxeR7j3w9Qd71mwskWg6mpj1"
 			]
 		},
 		"contracts/token/ERC721/ERC721.sol": {
