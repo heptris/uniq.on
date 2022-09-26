@@ -14,7 +14,7 @@ function SelectTab<T extends ElementType = "div">(
   props: SelectTabProps<T>,
   ref: Ref<any>
 ) {
-  const { menus, type = "purple", ...rest } = props;
+  const { menus, type = "purple", selectHandler, ...rest } = props;
   const theme = useTheme();
   const colorMap: ColorMap = {
     background: {
@@ -26,6 +26,7 @@ function SelectTab<T extends ElementType = "div">(
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const current = e.target.value;
     setSelect(current);
+    selectHandler(current);
   };
 
   return (
