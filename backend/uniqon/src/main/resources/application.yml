@@ -52,4 +52,7 @@ jwt:
   blacklist:
     access-token: BlackList_AccessToken_
 
+jasypt:
+  encryptor:
+    bean: jasyptStringEncryptor
 
