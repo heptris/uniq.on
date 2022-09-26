@@ -6,6 +6,7 @@ import com.ssafy.uniqon.dto.startup.StartupResponseListDto;
 import com.ssafy.uniqon.dto.startup.StartupSearchCondition;
 import com.ssafy.uniqon.service.startup.StartupService;
 import com.ssafy.uniqon.util.SecurityUtil;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -21,6 +22,7 @@ public class StartupController {
 
     private final StartupService startupService;
 
+    @ApiOperation(value = "스타트업 투자 등록(by 스타트업)")
     @PostMapping("/regist")
     public ResponseEntity startupRegist(@RequestPart StartupRequestDto startupRequestDto,
                                         @RequestPart(value = "business_plan", required = false) MultipartFile business_plan,
@@ -33,6 +35,7 @@ public class StartupController {
         );
     }
 
+    @ApiOperation(value = "스타트업 투자 리스트")
     @GetMapping
     public ResponseEntity startupList(@RequestParam(required = false) String title,
                                       @RequestParam(required = false) String startupName,
@@ -46,6 +49,7 @@ public class StartupController {
         );
     }
 
+    @ApiOperation(value = "스타트업 상세정보")
     @GetMapping("/{startupId}")
     public ResponseEntity startupDetail(@PathVariable Long startupId) {
         Long memberId = SecurityUtil.getCurrentMemberId();
@@ -58,6 +62,7 @@ public class StartupController {
     /**
      * 관심 목록 등록 / 해제
      */
+    @ApiOperation(value = "스타트업 관심목록 등록/해제")
     @GetMapping("/{startupId}/favorite")
     public ResponseEntity startupFavorite(@PathVariable Long startupId) {
         Long memberId = SecurityUtil.getCurrentMemberId();
