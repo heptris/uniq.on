@@ -51,13 +51,13 @@ function Navbar(
         <HeaderIcon>
           <Link href="/">
             <LogoText>
-              <span
+              <Text
                 css={css`
                   color: ${theme.color.background.main};
                 `}
               >
                 uniq
-              </span>
+              </Text>
               .on
             </LogoText>
           </Link>
@@ -129,16 +129,7 @@ function Navbar(
               </Link>
             </HeaderIcon>
           ) : (
-            <div
-              css={css`
-                display: flex;
-                justify-content: center;
-                &:hover {
-                  color: ${theme.color.text.hover};
-                  cursor: pointer;
-                }
-              `}
-            >
+            <HeaderIcon>
               <Link href="/login">
                 <FontAwesomeIcon
                   icon={faWallet}
@@ -148,7 +139,7 @@ function Navbar(
                   `}
                 />
               </Link>
-            </div>
+            </HeaderIcon>
           )}
           <MoreBtn
             className="more-btn"
@@ -256,7 +247,6 @@ const HeaderIcon = styled.div`
 `;
 
 const LogoText = styled.div`
-  margin-bottom: 5px;
   font-weight: bold;
   font-size: 27px;
   position: absolute;
