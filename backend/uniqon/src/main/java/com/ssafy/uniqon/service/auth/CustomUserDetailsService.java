@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collections;
 
-import static com.ssafy.uniqon.exception.ex.ErrorCode.MEMBER_EMAIL_NOT_FOUND;
+import static com.ssafy.uniqon.exception.ex.ErrorCode.MEMBER_WALLET_ADDRESS_NOT_FOUND;
 
 
 @Service
@@ -27,9 +27,9 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return memberRepository.findByEmail(username)
+        return memberRepository.findByWalletAddress(username)
                 .map(this::createUserDetails)
-                .orElseThrow(() -> new CustomException(MEMBER_EMAIL_NOT_FOUND));
+                .orElseThrow(() -> new CustomException(MEMBER_WALLET_ADDRESS_NOT_FOUND));
     }
 
     // DB 에 User 값이 존재한다면 UserDetails 객체로 만들어서 리턴
