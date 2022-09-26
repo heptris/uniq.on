@@ -37,10 +37,10 @@ public class Member extends BaseEntity {
 //    @Column(nullable = false)
 //    private String name;
 
-//    @Column(nullable = false, unique = true)
+    @Column(nullable = false, unique = true)
     private String walletAddress;
 
-//    @Column(nullable = false)
+    @Column(nullable = false)
     private String password;
 
     @Column(unique = true)
