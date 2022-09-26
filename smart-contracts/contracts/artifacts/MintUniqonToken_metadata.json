@@ -225,9 +225,9 @@
 				"name": "getOwnedTokens",
 				"outputs": [
 					{
-						"internalType": "uint256",
+						"internalType": "string[]",
 						"name": "",
-						"type": "uint256"
+						"type": "string[]"
 					}
 				],
 				"stateMutability": "view",
@@ -655,11 +655,11 @@
 	},
 	"sources": {
 		"contracts/MintUniqonToken.sol": {
-			"keccak256": "0xb2c7d0305b71cdb70dee789f64f7509ff272cf3bac68137f221f21244b0699b2",
+			"keccak256": "0xe878e689e457d8b3cd87cea49ebd61f411bdeb08db69491d69b75186cbdd2c0e",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://1cfd9c9afe73e4c302442e72e13c8b2131e1c71c5ace6fbe651942d02199710e",
-				"dweb:/ipfs/QmfBAtVCQWcvCnzjYGQiSEFxeR7j3w9Qd71mwskWg6mpj1"
+				"bzz-raw://271737a5bf63ce90b5098e1c2b4b63ad8ea8e4bd33fbf396c67478c3c8936853",
+				"dweb:/ipfs/QmZkWkqbnNuCQFwg8Eb4zPYMrQmBgz3BGKRFbLU1xWhs5n"
 			]
 		},
 		"contracts/token/ERC721/ERC721.sol": {

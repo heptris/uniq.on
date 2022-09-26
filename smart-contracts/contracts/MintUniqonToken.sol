@@ -77,15 +77,16 @@ contract MintUniqonToken is ERC721Enumerable{
         return _tokenIds;
     }
 
-    function getOwnedTokens(address owner) public view returns (uint) {
+    function getOwnedTokens(address owner) public view returns (string[] memory) {
         uint256 tokenCount = balanceOf(owner);
-        uint256 tokens[tokenCount];
-        string[] memory tokensURI;
+
+        uint256[] memory tokens = new uint[](tokenCount);
+        string[] memory tokensURI = new string[](tokenCount);
         for(uint i=0; i<tokenCount; i++){
-            tokens[i] = tokenOfOwnerByIndex(owner, i);
-        //     tokensURI[i] = tokenURI(tokens[i]);
+            tokens[i] = (tokenOfOwnerByIndex(owner, i));
+            tokensURI[i] = tokenURI(tokens[i]);
         }
-        return tokenCount;
+        return tokensURI;
     }
 
     function getTokenPrice(uint256 _uniqonTokenId) public view returns (uint256) {
