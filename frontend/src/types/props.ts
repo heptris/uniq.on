@@ -70,6 +70,17 @@ export type SelectTabProps<T extends ElementType> = CombineElementProps<
   SelectTabBaseProps
 >;
 
+
+export type CircleBarBaseProps = {
+  total?: number;
+  current?: number;
+  menus?: String[];
+};
+export type CircleBarProps<T extends ElementType> = CombineElementProps<
+  T,
+  CircleBarBaseProps
+>;
+
 export type ProgressBarBaseProps = {
   progress: number;
   maxProgress?: number;
@@ -105,3 +116,4 @@ export type CarouselItem = {
 export type CarouselProps = {
   items: CarouselItem[];
 };
+
