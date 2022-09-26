@@ -30,6 +30,7 @@ public class CommunityComment extends BaseEntity {
     @JoinColumn(name = "parent_id")
     private CommunityComment parent;
 
+    @Builder.Default
     @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL)
     private List<CommunityComment> children = new ArrayList<>();
 

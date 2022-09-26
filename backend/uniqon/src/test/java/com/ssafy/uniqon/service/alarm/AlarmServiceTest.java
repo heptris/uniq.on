@@ -20,13 +20,13 @@ class AlarmServiceTest {
     @Autowired
     private AlarmService alarmService;
 
-    @Test
-    public void mintTest() {
-        alarmService.mintSuccess(0, 16L);
-    }
-
-    @Test
-    public void purchaseTest() {
-        alarmService.nftPurchase(20L);
-    }
+//    @Test
+//    public void mintTest() {
+//        alarmService.mintSuccess(0, 16L);
+//    }
+//
+//    @Test
+//    public void purchaseTest() {
+//        alarmService.nftPurchase(20L);
+//    }
 }

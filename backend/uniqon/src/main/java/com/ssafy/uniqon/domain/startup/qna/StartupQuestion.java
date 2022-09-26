@@ -37,6 +37,7 @@ public class StartupQuestion extends BaseEntity {
     @Column(nullable = false)
     private String question;
 
+    @Builder.Default
     @OneToMany(mappedBy = "startupQuestion", cascade = CascadeType.ALL)
     private List<StartupAnswer> startupAnswerList = new ArrayList<>();
 
