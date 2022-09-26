@@ -29,6 +29,7 @@ public class Startup extends BaseEntity {
     @JoinColumn(name = "member_id")
     private Member member;
 
+    @Builder.Default
     @OneToMany(mappedBy = "startup", cascade = CascadeType.ALL)
     private List<Invest_history> investHistoryList = new ArrayList<>();
 

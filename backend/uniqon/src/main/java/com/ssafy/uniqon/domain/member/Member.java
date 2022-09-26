@@ -25,12 +25,15 @@ public class Member extends BaseEntity {
     @Column(name = "member_id")
     private Long id;
 
+    @Builder.Default
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<Startup> startupList = new ArrayList<>();
 
+    @Builder.Default
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<Invest_history> investHistoryList = new ArrayList<>();
 
+    @Builder.Default
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<StartupFavorite> startupFavoriteList = new ArrayList<>();
 

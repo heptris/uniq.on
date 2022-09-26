@@ -33,20 +33,20 @@ class MypageServiceTest {
         }
     }
 
-    @Test
-    public void 안읽은알림목록조회() throws Exception{
-        //given
-        List<AlarmDto> alarmDtoList = mypageService.unReadAlarmList(6L);
-
-        //when
-
-        //then
-        for (AlarmDto alarmDto : alarmDtoList) {
-            System.out.println("alarmDto.getContent() = " + alarmDto.getContent());
-            System.out.println("alarmDto.isRead() = " + alarmDto.isRead());
-        }
-        assertThat(alarmDtoList.get(0).getContent()).isEqualTo("예약한 펀딩이 성공했습니다 !!");
-    }
+//    @Test
+//    public void 안읽은알림목록조회() throws Exception{
+//        //given
+//        List<AlarmDto> alarmDtoList = mypageService.unReadAlarmList(6L);
+//
+//        //when
+//
+//        //then
+//        for (AlarmDto alarmDto : alarmDtoList) {
+//            System.out.println("alarmDto.getContent() = " + alarmDto.getContent());
+//            System.out.println("alarmDto.isRead() = " + alarmDto.isRead());
+//        }
+//        assertThat(alarmDtoList.get(0).getContent()).isEqualTo("예약한 펀딩이 성공했습니다 !!");
+//    }
 
     @Test
     public void 알림확인() throws Exception{
