@@ -17,10 +17,11 @@ import {
   faCircleUser,
   faWallet,
 } from "@fortawesome/free-solid-svg-icons";
-import { css, useTheme } from "@emotion/react";
+import { css, Theme, useTheme } from "@emotion/react";
 import styled from "@emotion/styled";
 import Link from "next/link";
 import contracts from "@/contracts/utils";
+import Text from "../Text";
 
 /**
  * @params
@@ -43,19 +44,13 @@ function Navbar(
   }, [account]);
 
   const theme = useTheme();
+
   return (
-    <Header theme={theme} ref={ref} {...props}>
-      <div className="container">
-        <div className="nav-icon">
+    <HeaderWrapper theme={theme} ref={ref} {...props}>
+      <HeaderContainer>
+        <HeaderIcon>
           <Link href="/">
-            <div
-              css={css`
-                margin-bottom: 5px;
-                font-weight: bold;
-                font-size: 27px;
-                position: absolute;
-              `}
-            >
+            <LogoText>
               <span
                 css={css`
                   color: ${theme.color.background.main};
@@ -64,35 +59,34 @@ function Navbar(
                 uniq
               </span>
               .on
-            </div>
+            </LogoText>
           </Link>
-
-          <div
-            css={css`
-              transform: translate(300%, -5px);
-            `}
-          >
+          <LogoImage>
             <Image src={logo} alt="logo" width={30} height={40} />
-          </div>
-        </div>
-        <div
-          css={css`
-            display: flex;
-            align-items: center;
-          `}
-        >
+          </LogoImage>
+        </HeaderIcon>
+        <HeaderList>
           <nav
             className={active ? "main-navigation active" : "main-navigation"}
           >
             <Link href="/list">
-              <a href="#">투자리스트</a>
+              <Text css={ListTextStyle({ theme })} onClick={toggleHandler}>
+                투자리스트
+              </Text>
             </Link>
-            <a href="#">투자신청</a>
-            <a href="#">자주하는질문</a>
+            <Link href="/apply">
+              <Text css={ListTextStyle({ theme })} onClick={toggleHandler}>
+                투자신청
+              </Text>
+            </Link>
+            <Link href="/question">
+              <Text css={ListTextStyle({ theme })} onClick={toggleHandler}>
+                자주하는질문
+              </Text>
+            </Link>
           </nav>
           {isLoggedIn ? (
-            <div
-              className="nav-icon"
+            <HeaderIcon
               css={css`
                 padding-left: 50px;
               `}
@@ -133,7 +127,7 @@ function Navbar(
                   `}
                 />
               </Link>
-            </div>
+            </HeaderIcon>
           ) : (
             <div
               css={css`
@@ -156,7 +150,7 @@ function Navbar(
               </Link>
             </div>
           )}
-          <button
+          <MoreBtn
             className="more-btn"
             onClick={toggleHandler}
             css={css`
@@ -164,24 +158,27 @@ function Navbar(
             `}
           >
             <FontAwesomeIcon
-              className="icon"
               icon={!active ? faBars : faTimes}
               css={css`
+                display: block;
                 width: 24px;
+                height: 24px;
+                margin: 0 auto;
                 color: ${theme.color.text.main};
                 &:hover {
+                  color: ${theme.color.text.hover};
                   cursor: pointer;
                 }
               `}
             />
-          </button>
-        </div>
-      </div>
-    </Header>
+          </MoreBtn>
+        </HeaderList>
+      </HeaderContainer>
+    </HeaderWrapper>
   );
 }
 
-const Header = styled.header`
+const HeaderWrapper = styled.header`
   background-color: ${({ theme }) => theme.color.background.page};
   color: ${({ theme }) => theme.color.text.main};
   position: fixed;
@@ -193,51 +190,12 @@ const Header = styled.header`
   z-index: 9960;
   border-bottom: 1px solid ${({ theme }) => theme.color.background.item};
 
-  .container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    height: 100%;
-    padding: 0 20px;
-    position: relative;
-  }
-
-  .nav-icon {
-    display: flex;
-    align-items: flex-end;
-    margin: 0;
-    z-index: 9960;
-    &:hover {
-      cursor: pointer;
-      color: ${({ theme }) => theme.color.text.hover};
-    }
-  }
-
-  a {
-    font-size: 18px;
-    text-decoration: none;
-    font-weight: 500;
-    &:hover {
-      color: ${({ theme }) => theme.color.text.hover};
-    }
-  }
-
   .main-navigation {
     float: right;
   }
 
-  .main-navigation a {
+  .main-navigation span {
     margin-left: 50px;
-  }
-
-  .main-navigation a.active {
-    font-weight: bold;
-    border-bottom: 2px solid #004fff;
-  }
-
-  .more-btn {
-    display: none;
   }
 
   @media screen and (max-width: 768px) {
@@ -264,36 +222,10 @@ const Header = styled.header`
       transition: 0.3s;
     }
 
-    .main-navigation a {
+    .main-navigation span {
       display: block;
       margin: auto;
-      margin-bottom: 8px;
       padding: 12px;
-    }
-    .main-navigation a.btn {
-      text-align: center;
-    }
-
-    .more-btn {
-      display: block;
-      z-index: 9960;
-      right: 12px;
-      top: 8px;
-      width: 40px;
-      height: 40px;
-      border-radius: 8px;
-      border: none;
-      background-color: transparent;
-    }
-
-    .more-btn .icon {
-      display: block;
-      width: 24px;
-      height: 24px;
-      margin: 0 auto;
-      &:hover {
-        color: ${({ theme }) => theme.color.text.hover};
-      }
     }
   }
 
@@ -301,4 +233,68 @@ const Header = styled.header`
   }
 `;
 
+const HeaderContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  padding: 0 20px;
+  position: relative;
+`;
+
+const HeaderIcon = styled.div`
+  display: flex;
+  align-items: flex-end;
+  margin: 0;
+  z-index: 9960;
+
+  &:hover {
+    cursor: pointer;
+    color: ${({ theme }) => theme.color.text.hover};
+  }
+`;
+
+const LogoText = styled.div`
+  margin-bottom: 5px;
+  font-weight: bold;
+  font-size: 27px;
+  position: absolute;
+`;
+
+const LogoImage = styled.div`
+  transform: translate(300%, -5px);
+`;
+
+const HeaderList = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+const ListTextStyle = ({ theme }: { theme: Theme }) => css`
+  font-size: 18px;
+  text-decoration: none;
+  font-weight: 500;
+  &:hover {
+    color: ${theme.color.text.hover};
+    cursor: pointer;
+  }
+  @media screen and (max-width: 768px) {
+  }
+`;
+
+const MoreBtn = styled.button`
+  display: none;
+  @media screen and (max-width: 768px) {
+    display: block;
+    z-index: 9960;
+    right: 12px;
+    top: 8px;
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    border: none;
+    background-color: transparent;
+  }
+`;
 export default forwardRef(Navbar) as typeof Navbar;
