@@ -1,2 +1,2 @@
-export * from "@/hooks/useModal";
+export * from "@/hooks/useNFTModal";
 export * from "@/hooks/useInterval";
