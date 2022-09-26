@@ -55,19 +55,22 @@ public class AuthController {
 
             throw new CustomValidationException("유효성 검사 실패", errorMap);
         } else {
-            if (!memberJoinDto.getPassword().equals(memberJoinDto.getPasswordConfirm())) {
-                throw new CustomException(NOT_EQUAL_PASSWORD);
-            }
             authService.signup(memberJoinDto);
             return new ResponseEntity<ResponseDto>(new ResponseDto(200, "success", "회원가입 완료"), HttpStatus.OK);
         }
     }
 
-    @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody MemberLoginDto memberLoginDto) {
-        TokenDto token = authService.login(memberLoginDto);
-        return new ResponseEntity<ResponseDto>(new ResponseDto<>(200, "로그인 성공",
-                token), HttpStatus.OK);
+//    @PostMapping("/login")
+//    public ResponseEntity<?> login(@RequestBody MemberLoginDto memberLoginDto) {
+//        TokenDto token = authService.login(memberLoginDto);
+//        return new ResponseEntity<ResponseDto>(new ResponseDto<>(200, "로그인 성공",
+//                token), HttpStatus.OK);
+//    }
+
+    @PostMapping("/{userAccount}")
+    public ResponseEntity<?> metaMaskLogin(@PathVariable("userAccount") String userAccount){
+        TokenDto token = authService.metaMasklogin(userAccount);
+        return new ResponseEntity<ResponseDto>(new ResponseDto(200, "로그인 성공", token), HttpStatus.OK);
     }
 
     @PostMapping("/reissue")

@@ -34,8 +34,8 @@ public class Member extends BaseEntity {
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<StartupFavorite> startupFavoriteList = new ArrayList<>();
 
-    @Column(nullable = false)
-    private String name;
+//    @Column(nullable = false)
+//    private String name;
 
 //    @Column(nullable = false, unique = true)
     private String walletAddress;
