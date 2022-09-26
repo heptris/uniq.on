@@ -70,7 +70,7 @@ public class AlarmService {
         Startup startup = startupRepository.findById(alarm.getStartupId()).orElseThrow(
                 () -> new CustomException(ErrorCode.STARTUP_NOT_FOUND)
         );
-        int firstTokenId = lastTokenId - startup.getInvestCount();
+        int firstTokenId = lastTokenId - startup.getInvestCount() + 1;
         List<Invest_history> investHistoryList = investHistoryRepository.findByInvestingInvestHistoryList(startup.getId());
         for (Invest_history investHistory : investHistoryList) {
             // 알람 생성(투자자에게 보내는 알람)
