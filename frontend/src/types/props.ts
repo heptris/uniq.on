@@ -63,6 +63,7 @@ export type AlertProps<T extends ElementType> = OverridableProps<
 export type SelectTabBaseProps = {
   menus: string[];
   type?: "purple" | "blue";
+  selectHandler(val: string): void;
 };
 export type SelectTabProps<T extends ElementType> = CombineElementProps<
   T,
