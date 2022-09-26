@@ -50,7 +50,7 @@ function Navbar(
       <HeaderContainer>
         <HeaderIcon>
           <Link href="/">
-            <LogoText onClick={activeHandler}>
+            <LogoText onClick={() => setActive(false)}>
               <Text
                 css={css`
                   color: ${theme.color.background.main};
@@ -61,7 +61,7 @@ function Navbar(
               .on
             </LogoText>
           </Link>
-          <LogoImage onClick={activeHandler}>
+          <LogoImage onClick={() => setActive(false)}>
             <Image src={logo} alt="logo" width={30} height={40} />
           </LogoImage>
         </HeaderIcon>
@@ -93,7 +93,7 @@ function Navbar(
             >
               <Link href="/mypage">
                 <FontAwesomeIcon
-                  onClick={activeHandler}
+                  onClick={() => setActive(false)}
                   icon={faCircleUser}
                   css={css`
                     width: 1.5rem;
@@ -108,7 +108,7 @@ function Navbar(
               </Link>
               <Link href="/alarm">
                 <FontAwesomeIcon
-                  onClick={activeHandler}
+                  onClick={() => setActive(false)}
                   icon={faBell}
                   css={css`
                     width: 1.3rem;
@@ -121,7 +121,7 @@ function Navbar(
               </Link>
               <Link href="/alarm">
                 <FontAwesomeIcon
-                  onClick={activeHandler}
+                  onClick={() => setActive(false)}
                   icon={faCircle}
                   css={css`
                     width: 7px;
@@ -135,7 +135,7 @@ function Navbar(
             <HeaderIcon>
               <Link href="/login">
                 <FontAwesomeIcon
-                  onClick={activeHandler}
+                  onClick={() => setActive(false)}
                   icon={faWallet}
                   css={css`
                     width: 19px;
