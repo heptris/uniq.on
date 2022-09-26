@@ -18,7 +18,7 @@ public enum ErrorCode {
 
     // 404 NOT FOUND 잘못된 리소스 접근
     MEMBER_NOT_FOUND(404, "존재하지 않은 회원 ID 입니다."),
-    MEMBER_EMAIL_NOT_FOUND(404, "존재하지 않은 이메일입니다."),
+    MEMBER_WALLET_ADDRESS_NOT_FOUND(404, "존재하지 않는 지갑주소입니다."),
     MEMBER_NICKNAME_NOT_FOUND(404, "존재하지 않은 닉네임입니다."),
     QUESTION_NOT_FOUND(404, "존재하지 않은 Question ID 입니다."),
     ANSWER_NOT_FOUND(404, "존재하지 않은 Answer ID 입니다."),
