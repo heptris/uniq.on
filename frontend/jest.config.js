@@ -15,13 +15,15 @@ const customJestConfig = {
     "\\.(css|less)$": "<rootDir>/__mocks__/styleMock.js",
 
     // Handle module aliases (this will be automatically configured for you soon)
-    "^@/api/(.*)$": "<rootDir>/api/$1",
-    "^@/assets/(.*)$": "<rootDir>/assets/$1",
-    "^@/components/(.*)$": "<rootDir>/components/$1",
-    "^@/contracts/(.*)$": "<rootDir>/contracts/$1",
-    "^@/pages/(.*)$": "<rootDir>/pages/$1",
-    "^@/styles/(.*)$": "<rootDir>/styles/$1",
-    "^@/types/(.*)$": "<rootDir>/types/$1",
+    "^@/(.*)$": "<rootDir>/src/$1",
+    "^@/api/(.*)$": "<rootDir>/src/api/$1",
+    "^@/assets/(.*)$": "<rootDir>/src/assets/$1",
+    "^@/components/(.*)$": "<rootDir>/src/components/$1",
+    "^@/contracts/(.*)$": "<rootDir>/src/contracts/$1",
+    "^@/pages/(.*)$": "<rootDir>/src/pages/$1",
+    "^@/styles/(.*)$": "<rootDir>/src/styles/$1",
+    "^@/types/(.*)$": "<rootDir>/src/types/$1",
+    "^@/hooks/(.*)$": "<rootDir>/src/hooks/$1",
   },
   testEnvironment: "jest-environment-jsdom",
 };

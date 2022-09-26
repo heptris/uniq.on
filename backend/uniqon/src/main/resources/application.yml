@@ -1,6 +1,6 @@
 spring:
   profiles:
-    include: data
+    include: API-KEY
   output:
     ansi:
       enabled: always # 로그 색상 추가
@@ -8,6 +8,7 @@ spring:
     url: jdbc:mysql://localhost:3306/uniqon?allowPublicKeyRetrieval=true&useSSL=false&useUnicode=true&serverTimezone=Asia/Seoul
     username: uniqon
     driver-class-name: com.mysql.cj.jdbc.Driver # MySql 드라이버 설정
+    password: ${MYSQL_PASSWORD}
   sql:
     init:
       mode: always
@@ -24,6 +25,17 @@ spring:
   redis:
     host: redis
     port: 6379
+
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 5MB
+
+
 
 logging:
   level:
