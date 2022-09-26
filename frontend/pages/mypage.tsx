@@ -10,17 +10,25 @@ import nft1 from "@/assets/nfts/1.png";
 import nft2 from "@/assets/nfts/2.png";
 import nft3 from "@/assets/nfts/3.png";
 
-import type { Member } from "@/types/api_responses";
+import { useNFTModal } from "@/hooks";
+
 import Avatar from "@/components/Avatar";
 import Text from "@/components/Text";
 import Grid from "@/components/Grid";
 import NFTItemCard from "@/components/Card/NFTItemCard";
 import SelectTab from "@/components/SelectTab";
+import Modal from "@/components/Modal";
+import Button from "@/components/Button";
+
 import { minTabletWidth } from "@/styles/utils";
+
+import type { Member, NFTItem } from "@/types/api_responses";
 
 function MyPage() {
   const theme = useTheme();
   const { account, setAccount } = contracts.useAccount();
+  const { isShowModal, modalContent, handleModalClose, handleModalOpen } =
+    useNFTModal();
   const member: Member = {
     id: 1,
     name: "tester",
@@ -30,8 +38,9 @@ function MyPage() {
     email: "test@gmail.com",
     memberType: "USER",
   };
-  const nfts = [
+  const nfts: NFTItem[] = [
     {
+      companyId: 1,
       nftImage: nft1,
       tokenId: 1243,
       corpName: "test",
@@ -39,6 +48,7 @@ function MyPage() {
       progress: 60,
     },
     {
+      companyId: 2,
       nftImage: nft2,
       tokenId: 1243,
       corpName: "test",
@@ -46,6 +56,7 @@ function MyPage() {
       progress: 60,
     },
     {
+      companyId: 3,
       nftImage: nft3,
       tokenId: 1243,
       corpName: "test",
@@ -53,6 +64,14 @@ function MyPage() {
       progress: 60,
     },
   ];
+
+  const handleModalSubmit = () => {
+    // 보유 NFT 목록일 경우
+    // discordUrl로 이동
+    // 예약 목록일 경우
+    // 해당 /list/:companyId로 이동
+    handleModalClose();
+  };
 
   return (
     <>
@@ -111,17 +130,32 @@ function MyPage() {
       />
 
       <Grid column="double">
-        {nfts.map((nft1, i) => (
-          <NFTItemCard
-            key={i}
-            nftImage={nft1.nftImage}
-            tokenId={nft1.tokenId}
-            corpName={nft1.corpName}
-            price={nft1.price}
-            progress={nft1.progress}
-          />
-        ))}
+        {nfts.map((nft1: NFTItem) => {
+          const { companyId, corpName, nftImage, price, progress, tokenId } =
+            nft1;
+          return (
+            <NFTItemCard
+              key={companyId}
+              nftImage={nftImage}
+              tokenId={tokenId}
+              corpName={corpName}
+              price={price}
+              progress={progress}
+              onClick={() => handleModalOpen(nft1)}
+            />
+          );
+        })}
       </Grid>
+      <Modal
+        isOpen={isShowModal}
+        onCancel={handleModalClose}
+        onSubmit={handleModalSubmit}
+      >
+        <div>
+          {modalContent?.corpName}
+          <Button onClick={handleModalSubmit}>어디로 이동하는 버튼</Button>
+        </div>
+      </Modal>
     </>
   );
 }
