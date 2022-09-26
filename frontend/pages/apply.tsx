@@ -1,26 +1,41 @@
 import Text from "@/components/Text";
-import { css } from "@emotion/react";
-import CircleBar from "@/components/CircleBar";
+import { css, useTheme } from "@emotion/react";
 import styled from "@emotion/styled";
 import { useState } from "react";
 import Button from "@/components/Button";
 import LabelInput from "@/components/LabelInput";
+import CircleBar from "@/components/CircleBar";
+import Alert from "@/components/Alert";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUpload } from "@fortawesome/free-solid-svg-icons";
 
 export default function apply() {
+  const theme = useTheme();
   const [current, setCurrent] = useState(1);
+  const [isChecked, setIsChecked] = useState(false);
   const currentUpHandler = () => {
     setCurrent(current + 1);
   };
   const submitHandler = () => {
-    setCurrent(1);
+    if (!isChecked) {
+      alert("개인정보 동의를 체크해주세요");
+    } else {
+      alert("신청이 완료되었습니다.");
+      setCurrent(1);
+      setIsChecked(false);
+    }
   };
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.target.checked ? setIsChecked(true) : setIsChecked(false);
+  };
+
   return (
     <ContainWrapper>
       <Text
         as="h1"
         css={css`
           font-size: 1.5rem;
-          margin: 3rem 0 1rem;
+          margin: 5rem 0 1rem;
         `}
       >
         투자받기
@@ -28,28 +43,180 @@ export default function apply() {
       <CircleBar current={current} total={3} />
       {current === 1 && (
         <>
-          <InputBox labelText="기업명" />
-          <InputBox labelText="담당자 이름/직함" />
-          <InputBox labelText="담당자 이메일" />
-          <InputBox labelText="담당자 이메일" />
-          <ButtonBox onClick={currentUpHandler}>다음단계</ButtonBox>
+          <LabelInput css={LabelInputStyle} labelText="기업명" />
+          <LabelInput css={LabelInputStyle} labelText="담당자 이름/직함" />
+          <LabelInput css={LabelInputStyle} labelText="담당자 이메일" />
+          <LabelInput css={LabelInputStyle} labelText="담당자 연락처" />
+          <Button css={ButtonStyle} onClick={currentUpHandler}>
+            다음단계
+          </Button>
         </>
       )}
       {current === 2 && (
         <>
-          <InputBox labelText="희망 모집 금액(SSH)" />
-          <InputBox labelText="투자 마감일" />
-          <InputBox labelText="토큰 발행 개수" />
-          <InputBox labelText="디스코드 주소" />
-          <InputBox labelText="회사 소개글" />
-          <InputBox labelText="투자자 모집 제목" />
-          <ButtonBox onClick={currentUpHandler}>다음단계</ButtonBox>
+          <LabelInput css={LabelInputStyle} labelText="희망 모집 금액(SSH)" />
+          <LabelInput css={LabelInputStyle} labelText="투자 마감일" />
+          <div
+            css={css`
+              color: ${theme.color.text.main};
+              font-size: 12px;
+              margin-bottom: 10px;
+              float: left;
+            `}
+          >
+            토큰 발행 개수
+          </div>
+          <select
+            id="토큰 발행 개수"
+            css={css`
+              width: 20rem;
+              height: 2.5rem;
+              border-radius: 4px;
+              margin-bottom: 1rem;
+              color: ${theme.color.text.main};
+              background-color: ${theme.color.background.item};
+              &:focus {
+                outline: 2px solid ${theme.color.border.main};
+              }
+            `}
+          >
+            <option>10</option>
+            <option>20</option>
+            <option>30</option>
+          </select>
+
+          <LabelInput css={LabelInputStyle} labelText="디스코드 주소" />
+          <LabelInput css={LabelInputStyle} labelText="회사 소개글" />
+          <LabelInput css={LabelInputStyle} labelText="투자자 모집 제목" />
+          <FileUploadWrapper>
+            <LabelInput
+              css={FileUploadStyle}
+              labelText="사업소개서 및 프로젝트 소개서(파일용량 50MB까지)"
+              disabled
+            />
+            <FileUploadBtn>
+              <FontAwesomeIcon
+                icon={faUpload}
+                css={css`
+                  width: 1.5rem;
+                  color: ${theme.color.text.main};
+                  margin-right: 2rem;
+                `}
+              />
+              <Text
+                css={css`
+                  font-size: 0.5rem;
+                `}
+              >
+                파일올리기
+              </Text>
+            </FileUploadBtn>
+          </FileUploadWrapper>
+          <FileUploadWrapper>
+            <LabelInput
+              css={FileUploadStyle}
+              labelText="NFT 이미지 파일을 첨부해주세요."
+              disabled
+            />
+            <FileUploadBtn>
+              <FontAwesomeIcon
+                icon={faUpload}
+                css={css`
+                  width: 1.5rem;
+                  color: ${theme.color.text.main};
+                  margin-right: 2rem;
+                `}
+              />
+              <Text
+                css={css`
+                  font-size: 0.5rem;
+                `}
+              >
+                파일올리기
+              </Text>
+            </FileUploadBtn>
+          </FileUploadWrapper>
+          <FileUploadWrapper>
+            <LabelInput
+              css={FileUploadStyle}
+              labelText="NFT 투자혜택 로드맵을 제출해주세요. "
+              disabled
+            />
+            <FileUploadBtn>
+              <FontAwesomeIcon
+                icon={faUpload}
+                css={css`
+                  width: 1.5rem;
+                  color: ${theme.color.text.main};
+                  margin-right: 2rem;
+                `}
+              />
+              <Text
+                css={css`
+                  font-size: 0.5rem;
+                `}
+              >
+                파일올리기
+              </Text>
+            </FileUploadBtn>
+          </FileUploadWrapper>
+
+          <Text
+            css={css`
+              align-self: flex-start;
+            `}
+          >
+            <LoadmapLink
+              href="https://themetakongz.com/kr.html#sec_roadmap"
+              target="_blank"
+            >
+              NFT 투자혜택 로드맵 예시 링크(메타콩즈)
+            </LoadmapLink>
+          </Text>
+
+          <Button css={ButtonStyle} onClick={currentUpHandler}>
+            다음단계
+          </Button>
         </>
       )}
       {current === 3 && (
         <>
-          <Text>개인정보 수집 및 이용 동의</Text>
-          <ButtonBox onClick={submitHandler}>제출완료</ButtonBox>
+          <Text
+            css={css`
+              align-self: flex-start;
+            `}
+          >
+            개인정보 수집 및 이용 동의
+          </Text>
+          <InfoAgreeBox>
+            <Text
+              css={css`
+                font-size: 0.5rem;
+              `}
+            >
+              uniq.on(이하 유니콘)은 펀딩 정보제공 목적으로 개인정보(성명,
+              이메일, 연락처)를 수집하고자 하며, 수집된 개인정보는 수집 및
+              이용목적이 달성된 후에는 지체 없이 파기합니다.
+              <br /> 개인 정보 수집 및 이용에 대하여 동의를 거부할 수 있으나,
+              거부할 시 uniq.on 정보제공 신청이 완료되지 않음에 유의하시기
+              바랍니다.
+            </Text>
+          </InfoAgreeBox>
+          <AgreeCheckBox>
+            <LabelInput id="infoAgree" type="checkbox" onChange={onChange} />
+            <label
+              htmlFor="infoAgree"
+              css={css`
+                font-size: 0.5rem;
+                color: ${theme.color.text.main};
+              `}
+            >
+              개인정보 수집 및 이용에 동의합니다.
+            </label>
+          </AgreeCheckBox>
+          <Button css={ButtonStyle} onClick={submitHandler}>
+            제출완료
+          </Button>
         </>
       )}
     </ContainWrapper>
@@ -60,16 +227,62 @@ const ContainWrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
 `;
 
-const InputBox = styled(LabelInput)`
+const LabelInputStyle = css`
   width: 20rem;
-  height: 2rem;
+  height: 2.5rem;
   margin-bottom: 1rem;
 `;
 
-const ButtonBox = styled(Button)`
-  margin: 3rem 0;
+const ButtonStyle = css`
+  margin: 2rem 0 0;
   width: 20rem;
+`;
+
+const FileUploadWrapper = styled.div`
+  position: relative;
+  margin-bottom: 1rem;
+`;
+
+const FileUploadBtn = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  left: 6rem;
+  top: 2.2rem;
+  position: absolute;
+  &:hover {
+    cursor: pointer;
+    color: ${({ theme }) => theme.color.text.hover};
+  }
+`;
+const FileUploadStyle = css`
+  width: 20rem;
+  height: 3rem;
+`;
+
+const InfoAgreeBox = styled.div`
+  width: 20rem;
+  height: 7rem;
+  padding: 0.5rem;
+  margin: 1rem 0;
+  border-radius: 0.5rem;
+  background-color: ${({ theme }) => theme.color.background.item};
+`;
+
+const AgreeCheckBox = styled.div`
+  width: 20rem;
+  display: flex;
+  align-items: center;
+`;
+
+const LoadmapLink = styled.a`
+  font-size: 0.5rem;
+  color: ${({ theme }) => theme.color.background.emphasis};
+  &:hover {
+    cursor: pointer;
+    color: ${({ theme }) => theme.color.text.hover};
+  }
 `;
