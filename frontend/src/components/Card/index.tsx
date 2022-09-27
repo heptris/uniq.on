@@ -38,7 +38,7 @@ function Card<T extends ElementType = "div">(
           border-radius: inherit;
           background-color: transparent;
           position: absolute;
-          z-index: 9950;
+          z-index: 1;
 
           ${cssConvex}
         `}

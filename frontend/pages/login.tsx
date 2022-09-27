@@ -72,7 +72,7 @@ const MenuItem = styled.div`
   display: flex;
   align-items: center;
   padding: 1.2rem 0.5rem;
-  z-index: 9951;
+  z-index: 1;
 
   &:hover {
     cursor: pointer;
