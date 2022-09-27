@@ -67,8 +67,8 @@ public class AuthController {
 //                token), HttpStatus.OK);
 //    }
 
-    @PostMapping("/{userAccount}")
-    public ResponseEntity<?> metaMaskLogin(@PathVariable("userAccount") String userAccount){
+    @PostMapping("/login")
+    public ResponseEntity<?> metaMaskLogin(@RequestParam String userAccount){
         TokenDto token = authService.metaMasklogin(userAccount);
         return new ResponseEntity<ResponseDto>(new ResponseDto(200, "로그인 성공", token), HttpStatus.OK);
     }
