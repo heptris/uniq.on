@@ -70,6 +70,13 @@ export type SelectTabProps<T extends ElementType> = CombineElementProps<
   SelectTabBaseProps
 >;
 
+export type FileUploadBaseProps = {
+  text: string;
+};
+export type FileUploadProps<T extends ElementType> = CombineElementProps<
+  T,
+  FileUploadBaseProps
+>;
 
 export type CircleBarBaseProps = {
   total?: number;
@@ -116,4 +123,3 @@ export type CarouselItem = {
 export type CarouselProps = {
   items: CarouselItem[];
 };
-
