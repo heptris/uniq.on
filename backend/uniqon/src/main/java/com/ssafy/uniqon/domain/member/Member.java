@@ -4,10 +4,7 @@ import com.ssafy.uniqon.domain.BaseEntity;
 import com.ssafy.uniqon.domain.invest.Invest_history;
 import com.ssafy.uniqon.domain.startup.Startup;
 import com.ssafy.uniqon.domain.startup.StartupFavorite;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -55,13 +52,19 @@ public class Member extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private MemberType memberType;
 
+    @Column(nullable = false)
+    private String profileImage;
+
     public void changeId(Long memberId) {
         this.id = memberId;
     }
 
-    public void updateMember(String password, String nickname){
-        this.password = password;
+    public void updateMember(String nickname){
         this.nickname = nickname;
+    }
+
+    public void changeProfileImage(String profileImage){
+        this.profileImage = profileImage;
     }
 
 }

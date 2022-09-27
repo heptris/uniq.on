@@ -4,7 +4,6 @@ package com.ssafy.uniqon.controller.alarm;
 import com.ssafy.uniqon.dto.alarm.AlarmRequestDto;
 import com.ssafy.uniqon.dto.response.ResponseDto;
 import com.ssafy.uniqon.service.alarm.AlarmService;
-import com.ssafy.uniqon.service.mypage.MypageService;
 import com.ssafy.uniqon.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
