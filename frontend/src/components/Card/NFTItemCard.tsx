@@ -48,7 +48,14 @@ function NFTItemCard<T extends ElementType = "div">(
   return (
     <Card style={{ height: "fit-content" }} ref={ref} {...rest}>
       <ImageContainer>
-        <Image src={nftImage} layout={"fill"} objectFit={"cover"} />
+        <Image
+          src={nftImage}
+          layout={"fill"}
+          objectFit={"cover"}
+          css={css`
+            z-index: -2;
+          `}
+        />
       </ImageContainer>
       <InfoContainer>
         <Text
