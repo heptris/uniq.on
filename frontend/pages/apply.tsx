@@ -55,13 +55,19 @@ export default function apply() {
       {current === 2 && (
         <>
           <LabelInput css={LabelInputStyle} labelText="희망 모집 금액(SSH)" />
-          <LabelInput css={LabelInputStyle} labelText="투자 마감일" />
+          <LabelInput
+            type="date"
+            css={LabelInputStyle}
+            style={{ color: theme.color.text.main }}
+            labelText="투자 마감일"
+          />
           <div
             css={css`
+              display: flex;
+              align-self: flex-start;
               color: ${theme.color.text.main};
               font-size: 12px;
               margin-bottom: 10px;
-              float: left;
             `}
           >
             토큰 발행 개수
@@ -227,6 +233,7 @@ const ContainWrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
 `;
 
 const LabelInputStyle = css`
