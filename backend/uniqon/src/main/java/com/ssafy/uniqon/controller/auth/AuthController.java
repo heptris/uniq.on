@@ -2,6 +2,7 @@ package com.ssafy.uniqon.controller.auth;
 
 import com.ssafy.uniqon.config.jwt.TokenProvider;
 import com.ssafy.uniqon.domain.member.Member;
+import com.ssafy.uniqon.dto.auth.AuthLoginDto;
 import com.ssafy.uniqon.dto.member.MemberJoinDto;
 import com.ssafy.uniqon.dto.member.MemberLoginDto;
 import com.ssafy.uniqon.dto.response.ResponseDto;
@@ -68,8 +69,8 @@ public class AuthController {
 //    }
 
     @PostMapping("/login")
-    public ResponseEntity<?> metaMaskLogin(@RequestParam String userAccount){
-        TokenDto token = authService.metaMasklogin(userAccount);
+    public ResponseEntity<?> metaMaskLogin(@RequestBody AuthLoginDto authLoginDto){
+        TokenDto token = authService.metaMasklogin(authLoginDto.getUserAccount());
         return new ResponseEntity<ResponseDto>(new ResponseDto(200, "로그인 성공", token), HttpStatus.OK);
     }
 
