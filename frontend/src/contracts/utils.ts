@@ -15,8 +15,8 @@ const contracts = {
 
     const getWeb3 = () => {
       if (!window.ethereum) {
-        alert("Metamask를 설치해주세요!");
-        throw new Error("Metamask is not installed.");
+        alert("MetaMask를 설치해주세요!");
+        throw new Error("MetaMask is not installed.");
       }
 
       setWeb3(new Web3(window.ethereum as any));
@@ -69,8 +69,8 @@ const contracts = {
 
     const connect = () => {
       if (!window.ethereum) {
-        alert("Metamask를 설치해주세요!");
-        throw new Error("Metamask is not installed.");
+        alert("MetaMask를 설치해주세요!");
+        throw new Error("MetaMask is not installed.");
       }
 
       return window.ethereum
