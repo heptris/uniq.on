@@ -34,11 +34,13 @@ export type IR = {
   memberId: number;
 };
 export type NFTItem = {
+  companyId: number;
   nftImage: string | StaticImageData;
   tokenId: number;
   corpName: string;
   price: number;
   progress: number;
+  discordUrl?: string;
 };
 export type Corp = {
   corpName: string;
