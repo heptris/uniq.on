@@ -1,4 +1,4 @@
-export * from "@/hooks/useModal";
+export * from "@/hooks/useNFTModal";
 export * from "@/hooks/useInterval";
 export * from "@/hooks/useSelectTab";
 export * from "@/hooks/useAuth";
