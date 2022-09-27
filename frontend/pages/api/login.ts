@@ -11,7 +11,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   }
 
   await axios
-    .post(`${ENDPOINT_AUTH}/auth/login`, body)
+    .post(`${ENDPOINT_AUTH}/login`, body)
     .then((response) => {
       const { data, headers } = response;
 
