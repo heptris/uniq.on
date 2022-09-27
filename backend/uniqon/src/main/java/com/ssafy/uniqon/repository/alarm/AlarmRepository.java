@@ -1,4 +1,4 @@
-package com.ssafy.uniqon.repository.mypage;
+package com.ssafy.uniqon.repository.alarm;
 
 import com.ssafy.uniqon.domain.alarm.Alarm;
 import org.springframework.data.jpa.repository.JpaRepository;

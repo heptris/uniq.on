@@ -9,7 +9,7 @@ import com.ssafy.uniqon.dto.alarm.AlarmDto;
 import com.ssafy.uniqon.exception.ex.CustomException;
 import com.ssafy.uniqon.exception.ex.ErrorCode;
 import com.ssafy.uniqon.repository.invest.InvestHistoryRepository;
-import com.ssafy.uniqon.repository.mypage.AlarmRepository;
+import com.ssafy.uniqon.repository.alarm.AlarmRepository;
 import com.ssafy.uniqon.repository.startup.StartupRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
