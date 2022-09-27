@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import Web3 from "web3";
 import { Contract } from "web3-eth-contract";
-import { AbiItem } from "web3-utils";
+
+import type { AbiItem } from "web3-utils";
+import type { Maybe } from "@metamask/providers/dist/utils";
 
 const contracts = {
   useWeb3: () => {
@@ -65,29 +67,46 @@ const contracts = {
   useAccount: () => {
     const [account, _setAccount] = useState("");
 
-    const setAccount = async () => {
+    const connect = () => {
       if (!window.ethereum) {
         alert("Metamask를 설치해주세요!");
         throw new Error("Metamask is not installed.");
       }
 
-      const accounts = await window.ethereum
+      return window.ethereum
         .request({
           method: "eth_requestAccounts",
         })
+        .then(handleAccountsChanged)
         .catch((error) => {
           console.error(error);
         });
-      if (!(accounts && Array.isArray(accounts))) return;
-
-      _setAccount(accounts[0]);
     };
 
-    useEffect(() => {
-      setAccount();
-    }, []);
+    const checkConnection = () => {
+      if (!window.ethereum) {
+        alert("Metamask를 설치해주세요!");
+        throw new Error("Metamask is not installed.");
+      }
+      return window.ethereum
+        .request({ method: "eth_accounts" })
+        .then(handleAccountsChanged)
+        .catch(console.error);
+    };
 
-    return { account, setAccount };
+    function handleAccountsChanged(response: Maybe<unknown>) {
+      if (!(response && Array.isArray(response))) return;
+
+      // 0이면 지갑 미연결 상태
+      if (response.length === 0) return false;
+      // 지갑 연결되어 잇으면 공개주소를 account에 넣고 연결되어 있음 반환
+      else {
+        _setAccount(response[0]);
+        return true;
+      }
+    }
+
+    return { account, connect, checkConnection };
   },
 };
 

@@ -6,12 +6,12 @@ import { minDesktopWidth } from "@/styles/utils";
 
 import metamask from "@/assets/wallet-icons/metamask.png";
 
-import contracts from "@/contracts/utils";
 import Text from "@/components/Text";
 import Card from "@/components/Card";
+import { useAuth } from "@/hooks";
 
 export default function Login() {
-  const { account, setAccount } = contracts.useAccount();
+  const { handleWallet } = useAuth();
   const wallets = [
     {
       id: 1,
@@ -39,7 +39,7 @@ export default function Login() {
         `}
       >
         {wallets.map((wallet) => (
-          <MenuItem key={wallet.id} onClick={() => console.log(account)}>
+          <MenuItem key={wallet.id} onClick={handleWallet}>
             <ImageContainer>
               <Image src={wallet.logo} />
             </ImageContainer>

@@ -22,6 +22,7 @@ import styled from "@emotion/styled";
 import Link from "next/link";
 import contracts from "@/contracts/utils";
 import Text from "../Text";
+import { useAuth } from "@/hooks";
 
 /**
  * @params
@@ -31,17 +32,11 @@ function Navbar(
   { ...props }: ComponentPropsWithoutRef<"header">,
   ref: Ref<any>
 ) {
-  const [isLoggedIn, setIsLogin] = useState(true);
+  const { isLogined } = useAuth();
   const [active, setActive] = useState(false);
   const activeHandler = () => {
     setActive(!active);
   };
-
-  const { account, setAccount } = contracts.useAccount();
-  useEffect(() => {
-    if (!account) setIsLogin(false);
-    else setIsLogin(true);
-  }, [account]);
 
   const theme = useTheme();
 
@@ -85,7 +80,7 @@ function Navbar(
               </Text>
             </Link>
           </nav>
-          {isLoggedIn ? (
+          {isLogined ? (
             <HeaderIcon
               css={css`
                 padding-left: 50px;
