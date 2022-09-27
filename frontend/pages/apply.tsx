@@ -8,6 +8,7 @@ import CircleBar from "@/components/CircleBar";
 import Alert from "@/components/Alert";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUpload } from "@fortawesome/free-solid-svg-icons";
+import { uniqonThemes } from "@/styles/theme";
 
 export default function apply() {
   const theme = useTheme();
@@ -58,38 +59,14 @@ export default function apply() {
           <LabelInput
             type="date"
             css={LabelInputStyle}
-            style={{ color: theme.color.text.main }}
             labelText="투자 마감일"
           />
-          <div
-            css={css`
-              display: flex;
-              align-self: flex-start;
-              color: ${theme.color.text.main};
-              font-size: 12px;
-              margin-bottom: 10px;
-            `}
-          >
-            토큰 발행 개수
-          </div>
-          <select
-            id="토큰 발행 개수"
-            css={css`
-              width: 20rem;
-              height: 2.5rem;
-              border-radius: 4px;
-              margin-bottom: 1rem;
-              color: ${theme.color.text.main};
-              background-color: ${theme.color.background.item};
-              &:focus {
-                outline: 2px solid ${theme.color.border.main};
-              }
-            `}
-          >
+          <SelectInputTitle>토큰 발행 개수</SelectInputTitle>
+          <SelectInput id="토큰 발행 개수">
             <option>10</option>
             <option>20</option>
             <option>30</option>
-          </select>
+          </SelectInput>
 
           <LabelInput css={LabelInputStyle} labelText="디스코드 주소" />
           <LabelInput css={LabelInputStyle} labelText="회사 소개글" />
@@ -234,12 +211,14 @@ const ContainWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  color: ${({ theme }) => theme.color.text.main};
 `;
 
 const LabelInputStyle = css`
   width: 20rem;
   height: 2.5rem;
   margin-bottom: 1rem;
+  color: ${uniqonThemes.darkTheme.color.text.main};
 `;
 
 const ButtonStyle = css`
@@ -291,5 +270,25 @@ const LoadmapLink = styled.a`
   &:hover {
     cursor: pointer;
     color: ${({ theme }) => theme.color.text.hover};
+  }
+`;
+
+const SelectInputTitle = styled.div`
+  display: flex;
+  align-self: flex-start;
+  color: ${({ theme }) => theme.color.text.main};
+  font-size: 12px;
+  margin-bottom: 10px;
+`;
+
+const SelectInput = styled.select`
+  width: 20rem;
+  height: 2.5rem;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+  color: ${({ theme }) => theme.color.text.main};
+  background-color: ${({ theme }) => theme.color.background.item};
+  &:focus {
+    outline: 2px solid ${({ theme }) => theme.color.border.main};
   }
 `;
