@@ -17,10 +17,14 @@ import Grid from "@/components/Grid";
 import NFTItemCard from "@/components/Card/NFTItemCard";
 import SelectTab from "@/components/SelectTab";
 import { minTabletWidth } from "@/styles/utils";
+import { useSelectTab } from "@/hooks";
 
 function MyPage() {
   const theme = useTheme();
   const { account, setAccount } = contracts.useAccount();
+  const menus = ["보유 NFT", "관심목록", "구매내역"];
+  const { selectedMenu, onSelectHandler } = useSelectTab(menus);
+
   const member: Member = {
     id: 1,
     name: "tester",
@@ -104,7 +108,8 @@ function MyPage() {
       </ProfileContainer>
 
       <SelectTab
-        menus={["보유 NFT", "관심목록", "구매내역"]}
+        menus={menus}
+        onSelectHandler={onSelectHandler}
         css={css`
           margin-top: 2rem;
         `}

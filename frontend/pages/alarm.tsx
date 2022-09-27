@@ -1,11 +1,8 @@
-import Image from "next/image";
+import { css, useTheme } from "@emotion/react";
 
 import SelectTab from "@/components/SelectTab";
-
-import { useEffect, useState } from "react";
-import { css, useTheme } from "@emotion/react";
 import Button from "@/components/Button";
-import Layout from "@/components/Layout";
+import { useSelectTab } from "@/hooks";
 
 const dummyData = {
   checked: [
@@ -33,68 +30,60 @@ const dummyData = {
 export default function alarm() {
   const theme = useTheme();
   const menus = ["확인한 알림", "읽지 않은 알림"];
-  const [select, setSelect] = useState(menus[0]);
-  const [checked, setChecked] = useState(true);
-
-  const selectHandler = (val: string) => {
-    setSelect(val);
-  };
-
-  useEffect(() => {
-    select === "확인한 알림" ? setChecked(true) : setChecked(false);
-  }, [select]);
+  const { selectedMenu, onSelectHandler } = useSelectTab(menus);
 
   return (
     <>
-      <SelectTab menus={menus} selectHandler={selectHandler} />
-      {(checked ? dummyData.checked : dummyData.unchecked).map(
-        (alarm: { text: any; date: any }) => (
+      <SelectTab menus={menus} onSelectHandler={onSelectHandler} />
+      {(selectedMenu === "확인한 알림"
+        ? dummyData.checked
+        : dummyData.unchecked
+      ).map((alarm: { text: any; date: any }) => (
+        <div
+          css={css`
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 6rem;
+            margin-top: 2rem;
+            padding: 0 0.5rem;
+            border-radius: 10px;
+            background-color: ${theme.color.background.item};
+            color: ${theme.color.text.main};
+          `}
+        >
           <div
             css={css`
               display: flex;
-              flex-direction: row;
+              flex-direction: column;
               justify-content: center;
-              align-items: center;
-              width: 100%;
-              height: 6rem;
-              margin-top: 2rem;
-              padding: 0 0.5rem;
-              border-radius: 10px;
-              background-color: ${theme.color.background.item};
-              color: ${theme.color.text.main};
+              width: 80%;
             `}
           >
-            <div
+            <p
               css={css`
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                width: 80%;
+                margin-bottom: 0.5rem;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                line-height: 1.2em;
               `}
             >
-              <p
-                css={css`
-                  margin-bottom: 0.5rem;
-                  overflow: hidden;
-                  text-overflow: ellipsis;
-                  line-height: 1.2em;
-                `}
-              >
-                {alarm.text}
-              </p>
-              <p
-                css={css`
-                  font-size: 0.8rem;
-                  color: ${theme.color.text.hover};
-                `}
-              >
-                {alarm.date}
-              </p>
-            </div>
-            <Button>확인</Button>
+              {alarm.text}
+            </p>
+            <p
+              css={css`
+                font-size: 0.8rem;
+                color: ${theme.color.text.hover};
+              `}
+            >
+              {alarm.date}
+            </p>
           </div>
-        )
-      )}
+          <Button>확인</Button>
+        </div>
+      ))}
     </>
   );
 }
