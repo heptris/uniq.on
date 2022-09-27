@@ -11,7 +11,7 @@ function SignUp() {
     email: "",
     walletAddress: account,
   });
-  const handleFormChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const onChangeForm = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setForm({
       ...form,
@@ -25,21 +25,21 @@ function SignUp() {
         labelText="이름"
         value={form.name}
         name={`name`}
-        onChange={handleFormChange}
+        onChange={onChangeForm}
       />
       <LabelInput
         placeholder="닉네임"
         labelText="닉네임"
         value={form.nickname}
         name={`nickname`}
-        onChange={handleFormChange}
+        onChange={onChangeForm}
       />
       <LabelInput
         placeholder="이메일"
         labelText="이메일"
         value={form.email}
         name={`email`}
-        onChange={handleFormChange}
+        onChange={onChangeForm}
       />
     </>
   );
