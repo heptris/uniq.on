@@ -44,7 +44,7 @@ public class MemberJoinDto {
     public Member toMember(){
         return Member.builder()
                 .walletAddress(walletAddress)
-                .password("1234")
+                .password("")
 //                .name(name)
                 .email(email)
                 .memberType(memberType)
