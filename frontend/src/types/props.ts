@@ -63,10 +63,29 @@ export type AlertProps<T extends ElementType> = OverridableProps<
 export type SelectTabBaseProps = {
   menus: string[];
   type?: "purple" | "blue";
+  onSelectHandler(val: string): void;
 };
 export type SelectTabProps<T extends ElementType> = CombineElementProps<
   T,
   SelectTabBaseProps
+>;
+
+export type FileUploadBaseProps = {
+  text: string;
+};
+export type FileUploadProps<T extends ElementType> = CombineElementProps<
+  T,
+  FileUploadBaseProps
+>;
+
+export type CircleBarBaseProps = {
+  total?: number;
+  current?: number;
+  menus?: String[];
+};
+export type CircleBarProps<T extends ElementType> = CombineElementProps<
+  T,
+  CircleBarBaseProps
 >;
 
 export type ProgressBarBaseProps = {

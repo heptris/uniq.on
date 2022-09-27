@@ -17,9 +17,13 @@ import Layout from "@/components/Layout";
 import Carousel from "@/components/Carousel";
 import contracts from "@/contracts/utils";
 import SelectTab from "@/components/SelectTab";
+import { useSelectTab } from "@/hooks";
 
 export default function InvestmentList() {
   const { account, setAccount } = contracts.useAccount();
+  const menus = ["전체 목록", "Top 10"];
+  const { selectedMenu, onSelectHandler } = useSelectTab(menus);
+
   const carouselItems: CarouselItem[] = [
     {
       corpName: "RENGA",
@@ -100,7 +104,8 @@ export default function InvestmentList() {
         </Button>
       </PageHeader> */}
       <SelectTab
-        menus={["전체 목록", "Top 10"]}
+        menus={menus}
+        onSelectHandler={onSelectHandler}
         type={"purple"}
         css={css`
           margin-top: 2rem;

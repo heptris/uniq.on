@@ -21,14 +21,17 @@ import Modal from "@/components/Modal";
 import Button from "@/components/Button";
 
 import { minTabletWidth } from "@/styles/utils";
-
-import type { Member, NFTItem } from "@/types/api_responses";
+import { useSelectTab } from "@/hooks";
+import { Member, NFTItem } from "@/types/api_responses";
 
 function MyPage() {
   const theme = useTheme();
-  const { account, setAccount } = contracts.useAccount();
+  const { account } = contracts.useAccount();
   const { isShowModal, modalContent, handleModalClose, handleModalOpen } =
     useNFTModal();
+  const menus = ["보유 NFT", "관심목록", "구매내역"];
+  const { selectedMenu, onSelectHandler } = useSelectTab(menus);
+
   const member: Member = {
     id: 1,
     name: "tester",
@@ -123,7 +126,8 @@ function MyPage() {
       </ProfileContainer>
 
       <SelectTab
-        menus={["보유 NFT", "관심목록", "구매내역"]}
+        menus={menus}
+        onSelectHandler={onSelectHandler}
         css={css`
           margin-top: 2rem;
         `}

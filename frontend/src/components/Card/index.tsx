@@ -27,6 +27,7 @@ function Card<T extends ElementType = "div">(
         position: relative;
         overflow: hidden;
         background-color: ${theme.color.background.card};
+        z-index: 0;
       `}
       ref={ref}
       {...rest}
@@ -38,7 +39,7 @@ function Card<T extends ElementType = "div">(
           border-radius: inherit;
           background-color: transparent;
           position: absolute;
-          z-index: 950;
+          z-index: -1;
 
           ${cssConvex}
         `}
