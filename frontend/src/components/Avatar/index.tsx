@@ -26,11 +26,11 @@ function Avatar<T extends ElementType = "div">(
       css={css`
         width: 5rem;
         height: 5rem;
-        border-radius: 8px;
         overflow: hidden;
-        outline: ${outline
+        border: ${outline
           ? `6px solid ${theme.color.border.main}`
           : `1px solid ${theme.color.border.main}`};
+        border-radius: 16px;
         filter: drop-shadow(0 0 10px ${theme.color.background.item});
       `}
       ref={ref}
