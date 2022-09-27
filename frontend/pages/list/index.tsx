@@ -20,7 +20,7 @@ import SelectTab from "@/components/SelectTab";
 import { useSelectTab } from "@/hooks";
 
 export default function InvestmentList() {
-  const { account, setAccount } = contracts.useAccount();
+  const { account } = contracts.useAccount();
   const menus = ["전체 목록", "Top 10"];
   const { selectedMenu, onSelectHandler } = useSelectTab(menus);
 
