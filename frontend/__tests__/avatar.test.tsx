@@ -28,7 +28,7 @@ describe("Avatar", () => {
     );
     const avatar = getByTestId(container, "avatar");
     expect(avatar).toHaveStyle(
-      `outline: 1px solid ${uniqonThemes.darkTheme.color.border.main}`
+      `border: 1px solid ${uniqonThemes.darkTheme.color.border.main}`
     );
   });
 });
