@@ -5,13 +5,13 @@ import { useState } from "react";
 import Button from "@/components/Button";
 import LabelInput from "@/components/LabelInput";
 import CircleBar from "@/components/CircleBar";
-import Alert from "@/components/Alert";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUpload } from "@fortawesome/free-solid-svg-icons";
 import { uniqonThemes } from "@/styles/theme";
+import FileUpload from "@/components/FileUpload";
+import { useRouter } from "next/router";
 
 export default function apply() {
   const theme = useTheme();
+  const router = useRouter();
   const [current, setCurrent] = useState(1);
   const [isChecked, setIsChecked] = useState(false);
   const currentUpHandler = () => {
@@ -24,6 +24,7 @@ export default function apply() {
       alert("신청이 완료되었습니다.");
       setCurrent(1);
       setIsChecked(false);
+      router.push("/");
     }
   };
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -71,78 +72,9 @@ export default function apply() {
           <LabelInput css={LabelInputStyle} labelText="디스코드 주소" />
           <LabelInput css={LabelInputStyle} labelText="회사 소개글" />
           <LabelInput css={LabelInputStyle} labelText="투자자 모집 제목" />
-          <FileUploadWrapper>
-            <LabelInput
-              css={FileUploadStyle}
-              labelText="사업소개서 및 프로젝트 소개서(파일용량 50MB까지)"
-              disabled
-            />
-            <FileUploadBtn>
-              <FontAwesomeIcon
-                icon={faUpload}
-                css={css`
-                  width: 1.5rem;
-                  color: ${theme.color.text.main};
-                  margin-right: 2rem;
-                `}
-              />
-              <Text
-                css={css`
-                  font-size: 0.5rem;
-                `}
-              >
-                파일올리기
-              </Text>
-            </FileUploadBtn>
-          </FileUploadWrapper>
-          <FileUploadWrapper>
-            <LabelInput
-              css={FileUploadStyle}
-              labelText="NFT 이미지 파일을 첨부해주세요."
-              disabled
-            />
-            <FileUploadBtn>
-              <FontAwesomeIcon
-                icon={faUpload}
-                css={css`
-                  width: 1.5rem;
-                  color: ${theme.color.text.main};
-                  margin-right: 2rem;
-                `}
-              />
-              <Text
-                css={css`
-                  font-size: 0.5rem;
-                `}
-              >
-                파일올리기
-              </Text>
-            </FileUploadBtn>
-          </FileUploadWrapper>
-          <FileUploadWrapper>
-            <LabelInput
-              css={FileUploadStyle}
-              labelText="NFT 투자혜택 로드맵을 제출해주세요. "
-              disabled
-            />
-            <FileUploadBtn>
-              <FontAwesomeIcon
-                icon={faUpload}
-                css={css`
-                  width: 1.5rem;
-                  color: ${theme.color.text.main};
-                  margin-right: 2rem;
-                `}
-              />
-              <Text
-                css={css`
-                  font-size: 0.5rem;
-                `}
-              >
-                파일올리기
-              </Text>
-            </FileUploadBtn>
-          </FileUploadWrapper>
+          <FileUpload text="사업소개서 및 프로젝트 소개서(파일용량 50MB까지)" />
+          <FileUpload text="NFT 이미지 파일을 첨부해주세요." />
+          <FileUpload text="NFT 투자혜택 로드맵을 제출해주세요." />
 
           <Text
             css={css`
@@ -224,29 +156,6 @@ const LabelInputStyle = css`
 const ButtonStyle = css`
   margin: 2rem 0 0;
   width: 20rem;
-`;
-
-const FileUploadWrapper = styled.div`
-  position: relative;
-  margin-bottom: 1rem;
-`;
-
-const FileUploadBtn = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  left: 6rem;
-  top: 2.2rem;
-  position: absolute;
-  &:hover {
-    cursor: pointer;
-    color: ${({ theme }) => theme.color.text.hover};
-  }
-`;
-const FileUploadStyle = css`
-  width: 20rem;
-  height: 3rem;
 `;
 
 const InfoAgreeBox = styled.div`
