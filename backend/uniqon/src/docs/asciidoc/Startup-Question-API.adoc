@@ -1,0 +1,18 @@
+[[Startup-Question-API]]
+== Startup Question API
+
+[[스타트업_질문_등록]]
+=== Startup 질문 등록
+operation::startup-question-controller-test/스타트업_질문_등록[snippets='http-request,http-response,path-parameters,request-fields']
+
+[[스타트업_질문_수정]]
+=== Startup 질문 수정
+operation::startup-question-controller-test/스타트업_질문_수정[snippets='http-request,http-response,path-parameters,request-fields']
+
+[[스타트업_질문_등록]]
+=== Startup 질문 등록
+operation::startup-question-controller-test/스타트업_질문_삭제[snippets='http-request,http-response,path-parameters']
+
+[[스타트업_질문_등록]]
+=== Startup 질문 등록
+operation::startup-question-controller-test/스타트업_질문_조회_페이징[snippets='http-request,http-response,path-parameters,request-parameters']

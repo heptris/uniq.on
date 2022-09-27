@@ -9,6 +9,9 @@ import com.ssafy.uniqon.controller.WithMockCustomUser;
 import com.ssafy.uniqon.domain.startup.Startup;
 import com.ssafy.uniqon.dto.startup.StartupDetailResponseDto;
 import com.ssafy.uniqon.dto.startup.StartupRequestDto;
+import com.ssafy.uniqon.dto.startup.StartupResponseListDto;
+import com.ssafy.uniqon.dto.startup.StartupSearchCondition;
+import com.ssafy.uniqon.dto.startup.community.StartupCommunityResponseListDto;
 import com.ssafy.uniqon.service.startup.StartupService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -21,6 +24,8 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.context.annotation.Import;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.mapping.JpaMetamodelMappingContext;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
@@ -31,6 +36,8 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.List;
 
 import static com.ssafy.uniqon.config.RestDocsConfig.field;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
@@ -85,26 +92,26 @@ class StartupControllerTest extends RestDocsTestSupport {
                         restDocs.document(
                                 pathParameters(
                                         parameterWithName("startupId").description("Startup ID")
-                                ),
-                                responseFields( // response 필드 정보 입력
-                                        fieldWithPath("status").description("status"),
-                                        fieldWithPath("message").description("message"),
-                                        fieldWithPath("data").description("data"),
-                                        fieldWithPath("data.startupId").description("startup ID"),
-                                        fieldWithPath("data.startupName").description("startup name"),
-                                        fieldWithPath("data.title").description("startup title"),
-                                        fieldWithPath("data.description").description("startup description"),
-                                        fieldWithPath("data.nftCount").description("startup nftCount"),
-                                        fieldWithPath("data.pricePerNft").description("startup pricePerNft"),
-                                        fieldWithPath("data.goalRate").description("startup goalRate"),
-                                        fieldWithPath("data.isFav").description("isFav"),
-                                        fieldWithPath("data.pricePerNft").description("startup pricePerNft"),
-                                        fieldWithPath("data.endDate").description("startup endDate"),
-                                        fieldWithPath("data.businessPlan").description("startup businessPlan"),
-                                        fieldWithPath("data.businessPlanImg").description("startup businessPlanImg"),
-                                        fieldWithPath("data.roadMap").description("startup roadMap"),
-                                        fieldWithPath("data.imageNft").description("startup imageNft")
                                 )
+//                                responseFields( // response 필드 정보 입력
+//                                        fieldWithPath("status").description("status"),
+//                                        fieldWithPath("message").description("message"),
+//                                        fieldWithPath("data").description("data"),
+//                                        fieldWithPath("data.startupId").description("startup ID"),
+//                                        fieldWithPath("data.startupName").description("startup name"),
+//                                        fieldWithPath("data.title").description("startup title"),
+//                                        fieldWithPath("data.description").description("startup description"),
+//                                        fieldWithPath("data.nftCount").description("startup nftCount"),
+//                                        fieldWithPath("data.pricePerNft").description("startup pricePerNft"),
+//                                        fieldWithPath("data.goalRate").description("startup goalRate"),
+//                                        fieldWithPath("data.isFav").description("isFav"),
+//                                        fieldWithPath("data.pricePerNft").description("startup pricePerNft"),
+//                                        fieldWithPath("data.endDate").description("startup endDate"),
+//                                        fieldWithPath("data.businessPlan").description("startup businessPlan"),
+//                                        fieldWithPath("data.businessPlanImg").description("startup businessPlanImg"),
+//                                        fieldWithPath("data.roadMap").description("startup roadMap"),
+//                                        fieldWithPath("data.imageNft").description("startup imageNft")
+//                                )
                         )
                 );
     }
@@ -168,12 +175,12 @@ class StartupControllerTest extends RestDocsTestSupport {
                                         fieldWithPath("discordUrl").description("discordUrl").attributes(field("constraints", "길이 10 이하")),
                                         fieldWithPath("description").description("description").attributes(field("constraints", "길이 10 이하")),
                                         fieldWithPath("title").description("title").attributes(field("constraints", "길이 10 이하"))
-                                ),
-                                responseFields(
-                                        fieldWithPath("status").description("status"),
-                                        fieldWithPath("message").description("message"),
-                                        fieldWithPath("data").description("data")
                                 )
+//                                responseFields(
+//                                        fieldWithPath("status").description("status"),
+//                                        fieldWithPath("message").description("message"),
+//                                        fieldWithPath("data").description("data")
+//                                )
                         )
                 );
 
@@ -194,11 +201,41 @@ class StartupControllerTest extends RestDocsTestSupport {
                         restDocs.document(
                                 pathParameters(
                                         parameterWithName("startupId").description("Startup ID")
-                                ), responseFields( // response 필드 정보 입력
-                                        fieldWithPath("status").description("status"),
-                                        fieldWithPath("message").description("message"),
-                                        fieldWithPath("data").description("data")
                                 )
+//                                responseFields( // response 필드 정보 입력
+//                                        fieldWithPath("status").description("status"),
+//                                        fieldWithPath("message").description("message"),
+//                                        fieldWithPath("data").description("data")
+//                                )
                         ));
+    }
+
+    @DisplayName(value = "스타트업 리스트")
+    @Test
+    public void 스타트업_리스트() throws Exception {
+
+        Pageable pageable = Pageable.ofSize(10).withPage(0);
+        StartupSearchCondition condition = new StartupSearchCondition("title", "startupName");
+        StartupResponseListDto startupResponseListDto = new StartupResponseListDto("startupName1", "title1", LocalDateTime.now(),
+                "nftImageUrl1");
+        StartupResponseListDto startupResponseListDto2 = new StartupResponseListDto("startupName2", "title2", LocalDateTime.now(),
+                "nftImageUrl2");
+        List<StartupResponseListDto> startupResponseListDtos = Arrays.asList(startupResponseListDto, startupResponseListDto2);
+        PageImpl page = new PageImpl(startupResponseListDtos, pageable, 2);
+        given(startupService.startupList(condition, pageable)).willReturn(page);
+
+        mockMvc.perform(
+                        get("/api/invest?size=10&page=0&startupName=startupName&title=title")
+                                .header("Authorization", "Bearer " + accessToken)
+                                .contentType(MediaType.APPLICATION_JSON)
+                ).andExpect(status().isOk())
+                .andDo(restDocs.document(
+                        requestParameters(
+                                parameterWithName("title").description("title"),
+                                parameterWithName("startupName").description("startupName"),
+                                parameterWithName("size").description("size"),
+                                parameterWithName("page").description("page")
+                        )
+                ));
     }
 }
