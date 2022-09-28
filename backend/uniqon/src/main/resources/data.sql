@@ -14,15 +14,15 @@ values (now(), now(), "aa@naver.com", "ADMIN", "aaa", "0XA", "", "https://picsum
        (now(), now(), "ee@naver.com", "USER", "eee", "0XE", "", "https://picsum.photos/200"),
        (now(), now(), "test@naver.com", "USER", "test", "0XF", "", "https://picsum.photos/200");
 
-insert into startup (created_date, last_modified_date, description, business_plan, cur_total_price
-                    , discord_url, end_date, enroll_status, goal_price, image_nft, invest_count, is_finished, is_goal, nft_count
-                    , price_per_nft, road_map, reject_reason, startup_name, title, member_id)
-values (now(), now(), "startup C입니다", null, 0, null,
-        DATE_ADD(now(), interval 1 day), null, 10, null, 0, false, false, 0, 0, null, null, null, "startup C", 3),
-       (now(), now(), "startup D입니다", null, 0, null,
-        DATE_ADD(now(), interval 1 day), null, 10, null, 0, false, false, 0, 0, null, null, null, "startup D", 4),
-       (now(), now(), "startup E입니다", null, 0, null,
-        DATE_ADD(now(), interval 1 day), null, 10, null, 0, false, false, 0, 0, null, null, null, "startup E", 6);
+insert into startup (created_date, last_modified_date, description, plan_paper
+                    , discord_url, enroll_status, due_date, nft_image, nft_reserve_count, is_finished, is_goal, nft_target_count
+                    , nft_price, road_map, reject_reason, startup_name, title, member_id, nft_description)
+values (now(), now(), "startup description", null, null, null,
+        DATE_ADD(now(), interval 1 day), null, 0, false, false, 10, 5, null, null, "ccc", "title", 3, "nft description"),
+       (now(), now(), "startup description2", null, null, null,
+        DATE_ADD(now(), interval 1 day), null, 0, false, false, 10, 5, null, null, "ddd", "title2", 4, "nft description2"),
+       (now(), now(), "startup description3", null, null, null,
+        DATE_ADD(now(), interval 1 day), null, 0, false, false, 10, 5, null, null, "test", "title3", 6, "nft description3");
 
 insert into startup_question (created_date, last_modified_date, question, member_id, startup_id)
 values (now(), now(), "질문1", 1, 1),

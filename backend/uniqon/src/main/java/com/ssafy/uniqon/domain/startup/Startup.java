@@ -34,38 +34,26 @@ public class Startup extends BaseEntity {
     private List<Invest_history> investHistoryList = new ArrayList<>();
 
     private String startupName;
-
-    private String managerName; // 담당자 이름
-    private String managerEmail; // 담당자 이메일
-    private String managerNumber; // 담당자 연락처
-
     @Lob
-    private String businessPlan;
+    private String planPaper;
     @Lob
-    private String businessPlanImg;
-
+    private String planPaperImg;
     private String roadMap;
 
     private String title;
 
     private String description;
 
-    private LocalDateTime endDate;
+    private LocalDateTime dueDate;
+    private String nftImage;
 
-    private String imageNft;
+    private Integer nftTargetCount;
+    private Integer nftReserveCount;
 
-    private Double goalPrice;
+    private double nftPrice;
 
-    private Double curTotalPrice;
-
-    private Integer nftCount;
-
-    private Integer investCount;
-
-    private double pricePerNft;
-
+    private String nftDescription;
     private Boolean isFinished;
-
     private Boolean isGoal;
 
     private String discordUrl;
@@ -78,35 +66,27 @@ public class Startup extends BaseEntity {
     public void changeId(Long startupId) {
         this.id = startupId;
     }
-
-    public void changeBusinessPlan(String businessPlan) {
-        this.businessPlan = businessPlan;
-    }
-
-    public void changeBusinessPlanImg(String businessPlanImg){
-        this.businessPlanImg = businessPlanImg;
-    }
-
-    public void changeImageNft(String imageNft) {
-        this.imageNft = imageNft;
+    public void changeNftImage(String nftImage) {
+        this.nftImage = nftImage;
     }
     public void changeRoadMap(String roadMap){
         this.roadMap = roadMap;
     }
-
-    public void investCountIncrement() {
-        this.investCount += 1;
+    public void nftReserveCountIncrement() {
+        this.nftReserveCount += 1;
     }
-
-    public void changeCurTotalPrice() {
-        this.curTotalPrice += this.pricePerNft;
-    }
-
     public void changeIsGoal() {
         this.isGoal = Boolean.TRUE;
     }
-
     public void changeIsFinish() {
         this.isFinished = Boolean.TRUE;
+    }
+
+    public void changePlanPaper(String plan_paper_url) {
+        this.planPaper = plan_paper_url;
+    }
+
+    public void changePlanPaperImg(String imgUrl) {
+        this.planPaperImg = imgUrl;
     }
 }

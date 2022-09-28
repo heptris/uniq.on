@@ -14,26 +14,31 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class StartupDetailResponseDto {
-
     private Long startupId;
     private String startupName;
     private String title;
     private String description;
-    private Integer nftCount; // 발행 개수
-    private Double goalRate; // 달성률
-    private Double pricePerNft; // 발행가
+
+    private Integer nftTargetCount; // 발행 개수
+
+    private Integer nftReserveCount;
+
+    private Double nftPrice; // 발행가
     @JsonFormat(pattern = "yyyy-MM-dd HH")
-    private LocalDateTime endDate;
+    private LocalDateTime dueDate;
 
     // 사업계획서
-    private String businessPlan;
-    private String businessPlanImg;
+    private String planPaper;
+
+    private String planPaperImg;
 
     // 로드맵
     private String roadMap;
 
     // nft image
-    private String imageNft;
+    private String nftImage;
+
+    private String nftDescription;
 
     private Boolean isFav;
 
@@ -42,13 +47,14 @@ public class StartupDetailResponseDto {
         this.startupName = startup.getStartupName();
         this.title = startup.getTitle();
         this.description = startup.getDescription();
-        this.nftCount = startup.getNftCount();
-        this.goalRate = new Double(startup.getInvestCount()) / startup.getNftCount() * 100;
-        this.pricePerNft = startup.getPricePerNft();
-        this.endDate = startup.getEndDate();
-        this.businessPlan = startup.getBusinessPlan();
-        this.businessPlanImg = startup.getBusinessPlanImg();
         this.roadMap = startup.getRoadMap();
-        this.imageNft = startup.getImageNft();
+        this.planPaper = startup.getPlanPaper();
+        this.planPaperImg = startup.getPlanPaperImg();
+        this.nftTargetCount = startup.getNftTargetCount();
+        this.nftReserveCount = startup.getNftReserveCount();
+        this.nftDescription = startup.getNftDescription();
+        this.nftImage = startup.getNftImage();
+        this.nftPrice = startup.getNftPrice();
+        this.dueDate = startup.getDueDate();
     }
 }
