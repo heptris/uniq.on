@@ -65,4 +65,15 @@ public class MemberController {
 
         return new ResponseEntity(new ResponseDto<>(200,"success","삭제 완료 !!"), HttpStatus.OK);
     }
+
+    @ApiOperation(value = "마이페이지 관심 목록")
+    @GetMapping("/mypage/favstartup")
+    public ResponseEntity findMemberFavStartup(){
+        Long memberId = SecurityUtil.getCurrentMemberId();
+
+        return ResponseEntity.status(HttpStatus.OK).body(
+                new ResponseDto(HttpStatus.OK.value(), "관심 목록", memberService.findMemberFavStartup(memberId))
+        );
+    }
+
 }

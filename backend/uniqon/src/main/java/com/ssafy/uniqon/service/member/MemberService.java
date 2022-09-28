@@ -2,6 +2,7 @@ package com.ssafy.uniqon.service.member;
 
 import com.ssafy.uniqon.domain.member.Member;
 import com.ssafy.uniqon.domain.s3.AwsS3;
+import com.ssafy.uniqon.dto.member.MemberFavStartupDto;
 import com.ssafy.uniqon.dto.member.MemberProfileDto;
 import com.ssafy.uniqon.dto.member.MemberUpdateDto;
 import com.ssafy.uniqon.exception.ex.CustomException;
@@ -15,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 
 import static com.ssafy.uniqon.exception.ex.ErrorCode.FILE_UPLOAD_ERROR;
 import static com.ssafy.uniqon.exception.ex.ErrorCode.MEMBER_NOT_FOUND;
@@ -67,6 +69,10 @@ public class MemberService {
                 .profileImage(member.getProfileImage())
                 .memberType(member.getMemberType())
                 .build();
+    }
+
+    public List<MemberFavStartupDto> findMemberFavStartup(Long memberId){
+        return memberRepository.findFavStartup(memberId);
     }
 
 
