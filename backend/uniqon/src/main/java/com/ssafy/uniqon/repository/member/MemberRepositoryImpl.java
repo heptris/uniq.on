@@ -78,8 +78,7 @@ public class MemberRepositoryImpl implements MemberRepositoryCustom{
                 .from(member)
                 .innerJoin(member.investHistoryList, invest_history)
                 .innerJoin(invest_history.startup, startup)
-                .where(member.id.eq(memberId).and(invest_history.investStatus.eq(INVESTING))
-                        .and(startup.member.id.ne(memberId)))
+                .where(member.id.eq(memberId).and(startup.member.id.ne(memberId)))
                 .fetch();
 
         return memberInvestedStartupDtoList;
@@ -107,8 +106,7 @@ public class MemberRepositoryImpl implements MemberRepositoryCustom{
                 .from(member)
                 .innerJoin(member.investHistoryList, invest_history)
                 .innerJoin(invest_history.startup, startup)
-                .where(member.id.eq(memberId).and(invest_history.investStatus.eq(INVESTING))
-                        .and(startup.member.id.eq(memberId)))
+                .where(member.id.eq(memberId).and(startup.member.id.eq(memberId)))
                 .fetch();
 
         return startupInvestedListDtoList;
