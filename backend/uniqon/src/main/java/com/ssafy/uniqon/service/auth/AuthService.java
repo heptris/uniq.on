@@ -61,9 +61,9 @@ public class AuthService {
 //    }
 
     @Transactional
-    public TokenDto metaMasklogin(String userAccount) throws RuntimeException{
+    public TokenDto metaMasklogin(String walletAddress) throws RuntimeException{
 
-        MetaMaskLoginDto metaMaskLoginDto = new MetaMaskLoginDto(userAccount, "");
+        MetaMaskLoginDto metaMaskLoginDto = new MetaMaskLoginDto(walletAddress, "");
 
         // 1. Login ID/PW 를 기반으로 AuthenticationToken 생성
         UsernamePasswordAuthenticationToken authenticationToken = metaMaskLoginDto.toAuthentication();

@@ -8,5 +8,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 public class AuthLoginDto {
-    private String userAccount;
+    private String walletAddress;
 }

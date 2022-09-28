@@ -86,7 +86,7 @@ public class AuthController {
     })
     @PostMapping("/login")
     public ResponseEntity<?> metaMaskLogin(@RequestBody AuthLoginDto authLoginDto){
-        TokenDto token = authService.metaMasklogin(authLoginDto.getUserAccount());
+        TokenDto token = authService.metaMasklogin(authLoginDto.getWalletAddress());
         return new ResponseEntity<ResponseDto>(new ResponseDto(200, "로그인 성공", token), HttpStatus.OK);
     }
 
