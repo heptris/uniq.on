@@ -2,6 +2,7 @@
 pragma solidity ^0.8.4;
 
 import "./token/ERC721/extensions/ERC721Enumerable.sol";
+import "./token/ERC20/ERC20.sol";
 
 /**
  * PJT Ⅰ - 과제 2) NFT Creator 구현
@@ -13,11 +14,13 @@ contract MintUniqonToken is ERC721Enumerable{
     mapping(uint256 => string) tokenURIs;
     mapping(uint256 => uint256) public uniqonTokenPrices;
     uint256[] public onSaleUniqonToken;
+    IERC20 public erc20Contract;
     
     event showTokenURI(string indexed tokenURI);
 
     constructor() ERC721("Uniq.on-NFT", "UNFT") {
         _tokenIds = 0;
+        erc20Contract = IERC20(0x0c54E456CE9E4501D2c43C38796ce3F06846C966);
     }
 
     function current() public view returns (uint256) {
@@ -97,6 +100,20 @@ contract MintUniqonToken is ERC721Enumerable{
         return onSaleUniqonToken;
     }
 
+    function getSSFBalance() public view returns (uint256) {
+        return erc20Contract.balanceOf(msg.sender);
+    }
+
+    function transferSSF() public payable {
+        require(erc20Contract.approve(msg.sender, getSSFBalance()), "address fail");
+        require(getSSFBalance() > 0, "caller has no money");
+        
+        // address uniqonTokenOwner = ownerOf(1);
+
+        erc20Contract.transferFrom(msg.sender, address(this), 1);
+        // erc20Contract.transfer(0x5Ca94806f7440E2D235120115bBb77873952e819, 1);
+    }
+
     function purchaseUniqonToken(uint256 _uniqonTokenId) public payable {
         uint256 price = uniqonTokenPrices[_uniqonTokenId];
         address uniqonTokenOwner = ownerOf(_uniqonTokenId);
@@ -108,7 +125,8 @@ contract MintUniqonToken is ERC721Enumerable{
             "Caller is uniqon token owner."
         );
 
-        payable(uniqonTokenOwner).transfer(msg.value);
+        // payable(uniqonTokenOwner).transfer(msg.value);
+        erc20Contract.transferFrom(msg.sender, uniqonTokenOwner, price);
         IERC721(address(this)).safeTransferFrom(uniqonTokenOwner, msg.sender, _uniqonTokenId);
 
         uniqonTokenPrices[_uniqonTokenId] = 0;

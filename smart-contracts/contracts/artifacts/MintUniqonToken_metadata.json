@@ -183,6 +183,19 @@
 				"type": "function"
 			},
 			{
+				"inputs": [],
+				"name": "erc20Contract",
+				"outputs": [
+					{
+						"internalType": "contract IERC20",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
 				"inputs": [
 					{
 						"internalType": "uint256",
@@ -228,6 +241,19 @@
 						"internalType": "string[]",
 						"name": "",
 						"type": "string[]"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "getSSFBalance",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
 					}
 				],
 				"stateMutability": "view",
@@ -558,6 +584,13 @@
 				"type": "function"
 			},
 			{
+				"inputs": [],
+				"name": "transferSSF",
+				"outputs": [],
+				"stateMutability": "payable",
+				"type": "function"
+			},
+			{
 				"inputs": [
 					{
 						"internalType": "uint256",
@@ -655,11 +688,35 @@
 	},
 	"sources": {
 		"contracts/MintUniqonToken.sol": {
-			"keccak256": "0xe878e689e457d8b3cd87cea49ebd61f411bdeb08db69491d69b75186cbdd2c0e",
+			"keccak256": "0x7f9d45ecef94430b83b6dea29f4c37f45eb420f7ffc070dc0844c165a93e3761",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://271737a5bf63ce90b5098e1c2b4b63ad8ea8e4bd33fbf396c67478c3c8936853",
-				"dweb:/ipfs/QmZkWkqbnNuCQFwg8Eb4zPYMrQmBgz3BGKRFbLU1xWhs5n"
+				"bzz-raw://4a720bbe3378d17c0cefc785a24db86f7a37cf3baf787d089319159f07da2693",
+				"dweb:/ipfs/QmYutHYKCrk8s1tfuDoUbt9WAZdvS69DAc2Uyb4VUYaQtq"
+			]
+		},
+		"contracts/token/ERC20/ERC20.sol": {
+			"keccak256": "0x40d568bcce1ee4f5ebb7d05ecb93b55eae3546df2c2215268072be7bf360ecc2",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://11e2f55e55d44bfdff043eaa22ace9d4751acd8a203446ed008e235d84a80faf",
+				"dweb:/ipfs/QmQqFU1N6Z5qKhLW2eeNdXWXkJ35i4wj1Uyac4fbowJ9Cv"
+			]
+		},
+		"contracts/token/ERC20/IERC20.sol": {
+			"keccak256": "0x74ae1a773c1ce27b59c22903469389a6aeb2c882c2485e014aaf50710b9bc32c",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://c399a2b2bcac88e61c5c617ef7f1341429fa589aba5a9563df6f422996a48b76",
+				"dweb:/ipfs/QmWEdyWLZLUy8aMSyYk4E4mD2WhPvrvtxC2KvA5pjBAzXn"
+			]
+		},
+		"contracts/token/ERC20/extensions/IERC20Metadata.sol": {
+			"keccak256": "0x625b87cf2c51463b99de1dda2afd18075618faafac512850ee78c205c82d1f93",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://02d72e8ea6e5c90e628b3b9391947658561c90809e4f9f18c76037ed2b3f61a9",
+				"dweb:/ipfs/QmXtdaEkMFehAN5C4F8TEW2HknLBhxfDzqorn3R1ZaGZaK"
 			]
 		},
 		"contracts/token/ERC721/ERC721.sol": {
