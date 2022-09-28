@@ -128,17 +128,19 @@ class MemberControllerTest extends RestDocsTestSupport {
     @Test
     public void 마이페이지_관심_목록() throws Exception {
 
-        MemberFavStartupDto favStartupDto = MemberFavStartupDto.builder().memberId(1L).startupId(1L).startupName("스타트업A").title("title").
-                description("description").nftCount(10).investCount(5)
-                .pricePerNft(new Double(2)).endDate(LocalDateTime.now().plusDays(2))
-                .businessPlan("businessPlan").businessPlanImg("businessPlanImg").roadMap("roadMap")
-                .imageNft("imageNft").isFav(Boolean.TRUE).build();
+        MemberFavStartupDto favStartupDto = MemberFavStartupDto.builder().memberId(1L).startupId(1L).
+                startupName("스타트업A").title("title").
+                description("description").nftTargetCount(10).nftReserveCount(5)
+                .nftPrice(new Double(2)).dueDate(LocalDateTime.now().plusDays(2))
+                .planPaper("planPaper").planPaperImg("planPaperImg").roadMap("roadMap")
+                .nftImage("nftImage").isFav(Boolean.TRUE).build();
 
-        MemberFavStartupDto favStartupDto2 = MemberFavStartupDto.builder().memberId(1L).startupId(2L).startupName("스타트업B").title("title").
-                description("description").nftCount(10).investCount(5)
-                .pricePerNft(new Double(2)).endDate(LocalDateTime.now().plusDays(2))
-                .businessPlan("businessPlan").businessPlanImg("businessPlanImg").roadMap("roadMap")
-                .imageNft("imageNft").isFav(Boolean.TRUE).build();
+        MemberFavStartupDto favStartupDto2 = MemberFavStartupDto.builder().memberId(1L).startupId(2L).
+                startupName("스타트업B").title("title2").
+                description("description2").nftTargetCount(10).nftReserveCount(5)
+                .nftPrice(new Double(2)).dueDate(LocalDateTime.now().plusDays(2))
+                .planPaper("planPaper").planPaperImg("planPaperImg").roadMap("roadMap")
+                .nftImage("nftImage").isFav(Boolean.TRUE).build();
 
         List<MemberFavStartupDto> favStartupDtoList = Arrays.asList(favStartupDto, favStartupDto2);
 

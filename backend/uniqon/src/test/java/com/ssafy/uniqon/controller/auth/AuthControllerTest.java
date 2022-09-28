@@ -90,7 +90,7 @@ class AuthControllerTest extends RestDocsTestSupport {
         TokenDto tokenDto = TokenDto.builder().accessToken("accessToken").refreshToken("refreshToken").grantType("bearer").accessTokenExpiresIn(16124L)
                 .build();
 
-        given(authService.metaMasklogin(authLoginDto.getUserAccount())).willReturn(tokenDto);
+        given(authService.metaMasklogin(authLoginDto.getWalletAddress())).willReturn(tokenDto);
 
         mockMvc.perform(
                         post("/auth/login")
@@ -100,7 +100,7 @@ class AuthControllerTest extends RestDocsTestSupport {
                 .andDo(
                         restDocs.document(
                                 requestFields(
-                                        fieldWithPath("userAccount").description("userAccount").attributes(
+                                        fieldWithPath("walletAddress").description("walletAddress").attributes(
                                                 field("constraints", "길이 100 이하")
                                         )
                                 )

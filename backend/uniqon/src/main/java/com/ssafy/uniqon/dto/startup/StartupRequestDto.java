@@ -22,7 +22,7 @@ public class StartupRequestDto {
     private String description; // 회사 소개글
     private String title; // 제목
 
-    private Integer nftTargetCount; // 토큰 발행 개수
-    private Double nftPrice;    // NFT 개당 개수
+    private Integer nftTargetCount; // 토큰 목표 발행 개수
+    private Double nftPrice;    // NFT 1개당 가격
     private String nftDescription;
 }

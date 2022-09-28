@@ -35,8 +35,8 @@ public class StartupRepositoryImpl implements StartupRepositoryCustom{
                 .select(Projections.constructor(StartupResponseListDto.class,
                         startup.startupName,
                         startup.title,
-                        startup.endDate,
-                        startup.imageNft
+                        startup.dueDate,
+                        startup.nftImage
                         ))
                 .from(startup)
                 .where(titleEq(condition.getTitle()),

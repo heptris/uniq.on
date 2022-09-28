@@ -69,15 +69,16 @@ class StartupControllerTest extends RestDocsTestSupport {
                 .startupId(1L)
                 .startupName("스타트업1")
                 .title("스타트업1 제목")
-                .nftCount(10)
-                .goalRate(0.0)
-                .pricePerNft(10.0)
+                .nftReserveCount(5)
+                .nftTargetCount(10)
+                .nftPrice(new Double(2))
+                .nftDescription("nft description")
                 .isFav(Boolean.FALSE)
-                .endDate(LocalDateTime.now().plusDays(3))
-                .businessPlan("https://uniqon-bucket.s3.ap-northeast-2.amazonaws.com/startup/4cfd6171-b839-404a-94e9-615e3cc93402uniqon%EB%B8%94%EB%A1%9D%EC%B2%B4%EC%9D%B8_%EC%A1%B0%EC%98%81%EB%8F%84%EB%A9%98%ED%86%A0%EB%8B%98.pdf")
-                .businessPlanImg("https://uniqon-bucket.s3.ap-northeast-2.amazonaws.com/startup/e95ca4c9-b7c3-4f8a-87da-e718a97c2926uniqonuniqon%EB%B8%94%EB%A1%9D%EC%B2%B4%EC%9D%B8_%EC%A1%B0%EC%98%81%EB%8F%84%EB%A9%98%ED%86%A0%EB%8B%98.jpg")
+                .dueDate(LocalDateTime.now().plusDays(3))
+                .planPaper("https://uniqon-bucket.s3.ap-northeast-2.amazonaws.com/startup/4cfd6171-b839-404a-94e9-615e3cc93402uniqon%EB%B8%94%EB%A1%9D%EC%B2%B4%EC%9D%B8_%EC%A1%B0%EC%98%81%EB%8F%84%EB%A9%98%ED%86%A0%EB%8B%98.pdf")
+                .planPaperImg("https://uniqon-bucket.s3.ap-northeast-2.amazonaws.com/startup/e95ca4c9-b7c3-4f8a-87da-e718a97c2926uniqonuniqon%EB%B8%94%EB%A1%9D%EC%B2%B4%EC%9D%B8_%EC%A1%B0%EC%98%81%EB%8F%84%EB%A9%98%ED%86%A0%EB%8B%98.jpg")
                 .roadMap("https://uniqon-bucket.s3.ap-northeast-2.amazonaws.com/startup/2ceda00d-e53f-4b8d-ba17-89fa74e759a1uniqon5dc267300fefd2738de6.jpg")
-                .imageNft("https://uniqon-bucket.s3.ap-northeast-2.amazonaws.com/startup/671c1f1b-e6f2-4c0b-af82-ada8ffc3ff3buniqon5dc267300fefd2738de6.jpg")
+                .nftImage("https://uniqon-bucket.s3.ap-northeast-2.amazonaws.com/startup/671c1f1b-e6f2-4c0b-af82-ada8ffc3ff3buniqon5dc267300fefd2738de6.jpg")
                 .build();
 
         given(startupService.startupDetail(1L, 1L)).willReturn(startupDetailResponseDto);
@@ -121,22 +122,19 @@ class StartupControllerTest extends RestDocsTestSupport {
     @Test
     public void 스타트업_등록() throws Exception {
         StartupRequestDto startupRequestDto = StartupRequestDto.builder()
-                .startupName("스타트업2")
-                .managerName("test")
-                .managerNumber("010-5138-9823")
-                .managerEmail("test@naver.com")
-                .goalPrice(new Double(1000))
-                .endDate(LocalDateTime.now().plusDays(3))
-                .nftCount(10)
+                .dueDate(LocalDateTime.now().plusDays(3))
                 .discordUrl("discordUrl")
-                .description("test")
-                .title("test")
+                .description("description")
+                .title("title")
+                .nftDescription("nft description")
+                .nftTargetCount(10)
+                .nftPrice(new Double(2))
                 .build();
         String requestDtoJson = objectMapper.writeValueAsString(startupRequestDto);
         MockMultipartFile request = new MockMultipartFile("startupRequestDto", "jsondata",
                 "application/json", requestDtoJson.getBytes(StandardCharsets.UTF_8));
 
-        MockMultipartFile businessPlan = new MockMultipartFile("business_plan", "business_plan.pdf",
+        MockMultipartFile planPaper = new MockMultipartFile("plan_paper", "business_plan.pdf",
                 "application/pdf", "<<pdf file>>".getBytes(StandardCharsets.UTF_8));
 
         MockMultipartFile nftImage = new MockMultipartFile("nft_image", "nft_image.jpeg",
@@ -145,12 +143,12 @@ class StartupControllerTest extends RestDocsTestSupport {
         MockMultipartFile roadMap = new MockMultipartFile("road_map", "road_map.jpeg",
                 "image/jpeg", "<<jpeg data>>".getBytes(StandardCharsets.UTF_8));
 
-        given(startupService.investRegist(1L, startupRequestDto, businessPlan, nftImage, roadMap))
+        given(startupService.investRegist(1L, startupRequestDto, planPaper, nftImage, roadMap))
                 .willReturn(1L);
         mockMvc.perform(
                         multipart("/api/invest/regist")
                                 .file(request)
-                                .file(businessPlan)
+                                .file(planPaper)
                                 .file(nftImage)
                                 .file(roadMap)
                                 .header("Authorization", "Bearer " + accessToken)
@@ -159,22 +157,19 @@ class StartupControllerTest extends RestDocsTestSupport {
                 .andDo(
                         restDocs.document(
                                 requestParts(
-                                        partWithName("business_plan").description("사업계획서 pdf"),
+                                        partWithName("plan_paper").description("사업계획서 pdf"),
                                         partWithName("nft_image").description("NFT 이미지"),
                                         partWithName("road_map").description("스타트업 로드맵"),
                                         partWithName("startupRequestDto").description("스타트업 등록 요청 폼")
                                 ),
                                 requestPartFields("startupRequestDto",
-                                        fieldWithPath("startupName").description("startupName").optional().attributes(field("constraints", "길이 10 이하")),
-                                        fieldWithPath("managerName").description("managerName").attributes(field("constraints", "길이 10 이하")),
-                                        fieldWithPath("managerEmail").description("managerEmail").attributes(field("constraints", "길이 10 이하")),
-                                        fieldWithPath("managerNumber").description("managerNumber").attributes(field("constraints", "길이 10 이하")),
-                                        fieldWithPath("goalPrice").description("goalPrice").attributes(field("constraints", "길이 10 이하")),
-                                        fieldWithPath("endDate").description("endDate").attributes(field("constraints", "길이 10 이하")),
-                                        fieldWithPath("nftCount").description("nftCount").attributes(field("constraints", "길이 10 이하")),
+                                        fieldWithPath("dueDate").description("dueDate").attributes(field("constraints", "길이 10 이하")),
                                         fieldWithPath("discordUrl").description("discordUrl").attributes(field("constraints", "길이 10 이하")),
                                         fieldWithPath("description").description("description").attributes(field("constraints", "길이 10 이하")),
-                                        fieldWithPath("title").description("title").attributes(field("constraints", "길이 10 이하"))
+                                        fieldWithPath("title").description("title").attributes(field("constraints", "길이 10 이하")),
+                                        fieldWithPath("nftTargetCount").description("nftTargetCount").attributes(field("constraints", "길이 10 이하")),
+                                        fieldWithPath("nftPrice").description("nftPrice").attributes(field("constraints", "길이 10 이하")),
+                                        fieldWithPath("nftDescription").description("nftDescription").attributes(field("constraints", "길이 10 이하"))
                                 )
 //                                responseFields(
 //                                        fieldWithPath("status").description("status"),

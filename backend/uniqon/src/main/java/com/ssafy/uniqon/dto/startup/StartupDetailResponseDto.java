@@ -18,12 +18,9 @@ public class StartupDetailResponseDto {
     private String startupName;
     private String title;
     private String description;
-
-    private Integer nftTargetCount; // 발행 개수
-
-    private Integer nftReserveCount;
-
-    private Double nftPrice; // 발행가
+    private Integer nftTargetCount;
+    private Integer nftReserveCount; // 투자 예약 수
+    private Double nftPrice;
     @JsonFormat(pattern = "yyyy-MM-dd HH")
     private LocalDateTime dueDate;
 

@@ -25,6 +25,7 @@ public class MemberInvestedStartupDto {
 
     private Integer nftReserveCount;
 
+
     private Double nftPrice; // 발행가
     @JsonFormat(pattern = "yyyy-MM-dd HH")
     private LocalDateTime dueDate;
@@ -41,6 +42,7 @@ public class MemberInvestedStartupDto {
     private String nftImage;
 
     private String nftDescription;
+
 
     private InvestStatus investStatus;
 }

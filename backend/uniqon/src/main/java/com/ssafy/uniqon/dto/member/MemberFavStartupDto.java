@@ -20,9 +20,11 @@ public class MemberFavStartupDto {
     private String title;
     private String description;
 
+
     private Integer nftTargetCount; // 발행 개수
 
     private Integer nftReserveCount;
+
 
     private Double nftPrice; // 발행가
     @JsonFormat(pattern = "yyyy-MM-dd HH")
@@ -40,6 +42,7 @@ public class MemberFavStartupDto {
     private String nftImage;
 
     private String nftDescription;
+
 
     private Boolean isFav;
 }

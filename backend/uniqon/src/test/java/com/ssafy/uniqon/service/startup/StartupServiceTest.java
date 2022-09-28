@@ -34,13 +34,7 @@ class StartupServiceTest {
         StartupRequestDto startupRequestDto = StartupRequestDto.builder()
                 .description("스타트업 투자 소개글")
                 .discordUrl("스타트업 test discord url")
-                .endDate(LocalDateTime.now().plusDays(2))
-                .managerEmail("test@naver.com")
-                .managerNumber("010-1234-5678")
-                .managerName("test")
-                .startupName("startupTest")
-                .goalPrice(new Double(1000))
-                .nftCount(20)
+                .dueDate(LocalDateTime.now().plusDays(2))
                 .title("스타트업 test title")
                 .build();
     }

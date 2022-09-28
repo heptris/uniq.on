@@ -36,7 +36,7 @@ public class StartupInvestService {
         );
         startup.nftReserveCountIncrement();
 
-        // 현재 모금액이 목표금액보다 클 경우 목표달성 True
+        // 현재 투자 예약 수가 목표 예약 수 보다 클 경우 목표 달성
         if (!startup.getIsGoal() && startup.getNftReserveCount() >= startup.getNftTargetCount()) {
             startup.changeIsGoal();
         }
