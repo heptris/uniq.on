@@ -41,8 +41,8 @@ public class MemberRepositoryImpl implements MemberRepositoryCustom{
                         startup.imageNft,
                         startupFavorite.isFav
                 ))
-                .from(startupFavorite)
-                .innerJoin(startupFavorite.member, member)
+                .from(member)
+                .innerJoin(member.startupFavoriteList, startupFavorite)
                 .innerJoin(startupFavorite.startup, startup)
                 .where(member.id.eq(memberId).and(startupFavorite.isFav.eq(true)))
                 .fetch();
