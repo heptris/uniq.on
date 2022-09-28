@@ -65,4 +65,35 @@ public class MemberController {
 
         return new ResponseEntity(new ResponseDto<>(200,"success","삭제 완료 !!"), HttpStatus.OK);
     }
+
+    @ApiOperation(value = "마이페이지 관심 목록")
+    @GetMapping("/mypage/favstartup")
+    public ResponseEntity findMemberFavStartup(){
+        Long memberId = SecurityUtil.getCurrentMemberId();
+
+        return ResponseEntity.status(HttpStatus.OK).body(
+                new ResponseDto(HttpStatus.OK.value(), "관심 목록", memberService.findMemberFavStartup(memberId))
+        );
+    }
+
+    @ApiOperation(value = "마이페이지(투자자) 내가 투자한 스타트업 목록")
+    @GetMapping("/mypage/invest")
+    public ResponseEntity findInvestedStartup(){
+        Long memberId = SecurityUtil.getCurrentMemberId();
+
+        return ResponseEntity.status(HttpStatus.OK).body(
+                new ResponseDto(HttpStatus.OK.value(), "투자한 스타트업 목록", memberService.findInvestedStartup(memberId))
+        );
+    }
+
+    @ApiOperation(value = "마이페이지(스타트업) 내가 투자 신청한 내역")
+    @GetMapping("/mypage/startup")
+    public ResponseEntity findStartupInvestedList(){
+        Long memberId = SecurityUtil.getCurrentMemberId();
+
+        return ResponseEntity.status(HttpStatus.OK).body(
+                new ResponseDto(HttpStatus.OK.value(), "스타트업이 투자 신청한 내역", memberService.findStartupInvestedList(memberId))
+        );
+    }
+
 }

@@ -17,10 +17,12 @@ values (now(), now(), "aa@naver.com", "ADMIN", "aaa", "0XA", "", "https://picsum
 insert into startup (created_date, last_modified_date, description, business_plan, cur_total_price
                     , discord_url, end_date, enroll_status, goal_price, image_nft, invest_count, is_finished, is_goal, nft_count
                     , price_per_nft, road_map, reject_reason, startup_name, title, member_id)
-values (now(), now(), "startup D입니다", null, 0, null,
-        now(), null, 10, null, 0, false, false, 0, 0, null, null, null, "startup D", 4),
+values (now(), now(), "startup C입니다", null, 0, null,
+        DATE_ADD(now(), interval 1 day), null, 10, null, 0, false, false, 0, 0, null, null, null, "startup C", 3),
+       (now(), now(), "startup D입니다", null, 0, null,
+        DATE_ADD(now(), interval 1 day), null, 10, null, 0, false, false, 0, 0, null, null, null, "startup D", 4),
        (now(), now(), "startup E입니다", null, 0, null,
-        now(), null, 10, null, 0, false, false, 0, 0, null, null, null, "startup E", 5);
+        DATE_ADD(now(), interval 1 day), null, 10, null, 0, false, false, 0, 0, null, null, null, "startup E", 6);
 
 insert into startup_question (created_date, last_modified_date, question, member_id, startup_id)
 values (now(), now(), "질문1", 1, 1),
@@ -52,7 +54,10 @@ values (now(), now(), "INVESTING", 1, 1),
        (now(), now(), "INVESTING", 2, 1),
        (now(), now(), "INVESTING", 3, 1),
        (now(), now(), "INVESTING", 1, 2),
-       (now(), now(), "INVESTING", 2, 2);
+       (now(), now(), "INVESTING", 2, 2),
+       (now(), now(), "INVESTED", 6, 1),
+       (now(), now(), "INVESTING", 6, 2),
+       (now(), now(), "INVESTING", 6, 3);
 
 insert into alarm  (created_date, last_modified_date, content, is_read, member_id)
 values (now(), now(), "예약한 펀딩이 성공했습니다 !!", false, 1),
@@ -70,5 +75,8 @@ values (now(), now(), "예약한 펀딩이 성공했습니다 !!", false, 1),
 
 insert into startup_favorite (created_date, last_modified_date, is_fav, member_id, startup_id)
 values (now(), now(), true, 1, 1),
-       (now(), now(), false, 1, 2);
+       (now(), now(), false, 1, 2),
+       (now(), now(), false, 6, 1),
+       (now(), now(), true, 6, 2);
+
 
