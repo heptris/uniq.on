@@ -7,7 +7,7 @@
 --        (now(), now(), "test@naver.com", "USER", "test", "test", "$2a$10$BlTLOFbU79iOq9rm34.vVub.bULEw/9iPf1wkKxJ1qu3DhA1eMka.", "0XF");
 
 insert into member (created_date, last_modified_date, email, member_type, nickname, wallet_address, password, profile_image)
-values (now(), now(), "aa@naver.com", "ADMIN", "aaa", "0XA", "", "https://picsum.photos/200"),
+values (now(), now(), "aa@naver.com", "USER", "aaa", "0XA", "", "https://picsum.photos/200"),
        (now(), now(), "bb@naver.com", "USER", "bbb", "0XB", "", "https://picsum.photos/200"),
        (now(), now(), "cc@naver.com", "USER", "ccc", "0XC", "", "https://picsum.photos/200"),
        (now(), now(), "dd@naver.com", "USER", "ddd", "0XD", "", "https://picsum.photos/200"),

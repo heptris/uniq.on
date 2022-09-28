@@ -39,7 +39,7 @@ public class MemberJoinDto {
     private String email;
 
 //    @NotBlank(message = "회원 유형은 필수 입력값입니다.")
-    private MemberType memberType;
+//    private MemberType memberType;
 
     public Member toMember(){
         return Member.builder()
@@ -47,7 +47,7 @@ public class MemberJoinDto {
                 .password("")
 //                .name(name)
                 .email(email)
-                .memberType(memberType)
+                .memberType(MemberType.USER)
                 .nickname(nickName)
                 .build();
     }
