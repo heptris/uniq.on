@@ -29,7 +29,7 @@ function MyPage() {
   const { account } = contracts.useAccount();
   const { isShowModal, modalContent, handleModalClose, handleModalOpen } =
     useNFTModal();
-  const menus = ["보유 NFT", "관심목록", "구매내역"];
+  const menus = ["보유 NFT", "관심목록", "예약내역"];
   const { selectedMenu, onSelectHandler } = useSelectTab(menus);
 
   const member: Member = {
@@ -43,28 +43,25 @@ function MyPage() {
   };
   const nfts: NFTItem[] = [
     {
-      companyId: 1,
+      startupId: 1,
       nftImage: nft1,
       tokenId: 1243,
-      corpName: "test",
+      startupName: "test",
       price: 0.99,
-      progress: 60,
     },
     {
-      companyId: 2,
+      startupId: 2,
       nftImage: nft2,
       tokenId: 1243,
-      corpName: "test",
+      startupName: "test",
       price: 0.99,
-      progress: 60,
     },
     {
-      companyId: 3,
+      startupId: 3,
       nftImage: nft3,
       tokenId: 1243,
-      corpName: "test",
+      startupName: "test",
       price: 0.99,
-      progress: 60,
     },
   ];
 
@@ -134,21 +131,17 @@ function MyPage() {
       />
 
       <Grid column="double">
-        {nfts.map((nft1: NFTItem) => {
-          const { companyId, corpName, nftImage, price, progress, tokenId } =
-            nft1;
-          return (
-            <NFTItemCard
-              key={companyId}
-              nftImage={nftImage}
-              tokenId={tokenId}
-              corpName={corpName}
-              price={price}
-              progress={progress}
-              onClick={() => handleModalOpen(nft1)}
-            />
-          );
-        })}
+        {nfts.map((nft: NFTItem) => (
+          <NFTItemCard
+            key={nft.startupId}
+            nftImage={nft.nftImage}
+            tokenId={nft.tokenId}
+            startupName={nft.startupName}
+            price={nft.price}
+            onClick={() => handleModalOpen(nft)}
+            clickable={true}
+          />
+        ))}
       </Grid>
       <Modal
         isOpen={isShowModal}
@@ -156,7 +149,7 @@ function MyPage() {
         onSubmit={handleModalSubmit}
       >
         <div>
-          {modalContent?.corpName}
+          {modalContent?.startupName}
           <Button onClick={handleModalSubmit}>어디로 이동하는 버튼</Button>
         </div>
       </Modal>

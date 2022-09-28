@@ -17,8 +17,9 @@ import { cssFontFamily, minDesktopWidth } from "@/styles/utils";
 function InvestmentDetail() {
   const menus = [];
   const InvestmentRequest: IR = {
-    id: 1,
-    corpName: "Samsung NEXT",
+    startupId: 1,
+    startupName: "Samsung NEXT",
+    description: "스타트업",
     planPaper: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce
     semper porttitor facilisis. Sed facilisis diam a nisl venenatis
     suscipit. Nam vitae consequat dui. Praesent in odio iaculis nibh
@@ -58,19 +59,14 @@ function InvestmentDetail() {
     roadmap: "",
     title: "SNKRZ",
     dueDate: "2022.09.26",
-    targetAmount: 1000,
-    curTotalAmount: 216,
+    nftTargetCount: 1000,
+    nftDescription: `이건 이쁜 NFT`,
     nftImage: nft1,
-    nftTypeCount: 1,
-    nftTokenCount: 217,
+    nftReserveCount: 217,
     nftPrice: 0.99,
-    isClosed: false,
-    isAchieved: false,
+    isFinished: false,
+    isGoal: false,
     discordUrl: "",
-    enrollStatus: "ACCEPT",
-    rejectReason: "",
-    description: `이건 이쁜 NFT`,
-    memberId: 1,
   };
 
   return (
@@ -85,9 +81,10 @@ function InvestmentDetail() {
     >
       <NFTInfo>
         <NFTItemCard
+          tokenId={InvestmentRequest.nftReserveCount}
+          startupId={InvestmentRequest.startupId}
           nftImage={InvestmentRequest.nftImage}
-          tokenId={InvestmentRequest.nftTokenCount}
-          corpName={InvestmentRequest.corpName}
+          startupName={InvestmentRequest.startupName}
           price={InvestmentRequest.nftPrice}
         />
         <Card
@@ -108,7 +105,7 @@ function InvestmentDetail() {
                 <FontAwesomeIcon icon={faHeart} width={"1.8rem"} />
               </FavoriteButton>
             </div>
-            <Text as="p">{InvestmentRequest.description}</Text>
+            <Text as="p">{InvestmentRequest.nftDescription}</Text>
 
             <Text as="h1">상세정보</Text>
             <InlineInfo>
@@ -117,7 +114,7 @@ function InvestmentDetail() {
             </InlineInfo>
             <InlineInfo>
               <Text as="h2">발행 토큰 수</Text>
-              <Text as="p">{InvestmentRequest.targetAmount}</Text>
+              <Text as="p">{InvestmentRequest.nftTargetCount}</Text>
             </InlineInfo>
             <InlineInfo>
               <Text as="h2">Token Standard</Text>
@@ -130,8 +127,8 @@ function InvestmentDetail() {
             <InlineInfo>
               <Text as="h2">펀딩 진행률</Text>
               <Text as="p">
-                {(InvestmentRequest.curTotalAmount /
-                  InvestmentRequest.targetAmount) *
+                {(InvestmentRequest.nftReserveCount /
+                  InvestmentRequest.nftTargetCount) *
                   100}
                 %
               </Text>
