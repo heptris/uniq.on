@@ -1,19 +1,15 @@
-import Head from "next/head";
-
 import { css } from "@emotion/react";
 import styled from "@emotion/styled";
 
-import corp from "@/assets/corps/1.png";
+import startup from "@/assets/corps/1.png";
 import nft1 from "@/assets/nfts/2.png";
 import nft2 from "@/assets/nfts/3.png";
 import nft3 from "@/assets/nfts/4.png";
 
-import type { Corp } from "@/types/api_responses";
+import type { Startup } from "@/types/api_responses";
 import type { CarouselItem } from "@/types/props";
 import Grid from "@/components/Grid";
-import Navbar from "@/components/Navbar";
 import CorporationCard from "@/components/Card/CorporationCard";
-import Layout from "@/components/Layout";
 import Carousel from "@/components/Carousel";
 import contracts from "@/contracts/utils";
 import SelectTab from "@/components/SelectTab";
@@ -26,46 +22,54 @@ export default function InvestmentList() {
 
   const carouselItems: CarouselItem[] = [
     {
-      corpName: "RENGA",
+      startupName: "RENGA",
       image: nft1,
     },
     {
-      corpName: "DigiDaigaku",
+      startupName: "DigiDaigaku",
       image: nft2,
     },
     {
-      corpName: "Hume Genesis",
+      startupName: "Hume Genesis",
       image: nft3,
     },
   ];
-  const corps: Corp[] = [
+  const startups: Startup[] = [
     {
-      corpName: "Samsung NEXT",
-      corpAvatar: corp,
+      startupId: 1,
+      startupName: "Samsung NEXT",
+      profileImage: startup,
       title: "SNKRZ",
-      date: "2022.09.07",
-      progress: 0,
+      dueDate: "2022.09.07",
+      nftTargetCount: 33,
+      nftReserveCount: 1,
     },
     {
-      corpName: "Samsung NEXT",
-      corpAvatar: corp,
+      startupId: 2,
+      startupName: "Samsung NEXT",
+      profileImage: startup,
       title: "SNKRZ",
-      date: "2022.09.07",
-      progress: 33,
+      dueDate: "2022.09.07",
+      nftTargetCount: 33,
+      nftReserveCount: 10,
     },
     {
-      corpName: "Samsung NEXT",
-      corpAvatar: corp,
+      startupId: 3,
+      startupName: "Samsung NEXT",
+      profileImage: startup,
       title: "SNKRZ",
-      date: "2022.09.07",
-      progress: 33,
+      dueDate: "2022.09.07",
+      nftTargetCount: 33,
+      nftReserveCount: 20,
     },
     {
-      corpName: "Samsung NEXT",
-      corpAvatar: corp,
+      startupId: 4,
+      startupName: "Samsung NEXT",
+      profileImage: startup,
       title: "SNKRZ",
-      date: "2022.09.07",
-      progress: 33,
+      dueDate: "2022.09.07",
+      nftTargetCount: 33,
+      nftReserveCount: 0,
     },
   ];
 
@@ -113,14 +117,20 @@ export default function InvestmentList() {
       />
 
       <Grid>
-        {corps.map((corp, i) => (
+        {startups.map((startup) => (
           <CorporationCard
-            key={i}
-            corpName={corp.corpName}
-            corpAvatar={corp.corpAvatar}
-            title={corp.title}
-            date={corp.date}
-            progress={corp.progress}
+            key={startup.startupId}
+            startupName={startup.startupName}
+            profileImage={startup.profileImage}
+            title={startup.title}
+            dueDate={startup.dueDate}
+            nftTargetCount={startup.nftTargetCount}
+            progress={parseInt(
+              (
+                (startup.nftReserveCount / startup.nftTargetCount) *
+                100
+              ).toFixed(0)
+            )}
             clickable={true}
           />
         ))}

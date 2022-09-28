@@ -119,7 +119,7 @@ export type LabelInputProps<T extends ElementType> = OverridableProps<
 >;
 
 export type CarouselItem = {
-  corpName: string;
+  startupName: string;
   image: string | StaticImageData;
 };
 export type CarouselProps = {
