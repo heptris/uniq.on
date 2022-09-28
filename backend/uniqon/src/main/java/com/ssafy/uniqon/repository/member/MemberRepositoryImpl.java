@@ -37,14 +37,15 @@ public class MemberRepositoryImpl implements MemberRepositoryCustom{
                         startup.startupName,
                         startup.title,
                         startup.description,
-                        startup.nftCount,
-                        startup.investCount,
-                        startup.pricePerNft,
-                        startup.endDate,
-                        startup.businessPlan,
-                        startup.businessPlanImg,
+                        startup.nftTargetCount,
+                        startup.nftReserveCount,
+                        startup.nftPrice,
+                        startup.dueDate,
+                        startup.planPaper,
+                        startup.planPaperImg,
                         startup.roadMap,
-                        startup.imageNft,
+                        startup.nftImage,
+                        startup.nftDescription,
                         startupFavorite.isFav
                 ))
                 .from(member)
@@ -65,14 +66,15 @@ public class MemberRepositoryImpl implements MemberRepositoryCustom{
                         startup.startupName,
                         startup.title,
                         startup.description,
-                        startup.nftCount,
-                        startup.investCount,
-                        startup.pricePerNft,
-                        startup.endDate,
-                        startup.businessPlan,
-                        startup.businessPlanImg,
+                        startup.nftTargetCount,
+                        startup.nftReserveCount,
+                        startup.nftPrice,
+                        startup.dueDate,
+                        startup.planPaper,
+                        startup.planPaperImg,
                         startup.roadMap,
-                        startup.imageNft,
+                        startup.nftImage,
+                        startup.nftDescription,
                         invest_history.investStatus
                 ))
                 .from(member)
@@ -93,14 +95,15 @@ public class MemberRepositoryImpl implements MemberRepositoryCustom{
                         startup.startupName,
                         startup.title,
                         startup.description,
-                        startup.nftCount,
-                        startup.investCount,
-                        startup.pricePerNft,
-                        startup.endDate,
-                        startup.businessPlan,
-                        startup.businessPlanImg,
+                        startup.nftTargetCount,
+                        startup.nftReserveCount,
+                        startup.nftPrice,
+                        startup.dueDate,
+                        startup.planPaper,
+                        startup.planPaperImg,
                         startup.roadMap,
-                        startup.imageNft
+                        startup.nftImage,
+                        startup.nftDescription
 //                        invest_history.investStatus
                 ))
                 .from(member)
