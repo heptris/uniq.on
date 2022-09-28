@@ -40,4 +40,14 @@ describe("Alert", () => {
       uniqonThemes.darkTheme.color.status.fail
     );
   });
+
+  it("disappeared after 1 second", () => {
+    // jest.useFakeTimers();
+    // const testId = "fail";
+    // const { container } = renderAlert(false, testId);
+    // setTimeout(() => {
+    //   expect(getByTestId(container, testId)).not.toBeInTheDocument();
+    // }, 1000);
+    // jest.runAllTimers();
+  });
 });
