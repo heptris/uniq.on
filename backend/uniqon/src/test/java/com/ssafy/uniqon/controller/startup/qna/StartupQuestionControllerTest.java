@@ -65,12 +65,12 @@ class StartupQuestionControllerTest extends RestDocsTestSupport {
                                         fieldWithPath("question").description("스타트업에 대한 질문").type(JsonFieldType.STRING).attributes(field(
                                                 "constraints", "길이 100 이하"
                                         ))
-                                ),
-                                responseFields(
-                                        fieldWithPath("status").description("status"),
-                                        fieldWithPath("message").description("message"),
-                                        fieldWithPath("data").description("data")
                                 )
+//                                responseFields(
+//                                        fieldWithPath("status").description("status"),
+//                                        fieldWithPath("message").description("message"),
+//                                        fieldWithPath("data").description("data")
+//                                )
                         )
                 );
     }
@@ -148,35 +148,35 @@ class StartupQuestionControllerTest extends RestDocsTestSupport {
                         requestParameters(
                                 parameterWithName("cursorId").description("cursorID"),
                                 parameterWithName("size").description("size")
-                        ),
-                        responseFields(
-                                fieldWithPath("status").description("status"),
-                                fieldWithPath("message").description("message"),
-                                fieldWithPath("data.cursorId").description("cursorId"),
-                                fieldWithPath("data.hasNext").description("hasNext"),
-                                fieldWithPath("data.values.[].nickname").description("nickname"),
-                                fieldWithPath("data.values.[].memberId").description("memberId"),
-                                fieldWithPath("data.values.[].createDate").description("createDate"),
-                                fieldWithPath("data.values.[].startupQuestionId").description("startupQuestionId"),
-                                fieldWithPath("data.values.[].question").description("question"),
-                                fieldWithPath("data.values.[].myQuestion").description("myQuestion"),
-                                fieldWithPath("data.values.[].answerParentResponseDtoList").description("answerParentResponseDtoList"),
-                                fieldWithPath("data.values.[].answerParentResponseDtoList.[].startupAnswerId").description("startupAnswerId"),
-                                fieldWithPath("data.values.[].answerParentResponseDtoList.[].memberId").description("memberId"),
-                                fieldWithPath("data.values.[].answerParentResponseDtoList.[].nickname").description("nickname"),
-                                fieldWithPath("data.values.[].answerParentResponseDtoList.[].answer").description("answer"),
-                                fieldWithPath("data.values.[].answerParentResponseDtoList.[].createDate").description("createDate"),
-                                fieldWithPath("data.values.[].answerParentResponseDtoList.[].parentId").description("parentId"),
-                                fieldWithPath("data.values.[].answerParentResponseDtoList.[].myAnswer").description("myAnswer"),
-                                fieldWithPath("data.values.[].answerParentResponseDtoList.[].answerChildren").description("answerChildren"),
-                                fieldWithPath("data.values.[].answerParentResponseDtoList.[].answerChildren.[].startupAnswerId").description("startupAnswerId"),
-                                fieldWithPath("data.values.[].answerParentResponseDtoList.[].answerChildren.[].memberId").description("memberId"),
-                                fieldWithPath("data.values.[].answerParentResponseDtoList.[].answerChildren.[].nickname").description("nickname"),
-                                fieldWithPath("data.values.[].answerParentResponseDtoList.[].answerChildren.[].answer").description("answer"),
-                                fieldWithPath("data.values.[].answerParentResponseDtoList.[].answerChildren.[].createDate").description("createDate"),
-                                fieldWithPath("data.values.[].answerParentResponseDtoList.[].answerChildren.[].parentId").description("parentId"),
-                                fieldWithPath("data.values.[].answerParentResponseDtoList.[].answerChildren.[].myAnswer").description("myAnswer")
                         )
+//                        responseFields(
+//                                fieldWithPath("status").description("status"),
+//                                fieldWithPath("message").description("message"),
+//                                fieldWithPath("data.cursorId").description("cursorId"),
+//                                fieldWithPath("data.hasNext").description("hasNext"),
+//                                fieldWithPath("data.values.[].nickname").description("nickname"),
+//                                fieldWithPath("data.values.[].memberId").description("memberId"),
+//                                fieldWithPath("data.values.[].createDate").description("createDate"),
+//                                fieldWithPath("data.values.[].startupQuestionId").description("startupQuestionId"),
+//                                fieldWithPath("data.values.[].question").description("question"),
+//                                fieldWithPath("data.values.[].myQuestion").description("myQuestion"),
+//                                fieldWithPath("data.values.[].answerParentResponseDtoList").description("answerParentResponseDtoList"),
+//                                fieldWithPath("data.values.[].answerParentResponseDtoList.[].startupAnswerId").description("startupAnswerId"),
+//                                fieldWithPath("data.values.[].answerParentResponseDtoList.[].memberId").description("memberId"),
+//                                fieldWithPath("data.values.[].answerParentResponseDtoList.[].nickname").description("nickname"),
+//                                fieldWithPath("data.values.[].answerParentResponseDtoList.[].answer").description("answer"),
+//                                fieldWithPath("data.values.[].answerParentResponseDtoList.[].createDate").description("createDate"),
+//                                fieldWithPath("data.values.[].answerParentResponseDtoList.[].parentId").description("parentId"),
+//                                fieldWithPath("data.values.[].answerParentResponseDtoList.[].myAnswer").description("myAnswer"),
+//                                fieldWithPath("data.values.[].answerParentResponseDtoList.[].answerChildren").description("answerChildren"),
+//                                fieldWithPath("data.values.[].answerParentResponseDtoList.[].answerChildren.[].startupAnswerId").description("startupAnswerId"),
+//                                fieldWithPath("data.values.[].answerParentResponseDtoList.[].answerChildren.[].memberId").description("memberId"),
+//                                fieldWithPath("data.values.[].answerParentResponseDtoList.[].answerChildren.[].nickname").description("nickname"),
+//                                fieldWithPath("data.values.[].answerParentResponseDtoList.[].answerChildren.[].answer").description("answer"),
+//                                fieldWithPath("data.values.[].answerParentResponseDtoList.[].answerChildren.[].createDate").description("createDate"),
+//                                fieldWithPath("data.values.[].answerParentResponseDtoList.[].answerChildren.[].parentId").description("parentId"),
+//                                fieldWithPath("data.values.[].answerParentResponseDtoList.[].answerChildren.[].myAnswer").description("myAnswer")
+//                        )
                 ));
     }
 

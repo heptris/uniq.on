@@ -25,11 +25,11 @@ public class StartupController {
     @ApiOperation(value = "스타트업 투자 등록(by 스타트업)")
     @PostMapping("/regist")
     public ResponseEntity startupRegist(@RequestPart StartupRequestDto startupRequestDto,
-                                        @RequestPart(value = "business_plan", required = false) MultipartFile business_plan,
+                                        @RequestPart(value = "plan_paper", required = false) MultipartFile plan_paper,
                                         @RequestPart(value = "nft_image", required = false) MultipartFile nft_image,
                                         @RequestPart(value = "road_map", required = false) MultipartFile road_map) {
         Long memberId = SecurityUtil.getCurrentMemberId();
-        startupService.investRegist(memberId, startupRequestDto, business_plan, nft_image, road_map);
+        startupService.investRegist(memberId, startupRequestDto, plan_paper, nft_image, road_map);
         return ResponseEntity.status(HttpStatus.CREATED).body(
                 new ResponseDto(HttpStatus.CREATED.value(), "투자 등록 완료", null)
         );

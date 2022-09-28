@@ -9,6 +9,7 @@ import com.ssafy.uniqon.dto.startup.StartupRequestDto;
 import com.ssafy.uniqon.exception.ex.CustomException;
 import com.ssafy.uniqon.dto.startup.StartupResponseListDto;
 import com.ssafy.uniqon.dto.startup.StartupSearchCondition;
+import com.ssafy.uniqon.repository.member.MemberRepository;
 import com.ssafy.uniqon.repository.startup.StartupRepository;
 import com.ssafy.uniqon.repository.startup.fav.StartupFavoriteRepository;
 // import com.ssafy.uniqon.service.ipfs.IpfsService;
@@ -34,8 +35,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static com.ssafy.uniqon.domain.startup.EnrollStatus.*;
-import static com.ssafy.uniqon.exception.ex.ErrorCode.FILE_UPLOAD_ERROR;
-import static com.ssafy.uniqon.exception.ex.ErrorCode.STARTUP_NOT_FOUND;
+import static com.ssafy.uniqon.exception.ex.ErrorCode.*;
 
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -44,9 +44,9 @@ public class StartupService {
 
     private final StartupRepository startupRepository;
     private final StartupFavoriteRepository startupFavoriteRepository;
-    private final AwsS3Service awsS3Service;
 
- //   private final IpfsService ipfsService;
+    private final MemberRepository memberRepository;
+    private final AwsS3Service awsS3Service;
 
     @Transactional
     public Long 투자등록(Startup startup) {
@@ -55,46 +55,43 @@ public class StartupService {
     }
 
     @Transactional
-    public Long investRegist(Long memberId, StartupRequestDto startupRequestDto, MultipartFile business_plan
+    public Long investRegist(Long memberId, StartupRequestDto startupRequestDto, MultipartFile plan_paper
     , MultipartFile nft_image, MultipartFile road_map) {
-        Member member = new Member();
-        member.changeId(memberId);
+        Member member = memberRepository.findById(memberId).orElseThrow(
+                () -> new CustomException(MEMBER_NOT_FOUND)
+        );
 
         Startup startup = Startup.builder()
-                .description(startupRequestDto.getDescription())
-                .startupName(startupRequestDto.getStartupName())
-                .managerEmail(startupRequestDto.getManagerEmail())
-                .managerName(startupRequestDto.getManagerName())
-                .managerNumber(startupRequestDto.getManagerNumber())
-                .goalPrice(startupRequestDto.getGoalPrice())
-                .endDate(startupRequestDto.getEndDate())
-                .discordUrl(startupRequestDto.getDiscordUrl())
+                .startupName(member.getNickname())
                 .title(startupRequestDto.getTitle())
-                .nftCount(startupRequestDto.getNftCount())
+                .description(startupRequestDto.getDescription())
+                .dueDate(startupRequestDto.getDueDate())
+                .discordUrl(startupRequestDto.getDiscordUrl())
                 .member(member)
-                .investCount(0)
+                .nftPrice(startupRequestDto.getNftPrice())
+                .nftReserveCount(0)
+                .nftTargetCount(startupRequestDto.getNftTargetCount())
+                .nftDescription(startupRequestDto.getNftDescription())
                 .isFinished(false)
                 .enrollStatus(PENDING)
                 .isGoal(false)
-                .curTotalPrice(new Double(0))
-                .pricePerNft(startupRequestDto.getGoalPrice() / startupRequestDto.getNftCount())
                 .build();
 
         Startup savedStartup = startupRepository.save(startup);
         AwsS3 awsS3 = new AwsS3();
-        if (business_plan != null) {
+        if (plan_paper != null) {
             try {
-                awsS3 = awsS3Service.upload(business_plan, "startup");
+                awsS3 = awsS3Service.upload(plan_paper, "startup");
             }catch (IOException e){
                 throw new CustomException(FILE_UPLOAD_ERROR);
             }
 
-            String business_plan_url = awsS3.getPath();
-            savedStartup.changeBusinessPlan(business_plan_url);
+            String plan_paper_url = awsS3.getPath();
+            savedStartup.changePlanPaper(plan_paper_url);
 
-            if("application/pdf".equals(business_plan.getContentType())) {
-                String imgUrl = awsS3Service.pdfToImg(business_plan);
-                savedStartup.changeBusinessPlanImg(imgUrl);
+            if("application/pdf".equals(plan_paper.getContentType())) {
+                String imgUrl = awsS3Service.pdfToImg(plan_paper);
+                savedStartup.changePlanPaperImg(imgUrl);
             }
         }
 
@@ -106,10 +103,8 @@ public class StartupService {
             }
 
             String nft_image_url = awsS3.getPath();
-            savedStartup.changeImageNft(nft_image_url);
+            savedStartup.changeNftImage(nft_image_url);
         }
-//        String idToken = ipfsService.saveFile(nft_image);
-//        System.out.println(idToken);
 
         if (road_map != null) {
             try {
@@ -121,7 +116,6 @@ public class StartupService {
             String roadMapUrl = awsS3.getPath();
             savedStartup.changeRoadMap(roadMapUrl);
         }
-
         return savedStartup.getId();
     }
 

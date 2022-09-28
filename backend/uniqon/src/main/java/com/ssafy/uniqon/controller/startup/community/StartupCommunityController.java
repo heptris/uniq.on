@@ -40,7 +40,7 @@ public class StartupCommunityController {
         return new ResponseEntity(new ResponseDto(200, "success", "글 수정 완료"), HttpStatus.OK);
     }
 
-    @DeleteMapping("/community/{startupId}/{communityId}s")
+    @DeleteMapping("/community/{startupId}/{communityId}")
     public ResponseEntity communityDelete(@PathVariable Long startupId, @PathVariable Long communityId){
         startupCommunityService.communityDelete(startupId, communityId);
         return new ResponseEntity(new ResponseDto(200, "success", "글 삭제 완료"), HttpStatus.OK);

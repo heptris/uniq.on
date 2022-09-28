@@ -30,15 +30,14 @@ public class StartupInvestService {
     private final AlarmRepository alarmRepository;
 
     @Transactional
-    public void startup_invest(Long memberId, Long startupId) {
+    public void investReserve(Long memberId, Long startupId) {
         Startup startup = startupRepository.findById(startupId).orElseThrow(
                 () -> new CustomException(ErrorCode.STARTUP_NOT_FOUND)
         );
-        startup.investCountIncrement();
-        startup.changeCurTotalPrice();
+        startup.nftReserveCountIncrement();
 
         // 현재 모금액이 목표금액보다 클 경우 목표달성 True
-        if (!startup.getIsGoal() && startup.getCurTotalPrice() >= startup.getGoalPrice()) {
+        if (!startup.getIsGoal() && startup.getNftReserveCount() >= startup.getNftTargetCount()) {
             startup.changeIsGoal();
         }
 
@@ -65,11 +64,9 @@ public class StartupInvestService {
 
         startupList.forEach(
                 startup -> {
-                    if (startup.getEndDate().isBefore(LocalDateTime.now())) { // 마감일 지났을 때
-                        log.info("local date : {}, end date : {}", LocalDateTime.now(), startup.getEndDate());
+                    if (startup.getDueDate().isBefore(LocalDateTime.now())) { // 마감일 지났을 때
                         List<Invest_history> investHistoryList = investHistoryRepository.findByInvestingInvestHistoryList(startup.getId());
                         if (startup.getIsGoal() && !startup.getIsFinished()) { // 목표금액 달성 했을 경우
-                            log.info("@@@@@@@@@@@@@@@@@@@local date : {}, end date : {}", LocalDateTime.now(), startup.getEndDate());
                             startup.changeIsFinish();   // 투자 마감 표시
                             // 알람 생성 (투자자에게 보내는 알람)
                             investHistoryList.forEach(invest_history -> {
@@ -92,7 +89,7 @@ public class StartupInvestService {
                                     .member(memberStartup)
                                     .isRead(Boolean.FALSE)
                                     .startupId(startup.getId())
-                                    .investCount(startup.getInvestCount())
+                                    .investCount(startup.getNftReserveCount())
                                     .content(startup.getStartupName() + " 투자 유치에 성공했습니다. NFT 토큰을 발급해주세요")
                                     .build();
                             alarmList.add(alarmToStartup);

@@ -45,15 +45,15 @@ public class AlarmController {
     public ResponseEntity readStartupAlarm(@PathVariable("alarmId") Long alarmId, @RequestBody AlarmRequestDto alarmRequestDto) {
         alarmService.mintSuccess(alarmRequestDto.getLastTokenId(), alarmId);
         return ResponseEntity.status(HttpStatus.OK).body(
-                new ResponseDto(HttpStatus.OK.value(), "alarm read", null)
+                new ResponseDto(HttpStatus.OK.value(), "alarm read", "알림 확인 완료")
         );
     }
 
-    @GetMapping("/investSuccses/{alarmId}")
+    @PostMapping("/investSuccess/{alarmId}")
     public ResponseEntity readInvestorAlarm(@PathVariable("alarmId") Long alarmId) {
         alarmService.nftPurchase(alarmId);
         return ResponseEntity.status(HttpStatus.OK).body(
-                new ResponseDto(HttpStatus.OK.value(), "alarm read", null)
+                new ResponseDto(HttpStatus.OK.value(), "alarm read", "알림 확인 완료")
         );
     }
 

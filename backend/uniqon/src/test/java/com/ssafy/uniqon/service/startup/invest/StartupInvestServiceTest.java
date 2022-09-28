@@ -28,7 +28,7 @@ class StartupInvestServiceTest {
 
     @Test
     public void 스타트업투자() {
-        startupInvestService.startup_invest(1L, 1L);
+        startupInvestService.investReserve(1L, 1L);
     }
 
 }

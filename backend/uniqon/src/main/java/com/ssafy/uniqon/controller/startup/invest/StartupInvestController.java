@@ -23,7 +23,7 @@ public class StartupInvestController {
     @GetMapping("/{startupId}")
     public ResponseEntity startupInvestReserve(@PathVariable("startupId") Long startupId) {
         Long memberId = SecurityUtil.getCurrentMemberId();
-        startupInvestService.startup_invest(memberId, startupId);
+        startupInvestService.investReserve(memberId, startupId);
         return ResponseEntity.status(HttpStatus.CREATED).body(
                 new ResponseDto<>(HttpStatus.CREATED.value(), "유저 투자 예약 완료", null)
         );

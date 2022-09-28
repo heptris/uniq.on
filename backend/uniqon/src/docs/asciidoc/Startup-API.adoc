@@ -1,0 +1,18 @@
+[[Startup-API]]
+== Startup API
+
+[[Startup-상세-조회]]
+=== Startup 상세 조회
+operation::startup-controller-test/스타트업_상세_정보[snippets='http-request,path-parameters,http-response']
+
+[[Startup-등록]]
+=== Startup 등록
+operation::startup-controller-test/스타트업_등록[snippets='http-request,http-response,request-parts,request-part-startupRequestDto-fields,response-body']
+
+[[Startup-리스트-조회]]
+=== Startup 리스트 조회
+operation::startup-controller-test/스타트업_리스트[snippets='http-request,http-response,request-parameters']
+
+[[Startup-즐겨찾기]]
+=== Startup 즐겨찾기 등록/해제
+operation::startup-controller-test/스타트업_즐겨찾기[snippets='http-request,http-response,path-parameters']
