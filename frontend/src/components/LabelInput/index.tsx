@@ -24,6 +24,7 @@ function LabelInput<T extends ElementType = "input">(
       css={css`
         -webkit-appearance: none;
         -webkit-border-radius: 0;
+        border-radius: 8px;
         border: 0;
         height: 3rem;
         padding: 0 1rem;
@@ -31,19 +32,28 @@ function LabelInput<T extends ElementType = "input">(
         color: ${color.text.main};
         font-size: 0.9rem;
         font-weight: 700;
-        outline: 2px solid transparent;
-        transition: outline 0.3s ease 0s;
-        border-radius: 8px;
+        box-shadow: 0 0 0 2px transparent;
+        transition: box-shadow 0.3s ease 0s;
         ${cssFontFamily}
 
         &:hover {
-          outline: 2px solid ${color.hover.main};
+          box-shadow: 0 0 0 2px ${color.hover.main};
         }
         &:focus {
-          outline: 2px solid ${color.background.main};
+          outline: none;
+          box-shadow: 0 0 0 2px ${color.background.main};
         }
         &::placeholder {
           color: ${color.text.sub};
+        }
+        &[type="checkbox"] {
+          height: fit-content;
+          -webkit-appearance: checkbox;
+
+          &:hover,
+          &:focus {
+            box-shadow: none;
+          }
         }
       `}
       placeholder={placeholder}
