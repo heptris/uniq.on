@@ -11,7 +11,7 @@ function CircleBar<T extends ElementType = "div">(
   const {
     total = 3,
     current = 1,
-    menus = ["기업정보", "개인정보", "투자정보"],
+    menus = ["투자정보", "NFT정보", "정보동의"],
     ...rest
   } = props;
   const theme = useTheme();
@@ -89,11 +89,11 @@ const Line = styled.div`
   width: 5rem;
   height: 0;
   border-top: 1px solid ${({ theme }) => theme.color.text.main};
-  margin-bottom: 3rem;
+  margin-bottom: 3.5rem;
 `;
 
 const TextStyle = css`
-  font-size: 0.5rem;
+  font-size: 0.8rem;
 `;
 
 export default forwardRef(CircleBar) as typeof CircleBar;
