@@ -24,10 +24,10 @@ describe("Card", () => {
       <MyApp>
         <CorporationCard
           data-testid="corporation-card"
-          corpName={"Tester"}
-          corpAvatar={corp}
+          startupName={"Tester"}
+          profileImage={corp}
           title={"testTitle"}
-          date={"testDate"}
+          dueDate={"testDate"}
           progress={38}
         />
       </MyApp>
@@ -46,9 +46,8 @@ describe("Card", () => {
           data-testid="nft-item-card"
           nftImage={nft}
           tokenId={199}
-          corpName={"Tester"}
+          startupName={"Tester"}
           price={1}
-          status={"망함"}
           progress={38}
         />
       </MyApp>
