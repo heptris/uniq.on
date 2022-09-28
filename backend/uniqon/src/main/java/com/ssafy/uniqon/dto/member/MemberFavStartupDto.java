@@ -19,14 +19,20 @@ public class MemberFavStartupDto {
     private String startupName;
     private String title;
     private String description;
+
+
     private Integer nftTargetCount; // 발행 개수
+
     private Integer nftReserveCount;
+
+
     private Double nftPrice; // 발행가
     @JsonFormat(pattern = "yyyy-MM-dd HH")
     private LocalDateTime dueDate;
 
     // 사업계획서
     private String planPaper;
+
     private String planPaperImg;
 
     // 로드맵
@@ -34,6 +40,9 @@ public class MemberFavStartupDto {
 
     // nft image
     private String nftImage;
+
+    private String nftDescription;
+
 
     private Boolean isFav;
 }
