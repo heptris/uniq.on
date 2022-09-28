@@ -58,19 +58,20 @@ function Carousel(props: CarouselProps) {
               as="p"
               role="corporation-name"
               css={css`
+                white-space: nowrap;
                 position: absolute;
                 left: 3%;
                 bottom: 10%;
                 padding: 0.3rem 1rem;
                 border-radius: 8px;
-                font-size: 3rem;
+                font-size: 2.5rem;
                 font-weight: 700;
                 z-index: 50;
                 color: ${theme.color.text.main};
                 backdrop-filter: blur(20px);
               `}
             >
-              {item.corpName}
+              {item.startupName}
             </Text>
             <Image
               src={item.image}

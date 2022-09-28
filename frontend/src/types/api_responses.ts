@@ -39,10 +39,12 @@ export type NFTItem = {
   startupName: string;
   price: number;
 };
-export type Corp = {
-  corpName: string;
-  corpAvatar: string | StaticImageData;
+export type Startup = {
+  startupId: number;
+  startupName: string;
   title: string;
-  date: string;
-  progress: number;
+  dueDate: string;
+  nftTargetCount: number;
+  nftReserveCount: number;
+  profileImage: string | StaticImageData;
 };
