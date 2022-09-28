@@ -36,7 +36,9 @@ export type GridProps<T extends ElementType> = OverridableProps<
   GridBaseProps
 >;
 
-export type CardBaseProps = {};
+export type CardBaseProps = {
+  clickable?: boolean;
+};
 export type CardProps<T extends ElementType> = OverridableProps<
   T,
   CardBaseProps

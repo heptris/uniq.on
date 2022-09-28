@@ -20,7 +20,7 @@ type CorporationCardProps = {
 };
 
 /**
- * @props
+ * @params
  * `corpName`: `string`
  *
  * `corpAvatar`: `string` | `StaticImageData`
@@ -30,7 +30,7 @@ type CorporationCardProps = {
  * `date`: `string`
  *
  * `progress`: `number`
- * @return `ReactElement`
+ * @returns `ReactElement`
  */
 function CorporationCard<T extends ElementType = "div">(
   props: Combine<CorporationCardProps, CardProps<T>>,

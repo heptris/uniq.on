@@ -121,6 +121,7 @@ export default function InvestmentList() {
             title={corp.title}
             date={corp.date}
             progress={corp.progress}
+            clickable={true}
           />
         ))}
       </Grid>
