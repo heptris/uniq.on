@@ -50,7 +50,7 @@ function Navbar(
       <HeaderContainer>
         <HeaderIcon>
           <Link href="/">
-            <LogoText>
+            <Text css={LogoText}>
               <Text
                 css={css`
                   color: ${theme.color.background.main};
@@ -59,7 +59,7 @@ function Navbar(
                 uniq
               </Text>
               .on
-            </LogoText>
+            </Text>
           </Link>
           <LogoImage>
             <Image src={logo} alt="logo" width={30} height={40} />
@@ -246,7 +246,7 @@ const HeaderIcon = styled.div`
   }
 `;
 
-const LogoText = styled.div`
+const LogoText = css`
   font-weight: bold;
   font-size: 27px;
   position: absolute;
