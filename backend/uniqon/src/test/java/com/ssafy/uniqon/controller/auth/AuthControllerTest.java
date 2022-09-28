@@ -4,7 +4,9 @@ import com.ssafy.uniqon.config.SecurityConfig;
 import com.ssafy.uniqon.controller.RestDocsTestSupport;
 import com.ssafy.uniqon.controller.alarm.AlarmController;
 import com.ssafy.uniqon.domain.member.MemberType;
+import com.ssafy.uniqon.dto.auth.AuthLoginDto;
 import com.ssafy.uniqon.dto.member.MemberJoinDto;
+import com.ssafy.uniqon.dto.token.TokenDto;
 import com.ssafy.uniqon.service.auth.AuthService;
 import com.ssafy.uniqon.service.member.MemberService;
 import org.junit.jupiter.api.DisplayName;
@@ -71,11 +73,38 @@ class AuthControllerTest extends RestDocsTestSupport {
                                                 .attributes(field("constraints", "길이 100 이하")),
                                         fieldWithPath("memberType").description("memberType")
                                                 .attributes(field("constraints", "길이 100 이하"))
-                                        )
+                                )
 
                         )
                 );
 
     }
+
+    @DisplayName(value = "로그인")
+    @Test
+    public void 로그인() throws Exception {
+        AuthLoginDto authLoginDto = new AuthLoginDto("0X1234");
+        TokenDto tokenDto = TokenDto.builder().accessToken("accessToken").refreshToken("refreshToken").grantType("bearer").accessTokenExpiresIn(16124L)
+                .build();
+
+        given(authService.metaMasklogin(authLoginDto.getUserAccount())).willReturn(tokenDto);
+
+        mockMvc.perform(
+                        post("/auth/login")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(objectMapper.writeValueAsString(authLoginDto))
+                ).andExpect(status().isOk())
+                .andDo(
+                        restDocs.document(
+                                requestFields(
+                                        fieldWithPath("userAccount").description("userAccount").attributes(
+                                                field("constraints", "길이 100 이하")
+                                        )
+                                )
+                        )
+                );
+    }
+
+
 
 }

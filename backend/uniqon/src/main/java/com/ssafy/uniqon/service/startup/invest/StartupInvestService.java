@@ -66,10 +66,8 @@ public class StartupInvestService {
         startupList.forEach(
                 startup -> {
                     if (startup.getEndDate().isBefore(LocalDateTime.now())) { // 마감일 지났을 때
-                        log.info("local date : {}, end date : {}", LocalDateTime.now(), startup.getEndDate());
                         List<Invest_history> investHistoryList = investHistoryRepository.findByInvestingInvestHistoryList(startup.getId());
                         if (startup.getIsGoal() && !startup.getIsFinished()) { // 목표금액 달성 했을 경우
-                            log.info("@@@@@@@@@@@@@@@@@@@local date : {}, end date : {}", LocalDateTime.now(), startup.getEndDate());
                             startup.changeIsFinish();   // 투자 마감 표시
                             // 알람 생성 (투자자에게 보내는 알람)
                             investHistoryList.forEach(invest_history -> {
