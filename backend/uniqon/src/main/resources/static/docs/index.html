@@ -512,7 +512,7 @@ Host: localhost:8080</code></pre>
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
 Content-Type: application/json;charset=UTF-8
-Content-Length: 1136
+Content-Length: 1180
 
 {
   "status" : 200,
@@ -522,14 +522,15 @@ Content-Length: 1136
     "startupName" : "스타트업1",
     "title" : "스타트업1 제목",
     "description" : "스타트업1 상세 정보 글입니다.",
-    "nftCount" : 10,
-    "goalRate" : 0.0,
-    "pricePerNft" : 10.0,
-    "endDate" : "2022-09-30 16",
-    "businessPlan" : "https://uniqon-bucket.s3.ap-northeast-2.amazonaws.com/startup/4cfd6171-b839-404a-94e9-615e3cc93402uniqon%EB%B8%94%EB%A1%9D%EC%B2%B4%EC%9D%B8_%EC%A1%B0%EC%98%81%EB%8F%84%EB%A9%98%ED%86%A0%EB%8B%98.pdf",
-    "businessPlanImg" : "https://uniqon-bucket.s3.ap-northeast-2.amazonaws.com/startup/e95ca4c9-b7c3-4f8a-87da-e718a97c2926uniqonuniqon%EB%B8%94%EB%A1%9D%EC%B2%B4%EC%9D%B8_%EC%A1%B0%EC%98%81%EB%8F%84%EB%A9%98%ED%86%A0%EB%8B%98.jpg",
+    "nftTargetCount" : 10,
+    "nftReserveCount" : 5,
+    "nftPrice" : 2.0,
+    "dueDate" : "2022-10-01 16",
+    "planPaper" : "https://uniqon-bucket.s3.ap-northeast-2.amazonaws.com/startup/4cfd6171-b839-404a-94e9-615e3cc93402uniqon%EB%B8%94%EB%A1%9D%EC%B2%B4%EC%9D%B8_%EC%A1%B0%EC%98%81%EB%8F%84%EB%A9%98%ED%86%A0%EB%8B%98.pdf",
+    "planPaperImg" : "https://uniqon-bucket.s3.ap-northeast-2.amazonaws.com/startup/e95ca4c9-b7c3-4f8a-87da-e718a97c2926uniqonuniqon%EB%B8%94%EB%A1%9D%EC%B2%B4%EC%9D%B8_%EC%A1%B0%EC%98%81%EB%8F%84%EB%A9%98%ED%86%A0%EB%8B%98.jpg",
     "roadMap" : "https://uniqon-bucket.s3.ap-northeast-2.amazonaws.com/startup/2ceda00d-e53f-4b8d-ba17-89fa74e759a1uniqon5dc267300fefd2738de6.jpg",
-    "imageNft" : "https://uniqon-bucket.s3.ap-northeast-2.amazonaws.com/startup/671c1f1b-e6f2-4c0b-af82-ada8ffc3ff3buniqon5dc267300fefd2738de6.jpg",
+    "nftImage" : "https://uniqon-bucket.s3.ap-northeast-2.amazonaws.com/startup/671c1f1b-e6f2-4c0b-af82-ada8ffc3ff3buniqon5dc267300fefd2738de6.jpg",
+    "nftDescription" : "nft description",
     "isFav" : false
   }
 }</code></pre>
@@ -552,9 +553,9 @@ Host: localhost:8080
 Content-Disposition: form-data; name=startupRequestDto; filename=jsondata
 Content-Type: application/json
 
-{"startupName":"스타트업2","managerName":"test","managerEmail":"test@naver.com","managerNumber":"010-5138-9823","goalPrice":1000.0,"endDate":"2022-09-30T16:08:41.114","nftCount":10,"discordUrl":"discordUrl","description":"test","title":"test"}
+{"dueDate":"2022-10-01T16:16:51.66","discordUrl":"discordUrl","description":"description","title":"title","nftTargetCount":10,"nftPrice":2.0,"nftDescription":"nft description"}
 --6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
-Content-Disposition: form-data; name=business_plan; filename=business_plan.pdf
+Content-Disposition: form-data; name=plan_paper; filename=business_plan.pdf
 Content-Type: application/pdf
 
 &lt;&lt;pdf file&gt;&gt;
@@ -603,7 +604,7 @@ Content-Length: 79
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>business_plan</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>plan_paper</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">사업계획서 pdf</p></td>
 </tr>
 <tr>
@@ -640,53 +641,11 @@ Content-Length: 79
 <td class="tableblock halign-left valign-top"><p class="tableblock">설명</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>startupName</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">길이 10 이하</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">startupName</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>managerName</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>dueDate</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">길이 10 이하</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">managerName</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>managerEmail</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">길이 10 이하</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">managerEmail</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>managerNumber</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">길이 10 이하</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">managerNumber</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>goalPrice</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">길이 10 이하</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">goalPrice</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>endDate</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">길이 10 이하</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">endDate</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>nftCount</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">길이 10 이하</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">nftCount</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">dueDate</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>discordUrl</code></p></td>
@@ -708,6 +667,27 @@ Content-Length: 79
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">길이 10 이하</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">title</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>nftTargetCount</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">길이 10 이하</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">nftTargetCount</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>nftPrice</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">길이 10 이하</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">nftPrice</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>nftDescription</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">길이 10 이하</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">nftDescription</p></td>
 </tr>
 </tbody>
 </table>
@@ -741,12 +721,12 @@ Content-Length: 935
     "content" : [ {
       "startupName" : "startupName1",
       "title" : "title1",
-      "endDate" : "2022-09-27 16",
+      "endDate" : "2022-09-28 16",
       "nftImageUrl" : "nftImageUrl1"
     }, {
       "startupName" : "startupName2",
       "title" : "title2",
-      "endDate" : "2022-09-27 16",
+      "endDate" : "2022-09-28 16",
       "nftImageUrl" : "nftImageUrl2"
     } ],
     "pageable" : {
@@ -756,14 +736,14 @@ Content-Length: 935
         "unsorted" : true
       },
       "offset" : 0,
-      "pageNumber" : 0,
       "pageSize" : 10,
+      "pageNumber" : 0,
       "paged" : true,
       "unpaged" : false
     },
-    "totalElements" : 2,
     "last" : true,
     "totalPages" : 1,
+    "totalElements" : 2,
     "number" : 0,
     "size" : 10,
     "sort" : {
@@ -1120,7 +1100,7 @@ Content-Length: 2225
     "values" : [ {
       "nickname" : "투자자0",
       "memberId" : 1,
-      "createDate" : "2022-09-27 16:08:46",
+      "createDate" : "2022-09-28 16:16:55",
       "startupQuestionId" : 1,
       "question" : "질문0",
       "myQuestion" : true,
@@ -1129,7 +1109,7 @@ Content-Length: 2225
         "memberId" : 4,
         "nickname" : "스타트업A",
         "answer" : "답변 0",
-        "createDate" : "2022-09-27 16:08:46",
+        "createDate" : "2022-09-28 16:16:55",
         "parentId" : null,
         "myAnswer" : false,
         "answerChildren" : [ {
@@ -1137,7 +1117,7 @@ Content-Length: 2225
           "memberId" : 1,
           "nickname" : "투자자0",
           "answer" : "답변 Test",
-          "createDate" : "2022-09-27 16:08:46",
+          "createDate" : "2022-09-28 16:16:55",
           "parentId" : 1,
           "myAnswer" : true
         }, {
@@ -1145,7 +1125,7 @@ Content-Length: 2225
           "memberId" : 4,
           "nickname" : "스타트업A",
           "answer" : "답변 Test2",
-          "createDate" : "2022-09-27 16:08:46",
+          "createDate" : "2022-09-28 16:16:55",
           "parentId" : 1,
           "myAnswer" : true
         } ]
@@ -1154,7 +1134,7 @@ Content-Length: 2225
         "memberId" : 4,
         "nickname" : "스타트업A",
         "answer" : "답변 1",
-        "createDate" : "2022-09-27 16:08:46",
+        "createDate" : "2022-09-28 16:16:55",
         "parentId" : null,
         "myAnswer" : false,
         "answerChildren" : [ ]
@@ -1163,7 +1143,7 @@ Content-Length: 2225
         "memberId" : 4,
         "nickname" : "스타트업A",
         "answer" : "답변 2",
-        "createDate" : "2022-09-27 16:08:46",
+        "createDate" : "2022-09-28 16:16:55",
         "parentId" : null,
         "myAnswer" : false,
         "answerChildren" : [ ]
@@ -1171,7 +1151,7 @@ Content-Length: 2225
     }, {
       "nickname" : "투자자1",
       "memberId" : 2,
-      "createDate" : "2022-09-27 16:08:46",
+      "createDate" : "2022-09-28 16:16:55",
       "startupQuestionId" : 2,
       "question" : "질문1",
       "myQuestion" : false,
@@ -1179,7 +1159,7 @@ Content-Length: 2225
     }, {
       "nickname" : "투자자2",
       "memberId" : 3,
-      "createDate" : "2022-09-27 16:08:46",
+      "createDate" : "2022-09-28 16:16:55",
       "startupQuestionId" : 3,
       "question" : "질문2",
       "myQuestion" : false,

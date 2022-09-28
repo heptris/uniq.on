@@ -57,7 +57,7 @@ public class AlarmService {
     }
 
     /**
-     * 스타트업이 NFT토큰 발행 후 투자자들에게 NFT토큰 됐다는 알람 생성하는 함수
+     * 스타트업이 NFT토큰 발행 후 알람 읽음 표시 후 투자자들에게 NFT토큰 됐다는 알람 생성하는 함수
      */
     @Transactional
     public void mintSuccess(Integer lastTokenId, Long alarmId) {
