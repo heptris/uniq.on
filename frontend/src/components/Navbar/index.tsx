@@ -23,6 +23,7 @@ import Link from "next/link";
 import contracts from "@/contracts/utils";
 import Text from "../Text";
 import { useAuth } from "@/hooks";
+import { HEADER_HEIGHT } from "@/constants";
 
 /**
  * @params
@@ -93,7 +94,6 @@ function Navbar(
                   css={css`
                     width: 1.5rem;
                     color: ${theme.color.text.main};
-                    margin-right: 2rem;
 
                     &:hover {
                       color: ${theme.color.text.hover};
@@ -175,7 +175,7 @@ const HeaderWrapper = styled.header`
   top: 0;
   left: 0;
   width: 100%;
-  height: 80px;
+  height: ${HEADER_HEIGHT};
   padding: 20px 10px;
   z-index: 9960;
   border-bottom: 1px solid ${({ theme }) => theme.color.background.item};
