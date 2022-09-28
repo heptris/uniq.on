@@ -36,5 +36,5 @@ public class StartupInvestedListDto {
     // nft image
     private String imageNft;
 
-    private InvestStatus investStatus;
+//    private InvestStatus investStatus;
 }

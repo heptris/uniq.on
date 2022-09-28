@@ -56,8 +56,8 @@ values (now(), now(), "INVESTING", 1, 1),
        (now(), now(), "INVESTING", 1, 2),
        (now(), now(), "INVESTING", 2, 2),
        (now(), now(), "INVESTED", 6, 1),
-       (now(), now(), "INVESTING", 6, 2),
-       (now(), now(), "INVESTING", 6, 3);
+       (now(), now(), "INVESTING", 6, 2);
+--        (now(), now(), "INVESTING", 6, 3);
 
 insert into alarm  (created_date, last_modified_date, content, is_read, member_id)
 values (now(), now(), "예약한 펀딩이 성공했습니다 !!", false, 1),

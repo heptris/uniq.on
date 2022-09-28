@@ -100,13 +100,13 @@ public class MemberRepositoryImpl implements MemberRepositoryCustom{
                         startup.businessPlan,
                         startup.businessPlanImg,
                         startup.roadMap,
-                        startup.imageNft,
-                        invest_history.investStatus
+                        startup.imageNft
+//                        invest_history.investStatus
                 ))
                 .from(member)
-                .innerJoin(member.investHistoryList, invest_history)
-                .innerJoin(invest_history.startup, startup)
-                .where(member.id.eq(memberId).and(startup.member.id.eq(memberId)))
+                .innerJoin(member.startupList, startup)
+//                .innerJoin(invest_history.startup, startup)
+                .where(member.id.eq(memberId))
                 .fetch();
 
         return startupInvestedListDtoList;
