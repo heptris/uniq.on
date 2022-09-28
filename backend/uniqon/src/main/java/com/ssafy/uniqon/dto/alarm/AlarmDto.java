@@ -2,9 +2,11 @@ package com.ssafy.uniqon.dto.alarm;
 
 import com.ssafy.uniqon.domain.alarm.Alarm;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
