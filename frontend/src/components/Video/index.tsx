@@ -2,6 +2,7 @@ import { cssConvex } from "@/styles/utils";
 import { css, useTheme } from "@emotion/react";
 import Link from "next/link";
 import Button from "../Button";
+import Text from "../Text";
 
 export default function Video() {
   const theme = useTheme();
@@ -56,7 +57,8 @@ export default function Video() {
           }
         `}
       >
-        <h2
+        <Text
+          as="h1"
           css={css`
             color: ${theme.color.text.main};
             font-size: 6rem;
@@ -69,8 +71,9 @@ export default function Video() {
           `}
         >
           유니크한 NFT를 구매해보세요.
-        </h2>
-        <h3
+        </Text>
+        <Text
+          as="h3"
           css={css`
             color: ${theme.color.text.main};
             font-size: 2rem;
@@ -91,8 +94,9 @@ export default function Video() {
             `}
           />
           투자받는 것이 가능한 곳
-        </h3>
-        <p
+        </Text>
+        <Text
+          as="p"
           css={css`
             color: ${theme.color.text.main};
             font-size: 1.5rem;
@@ -104,7 +108,7 @@ export default function Video() {
           `}
         >
           스타트업과 투자자가 NFT를 기반으로 소통하며 상생하는 플랫폼입니다.
-        </p>
+        </Text>
         <div>
           <Link href="/apply">
             <Button
