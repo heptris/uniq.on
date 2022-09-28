@@ -7,6 +7,7 @@ import com.ssafy.uniqon.domain.member.MemberType;
 import com.ssafy.uniqon.dto.auth.AuthLoginDto;
 import com.ssafy.uniqon.dto.member.MemberJoinDto;
 import com.ssafy.uniqon.dto.token.TokenDto;
+import com.ssafy.uniqon.dto.token.TokenRequestDto;
 import com.ssafy.uniqon.service.auth.AuthService;
 import com.ssafy.uniqon.service.member.MemberService;
 import org.junit.jupiter.api.DisplayName;
@@ -16,6 +17,8 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.http.MediaType;
+
+import javax.persistence.SecondaryTable;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -105,6 +108,55 @@ class AuthControllerTest extends RestDocsTestSupport {
                 );
     }
 
+    @DisplayName(value = "토큰 재발행")
+    @Test
+    public void 토큰_재발행() throws Exception {
+        TokenRequestDto tokenRequestDto = new TokenRequestDto("accessToken", "refreshToken");
+        TokenDto tokenDto = TokenDto.builder().accessToken("accessToken").refreshToken("refreshToken").grantType("bearer").accessTokenExpiresIn(16124L)
+                .build();
 
+        given(authService.reissue(tokenRequestDto)).willReturn(tokenDto);
 
+        mockMvc.perform(
+                        post("/auth/reissue")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(objectMapper.writeValueAsString(tokenRequestDto))
+                ).andExpect(status().isOk())
+                .andDo(
+                        restDocs.document(
+                                requestFields(
+                                        fieldWithPath("accessToken").description("accessToken").attributes(
+                                                field("constraints", "길이 100 이하")
+                                        ),
+                                        fieldWithPath("refreshToken").description("refreshToken").attributes(
+                                                field("constraints", "길이 100 이하")
+                                        )
+                                )
+                        )
+                );
+    }
+
+    @DisplayName(value = "로그아웃")
+    @Test
+    public void 로그아웃() throws Exception {
+        mockMvc.perform(
+                get("/auth/logout")
+                        .header("Authorization", "Bearer " + accessToken)
+
+        ).andExpect(status().isOk());
+    }
+
+    @DisplayName(value = "닉네임 중복 검사")
+    @Test
+    public void 닉네임_중복_검사() throws Exception {
+        mockMvc.perform(
+                        get("/auth/{nickname}/check", "nickname")
+
+                ).andExpect(status().isOk())
+                .andDo(
+                        restDocs.document(
+                                pathParameters(parameterWithName("nickname").description("nickname"))
+                        )
+                );
+    }
 }
