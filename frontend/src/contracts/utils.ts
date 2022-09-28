@@ -4,6 +4,8 @@ import { Contract } from "web3-eth-contract";
 
 import type { AbiItem } from "web3-utils";
 import type { Maybe } from "@metamask/providers/dist/utils";
+import { useAppDispatch, useAppSelector } from "@/hooks";
+import { _setAccount } from "@/store";
 
 const contracts = {
   useWeb3: () => {
@@ -65,15 +67,16 @@ const contracts = {
   },
 
   useAccount: () => {
-    const [account, _setAccount] = useState("");
+    const { walletAddress: account } = useAppSelector((state) => state.auth);
+    const dispatch = useAppDispatch();
 
-    const connect = () => {
+    const connect = async () => {
       if (!window.ethereum) {
         alert("MetaMask를 설치해주세요!");
         throw new Error("MetaMask is not installed.");
       }
 
-      return window.ethereum
+      return await window.ethereum
         .request({
           method: "eth_requestAccounts",
         })
@@ -83,12 +86,12 @@ const contracts = {
         });
     };
 
-    const checkConnection = () => {
+    const checkConnection = async () => {
       if (!window.ethereum) {
         alert("Metamask를 설치해주세요!");
         throw new Error("Metamask is not installed.");
       }
-      return window.ethereum
+      return await window.ethereum
         .request({ method: "eth_accounts" })
         .then(handleAccountsChanged)
         .catch(console.error);
@@ -101,7 +104,7 @@ const contracts = {
       if (response.length === 0) return false;
       // 지갑 연결되어 잇으면 공개주소를 account에 넣고 연결되어 있음 반환
       else {
-        _setAccount(response[0]);
+        dispatch(_setAccount(response[0]));
         return true;
       }
     }
