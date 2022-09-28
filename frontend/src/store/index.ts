@@ -6,10 +6,14 @@ const authSlice = createSlice({
   name: "login",
   initialState: {
     isLogined: false,
+    walletAddress: "",
   },
   reducers: {
     _setLogined(state, action: PayloadAction<boolean>) {
       state.isLogined = action.payload;
+    },
+    _setAccount(state, action: PayloadAction<string>) {
+      state.walletAddress = action.payload;
     },
   },
 });
@@ -41,7 +45,7 @@ const store = configureStore({
   },
 });
 
-export const { _setLogined } = authSlice.actions;
+export const { _setLogined, _setAccount } = authSlice.actions;
 export const { setIsAlertOn, setAlertState } = alertSlice.actions;
 export default store;
 export type RootState = ReturnType<typeof store.getState>;
