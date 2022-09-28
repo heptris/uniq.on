@@ -1,0 +1,14 @@
+[[Startup-Answer-API]]
+== Startup Answer API
+
+[[스타트업_댓글_등록]]
+=== Startup 댓글 등록
+operation::startup-answer-controller-test/스타트업_댓글등록[snippets='http-request,http-response,path-parameters,request-fields']
+
+[[스타트업_댓글_수정]]
+=== Startup 댓글 수정
+operation::startup-answer-controller-test/스타트업_댓글수정[snippets='http-request,http-response,path-parameters,request-fields']
+
+[[스타트업_댓글_삭제]]
+=== Startup 댓글 삭제
+operation::startup-answer-controller-test/스타트업_댓글삭제[snippets='http-request,http-response,path-parameters']

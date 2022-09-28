@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static com.ssafy.uniqon.domain.invest.QInvest_history.*;
+import static com.ssafy.uniqon.domain.member.QMember.member;
 import static com.ssafy.uniqon.domain.startup.QStartup.startup;
 
 public class StartupRepositoryImpl implements StartupRepositoryCustom{
@@ -33,12 +34,16 @@ public class StartupRepositoryImpl implements StartupRepositoryCustom{
     public Page<StartupResponseListDto> search(StartupSearchCondition condition, Pageable pageable) {
         List<StartupResponseListDto> contents = queryFactory
                 .select(Projections.constructor(StartupResponseListDto.class,
+                        startup.id,
                         startup.startupName,
                         startup.title,
                         startup.dueDate,
-                        startup.nftImage
+                        startup.nftTargetCount,
+                        startup.nftReserveCount,
+                        member.profileImage
                         ))
                 .from(startup)
+                .innerJoin(startup.member, member)
                 .where(titleEq(condition.getTitle()),
                         startupNameEq(condition.getStartupName()))
                 .offset(pageable.getOffset())

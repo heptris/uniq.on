@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.time.LocalDateTime;
 
 @Data
@@ -13,10 +14,18 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class StartupResponseListDto {
+
+    private Long startupId;
     private String startupName;
     private String title;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH")
-    private LocalDateTime endDate;
-    private String nftImageUrl;
+    private LocalDateTime dueDate;
+
+    private Integer nftTargetCount;
+
+    private Integer nftReserveCount;
+
+    private String profileImage;
+
 }

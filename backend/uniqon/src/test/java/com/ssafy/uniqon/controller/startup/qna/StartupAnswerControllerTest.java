@@ -52,8 +52,12 @@ public class StartupAnswerControllerTest extends RestDocsTestSupport {
                         restDocs.document(
                                 pathParameters(parameterWithName("startupQuestionId").description("스타트업 Question ID")),
                                 requestFields(
-                                        fieldWithPath("parentId").description("parent ID"),
-                                        fieldWithPath("answer").description("answer")
+                                        fieldWithPath("parentId").description("parent ID").attributes(
+                                                field("constraints", "길이 100 이하")
+                                        ),
+                                        fieldWithPath("answer").description("answer").attributes(
+                                                field("constraints", "길이 100 이하")
+                                        )
                                 )
                         )
                 );
