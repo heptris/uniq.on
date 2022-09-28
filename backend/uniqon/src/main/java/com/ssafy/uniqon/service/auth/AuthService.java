@@ -9,6 +9,7 @@ import com.ssafy.uniqon.dto.token.TokenDto;
 import com.ssafy.uniqon.dto.token.TokenRequestDto;
 import com.ssafy.uniqon.exception.ex.CustomException;
 import com.ssafy.uniqon.repository.member.MemberRepository;
+import com.ssafy.uniqon.service.s3.AwsS3Service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -30,6 +31,8 @@ public class AuthService {
     private final AuthenticationManager authenticationManager;
     private final TokenProvider tokenProvider;
 
+    private final AwsS3Service awsS3Service;
+
     @Transactional
     public void signup(MemberJoinDto memberJoinDto){
         if(memberRepository.existsByEmail(memberJoinDto.getEmail())){
@@ -37,6 +40,7 @@ public class AuthService {
         }
 
         Member member = memberJoinDto.toMember();
+        member.changeProfileImage(getRandomImage());
         memberRepository.save(member);
     }
 
@@ -101,6 +105,11 @@ public class AuthService {
         tokenProvider.logout(authentication.getName(), accessToken);
     }
 
-
+    public String getRandomImage() {
+        int random = (int) (Math.random() * 6) + 1;
+        String path = "member/default/" + random + ".jpg";
+        String thumbnailPath = awsS3Service.getThumbnailPath(path);
+        return thumbnailPath;
+    }
 
 }
