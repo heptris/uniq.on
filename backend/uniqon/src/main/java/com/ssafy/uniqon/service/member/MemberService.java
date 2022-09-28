@@ -2,9 +2,7 @@ package com.ssafy.uniqon.service.member;
 
 import com.ssafy.uniqon.domain.member.Member;
 import com.ssafy.uniqon.domain.s3.AwsS3;
-import com.ssafy.uniqon.dto.member.MemberFavStartupDto;
-import com.ssafy.uniqon.dto.member.MemberProfileDto;
-import com.ssafy.uniqon.dto.member.MemberUpdateDto;
+import com.ssafy.uniqon.dto.member.*;
 import com.ssafy.uniqon.exception.ex.CustomException;
 import com.ssafy.uniqon.exception.ex.ErrorCode;
 import com.ssafy.uniqon.repository.member.MemberRepository;
@@ -73,6 +71,14 @@ public class MemberService {
 
     public List<MemberFavStartupDto> findMemberFavStartup(Long memberId){
         return memberRepository.findFavStartup(memberId);
+    }
+
+    public List<MemberInvestedStartupDto> findInvestedStartup(Long memberId){
+        return memberRepository.findInvestedStartup(memberId);
+    }
+
+    public List<StartupInvestedListDto> findStartupInvestedList(Long memberId){
+        return memberRepository.findStartupInvestedList(memberId);
     }
 
 

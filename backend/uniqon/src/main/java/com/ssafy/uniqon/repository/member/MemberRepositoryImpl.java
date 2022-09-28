@@ -2,14 +2,20 @@ package com.ssafy.uniqon.repository.member;
 
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import com.ssafy.uniqon.domain.invest.InvestStatus;
+import com.ssafy.uniqon.domain.invest.QInvest_history;
 import com.ssafy.uniqon.domain.member.QMember;
 import com.ssafy.uniqon.domain.startup.QStartup;
 import com.ssafy.uniqon.domain.startup.QStartupFavorite;
 import com.ssafy.uniqon.dto.member.MemberFavStartupDto;
+import com.ssafy.uniqon.dto.member.MemberInvestedStartupDto;
+import com.ssafy.uniqon.dto.member.StartupInvestedListDto;
 
 import javax.persistence.EntityManager;
 import java.util.List;
 
+import static com.ssafy.uniqon.domain.invest.InvestStatus.INVESTING;
+import static com.ssafy.uniqon.domain.invest.QInvest_history.invest_history;
 import static com.ssafy.uniqon.domain.member.QMember.member;
 import static com.ssafy.uniqon.domain.startup.QStartup.startup;
 import static com.ssafy.uniqon.domain.startup.QStartupFavorite.startupFavorite;
@@ -48,5 +54,63 @@ public class MemberRepositoryImpl implements MemberRepositoryCustom{
                 .fetch();
 
         return memberFavStartupDtoList;
+    }
+
+    @Override
+    public List<MemberInvestedStartupDto> findInvestedStartup(Long memberId) {
+        List<MemberInvestedStartupDto> memberInvestedStartupDtoList = queryFactory
+                .select(Projections.constructor(MemberInvestedStartupDto.class,
+                        member.id,
+                        startup.id,
+                        startup.startupName,
+                        startup.title,
+                        startup.description,
+                        startup.nftCount,
+                        startup.investCount,
+                        startup.pricePerNft,
+                        startup.endDate,
+                        startup.businessPlan,
+                        startup.businessPlanImg,
+                        startup.roadMap,
+                        startup.imageNft,
+                        invest_history.investStatus
+                ))
+                .from(member)
+                .innerJoin(member.investHistoryList, invest_history)
+                .innerJoin(invest_history.startup, startup)
+                .where(member.id.eq(memberId).and(invest_history.investStatus.eq(INVESTING))
+                        .and(startup.member.id.ne(memberId)))
+                .fetch();
+
+        return memberInvestedStartupDtoList;
+    }
+
+    @Override
+    public List<StartupInvestedListDto> findStartupInvestedList(Long memberId) {
+        List<StartupInvestedListDto> startupInvestedListDtoList = queryFactory
+                .select(Projections.constructor(StartupInvestedListDto.class,
+                        member.id,
+                        startup.id,
+                        startup.startupName,
+                        startup.title,
+                        startup.description,
+                        startup.nftCount,
+                        startup.investCount,
+                        startup.pricePerNft,
+                        startup.endDate,
+                        startup.businessPlan,
+                        startup.businessPlanImg,
+                        startup.roadMap,
+                        startup.imageNft,
+                        invest_history.investStatus
+                ))
+                .from(member)
+                .innerJoin(member.investHistoryList, invest_history)
+                .innerJoin(invest_history.startup, startup)
+                .where(member.id.eq(memberId).and(invest_history.investStatus.eq(INVESTING))
+                        .and(startup.member.id.eq(memberId)))
+                .fetch();
+
+        return startupInvestedListDtoList;
     }
 }
