@@ -1,25 +1,16 @@
+import { css } from "@emotion/react";
+
+import { useSignupForm, useAuth } from "@/hooks";
 import LabelInput from "@/components/LabelInput";
-import contracts from "@/contracts/utils";
-import { SignupForm } from "@/types/api_requests";
-import { ChangeEvent, useState } from "react";
+import Card from "@/components/Card";
+import Button from "@/components/Button";
 
 function SignUp() {
-  const { account } = contracts.useAccount();
-  const [form, setForm] = useState<SignupForm>({
-    name: "",
-    nickname: "",
-    email: "",
-    walletAddress: account,
-  });
-  const onChangeForm = (e: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setForm({
-      ...form,
-      [name]: value,
-    });
-  };
+  const { form, onChangeForm, handleNicknameCheck } = useSignupForm();
+  const { handleSignup } = useAuth();
+
   return (
-    <>
+    <Card>
       <LabelInput
         placeholder="이름"
         labelText="이름"
@@ -27,13 +18,29 @@ function SignUp() {
         name={`name`}
         onChange={onChangeForm}
       />
-      <LabelInput
-        placeholder="닉네임"
-        labelText="닉네임"
-        value={form.nickname}
-        name={`nickname`}
-        onChange={onChangeForm}
-      />
+      <div
+        css={css`
+          position: relative;
+        `}
+      >
+        <LabelInput
+          placeholder="닉네임"
+          labelText="닉네임"
+          value={form.nickname}
+          name={`nickname`}
+          onChange={onChangeForm}
+        />
+        <Button
+          css={css`
+            position: absolute;
+            right: 0.2rem;
+            bottom: 0.17rem;
+          `}
+          onClick={handleNicknameCheck}
+        >
+          중복 확인
+        </Button>
+      </div>
       <LabelInput
         placeholder="이메일"
         labelText="이메일"
@@ -41,7 +48,8 @@ function SignUp() {
         name={`email`}
         onChange={onChangeForm}
       />
-    </>
+      <Button onClick={() => handleSignup(form)}>회원 가입</Button>
+    </Card>
   );
 }
 
