@@ -493,8 +493,8 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <ul class="sectlevel2">
 <li><a href="#스타트업_질문_등록">6.1. Startup 질문 등록</a></li>
 <li><a href="#스타트업_질문_수정">6.2. Startup 질문 수정</a></li>
-<li><a href="#스타트업_질문_등록">6.3. Startup 질문 등록</a></li>
-<li><a href="#스타트업_질문_등록">6.4. Startup 질문 등록</a></li>
+<li><a href="#스타트업_질문_삭제">6.3. Startup 질문 삭제</a></li>
+<li><a href="#스타트업_질문_조회">6.4. Startup 질문 조회(Cursor 페이징)</a></li>
 </ul>
 </li>
 <li><a href="#Startup-Answer-API">7. Startup Answer API</a>
@@ -587,8 +587,8 @@ Content-Length: 216
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>walletAddress</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">길이 100 이하</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">walletAddress</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">지갑 주소</p></td>
 </tr>
 </tbody>
 </table>
@@ -602,14 +602,13 @@ Content-Length: 216
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /auth/signup HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Content-Length: 119
+Content-Length: 93
 Host: localhost:8080
 
 {
   "walletAddress" : "0X1234",
   "nickName" : "nickName",
-  "email" : "test@naver.com",
-  "memberType" : "USER"
+  "email" : "test@naver.com"
 }</code></pre>
 </div>
 </div>
@@ -652,29 +651,22 @@ Content-Length: 83
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>walletAddress</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">길이 100 이하</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">walletAddress</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">지갑 주소</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>email</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">길이 100 이하</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">email</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">이메일</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>nickName</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">길이 100 이하</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">nickName</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>memberType</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">길이 100 이하</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">memberType</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">닉네임은 3~30자리입니다.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">닉네임</p></td>
 </tr>
 </tbody>
 </table>
@@ -704,12 +696,17 @@ Host: localhost:8080
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
 Content-Type: application/json;charset=UTF-8
-Content-Length: 75
+Content-Length: 215
 
 {
   "status" : 200,
   "message" : "토큰 재발행",
-  "data" : null
+  "data" : {
+    "grantType" : "bearer",
+    "accessToken" : "accessToken",
+    "refreshToken" : "refreshToken",
+    "accessTokenExpiresIn" : 1124
+  }
 }</code></pre>
 </div>
 </div>
@@ -736,14 +733,14 @@ Content-Length: 75
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>accessToken</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">길이 100 이하</p></td>
+<td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">accessToken</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>refreshToken</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">길이 100 이하</p></td>
+<td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">refreshToken</p></td>
 </tr>
 </tbody>
@@ -823,7 +820,7 @@ Content-Length: 98
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>nickname</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">nickname</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">닉네임</p></td>
 </tr>
 </tbody>
 </table>
@@ -853,12 +850,44 @@ Host: localhost:8080</code></pre>
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
 Content-Type: application/json;charset=UTF-8
-Content-Length: 71
+Content-Length: 952
 
 {
   "status" : 200,
   "message" : "관심 목록",
-  "data" : [ ]
+  "data" : [ {
+    "memberId" : 2,
+    "startupId" : 1,
+    "startupName" : "스타트업A",
+    "title" : "title",
+    "description" : "description",
+    "nftTargetCount" : 10,
+    "nftReserveCount" : 5,
+    "nftPrice" : 2.0,
+    "dueDate" : "2022-10-01 17",
+    "planPaper" : "planPaper",
+    "planPaperImg" : "planPaperImg",
+    "roadMap" : "roadMap",
+    "nftImage" : "nftImage",
+    "nftDescription" : null,
+    "isFav" : true
+  }, {
+    "memberId" : 3,
+    "startupId" : 2,
+    "startupName" : "스타트업B",
+    "title" : "title2",
+    "description" : "description2",
+    "nftTargetCount" : 10,
+    "nftReserveCount" : 5,
+    "nftPrice" : 2.0,
+    "dueDate" : "2022-10-01 17",
+    "planPaper" : "planPaper",
+    "planPaperImg" : "planPaperImg",
+    "roadMap" : "roadMap",
+    "nftImage" : "nftImage",
+    "nftDescription" : null,
+    "isFav" : true
+  } ]
 }</code></pre>
 </div>
 </div>
@@ -897,7 +926,7 @@ Content-Length: 954
     "nftTargetCount" : 10,
     "nftReserveCount" : 5,
     "nftPrice" : 2.0,
-    "dueDate" : "2022-09-30 09",
+    "dueDate" : "2022-09-30 17",
     "planPaper" : "planPaper",
     "planPaperImg" : "planPaperImg",
     "roadMap" : "roadMap",
@@ -912,7 +941,7 @@ Content-Length: 954
     "nftTargetCount" : 10,
     "nftReserveCount" : 5,
     "nftPrice" : 2.0,
-    "dueDate" : "2022-09-30 09",
+    "dueDate" : "2022-09-30 17",
     "planPaper" : "planPaper",
     "planPaperImg" : "planPaperImg",
     "roadMap" : "roadMap",
@@ -943,12 +972,44 @@ Host: localhost:8080</code></pre>
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
 Content-Type: application/json;charset=UTF-8
-Content-Length: 87
+Content-Length: 1000
 
 {
   "status" : 200,
   "message" : "투자한 스타트업 목록",
-  "data" : [ ]
+  "data" : [ {
+    "memberId" : 1,
+    "startupId" : 1,
+    "startupName" : "startupName",
+    "title" : "title",
+    "description" : "description",
+    "nftTargetCount" : 10,
+    "nftReserveCount" : 5,
+    "nftPrice" : 2.0,
+    "dueDate" : "2022-09-30 17",
+    "planPaper" : "planPaper",
+    "planPaperImg" : "planPaperImg",
+    "roadMap" : "roadMap",
+    "nftImage" : "nftImage",
+    "nftDescription" : "nftDescription",
+    "investStatus" : null
+  }, {
+    "memberId" : 2,
+    "startupId" : 2,
+    "startupName" : "startupName",
+    "title" : "title",
+    "description" : "description",
+    "nftTargetCount" : 10,
+    "nftReserveCount" : 5,
+    "nftPrice" : 2.0,
+    "dueDate" : "2022-09-30 17",
+    "planPaper" : "planPaper",
+    "planPaperImg" : "planPaperImg",
+    "roadMap" : "roadMap",
+    "nftImage" : "nftImage",
+    "nftDescription" : "nftDescription",
+    "investStatus" : null
+  } ]
 }</code></pre>
 </div>
 </div>
@@ -987,12 +1048,6 @@ Content-Length: 246
   }
 }</code></pre>
 </div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="회원_프로필_조회_path_parameters"><a class="link" href="#회원_프로필_조회_path_parameters">Path parameters</a></h4>
-<div class="paragraph">
-<p>Snippet path-parameters not found for operation::member-controller-test/회원_프로필_조회</p>
 </div>
 </div>
 </div>
@@ -1083,8 +1138,8 @@ Content-Length: 80
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>nickName</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">길이 10 이하</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">닉네임은 3~30자여야 합니다.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">nickname</p></td>
 </tr>
 </tbody>
@@ -1169,7 +1224,7 @@ Content-Length: 562
     "investCount" : null,
     "read" : false
   }, {
-    "alarmId" : 3,
+    "alarmId" : 4,
     "content" : "알람4",
     "tokenId" : null,
     "investCount" : null,
@@ -1186,7 +1241,7 @@ Content-Length: 562
 <h4 id="안읽은_알람_조회_http_request"><a class="link" href="#안읽은_알람_조회_http_request">HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /api/alarm/alarmList HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /api/alarm/unReadAlarmList HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Authorization: Bearer accessToken
 Host: localhost:8080</code></pre>
@@ -1199,12 +1254,30 @@ Host: localhost:8080</code></pre>
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
 Content-Type: application/json;charset=UTF-8
-Content-Length: 65
+Content-Length: 437
 
 {
   "status" : 200,
   "message" : "success",
-  "data" : [ ]
+  "data" : [ {
+    "alarmId" : 1,
+    "content" : "알람1",
+    "tokenId" : null,
+    "investCount" : 10,
+    "read" : false
+  }, {
+    "alarmId" : 2,
+    "content" : "알람2",
+    "tokenId" : 1,
+    "investCount" : null,
+    "read" : false
+  }, {
+    "alarmId" : 3,
+    "content" : "알람3",
+    "tokenId" : null,
+    "investCount" : null,
+    "read" : false
+  } ]
 }</code></pre>
 </div>
 </div>
@@ -1340,8 +1413,8 @@ Content-Length: 87
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>lastTokenId</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">길이 100 이하</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">lastTokenID</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">마지막으로 발행한 NFT 토큰 ID</p></td>
 </tr>
 </tbody>
 </table>
@@ -1412,7 +1485,6 @@ Content-Length: 87
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /api/invest/1 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer accessToken
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -1445,7 +1517,7 @@ Host: localhost:8080</code></pre>
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
 Content-Type: application/json;charset=UTF-8
-Content-Length: 1180
+Content-Length: 1183
 
 {
   "status" : 200,
@@ -1458,7 +1530,7 @@ Content-Length: 1180
     "nftTargetCount" : 10,
     "nftReserveCount" : 5,
     "nftPrice" : 2.0,
-    "dueDate" : "2022-10-02 09",
+    "dueDate" : "2022-10-02 17:10",
     "planPaper" : "https://uniqon-bucket.s3.ap-northeast-2.amazonaws.com/startup/4cfd6171-b839-404a-94e9-615e3cc93402uniqon%EB%B8%94%EB%A1%9D%EC%B2%B4%EC%9D%B8_%EC%A1%B0%EC%98%81%EB%8F%84%EB%A9%98%ED%86%A0%EB%8B%98.pdf",
     "planPaperImg" : "https://uniqon-bucket.s3.ap-northeast-2.amazonaws.com/startup/e95ca4c9-b7c3-4f8a-87da-e718a97c2926uniqonuniqon%EB%B8%94%EB%A1%9D%EC%B2%B4%EC%9D%B8_%EC%A1%B0%EC%98%81%EB%8F%84%EB%A9%98%ED%86%A0%EB%8B%98.jpg",
     "roadMap" : "https://uniqon-bucket.s3.ap-northeast-2.amazonaws.com/startup/2ceda00d-e53f-4b8d-ba17-89fa74e759a1uniqon5dc267300fefd2738de6.jpg",
@@ -1486,7 +1558,7 @@ Host: localhost:8080
 Content-Disposition: form-data; name=startupRequestDto; filename=jsondata
 Content-Type: application/json
 
-{"dueDate":"2022-10-02T09:22:01.677","discordUrl":"discordUrl","description":"description","title":"title","nftTargetCount":10,"nftPrice":2.0,"nftDescription":"nft description"}
+{"dueDate":"2022-10-02T17:09:25.1","discordUrl":"discordUrl","description":"description","title":"title","nftTargetCount":10,"nftPrice":2.0,"nftDescription":"nft description"}
 --6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
 Content-Disposition: form-data; name=plan_paper; filename=business_plan.pdf
 Content-Type: application/pdf
@@ -1577,50 +1649,50 @@ Content-Length: 79
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>dueDate</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">길이 10 이하</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">dueDate</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">yyyy-MM-dd HH:MM</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">투자 마감 기한</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>discordUrl</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">길이 10 이하</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">discordUrl</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">스타트업 디스코드 주소</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>description</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">길이 10 이하</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">description</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">길이 50자 이하</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">간단한 소개글</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>title</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">길이 10 이하</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">title</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">길이 30자 이하</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">제목</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>nftTargetCount</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">길이 10 이하</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">nftTargetCount</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">목표 발행 개수</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>nftPrice</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">길이 10 이하</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">nftPrice</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">NFT 1개당 가격</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>nftDescription</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">길이 10 이하</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">nftDescription</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">길이 50자 이하</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">NFT 간단한 설명</p></td>
 </tr>
 </tbody>
 </table>
@@ -1634,7 +1706,6 @@ Content-Length: 79
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /api/invest?size=10&amp;page=0&amp;startupName=startupName&amp;title=title HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer accessToken
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -1645,7 +1716,7 @@ Host: localhost:8080</code></pre>
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
 Content-Type: application/json;charset=UTF-8
-Content-Length: 1105
+Content-Length: 1111
 
 {
   "status" : 200,
@@ -1655,7 +1726,7 @@ Content-Length: 1105
       "startupId" : 1,
       "startupName" : "startupName1",
       "title" : "title1",
-      "dueDate" : "2022-10-01 09",
+      "dueDate" : "2022-10-01 17:10",
       "nftTargetCount" : 10,
       "nftReserveCount" : 5,
       "profileImage" : "profileImage"
@@ -1663,7 +1734,7 @@ Content-Length: 1105
       "startupId" : 2,
       "startupName" : "startupName2",
       "title" : "title2",
-      "dueDate" : "2022-10-01 09",
+      "dueDate" : "2022-10-01 17:10",
       "nftTargetCount" : 10,
       "nftReserveCount" : 5,
       "profileImage" : "profileImage"
@@ -1675,14 +1746,14 @@ Content-Length: 1105
         "unsorted" : true
       },
       "offset" : 0,
-      "pageSize" : 10,
       "pageNumber" : 0,
+      "pageSize" : 10,
       "unpaged" : false,
       "paged" : true
     },
-    "last" : true,
     "totalPages" : 1,
     "totalElements" : 2,
+    "last" : true,
     "number" : 0,
     "size" : 10,
     "sort" : {
@@ -1714,19 +1785,19 @@ Content-Length: 1105
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>title</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">title</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">제목</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>startupName</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">startupName</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">스타트업 이름</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>size</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">size</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1 페이지당 스타트업 리스트 개수</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>page</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">page</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Page 번호(0부터 시작)</p></td>
 </tr>
 </tbody>
 </table>
@@ -2010,16 +2081,16 @@ Content-Length: 81
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">길이 100 이하</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">스타트업에 대한 질문</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">스타트업에 대한 질문(수정본)</p></td>
 </tr>
 </tbody>
 </table>
 </div>
 </div>
 <div class="sect2">
-<h3 id="스타트업_질문_등록"><a class="link" href="#스타트업_질문_등록">6.3. Startup 질문 등록</a></h3>
+<h3 id="스타트업_질문_삭제"><a class="link" href="#스타트업_질문_삭제">6.3. Startup 질문 삭제</a></h3>
 <div class="sect3">
-<h4 id="스타트업_질문_등록_http_request"><a class="link" href="#스타트업_질문_등록_http_request">HTTP request</a></h4>
+<h4 id="스타트업_질문_삭제_http_request"><a class="link" href="#스타트업_질문_삭제_http_request">HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">DELETE /api/invest/question/1 HTTP/1.1
@@ -2030,7 +2101,7 @@ Host: localhost:8080</code></pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="스타트업_질문_등록_http_response"><a class="link" href="#스타트업_질문_등록_http_response">HTTP response</a></h4>
+<h4 id="스타트업_질문_삭제_http_response"><a class="link" href="#스타트업_질문_삭제_http_response">HTTP response</a></h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
@@ -2046,7 +2117,7 @@ Content-Length: 81
 </div>
 </div>
 <div class="sect3">
-<h4 id="스타트업_질문_등록_path_parameters"><a class="link" href="#스타트업_질문_등록_path_parameters">Path parameters</a></h4>
+<h4 id="스타트업_질문_삭제_path_parameters"><a class="link" href="#스타트업_질문_삭제_path_parameters">Path parameters</a></h4>
 <table class="tableblock frame-all grid-all stretch">
 <caption class="title">Table 1. /api/invest/question/{startupQuestionId}</caption>
 <colgroup>
@@ -2062,27 +2133,26 @@ Content-Length: 81
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>startupQuestionId</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">스타트업 question ID</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">startupQuestionID</p></td>
 </tr>
 </tbody>
 </table>
 </div>
 </div>
 <div class="sect2">
-<h3 id="스타트업_질문_등록"><a class="link" href="#스타트업_질문_등록">6.4. Startup 질문 등록</a></h3>
+<h3 id="스타트업_질문_조회"><a class="link" href="#스타트업_질문_조회">6.4. Startup 질문 조회(Cursor 페이징)</a></h3>
 <div class="sect3">
-<h4 id="스타트업_질문_등록_http_request"><a class="link" href="#스타트업_질문_등록_http_request">HTTP request</a></h4>
+<h4 id="스타트업_질문_조회_http_request"><a class="link" href="#스타트업_질문_조회_http_request">HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /api/invest/question/1/page?cursorId=4&amp;size=3 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer accessToken
 Host: localhost:8080</code></pre>
 </div>
 </div>
 </div>
 <div class="sect3">
-<h4 id="스타트업_질문_등록_http_response"><a class="link" href="#스타트업_질문_등록_http_response">HTTP response</a></h4>
+<h4 id="스타트업_질문_조회_http_response"><a class="link" href="#스타트업_질문_조회_http_response">HTTP response</a></h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
@@ -2096,7 +2166,7 @@ Content-Length: 2225
     "values" : [ {
       "nickname" : "투자자0",
       "memberId" : 1,
-      "createDate" : "2022-09-29 09:22:05",
+      "createDate" : "2022-09-29 17:09:28",
       "startupQuestionId" : 1,
       "question" : "질문0",
       "myQuestion" : true,
@@ -2105,7 +2175,7 @@ Content-Length: 2225
         "memberId" : 4,
         "nickname" : "스타트업A",
         "answer" : "답변 0",
-        "createDate" : "2022-09-29 09:22:05",
+        "createDate" : "2022-09-29 17:09:28",
         "parentId" : null,
         "myAnswer" : false,
         "answerChildren" : [ {
@@ -2113,7 +2183,7 @@ Content-Length: 2225
           "memberId" : 1,
           "nickname" : "투자자0",
           "answer" : "답변 Test",
-          "createDate" : "2022-09-29 09:22:05",
+          "createDate" : "2022-09-29 17:09:28",
           "parentId" : 1,
           "myAnswer" : true
         }, {
@@ -2121,7 +2191,7 @@ Content-Length: 2225
           "memberId" : 4,
           "nickname" : "스타트업A",
           "answer" : "답변 Test2",
-          "createDate" : "2022-09-29 09:22:05",
+          "createDate" : "2022-09-29 17:09:28",
           "parentId" : 1,
           "myAnswer" : true
         } ]
@@ -2130,7 +2200,7 @@ Content-Length: 2225
         "memberId" : 4,
         "nickname" : "스타트업A",
         "answer" : "답변 1",
-        "createDate" : "2022-09-29 09:22:05",
+        "createDate" : "2022-09-29 17:09:28",
         "parentId" : null,
         "myAnswer" : false,
         "answerChildren" : [ ]
@@ -2139,7 +2209,7 @@ Content-Length: 2225
         "memberId" : 4,
         "nickname" : "스타트업A",
         "answer" : "답변 2",
-        "createDate" : "2022-09-29 09:22:05",
+        "createDate" : "2022-09-29 17:09:28",
         "parentId" : null,
         "myAnswer" : false,
         "answerChildren" : [ ]
@@ -2147,7 +2217,7 @@ Content-Length: 2225
     }, {
       "nickname" : "투자자1",
       "memberId" : 2,
-      "createDate" : "2022-09-29 09:22:05",
+      "createDate" : "2022-09-29 17:09:28",
       "startupQuestionId" : 2,
       "question" : "질문1",
       "myQuestion" : false,
@@ -2155,7 +2225,7 @@ Content-Length: 2225
     }, {
       "nickname" : "투자자2",
       "memberId" : 3,
-      "createDate" : "2022-09-29 09:22:05",
+      "createDate" : "2022-09-29 17:09:28",
       "startupQuestionId" : 3,
       "question" : "질문2",
       "myQuestion" : false,
@@ -2169,7 +2239,7 @@ Content-Length: 2225
 </div>
 </div>
 <div class="sect3">
-<h4 id="스타트업_질문_등록_path_parameters"><a class="link" href="#스타트업_질문_등록_path_parameters">Path parameters</a></h4>
+<h4 id="스타트업_질문_조회_path_parameters"><a class="link" href="#스타트업_질문_조회_path_parameters">Path parameters</a></h4>
 <table class="tableblock frame-all grid-all stretch">
 <caption class="title">Table 1. /api/invest/question/{startupId}/page</caption>
 <colgroup>
@@ -2191,7 +2261,7 @@ Content-Length: 2225
 </table>
 </div>
 <div class="sect3">
-<h4 id="스타트업_질문_등록_request_parameters"><a class="link" href="#스타트업_질문_등록_request_parameters">Request parameters</a></h4>
+<h4 id="스타트업_질문_조회_request_parameters"><a class="link" href="#스타트업_질문_조회_request_parameters">Request parameters</a></h4>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 50%;">
@@ -2299,16 +2369,16 @@ Content-Length: 72
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>parentId</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">길이 100 이하</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">parent ID</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">대댓글일 경우 startupAnswerID대댓글이 아닐경우 null</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>answer</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">길이 100 이하</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">answer</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">길이 50 이하</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">질문에 대한 댓글</p></td>
 </tr>
 </tbody>
 </table>
@@ -2393,7 +2463,7 @@ Content-Length: 79
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">길이 100 이하</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">질문에 대한 답변</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">질문에 대한 댓글(수정)</p></td>
 </tr>
 </tbody>
 </table>
@@ -2536,14 +2606,14 @@ Content-Length: 80
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">길이 100 이하</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">title</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">커뮤니티 글 제목</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>content</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">길이 100 이하</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">content</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">커뮤니티 글 내용</p></td>
 </tr>
 </tbody>
 </table>
@@ -2633,14 +2703,14 @@ Content-Length: 81
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">길이 100 이하</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">title</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">커뮤니티 글 제목</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>content</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">길이 100 이하</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">content</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">커뮤니티 글 내용</p></td>
 </tr>
 </tbody>
 </table>
@@ -2730,12 +2800,12 @@ Content-Length: 338
     "title" : "title",
     "nickName" : "nickName",
     "commentsCount" : 10,
-    "createdDate" : "2022-09-29T09:22:03.499"
+    "createdDate" : "2022-09-29T17:09:26.808"
   }, {
     "title" : "title2",
     "nickName" : "nickName2",
     "commentsCount" : 10,
-    "createdDate" : "2022-09-29T09:22:03.499"
+    "createdDate" : "2022-09-29T17:09:26.808"
   } ]
 }</code></pre>
 </div>
@@ -2798,24 +2868,24 @@ Content-Length: 1259
       "content" : "댓글1",
       "nickName" : "nickName1",
       "myComment" : true,
-      "createdDate" : "2022-09-29 09:22:03",
-      "updateDate" : "2022-09-29 09:22:03",
+      "createdDate" : "2022-09-29 17:09:26",
+      "updateDate" : "2022-09-29 17:09:26",
       "children" : [ {
         "parentId" : 1,
         "commentId" : 2,
         "content" : "댓글2",
         "nickName" : "nickName2",
         "myComment" : false,
-        "createdDate" : "2022-09-29 09:22:03",
-        "updateDate" : "2022-09-29 09:22:03"
+        "createdDate" : "2022-09-29 17:09:26",
+        "updateDate" : "2022-09-29 17:09:26"
       }, {
         "parentId" : 1,
         "commentId" : 3,
         "content" : "댓글3",
         "nickName" : "nickName3",
         "myComment" : false,
-        "createdDate" : "2022-09-29 09:22:03",
-        "updateDate" : "2022-09-29 09:22:03"
+        "createdDate" : "2022-09-29 17:09:26",
+        "updateDate" : "2022-09-29 17:09:26"
       } ]
     }, {
       "parentId" : null,
@@ -2823,11 +2893,11 @@ Content-Length: 1259
       "content" : "댓글4",
       "nickName" : "nickName4",
       "myComment" : true,
-      "createdDate" : "2022-09-29 09:22:03",
-      "updateDate" : "2022-09-29 09:22:03",
+      "createdDate" : "2022-09-29 17:09:26",
+      "updateDate" : "2022-09-29 17:09:26",
       "children" : [ ]
     } ],
-    "createdDate" : "2022-09-29T09:22:03.523"
+    "createdDate" : "2022-09-29T17:09:26.825"
   }
 }</code></pre>
 </div>
@@ -2940,15 +3010,15 @@ Content-Length: 84
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>parentId</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">길이 100 이하</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Parent ID</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">대댓글일 경우 이전 댓글 communityId대댓글이 아닐 경우 null</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>content</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">길이 100 이하</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">content</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">커뮤니티 댓글 내용</p></td>
 </tr>
 </tbody>
 </table>
@@ -3037,7 +3107,7 @@ Content-Length: 84
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">길이 100 이하</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">content</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">커뮤니티 댓글 내용</p></td>
 </tr>
 </tbody>
 </table>

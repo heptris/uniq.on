@@ -77,10 +77,10 @@ class AlarmControllerTest extends RestDocsTestSupport {
         AlarmDto alarmDto3 = AlarmDto.builder().alarmId(3L).content("알람3").isRead(Boolean.FALSE).build();
 
         List<AlarmDto> alarmDtoList = Arrays.asList(alarmDto, alarmDto2, alarmDto3);
-        given(alarmService.unReadAlarmList(1L)).willReturn(alarmDtoList);
+        given(alarmService.unReadAlarmList(any(Long.class))).willReturn(alarmDtoList);
 
         mockMvc.perform(
-                get("/api/alarm/alarmList")
+                get("/api/alarm/unReadAlarmList")
                         .header("Authorization", "Bearer " + accessToken)
                         .contentType(MediaType.APPLICATION_JSON)
         ).andExpect(status().isOk());

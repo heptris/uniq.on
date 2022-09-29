@@ -84,7 +84,7 @@ class MemberControllerTest extends RestDocsTestSupport {
                                         partWithName("memberUpdateDto").description("회원 프로필 수정 DTO")
                                 ),
                                 requestPartFields("memberUpdateDto",
-                                        fieldWithPath("nickName").description("nickname").optional().attributes(field("constraints", "닉네임은 3~30자여야 합니다."))
+                                        fieldWithPath("nickName").description("nickname").attributes(field("constraints", "닉네임은 3~30자여야 합니다."))
                                 )
                         ));
     }
@@ -169,7 +169,7 @@ class MemberControllerTest extends RestDocsTestSupport {
 
         List<MemberInvestedStartupDto> memberInvestedStartupDtoList = Arrays.asList(memberInvestedStartupDto, memberInvestedStartupDto2);
 
-        given(memberService.findInvestedStartup(4L)).willReturn(memberInvestedStartupDtoList);
+        given(memberService.findInvestedStartup(any(Long.class))).willReturn(memberInvestedStartupDtoList);
 
         mockMvc.perform(
                 get("/api/member/mypage/invest")

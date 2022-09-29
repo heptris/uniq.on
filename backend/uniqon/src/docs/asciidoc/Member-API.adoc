@@ -15,7 +15,7 @@ operation::member-controller-test/마이페이지_투자자_투자한_스타트�
 
 [[회원_프로필_조회]]
 === 2.4. 회원 프로필 조회
-operation::member-controller-test/회원_프로필_조회[snippets='http-request,http-response,path-parameters']
+operation::member-controller-test/회원_프로필_조회[snippets='http-request,http-response']
 
 [[회원_프로필_수정]]
 === 2.5. 회원 프로필 수정

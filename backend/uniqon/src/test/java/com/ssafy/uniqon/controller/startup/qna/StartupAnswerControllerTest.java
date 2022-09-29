@@ -52,11 +52,12 @@ public class StartupAnswerControllerTest extends RestDocsTestSupport {
                         restDocs.document(
                                 pathParameters(parameterWithName("startupQuestionId").description("스타트업 Question ID")),
                                 requestFields(
-                                        fieldWithPath("parentId").description("parent ID").attributes(
-                                                field("constraints", "길이 100 이하")
+                                        fieldWithPath("parentId").description("대댓글일 경우 startupAnswerID" +
+                                                "대댓글이 아닐경우 null").optional().attributes(
+                                                field("constraints", "")
                                         ),
-                                        fieldWithPath("answer").description("질문에 대한 답변").attributes(
-                                                field("constraints", "길이 100 이하")
+                                        fieldWithPath("answer").description("질문에 대한 댓글").attributes(
+                                                field("constraints", "길이 50 이하")
                                         )
                                 )
                         )
@@ -79,7 +80,7 @@ public class StartupAnswerControllerTest extends RestDocsTestSupport {
                         restDocs.document(
                                 pathParameters(parameterWithName("startupAnswerId").description("스타트업 Answer ID")),
                                 requestFields(
-                                        fieldWithPath("answer").description("질문에 대한 답변").type(JsonFieldType.STRING).attributes(field(
+                                        fieldWithPath("answer").description("질문에 대한 댓글(수정)").type(JsonFieldType.STRING).attributes(field(
                                                 "constraints", "길이 100 이하"
                                         ))
                                 )
