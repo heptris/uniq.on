@@ -46,7 +46,11 @@ function Navbar(
       <HeaderContainer>
         <HeaderIcon>
           <Link href="/">
-            <LogoText onClick={() => setActive(false)}>
+<<<<<<< frontend/src/components/Navbar/index.tsx
+            <Text css={LogoText} onClick={() => setActive(false)}>
+=======
+          
+>>>>>>> frontend/src/components/Navbar/index.tsx
               <Text
                 css={css`
                   color: ${theme.color.background.main};
@@ -55,7 +59,7 @@ function Navbar(
                 uniq
               </Text>
               .on
-            </LogoText>
+            </Text>
           </Link>
           <LogoImage onClick={() => setActive(false)}>
             <Image src={logo} alt="logo" width={30} height={40} />
@@ -245,7 +249,7 @@ const HeaderIcon = styled.div`
   }
 `;
 
-const LogoText = styled.div`
+const LogoText = css`
   font-weight: bold;
   font-size: 27px;
   position: absolute;

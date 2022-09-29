@@ -74,6 +74,9 @@ export type SelectTabProps<T extends ElementType> = CombineElementProps<
 
 export type FileUploadBaseProps = {
   text: string;
+  type?: "img" | "pdf";
+  onFileSelectSuccess(file: File): void;
+  onFileSelectError(error: any): void;
 };
 export type FileUploadProps<T extends ElementType> = CombineElementProps<
   T,
