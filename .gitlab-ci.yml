@@ -19,18 +19,13 @@ cache:
 spring-build:
   image: openjdk:8
   stage: spring-build
-  services:
-  - mysql:latest
-  variables:
-    MYSQL_DATABASE: uniqon
-    MYSQL_ROOT_PASSWORD: brc9g5U4PQwC4du
   script: |
     echo -e $BACK_APIKEY > ./backend/uniqon/src/main/resources/application-API-KEY.properties
     value=`cat ./backend/uniqon/src/main/resources/application-API-KEY.properties`
     echo "$value"
     cd backend/uniqon/
     chmod +x gradlew
-    ./gradlew build 
+    ./gradlew build -x test
   artifacts:
     paths:
       - ./backend/uniqon/build/libs/*.jar
