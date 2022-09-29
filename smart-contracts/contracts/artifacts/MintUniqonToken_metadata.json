@@ -456,6 +456,32 @@
 			{
 				"inputs": [
 					{
+						"internalType": "address payable",
+						"name": "_startupAddress",
+						"type": "address"
+					}
+				],
+				"name": "setStartupAddress",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "startupAddress",
+				"outputs": [
+					{
+						"internalType": "address payable",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
 						"internalType": "bytes4",
 						"name": "interfaceId",
 						"type": "bytes4"
@@ -584,8 +610,21 @@
 				"type": "function"
 			},
 			{
-				"inputs": [],
+				"inputs": [
+					{
+						"internalType": "address payable",
+						"name": "_startupAddress",
+						"type": "address"
+					}
+				],
 				"name": "transferSSF",
+				"outputs": [],
+				"stateMutability": "payable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "transferSSF2",
 				"outputs": [],
 				"stateMutability": "payable",
 				"type": "function"
@@ -688,11 +727,11 @@
 	},
 	"sources": {
 		"contracts/MintUniqonToken.sol": {
-			"keccak256": "0x7f9d45ecef94430b83b6dea29f4c37f45eb420f7ffc070dc0844c165a93e3761",
+			"keccak256": "0xc20113eb1dfe5524e41885fe0cddec3a94663a3d9b4b086c8b62786d4ce277ac",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://4a720bbe3378d17c0cefc785a24db86f7a37cf3baf787d089319159f07da2693",
-				"dweb:/ipfs/QmYutHYKCrk8s1tfuDoUbt9WAZdvS69DAc2Uyb4VUYaQtq"
+				"bzz-raw://fd1e6bfac4af09b8274ffef5d19b3e2dc2566e0f9979d9854a2ca8adb279786d",
+				"dweb:/ipfs/QmUt5sxSEvPrYD5Y7FYjV5VXi5XzJ3U9GLSz7fREpzoaFr"
 			]
 		},
 		"contracts/token/ERC20/ERC20.sol": {

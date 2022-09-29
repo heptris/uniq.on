@@ -15,12 +15,16 @@ contract MintUniqonToken is ERC721Enumerable{
     mapping(uint256 => uint256) public uniqonTokenPrices;
     uint256[] public onSaleUniqonToken;
     IERC20 public erc20Contract;
+    address payable public startupAddress;
     
     event showTokenURI(string indexed tokenURI);
 
     constructor() ERC721("Uniq.on-NFT", "UNFT") {
-        _tokenIds = 0;
         erc20Contract = IERC20(0x0c54E456CE9E4501D2c43C38796ce3F06846C966);
+    }
+
+    function setStartupAddress(address payable _startupAddress) public {
+        startupAddress = _startupAddress;
     }
 
     function current() public view returns (uint256) {
@@ -104,14 +108,32 @@ contract MintUniqonToken is ERC721Enumerable{
         return erc20Contract.balanceOf(msg.sender);
     }
 
-    function transferSSF() public payable {
-        require(erc20Contract.approve(msg.sender, getSSFBalance()), "address fail");
+    function transferSSF(address payable _startupAddress) public payable {
+        address sender = msg.sender;
+        uint price = 3;
+        require(erc20Contract.approve(_startupAddress, price), "address fail");
+        require(erc20Contract.approve(sender, price), "msg.sender fail");
         require(getSSFBalance() > 0, "caller has no money");
         
         // address uniqonTokenOwner = ownerOf(1);
 
-        erc20Contract.transferFrom(msg.sender, address(this), 1);
-        // erc20Contract.transfer(0x5Ca94806f7440E2D235120115bBb77873952e819, 1);
+        // erc20Contract.transferFrom(msg.sender, address(this), 1);
+        erc20Contract.transfer(_startupAddress, 1);
+    }
+
+    function transferSSF2() public payable {
+        address sender = msg.sender;
+        uint price = 3;
+        require(erc20Contract.approve(address(this), price), "address fail");
+        require(erc20Contract.approve(sender, price), "msg.sender fail");
+        require(getSSFBalance() > 0, "caller has no money");
+        // 보내는 사람 != 받는사람
+        // 처음에 msg.sender 저장해놔야함
+        
+        // address uniqonTokenOwner = ownerOf(1);
+
+        erc20Contract.transferFrom(sender, address(this), 1);
+        // erc20Contract.transfer(startupAddress, 1);
     }
 
     function purchaseUniqonToken(uint256 _uniqonTokenId) public payable {
