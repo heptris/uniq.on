@@ -36,7 +36,7 @@ function Avatar<T extends ElementType = "div">(
       ref={ref}
       {...rest}
     >
-      <Image src={image} />
+      <Image src={image} layout={"fill"} objectFit={"cover"} />
     </Component>
   );
 }
