@@ -7,7 +7,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
   // console.log(url, query);
   const nickname =
-    typeof query.nickname == "string" ? decodeURI(query.nickname) : "";
+    typeof query.nickname === "string" ? decodeURI(query.nickname) : "";
   switch (method) {
     case "GET":
       axios
