@@ -46,11 +46,7 @@ function Navbar(
       <HeaderContainer>
         <HeaderIcon>
           <Link href="/">
-<<<<<<< frontend/src/components/Navbar/index.tsx
             <Text css={LogoText} onClick={() => setActive(false)}>
-=======
-          
->>>>>>> frontend/src/components/Navbar/index.tsx
               <Text
                 css={css`
                   color: ${theme.color.background.main};
