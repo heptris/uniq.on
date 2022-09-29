@@ -96,21 +96,18 @@ contract MintUniqonToken is ERC721Enumerable{
     function getUniqonTBalance() public view returns (uint256) {
         return erc20Contract.balanceOf(msg.sender);
     }
+    
     function getUniqonTtotalSupply() public view returns (uint256) {
         return erc20Contract.totalSupply();
     }
-    function UniqonTApprove() public {
-        address sender = msg.sender;
-        erc20Contract.approve(address(this), erc20Contract.balanceOf(sender));
-    }
 
+    // NFT 구매
     function purchaseUniqonToken(uint256 _uniqonTokenId) public {
         address buyer = msg.sender;
         uint256 price = uniqonTokenPrices[_uniqonTokenId];
         address uniqonTokenOwner = ownerOf(_uniqonTokenId);
 
         require(price > 0, "This uniqon token not sale.");
-        // require(price <= msg.value, "Caller sent lower than price.");
         require(
             uniqonTokenOwner != msg.sender,
             "Caller is uniqon token owner."
