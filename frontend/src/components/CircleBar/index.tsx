@@ -1,7 +1,7 @@
 import { CircleBarProps } from "@/types/props";
 import { css, useTheme } from "@emotion/react";
 import styled from "@emotion/styled";
-import { ElementType, forwardRef, Ref } from "react";
+import React, { ElementType, forwardRef, Ref } from "react";
 import Text from "../Text";
 
 function CircleBar<T extends ElementType = "div">(
@@ -53,7 +53,9 @@ function CircleBar<T extends ElementType = "div">(
   };
   return (
     <CircleWrapper ref={ref} {...rest}>
-      {CircleHandler()}
+      {CircleHandler().map((el, i) => {
+        return <React.Fragment key={i}>{el}</React.Fragment>;
+      })}
     </CircleWrapper>
   );
 }
