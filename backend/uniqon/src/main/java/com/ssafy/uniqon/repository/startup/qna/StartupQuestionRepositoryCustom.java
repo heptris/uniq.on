@@ -16,4 +16,10 @@ public interface StartupQuestionRepositoryCustom {
 
 
     List<AnswerParentResponseDto> findAnswerParentResponseDtoList(Long memberId, Long startupQuestionId);
+
+    List<StartupQuestionResDto> findQuestionListDtoPage(Long startupId, Pageable page);
+
+    List<StartupQuestionResDto> findQuestionListDtoLessPage(Long startupId, Long cursorId, Pageable page);
+
+    List<AnswerParentResponseDto> findAnswerParentResponseDtoList(Long startupQuestionId);
 }

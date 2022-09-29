@@ -14,25 +14,25 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/invest")
+@RequestMapping("/api/invest/community")
 @RequiredArgsConstructor
 public class StartupCommunityController {
 
     private final StartupCommunityService startupCommunityService;
 
-    @GetMapping("/community/{startupId}")
+    @GetMapping("/{startupId}")
     public ResponseEntity communityList(@PathVariable Long startupId){
         List<StartupCommunityResponseListDto> startupCommunityResponseListDto = startupCommunityService.communityList(startupId);
         return new ResponseEntity(new ResponseDto(200, "success", startupCommunityResponseListDto), HttpStatus.OK);
     }
 
-    @PostMapping("/community/{startupId}")
+    @PostMapping("/{startupId}")
     public ResponseEntity communityWrite(@PathVariable Long startupId, @RequestBody StartupCommunityRequestDto requestDto){
         startupCommunityService.communityWrite(startupId, requestDto);
         return new ResponseEntity(new ResponseDto(200, "success", "글쓰기 완료"), HttpStatus.OK);
     }
 
-    @PutMapping("/community/{startupId}/{communityId}")
+    @PutMapping("/{startupId}/{communityId}")
     public ResponseEntity communityModify(@PathVariable Long startupId,
                                           @PathVariable Long communityId,
                                           @RequestBody StartupCommunityRequestModifyDto requestDto){
@@ -40,13 +40,13 @@ public class StartupCommunityController {
         return new ResponseEntity(new ResponseDto(200, "success", "글 수정 완료"), HttpStatus.OK);
     }
 
-    @DeleteMapping("/community/{startupId}/{communityId}")
+    @DeleteMapping("/{startupId}/{communityId}")
     public ResponseEntity communityDelete(@PathVariable Long startupId, @PathVariable Long communityId){
         startupCommunityService.communityDelete(startupId, communityId);
         return new ResponseEntity(new ResponseDto(200, "success", "글 삭제 완료"), HttpStatus.OK);
     }
 
-    @GetMapping("/community/detail/{communityId}")
+    @GetMapping("/detail/{communityId}")
     public ResponseEntity communityDetail(@PathVariable Long communityId){
         StartupCommunityResponseDetailDto detailDto = startupCommunityService.communityDetail(communityId);
         return new ResponseEntity(new ResponseDto(200, "success", detailDto), HttpStatus.OK);

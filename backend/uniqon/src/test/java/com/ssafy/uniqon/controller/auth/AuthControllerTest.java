@@ -59,7 +59,6 @@ class AuthControllerTest extends RestDocsTestSupport {
         MemberJoinDto memberJoinDto = MemberJoinDto.builder()
                 .walletAddress("0X1234")
                 .email("test@naver.com")
-                .memberType(MemberType.USER)
                 .nickName("nickName")
                 .build();
 
@@ -71,14 +70,12 @@ class AuthControllerTest extends RestDocsTestSupport {
                 .andDo(
                         restDocs.document(
                                 requestFields(
-                                        fieldWithPath("walletAddress").description("walletAddress")
-                                                .attributes(field("constraints", "길이 100 이하")),
-                                        fieldWithPath("email").description("email")
-                                                .attributes(field("constraints", "길이 100 이하")),
-                                        fieldWithPath("nickName").description("nickName")
-                                                .attributes(field("constraints", "길이 100 이하")),
-                                        fieldWithPath("memberType").description("memberType")
-                                                .attributes(field("constraints", "길이 100 이하"))
+                                        fieldWithPath("walletAddress").description("지갑 주소")
+                                                .attributes(field("constraints", "")),
+                                        fieldWithPath("email").description("이메일")
+                                                .attributes(field("constraints", "")),
+                                        fieldWithPath("nickName").description("닉네임")
+                                                .attributes(field("constraints", "닉네임은 3~30자리입니다."))
                                 )
 
                         )
@@ -92,7 +89,6 @@ class AuthControllerTest extends RestDocsTestSupport {
         MemberJoinDto memberJoinDto = MemberJoinDto.builder()
                 .walletAddress("0X1234")
                 .email("test@naver.com")
-                .memberType(MemberType.USER)
                 .nickName("nickName")
                 .build();
 
@@ -107,14 +103,12 @@ class AuthControllerTest extends RestDocsTestSupport {
                 .andDo(
                         restDocs.document(
                                 requestFields(
-                                        fieldWithPath("walletAddress").description("walletAddress")
-                                                .attributes(field("constraints", "길이 100 이하")),
-                                        fieldWithPath("email").description("email")
-                                                .attributes(field("constraints", "길이 100 이하")),
-                                        fieldWithPath("nickName").description("nickName")
-                                                .attributes(field("constraints", "길이 100 이하")),
-                                        fieldWithPath("memberType").description("memberType")
-                                                .attributes(field("constraints", "길이 100 이하"))
+                                        fieldWithPath("walletAddress").description("지갑 주소")
+                                                .attributes(field("constraints", "")),
+                                        fieldWithPath("email").description("이메일")
+                                                .attributes(field("constraints", "")),
+                                        fieldWithPath("nickName").description("닉네임")
+                                                .attributes(field("constraints", "닉네임은 3~30자리입니다."))
                                 )
 
                         )
@@ -138,8 +132,8 @@ class AuthControllerTest extends RestDocsTestSupport {
                 .andDo(
                         restDocs.document(
                                 requestFields(
-                                        fieldWithPath("walletAddress").description("walletAddress").attributes(
-                                                field("constraints", "길이 100 이하")
+                                        fieldWithPath("walletAddress").description("지갑 주소").attributes(
+                                                field("constraints", "")
                                         )
                                 )
                         )
@@ -164,10 +158,10 @@ class AuthControllerTest extends RestDocsTestSupport {
                         restDocs.document(
                                 requestFields(
                                         fieldWithPath("accessToken").description("accessToken").attributes(
-                                                field("constraints", "길이 100 이하")
+                                                field("constraints", "")
                                         ),
                                         fieldWithPath("refreshToken").description("refreshToken").attributes(
-                                                field("constraints", "길이 100 이하")
+                                                field("constraints", "")
                                         )
                                 )
                         )
@@ -193,7 +187,7 @@ class AuthControllerTest extends RestDocsTestSupport {
                 ).andExpect(status().isOk())
                 .andDo(
                         restDocs.document(
-                                pathParameters(parameterWithName("nickname").description("nickname"))
+                                pathParameters(parameterWithName("nickname").description("닉네임"))
                         )
                 );
     }
@@ -212,7 +206,7 @@ class AuthControllerTest extends RestDocsTestSupport {
                 ).andExpect(status().isConflict())
                 .andDo(
                         restDocs.document(
-                                pathParameters(parameterWithName("nickname").description("nickname"))
+                                pathParameters(parameterWithName("nickname").description("닉네임"))
                         )
                 );
     }

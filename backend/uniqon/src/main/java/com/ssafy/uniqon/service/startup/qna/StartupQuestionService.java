@@ -48,17 +48,7 @@ public class StartupQuestionService {
     }
 
     public List<StartupQuestionResDto> 질문조회(Long memberId, Long startupId) {
-//        List<StartupQuestion> startupQuestionList = startupQuestionRepository.findAllByStartupId(startupId);
-//        List<StartupQuestionResDto> startupQuestionResDtoList = startupQuestionList.stream()
-//                .map(startupQuestion -> new StartupQuestionResDto(startupQuestion))
-//                .collect(Collectors.toList());
-//
-//        startupQuestionResDtoList.forEach(startupQuestionResDto -> {
-//            List<AnswerParentResponseDto> answerParentResponseDtoList = startupAnswerService.댓글조회(startupQuestionResDto.getStartupQuestionId());
-//            startupQuestionResDto.changeParentResponseDto(answerParentResponseDtoList);
-//        });
         List<StartupQuestionResDto> startupQuestionResDtoList = startupQuestionRepository.findStartupQuestionResDtoList(memberId, startupId);
-
         return startupQuestionResDtoList;
     }
 
@@ -75,6 +65,21 @@ public class StartupQuestionService {
         return cursorId == null ?
                 this.startupQuestionRepository.findQuestionListDtoPage(memberId, startupId, page) :
                 this.startupQuestionRepository.findQuestionListDtoLessPage(memberId, startupId, cursorId, page);
+    }
+
+    public CursorResult<StartupQuestionResDto> 질문조회페이징_PUBLIC(Long startupId, Long cursorId, Pageable page) {
+
+        List<StartupQuestionResDto> questions = getQuestions_PUBLIC(startupId, cursorId, page);
+        Long lastIdOfList = questions.isEmpty() ?
+                null : questions.get(questions.size() - 1).getStartupQuestionId();
+
+        return new CursorResult(questions, hasNext(startupId, lastIdOfList), lastIdOfList);
+    }
+
+    private List<StartupQuestionResDto> getQuestions_PUBLIC(Long startupId, Long cursorId, Pageable page) {
+        return cursorId == null ?
+                this.startupQuestionRepository.findQuestionListDtoPage(startupId, page) :
+                this.startupQuestionRepository.findQuestionListDtoLessPage(startupId, cursorId, page);
     }
 
     private Boolean hasNext(Long startupId, Long cursorId) {

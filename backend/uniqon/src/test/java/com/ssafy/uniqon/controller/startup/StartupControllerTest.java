@@ -85,7 +85,6 @@ class StartupControllerTest extends RestDocsTestSupport {
 
         mockMvc.perform(
                         get("/api/invest/{startupId}", 1L)
-                                .header("Authorization", "Bearer " + accessToken)
                                 .contentType(MediaType.APPLICATION_JSON)
                 )
                 .andExpect(status().isOk())
@@ -163,13 +162,13 @@ class StartupControllerTest extends RestDocsTestSupport {
                                         partWithName("startupRequestDto").description("스타트업 등록 요청 폼")
                                 ),
                                 requestPartFields("startupRequestDto",
-                                        fieldWithPath("dueDate").description("dueDate").attributes(field("constraints", "길이 10 이하")),
+                                        fieldWithPath("dueDate").description("투자 마감 기한").attributes(field("constraints", "길이 10 이하")),
                                         fieldWithPath("discordUrl").description("discordUrl").attributes(field("constraints", "길이 10 이하")),
                                         fieldWithPath("description").description("description").attributes(field("constraints", "길이 10 이하")),
                                         fieldWithPath("title").description("title").attributes(field("constraints", "길이 10 이하")),
-                                        fieldWithPath("nftTargetCount").description("nftTargetCount").attributes(field("constraints", "길이 10 이하")),
-                                        fieldWithPath("nftPrice").description("nftPrice").attributes(field("constraints", "길이 10 이하")),
-                                        fieldWithPath("nftDescription").description("nftDescription").attributes(field("constraints", "길이 10 이하"))
+                                        fieldWithPath("nftTargetCount").description("목표 발행 개수").attributes(field("constraints", "길이 10 이하")),
+                                        fieldWithPath("nftPrice").description("NFT 1개당 가격").attributes(field("constraints", "길이 10 이하")),
+                                        fieldWithPath("nftDescription").description("NFT 간단한 설명").attributes(field("constraints", "길이 10 이하"))
                                 )
 //                                responseFields(
 //                                        fieldWithPath("status").description("status"),
@@ -221,7 +220,6 @@ class StartupControllerTest extends RestDocsTestSupport {
 
         mockMvc.perform(
                         get("/api/invest?size=10&page=0&startupName=startupName&title=title")
-                                .header("Authorization", "Bearer " + accessToken)
                                 .contentType(MediaType.APPLICATION_JSON)
                 ).andExpect(status().isOk())
                 .andDo(restDocs.document(

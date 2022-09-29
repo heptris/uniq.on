@@ -84,7 +84,7 @@ class MemberControllerTest extends RestDocsTestSupport {
                                         partWithName("memberUpdateDto").description("회원 프로필 수정 DTO")
                                 ),
                                 requestPartFields("memberUpdateDto",
-                                        fieldWithPath("nickName").description("nickname").optional().attributes(field("constraints", "길이 10 이하"))
+                                        fieldWithPath("nickName").description("nickname").optional().attributes(field("constraints", "닉네임은 3~30자여야 합니다."))
                                 )
                         ));
     }

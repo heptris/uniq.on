@@ -31,7 +31,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
 
     @Bean
-    PasswordEncoder passwordEncoder(){
+    PasswordEncoder passwordEncoder() {
         return new NoPasswordEncoder();
     }
 
@@ -66,9 +66,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // 로그인, 회원가입 API 는 토큰이 없는 상태에서 요청이 들어오기 때문에 permitAll 설정
                 .and()
                 .authorizeRequests()
-                .antMatchers("/api/member/**", "/api/invest/regist", "/api/invest/{startupId}/favorite", "/api/startup/**","/api/mypage/**","/api/alarm/**")
+                .antMatchers( "/api/invest/question/{startupId}/page"
+                ,"/api/invest", "/api/invest/{startupId}").permitAll()
+                .antMatchers("/api/member/**", "/api/invest/**",
+                        "/api/mypage/**", "/api/alarm/**")
                 .authenticated()
-                .antMatchers("/**").permitAll()
 
                 // JwtFilter 를 addFilterBefore 로 등록했던 JwtSecurityConfig 클래스를 적용
                 .and()

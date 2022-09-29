@@ -37,12 +37,19 @@ public class StartupQuestionController {
     @ApiOperation(value = "스타트업 question 페이징 조회")
     @GetMapping("/{startupId}/page")
     public ResponseEntity getStartupQuestionPage(@PathVariable Long startupId, Long cursorId, Integer size) {
-        Long memberId = SecurityUtil.getCurrentMemberId();
         if(size == null) size = DEFAULT_SIZE;
-        CursorResult<StartupQuestionResDto> questionCursorResult = startupQuestionService.질문조회페이징(memberId, startupId, cursorId
-                , PageRequest.of(0, size));
-        return new ResponseEntity(new ResponseDto(200, "질문 조회 성공", questionCursorResult),
-                HttpStatus.OK);
+        try {
+            Long memberId = SecurityUtil.getCurrentMemberId();
+            CursorResult<StartupQuestionResDto> questionCursorResult = startupQuestionService.질문조회페이징(memberId, startupId, cursorId
+                    , PageRequest.of(0, size));
+            return new ResponseEntity(new ResponseDto(200, "질문 조회 성공", questionCursorResult),
+                    HttpStatus.OK);
+        } catch (NumberFormatException e) {
+            CursorResult<StartupQuestionResDto> questionCursorResult = startupQuestionService.질문조회페이징_PUBLIC(startupId, cursorId
+                    , PageRequest.of(0, size));
+            return new ResponseEntity(new ResponseDto(200, "질문 조회 성공", questionCursorResult),
+                    HttpStatus.OK);
+        }
     }
 
     @ApiOperation(value = "스타트업 Question 동륵")

@@ -38,6 +38,7 @@ public class Startup extends BaseEntity {
     private String planPaper;
     @Lob
     private String planPaperImg;
+    @Lob
     private String roadMap;
 
     private String title;
@@ -45,6 +46,8 @@ public class Startup extends BaseEntity {
     private String description;
 
     private LocalDateTime dueDate;
+
+    @Lob
     private String nftImage;
 
     private Integer nftTargetCount;
