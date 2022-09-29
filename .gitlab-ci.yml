@@ -16,6 +16,12 @@ cache:
   paths:
     - node_modules/
 
+services:
+  - mysql:latest
+variables:
+  MYSQL_DATABASE: uniqon
+  MYSQL_ROOT_PASSWORD: brc9g5U4PQwC4du
+
 spring-build:
   image: openjdk:8
   stage: spring-build
