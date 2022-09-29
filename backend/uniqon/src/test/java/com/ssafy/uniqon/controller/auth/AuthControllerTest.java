@@ -2,6 +2,7 @@ package com.ssafy.uniqon.controller.auth;
 
 import com.ssafy.uniqon.config.SecurityConfig;
 import com.ssafy.uniqon.controller.RestDocsTestSupport;
+import com.ssafy.uniqon.controller.WithMockCustomUser;
 import com.ssafy.uniqon.controller.alarm.AlarmController;
 import com.ssafy.uniqon.domain.member.MemberType;
 import com.ssafy.uniqon.dto.auth.AuthLoginDto;
@@ -29,12 +30,14 @@ import java.util.Arrays;
 import java.util.List;
 
 import static com.ssafy.uniqon.config.RestDocsConfig.field;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.doThrow;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.BDDMockito.given;
+
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
@@ -144,16 +147,48 @@ class AuthControllerTest extends RestDocsTestSupport {
     @Test
     public void 토큰_재발행() throws Exception {
         TokenRequestDto tokenRequestDto = new TokenRequestDto("accessToken", "refreshToken");
-        TokenDto tokenDto = TokenDto.builder().accessToken("accessToken").refreshToken("refreshToken").grantType("bearer").accessTokenExpiresIn(16124L)
-                .build();
+        TokenDto tokenDto = TokenDto.builder()
+                .accessToken("accessToken").refreshToken("refreshToken").grantType("bearer")
+                .accessTokenExpiresIn(1124L).build();
 
-        given(authService.reissue(tokenRequestDto)).willReturn(tokenDto);
+        given(authService.reissue(any(TokenRequestDto.class))).willReturn(tokenDto);
 
         mockMvc.perform(
                         post("/auth/reissue")
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(objectMapper.writeValueAsString(tokenRequestDto))
                 ).andExpect(status().isOk())
+                .andDo(
+                        restDocs.document(
+                                requestFields(
+                                        fieldWithPath("accessToken").description("accessToken").attributes(
+                                                field("constraints", "")
+                                        ),
+                                        fieldWithPath("refreshToken").description("refreshToken").attributes(
+                                                field("constraints", "")
+                                        )
+                                )
+                        )
+                );
+    }
+
+    @DisplayName(value = "토큰 재발행 실패")
+    @Test
+    public void 토큰_재발행_실패() throws Exception {
+        TokenRequestDto tokenRequestDto = new TokenRequestDto("accessToken", "refreshToken");
+        TokenDto tokenDto = TokenDto.builder()
+                .accessToken("accessToken").refreshToken("refreshToken").grantType("bearer")
+                .accessTokenExpiresIn(1124L).build();
+
+        given(authService.reissue(any(TokenRequestDto.class))).willThrow(
+                new CustomException(ErrorCode.INVALID_REFRESH_TOKEN)
+        );
+
+        mockMvc.perform(
+                        post("/auth/reissue")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(objectMapper.writeValueAsString(tokenRequestDto))
+                ).andExpect(status().is4xxClientError())
                 .andDo(
                         restDocs.document(
                                 requestFields(

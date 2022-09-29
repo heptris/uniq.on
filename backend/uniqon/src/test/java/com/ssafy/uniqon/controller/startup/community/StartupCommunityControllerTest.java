@@ -84,10 +84,10 @@ class StartupCommunityControllerTest extends RestDocsTestSupport {
                         restDocs.document(
                                 pathParameters(parameterWithName("startupId").description("startupID")),
                                 requestFields(
-                                        fieldWithPath("title").description("title").type(JsonFieldType.STRING).attributes(field(
+                                        fieldWithPath("title").description("커뮤니티 글 제목").type(JsonFieldType.STRING).attributes(field(
                                                 "constraints", "길이 100 이하"
                                         )),
-                                        fieldWithPath("content").description("content").type(JsonFieldType.STRING).attributes(field(
+                                        fieldWithPath("content").description("커뮤니티 글 내용").type(JsonFieldType.STRING).attributes(field(
                                                 "constraints", "길이 100 이하"
                                         ))
                                 )
@@ -111,10 +111,10 @@ class StartupCommunityControllerTest extends RestDocsTestSupport {
                                 pathParameters(parameterWithName("startupId").description("startupID"),
                                         parameterWithName("communityId").description("communityID")),
                                 requestFields(
-                                        fieldWithPath("title").description("title").type(JsonFieldType.STRING).attributes(field(
+                                        fieldWithPath("title").description("커뮤니티 글 제목").type(JsonFieldType.STRING).attributes(field(
                                                 "constraints", "길이 100 이하"
                                         )),
-                                        fieldWithPath("content").description("content").type(JsonFieldType.STRING).attributes(field(
+                                        fieldWithPath("content").description("커뮤니티 글 내용").type(JsonFieldType.STRING).attributes(field(
                                                 "constraints", "길이 100 이하"
                                         ))
                                 )

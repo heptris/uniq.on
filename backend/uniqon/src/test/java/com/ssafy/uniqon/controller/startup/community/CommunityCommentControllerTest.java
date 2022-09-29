@@ -54,10 +54,11 @@ class CommunityCommentControllerTest extends RestDocsTestSupport {
                         restDocs.document(
                                 pathParameters(parameterWithName("communityId").description("communityID")),
                                 requestFields(
-                                        fieldWithPath("parentId").description("Parent ID").attributes(
-                                                field("constraints", "길이 100 이하")
+                                        fieldWithPath("parentId").description("대댓글일 경우 이전 댓글 communityId" +
+                                                "대댓글이 아닐 경우 null").attributes(
+                                                field("constraints", "")
                                         ),
-                                        fieldWithPath("content").description("content").attributes(
+                                        fieldWithPath("content").description("커뮤니티 댓글 내용").attributes(
                                                 field("constraints", "길이 100 이하")
                                         )
                                 )
@@ -81,7 +82,7 @@ class CommunityCommentControllerTest extends RestDocsTestSupport {
                                         parameterWithName("commentId").description("commentId")
                                 ),
                                 requestFields(
-                                        fieldWithPath("content").description("content").attributes(
+                                        fieldWithPath("content").description("커뮤니티 댓글 내용").attributes(
                                                 field("constraints", "길이 100 이하")
                                         ).optional()
                                 )

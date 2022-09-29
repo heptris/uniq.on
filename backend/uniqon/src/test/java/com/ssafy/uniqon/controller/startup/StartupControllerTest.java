@@ -162,13 +162,13 @@ class StartupControllerTest extends RestDocsTestSupport {
                                         partWithName("startupRequestDto").description("스타트업 등록 요청 폼")
                                 ),
                                 requestPartFields("startupRequestDto",
-                                        fieldWithPath("dueDate").description("투자 마감 기한").attributes(field("constraints", "길이 10 이하")),
-                                        fieldWithPath("discordUrl").description("discordUrl").attributes(field("constraints", "길이 10 이하")),
-                                        fieldWithPath("description").description("description").attributes(field("constraints", "길이 10 이하")),
-                                        fieldWithPath("title").description("title").attributes(field("constraints", "길이 10 이하")),
-                                        fieldWithPath("nftTargetCount").description("목표 발행 개수").attributes(field("constraints", "길이 10 이하")),
-                                        fieldWithPath("nftPrice").description("NFT 1개당 가격").attributes(field("constraints", "길이 10 이하")),
-                                        fieldWithPath("nftDescription").description("NFT 간단한 설명").attributes(field("constraints", "길이 10 이하"))
+                                        fieldWithPath("dueDate").description("투자 마감 기한").attributes(field("constraints", "yyyy-MM-dd HH:MM")),
+                                        fieldWithPath("discordUrl").description("스타트업 디스코드 주소").attributes(field("constraints", "")),
+                                        fieldWithPath("description").description("간단한 소개글").attributes(field("constraints", "길이 50자 이하")),
+                                        fieldWithPath("title").description("제목").attributes(field("constraints", "길이 30자 이하")),
+                                        fieldWithPath("nftTargetCount").description("목표 발행 개수").attributes(field("constraints", "")),
+                                        fieldWithPath("nftPrice").description("NFT 1개당 가격").attributes(field("constraints", "")),
+                                        fieldWithPath("nftDescription").description("NFT 간단한 설명").attributes(field("constraints", "길이 50자 이하"))
                                 )
 //                                responseFields(
 //                                        fieldWithPath("status").description("status"),
@@ -196,11 +196,6 @@ class StartupControllerTest extends RestDocsTestSupport {
                                 pathParameters(
                                         parameterWithName("startupId").description("Startup ID")
                                 )
-//                                responseFields( // response 필드 정보 입력
-//                                        fieldWithPath("status").description("status"),
-//                                        fieldWithPath("message").description("message"),
-//                                        fieldWithPath("data").description("data")
-//                                )
                         ));
     }
 
@@ -224,10 +219,10 @@ class StartupControllerTest extends RestDocsTestSupport {
                 ).andExpect(status().isOk())
                 .andDo(restDocs.document(
                         requestParameters(
-                                parameterWithName("title").description("title"),
-                                parameterWithName("startupName").description("startupName"),
-                                parameterWithName("size").description("size"),
-                                parameterWithName("page").description("page")
+                                parameterWithName("title").description("제목"),
+                                parameterWithName("startupName").description("스타트업 이름"),
+                                parameterWithName("size").description("1 페이지당 스타트업 리스트 개수"),
+                                parameterWithName("page").description("Page 번호(0부터 시작)")
                         )
                 ));
     }

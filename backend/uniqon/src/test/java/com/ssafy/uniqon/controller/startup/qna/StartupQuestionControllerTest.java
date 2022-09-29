@@ -140,7 +140,6 @@ class StartupQuestionControllerTest extends RestDocsTestSupport {
 
         mockMvc.perform(
                         get("/api/invest/question/{startupId}/page?cursorId=4&size=3", 1L)
-                                .header("Authorization", "Bearer " + accessToken)
                                 .contentType(MediaType.APPLICATION_JSON)
                 ).andExpect(status().isOk())
                 .andDo(restDocs.document(
@@ -196,7 +195,7 @@ class StartupQuestionControllerTest extends RestDocsTestSupport {
                         restDocs.document(
                                 pathParameters(parameterWithName("startupQuestionId").description("스타트업 question ID")),
                                 requestFields(
-                                        fieldWithPath("question").description("스타트업에 대한 질문").type(JsonFieldType.STRING).attributes(field(
+                                        fieldWithPath("question").description("스타트업에 대한 질문(수정본)").type(JsonFieldType.STRING).attributes(field(
                                                 "constraints", "길이 100 이하"
                                         ))
                                 )
@@ -215,7 +214,7 @@ class StartupQuestionControllerTest extends RestDocsTestSupport {
                 ).andExpect(status().isOk())
                 .andDo(
                         restDocs.document(
-                                pathParameters(parameterWithName("startupQuestionId").description("스타트업 question ID"))
+                                pathParameters(parameterWithName("startupQuestionId").description("startupQuestionID"))
                         )
                 );
     }
