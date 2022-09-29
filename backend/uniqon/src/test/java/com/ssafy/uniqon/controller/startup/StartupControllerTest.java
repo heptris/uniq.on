@@ -211,10 +211,10 @@ class StartupControllerTest extends RestDocsTestSupport {
 
         Pageable pageable = Pageable.ofSize(10).withPage(0);
         StartupSearchCondition condition = new StartupSearchCondition("title", "startupName");
-        StartupResponseListDto startupResponseListDto = new StartupResponseListDto("startupName1", "title1", LocalDateTime.now(),
-                "nftImageUrl1");
-        StartupResponseListDto startupResponseListDto2 = new StartupResponseListDto("startupName2", "title2", LocalDateTime.now(),
-                "nftImageUrl2");
+        StartupResponseListDto startupResponseListDto = new StartupResponseListDto(1L, "startupName1", "title1", LocalDateTime.now().plusDays(2),
+                10, 5, "profileImage");
+        StartupResponseListDto startupResponseListDto2 = new StartupResponseListDto(2L, "startupName2", "title2", LocalDateTime.now().plusDays(2),
+                10, 5, "profileImage");
         List<StartupResponseListDto> startupResponseListDtos = Arrays.asList(startupResponseListDto, startupResponseListDto2);
         PageImpl page = new PageImpl(startupResponseListDtos, pageable, 2);
         given(startupService.startupList(condition, pageable)).willReturn(page);

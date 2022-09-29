@@ -1,0 +1,7 @@
+[[Startup-Invest-API]]
+== 5. Startup Invest API
+
+[[스타트업_투자_예약]]
+=== 5.1. Startup 투자 예약(by 투자자)
+operation::startup-invest-controller-test/투자_예약[snippets='http-request,http-response,path-parameters']
+

@@ -1,11 +1,20 @@
 package com.ssafy.uniqon.service.startup;
 
+import com.ssafy.uniqon.domain.startup.Startup;
+import com.ssafy.uniqon.domain.startup.StartupFavorite;
 import com.ssafy.uniqon.dto.startup.StartupDetailResponseDto;
 import com.ssafy.uniqon.dto.startup.StartupRequestDto;
+import com.ssafy.uniqon.repository.startup.StartupRepository;
+import com.ssafy.uniqon.repository.startup.fav.StartupFavoriteRepository;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.rendering.ImageType;
 import org.apache.pdfbox.rendering.PDFRenderer;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -18,31 +27,39 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.Optional;
 
+import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.BDDMockito.given;
 
-@Rollback(value = false)
-@Transactional
-@SpringBootTest
+@ExtendWith(MockitoExtension.class)
 class StartupServiceTest {
 
-    @Autowired
+    @Mock
+    private StartupRepository startupRepository;
+
+    @Mock
+    private StartupFavoriteRepository startupFavoriteRepository;
+
+    @InjectMocks
     private StartupService startupService;
 
     @Test
-    public void 투자등록() {
-        StartupRequestDto startupRequestDto = StartupRequestDto.builder()
-                .description("스타트업 투자 소개글")
-                .discordUrl("스타트업 test discord url")
-                .dueDate(LocalDateTime.now().plusDays(2))
-                .title("스타트업 test title")
-                .build();
+    public void 투자상세정보() {
+        //given
+        given(startupRepository.findById(1L)).willReturn(Optional.ofNullable(Startup.builder().id(1L).build()));
+        given(startupFavoriteRepository.findByMemberIdAndStartupId(1L, 1L))
+                .willReturn(Optional.of(StartupFavorite.builder().build()));
+
+        //when
+        StartupDetailResponseDto startupDetailResponseDto = startupService.startupDetail(1L, 1L);
+
+        //then
+        assertThat(startupDetailResponseDto.getStartupId()).isEqualTo(1L);
     }
 
-    @Test
-    public void 투자상세정보() {
-        StartupDetailResponseDto startupDetailResponseDto = startupService.startupDetail(2L, 1L);
-        System.out.println(startupDetailResponseDto);
-    }
+
 
 }
