@@ -3,6 +3,7 @@ pragma solidity ^0.8.4;
 
 import "./token/ERC721/extensions/ERC721Enumerable.sol";
 import "./token/ERC20/ERC20.sol";
+import "./SSF.sol";
 
 /**
  * PJT Ⅰ - 과제 2) NFT Creator 구현
@@ -14,17 +15,12 @@ contract MintUniqonToken is ERC721Enumerable{
     mapping(uint256 => string) tokenURIs;
     mapping(uint256 => uint256) public uniqonTokenPrices;
     uint256[] public onSaleUniqonToken;
-    IERC20 public erc20Contract;
-    address payable public startupAddress;
+    SSF public erc20Contract;
     
     event showTokenURI(string indexed tokenURI);
 
     constructor() ERC721("Uniq.on-NFT", "UNFT") {
-        erc20Contract = IERC20(0x0c54E456CE9E4501D2c43C38796ce3F06846C966);
-    }
-
-    function setStartupAddress(address payable _startupAddress) public {
-        startupAddress = _startupAddress;
+        erc20Contract = SSF(0xB39D41Fe05d0cC6271513A47C89aC829f88952bF);
     }
 
     function current() public view returns (uint256) {
@@ -34,10 +30,6 @@ contract MintUniqonToken is ERC721Enumerable{
     function tokenURI(uint256 tokenId) public view override returns (string memory) {
         return tokenURIs[tokenId];
     }
-
-    // function setApprovalForAllSale(address saleFactolyAddress) public {
-    //     ERC721.setApprovalForAll(saleFactolyAddress, true);
-    // }
 
     function setForSaleUniqonToken(uint256 _uniqonTokenId, uint256 _price)
         public
@@ -64,14 +56,13 @@ contract MintUniqonToken is ERC721Enumerable{
         onSaleUniqonToken.push(_uniqonTokenId);
     }
 
+    // NFT Minting
     function create(address to, string memory _tokenURI, uint repeat, uint price) public returns (uint256) {
-        // uint256 tokenId = current() + 1;
-        // tokenURIs[tokenId] = _tokenURI;
-        // _tokenIds = tokenId;
-        // _tokenIds = totalSupply() + 1;
 
+        // 현재 contract에 모든 NFT 전송 권한 넘기기
         setApprovalForAll(address(this), true);
 
+        // 발행 개수 만큼 Minting
         for(uint i=0; i<repeat; i++){
             tokenURIs[_tokenIds+1] = _tokenURI;
             _tokenIds += 1;
@@ -79,8 +70,6 @@ contract MintUniqonToken is ERC721Enumerable{
             setForSaleUniqonToken(_tokenIds, price);
         }
 
-
-        // emit createNFT(_tokenIds+1, to); // block에 저장 + print 기능
         return _tokenIds;
     }
 
@@ -104,52 +93,37 @@ contract MintUniqonToken is ERC721Enumerable{
         return onSaleUniqonToken;
     }
 
-    function getSSFBalance() public view returns (uint256) {
+    function getUniqonTBalance() public view returns (uint256) {
         return erc20Contract.balanceOf(msg.sender);
     }
-
-    function transferSSF(address payable _startupAddress) public payable {
+    function getUniqonTtotalSupply() public view returns (uint256) {
+        return erc20Contract.totalSupply();
+    }
+    function UniqonTApprove() public {
         address sender = msg.sender;
-        uint price = 3;
-        require(erc20Contract.approve(_startupAddress, price), "address fail");
-        require(erc20Contract.approve(sender, price), "msg.sender fail");
-        require(getSSFBalance() > 0, "caller has no money");
-        
-        // address uniqonTokenOwner = ownerOf(1);
-
-        // erc20Contract.transferFrom(msg.sender, address(this), 1);
-        erc20Contract.transfer(_startupAddress, 1);
+        erc20Contract.approve(address(this), erc20Contract.balanceOf(sender));
     }
 
-    function transferSSF2() public payable {
-        address sender = msg.sender;
-        uint price = 3;
-        require(erc20Contract.approve(address(this), price), "address fail");
-        require(erc20Contract.approve(sender, price), "msg.sender fail");
-        require(getSSFBalance() > 0, "caller has no money");
-        // 보내는 사람 != 받는사람
-        // 처음에 msg.sender 저장해놔야함
-        
-        // address uniqonTokenOwner = ownerOf(1);
-
-        erc20Contract.transferFrom(sender, address(this), 1);
-        // erc20Contract.transfer(startupAddress, 1);
-    }
-
-    function purchaseUniqonToken(uint256 _uniqonTokenId) public payable {
+    function purchaseUniqonToken(uint256 _uniqonTokenId) public {
+        address buyer = msg.sender;
         uint256 price = uniqonTokenPrices[_uniqonTokenId];
         address uniqonTokenOwner = ownerOf(_uniqonTokenId);
 
         require(price > 0, "This uniqon token not sale.");
-        require(price <= msg.value, "Caller sent lower than price.");
+        // require(price <= msg.value, "Caller sent lower than price.");
         require(
             uniqonTokenOwner != msg.sender,
             "Caller is uniqon token owner."
         );
 
-        // payable(uniqonTokenOwner).transfer(msg.value);
-        erc20Contract.transferFrom(msg.sender, uniqonTokenOwner, price);
-        IERC721(address(this)).safeTransferFrom(uniqonTokenOwner, msg.sender, _uniqonTokenId);
+
+        require(erc20Contract.approve(address(this), erc20Contract.balanceOf(buyer)), "address fail");
+        require(erc20Contract.approve(buyer, price), "msg.sender fail");
+        require(erc20Contract.allowance(buyer, address(this)) != 0, "buyer did not approve this contract");
+        require(erc20Contract.allowance(buyer, address(this)) >= price, "caller approve less amount of token");
+        require(getUniqonTBalance() > 0, "caller has no money");
+        erc20Contract.transferFrom(buyer, uniqonTokenOwner, price);
+        IERC721(address(this)).safeTransferFrom(uniqonTokenOwner, buyer, _uniqonTokenId);
 
         uniqonTokenPrices[_uniqonTokenId] = 0;
 
