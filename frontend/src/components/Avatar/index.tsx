@@ -24,6 +24,7 @@ function Avatar<T extends ElementType = "div">(
   return (
     <Component
       css={css`
+        position: relative;
         border-radius: 8px;
         width: 5rem;
         height: 5rem;
