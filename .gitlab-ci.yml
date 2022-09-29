@@ -25,7 +25,7 @@ spring-build:
     echo "$value"
     cd backend/uniqon/
     chmod +x gradlew
-    ./gradlew build -x test
+    ./gradlew build 
   artifacts:
     paths:
       - ./backend/uniqon/build/libs/*.jar
