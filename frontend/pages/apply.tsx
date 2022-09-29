@@ -27,7 +27,7 @@ export default function apply() {
   };
 
   //2단계 정보
-  const [nftTargetCount, setNftTargetCount] = useState("1");
+  const [nftTargetCount, setNftTargetCount] = useState("10");
   const [nftPrice, setNftPrice] = useState("");
   const [nftDescription, setNftDescription] = useState("");
   const [nftImageFile, setNftImageFile] = useState(null);
@@ -149,7 +149,7 @@ export default function apply() {
           <SelectInputTitle>토큰 발행 개수</SelectInputTitle>
           <SelectInput
             id="토큰 발행 개수"
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
               setNftTargetCount(e.target.value)
             }
             value={nftTargetCount}

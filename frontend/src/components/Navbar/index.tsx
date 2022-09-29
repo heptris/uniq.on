@@ -94,7 +94,7 @@ function Navbar(
                   css={css`
                     width: 1.5rem;
                     color: ${theme.color.text.main};
-
+                    margin-right: 30px;
                     &:hover {
                       color: ${theme.color.text.hover};
                     }
