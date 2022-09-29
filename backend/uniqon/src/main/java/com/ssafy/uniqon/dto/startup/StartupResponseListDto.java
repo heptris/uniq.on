@@ -19,7 +19,7 @@ public class StartupResponseListDto {
     private String startupName;
     private String title;
 
-    @JsonFormat(pattern = "yyyy-MM-dd HH")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:MM")
     private LocalDateTime dueDate;
 
     private Integer nftTargetCount;

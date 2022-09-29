@@ -37,7 +37,7 @@ spring:
 
 ethereum:
   server:
-    ip: localhost
+    ip: redis
     port: 7545
   contract:
     address: "0xE765ac275D87F4201b0a453617Ed6717aEe5e540"
