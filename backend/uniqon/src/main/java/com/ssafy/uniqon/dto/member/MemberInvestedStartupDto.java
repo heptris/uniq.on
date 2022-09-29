@@ -43,6 +43,5 @@ public class MemberInvestedStartupDto {
 
     private String nftDescription;
 
-
     private InvestStatus investStatus;
 }

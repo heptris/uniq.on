@@ -124,7 +124,7 @@ public class StartupService {
     }
 
     /**
-     * 스타트업 상세정보 조회
+     * 스타트업 상세정보 조회(로그인 상태)
      */
     public StartupDetailResponseDto startupDetail(Long memberId, Long startupId) {
         Startup startup = startupRepository.findById(startupId).orElseThrow(
@@ -140,6 +140,17 @@ public class StartupService {
         return startupDetailResponseDto;
     }
 
+    /**
+     * 스타트업 상세조회(비로그인 상태)
+     */
+    public StartupDetailResponseDto startupDetail(Long startupId) {
+        Startup startup = startupRepository.findById(startupId).orElseThrow(
+                () -> new CustomException(STARTUP_NOT_FOUND)
+        );
+        StartupDetailResponseDto startupDetailResponseDto = new StartupDetailResponseDto(startup);
+        startupDetailResponseDto.setIsFav(Boolean.FALSE);
+        return startupDetailResponseDto;
+    }
     @Transactional
     public void startupFavoriteToggle(Long memberId, Long startupId) {
         Optional<StartupFavorite> startupFavoriteOptional = startupFavoriteRepository.findByMemberIdAndStartupId(memberId, startupId);

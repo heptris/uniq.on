@@ -8,6 +8,8 @@ import com.ssafy.uniqon.dto.auth.AuthLoginDto;
 import com.ssafy.uniqon.dto.member.MemberJoinDto;
 import com.ssafy.uniqon.dto.token.TokenDto;
 import com.ssafy.uniqon.dto.token.TokenRequestDto;
+import com.ssafy.uniqon.exception.ex.CustomException;
+import com.ssafy.uniqon.exception.ex.ErrorCode;
 import com.ssafy.uniqon.service.auth.AuthService;
 import com.ssafy.uniqon.service.member.MemberService;
 import org.junit.jupiter.api.DisplayName;
@@ -27,6 +29,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static com.ssafy.uniqon.config.RestDocsConfig.field;
+import static org.mockito.Mockito.doThrow;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -81,6 +84,41 @@ class AuthControllerTest extends RestDocsTestSupport {
                         )
                 );
 
+    }
+
+    @DisplayName(value = "회원 가입 실패")
+    @Test
+    public void 회원가입_실패() throws Exception {
+        MemberJoinDto memberJoinDto = MemberJoinDto.builder()
+                .walletAddress("0X1234")
+                .email("test@naver.com")
+                .memberType(MemberType.USER)
+                .nickName("nickName")
+                .build();
+
+        doThrow(new CustomException(ErrorCode.ALREADY_SAVED_MEMBER))
+                .when(authService).signup(memberJoinDto);
+
+        mockMvc.perform(
+                        post("/auth/signup")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(objectMapper.writeValueAsString(memberJoinDto))
+                ).andExpect(status().isConflict())
+                .andDo(
+                        restDocs.document(
+                                requestFields(
+                                        fieldWithPath("walletAddress").description("walletAddress")
+                                                .attributes(field("constraints", "길이 100 이하")),
+                                        fieldWithPath("email").description("email")
+                                                .attributes(field("constraints", "길이 100 이하")),
+                                        fieldWithPath("nickName").description("nickName")
+                                                .attributes(field("constraints", "길이 100 이하")),
+                                        fieldWithPath("memberType").description("memberType")
+                                                .attributes(field("constraints", "길이 100 이하"))
+                                )
+
+                        )
+                );
     }
 
     @DisplayName(value = "로그인")
@@ -153,6 +191,25 @@ class AuthControllerTest extends RestDocsTestSupport {
                         get("/auth/{nickname}/check", "nickname")
 
                 ).andExpect(status().isOk())
+                .andDo(
+                        restDocs.document(
+                                pathParameters(parameterWithName("nickname").description("nickname"))
+                        )
+                );
+    }
+
+    @DisplayName(value = "닉네임 중복 검사 실패")
+    @Test
+    public void 닉네임_중복_검사_실패() throws Exception {
+
+        given(memberService.existsByNickname("nickname")).willThrow(
+                new CustomException(ErrorCode.ALREADY_USED_NICKNAME)
+        );
+
+        mockMvc.perform(
+                        get("/auth/{nickname}/check", "nickname")
+
+                ).andExpect(status().isConflict())
                 .andDo(
                         restDocs.document(
                                 pathParameters(parameterWithName("nickname").description("nickname"))

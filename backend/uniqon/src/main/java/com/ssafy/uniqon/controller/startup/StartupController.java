@@ -1,4 +1,5 @@
 package com.ssafy.uniqon.controller.startup;
+
 import com.ssafy.uniqon.dto.response.ResponseDto;
 import com.ssafy.uniqon.dto.startup.StartupDetailResponseDto;
 import com.ssafy.uniqon.dto.startup.StartupRequestDto;
@@ -40,7 +41,7 @@ public class StartupController {
     public ResponseEntity startupList(@RequestParam(required = false) String title,
                                       @RequestParam(required = false) String startupName,
                                       @RequestParam Integer size,
-                                      @RequestParam Integer page){
+                                      @RequestParam Integer page) {
         Pageable pageable = Pageable.ofSize(size).withPage(page);
         StartupSearchCondition condition = new StartupSearchCondition(title, startupName);
         Page<StartupResponseListDto> startupList = startupService.startupList(condition, pageable);
@@ -52,11 +53,18 @@ public class StartupController {
     @ApiOperation(value = "스타트업 상세정보")
     @GetMapping("/{startupId}")
     public ResponseEntity startupDetail(@PathVariable Long startupId) {
-        Long memberId = SecurityUtil.getCurrentMemberId();
-        StartupDetailResponseDto startupDetailResponseDto = startupService.startupDetail(memberId, startupId);
-        return ResponseEntity.status(HttpStatus.OK).body(
-                new ResponseDto(HttpStatus.OK.value(), "스타트업 상세정보", startupDetailResponseDto)
-        );
+        try {
+            Long memberId = SecurityUtil.getCurrentMemberId();
+            StartupDetailResponseDto startupDetailResponseDto = startupService.startupDetail(memberId, startupId);
+            return ResponseEntity.status(HttpStatus.OK).body(
+                    new ResponseDto(HttpStatus.OK.value(), "스타트업 상세정보", startupDetailResponseDto)
+            );
+        } catch (NumberFormatException e) {
+            StartupDetailResponseDto startupDetailResponseDto = startupService.startupDetail(startupId);
+            return ResponseEntity.status(HttpStatus.OK).body(
+                    new ResponseDto(HttpStatus.OK.value(), "스타트업 상세정보", startupDetailResponseDto)
+            );
+        }
     }
 
     /**

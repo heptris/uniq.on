@@ -5,9 +5,7 @@ import com.ssafy.uniqon.controller.RestDocsTestSupport;
 import com.ssafy.uniqon.controller.WithMockCustomUser;
 import com.ssafy.uniqon.controller.auth.AuthController;
 import com.ssafy.uniqon.domain.member.MemberType;
-import com.ssafy.uniqon.dto.member.MemberFavStartupDto;
-import com.ssafy.uniqon.dto.member.MemberProfileDto;
-import com.ssafy.uniqon.dto.member.MemberUpdateDto;
+import com.ssafy.uniqon.dto.member.*;
 import com.ssafy.uniqon.service.member.MemberService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -128,14 +126,14 @@ class MemberControllerTest extends RestDocsTestSupport {
     @Test
     public void 마이페이지_관심_목록() throws Exception {
 
-        MemberFavStartupDto favStartupDto = MemberFavStartupDto.builder().memberId(1L).startupId(1L).
+        MemberFavStartupDto favStartupDto = MemberFavStartupDto.builder().memberId(2L).startupId(1L).
                 startupName("스타트업A").title("title").
                 description("description").nftTargetCount(10).nftReserveCount(5)
                 .nftPrice(new Double(2)).dueDate(LocalDateTime.now().plusDays(2))
                 .planPaper("planPaper").planPaperImg("planPaperImg").roadMap("roadMap")
                 .nftImage("nftImage").isFav(Boolean.TRUE).build();
 
-        MemberFavStartupDto favStartupDto2 = MemberFavStartupDto.builder().memberId(1L).startupId(2L).
+        MemberFavStartupDto favStartupDto2 = MemberFavStartupDto.builder().memberId(3L).startupId(2L).
                 startupName("스타트업B").title("title2").
                 description("description2").nftTargetCount(10).nftReserveCount(5)
                 .nftPrice(new Double(2)).dueDate(LocalDateTime.now().plusDays(2))
@@ -148,6 +146,59 @@ class MemberControllerTest extends RestDocsTestSupport {
 
         mockMvc.perform(
                 get("/api/member/mypage/favstartup")
+                        .header("Authorization", "Bearer " + accessToken)
+                        .contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(status().isOk());
+    }
+
+    @DisplayName(value = "마이페이지(투자자) 내가 투자한 스타트업 목록")
+    @WithMockCustomUser
+    @Test
+    public void 마이페이지_투자자_투자한_스타트업_목록() throws Exception {
+        MemberInvestedStartupDto memberInvestedStartupDto = MemberInvestedStartupDto.builder()
+                .memberId(1L).startupId(1L).startupName("startupName").title("title").description("description")
+                .nftTargetCount(10).nftReserveCount(5).nftPrice(new Double(2)).dueDate(LocalDateTime.now().plusDays(1))
+                .planPaper("planPaper").planPaperImg("planPaperImg").roadMap("roadMap").nftImage("nftImage")
+                .nftDescription("nftDescription").build();
+
+        MemberInvestedStartupDto memberInvestedStartupDto2 = MemberInvestedStartupDto.builder()
+                .memberId(2L).startupId(2L).startupName("startupName").title("title").description("description")
+                .nftTargetCount(10).nftReserveCount(5).nftPrice(new Double(2)).dueDate(LocalDateTime.now().plusDays(1))
+                .planPaper("planPaper").planPaperImg("planPaperImg").roadMap("roadMap").nftImage("nftImage")
+                .nftDescription("nftDescription").build();
+
+        List<MemberInvestedStartupDto> memberInvestedStartupDtoList = Arrays.asList(memberInvestedStartupDto, memberInvestedStartupDto2);
+
+        given(memberService.findInvestedStartup(4L)).willReturn(memberInvestedStartupDtoList);
+
+        mockMvc.perform(
+                get("/api/member/mypage/invest")
+                        .header("Authorization", "Bearer " + accessToken)
+                        .contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(status().isOk());
+
+    }
+
+    @DisplayName(value = "마이페이지(스타트업) 투자 신청 목록")
+    @WithMockCustomUser
+    @Test
+    public void 마이페이지_스타트업_투자_신청_목록() throws Exception {
+        StartupInvestedListDto startupInvestedListDto = StartupInvestedListDto.builder().memberId(1L).startupId(1L).startupName("startupName").title("title")
+                .description("description").nftTargetCount(10).nftReserveCount(5).nftPrice(new Double(2))
+                .dueDate(LocalDateTime.now().plusDays(1)).planPaper("planPaper").planPaperImg("planPaperImg")
+                .roadMap("roadMap").nftImage("nftImage").nftDescription("nftDescription").build();
+
+        StartupInvestedListDto startupInvestedListDto2 = StartupInvestedListDto.builder().memberId(1L).startupId(2L).startupName("startupName").title("title")
+                .description("description").nftTargetCount(10).nftReserveCount(5).nftPrice(new Double(2))
+                .dueDate(LocalDateTime.now().plusDays(1)).planPaper("planPaper").planPaperImg("planPaperImg")
+                .roadMap("roadMap").nftImage("nftImage").nftDescription("nftDescription").build();
+
+        List<StartupInvestedListDto> startupInvestedListDtoList = Arrays.asList(startupInvestedListDto, startupInvestedListDto2);
+
+        given(memberService.findStartupInvestedList(1L)).willReturn(startupInvestedListDtoList);
+
+        mockMvc.perform(
+                get("/api/member/mypage/startup")
                         .header("Authorization", "Bearer " + accessToken)
                         .contentType(MediaType.APPLICATION_JSON)
         ).andExpect(status().isOk());
