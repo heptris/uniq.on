@@ -69,6 +69,7 @@ function Button<T extends ElementType = "button">(
         }
       `}
       ref={ref}
+      type="button"
       {...rest}
     />
   );

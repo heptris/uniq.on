@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 
-import { css } from "@emotion/react";
+import { css, useTheme } from "@emotion/react";
 import styled from "@emotion/styled";
 import {
   faChevronCircleLeft,
@@ -12,6 +12,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import type { CarouselProps } from "@/types/props";
 import { minDesktopWidth, minTabletWidth } from "@/styles/utils";
 import { useInterval } from "@/hooks/index";
+import Text from "@/components/Text";
 
 /**
  *
@@ -20,6 +21,7 @@ import { useInterval } from "@/hooks/index";
  */
 function Carousel(props: CarouselProps) {
   const items = props.items;
+  const theme = useTheme();
 
   const [currentIdx, setCurrentIdx] = useState(0);
   const [style, setStyle] = useState({
@@ -52,7 +54,25 @@ function Carousel(props: CarouselProps) {
       <Slide style={style}>
         {items.map((item, i) => (
           <SlideItem key={i}>
-            <CorporationName>{item.corpName}</CorporationName>
+            <Text
+              as="p"
+              role="corporation-name"
+              css={css`
+                white-space: nowrap;
+                position: absolute;
+                left: 3%;
+                bottom: 10%;
+                padding: 0.3rem 1rem;
+                border-radius: 8px;
+                font-size: 2.5rem;
+                font-weight: 700;
+                z-index: 50;
+                color: ${theme.color.text.main};
+                backdrop-filter: blur(20px);
+              `}
+            >
+              {item.startupName}
+            </Text>
             <Image
               src={item.image}
               layout={"fill"}
@@ -144,18 +164,6 @@ const SlideItem = styled.div`
   @media (${minTabletWidth}) {
     height: 50vh;
   }
-`;
-const CorporationName = styled.p`
-  position: absolute;
-  left: 3%;
-  bottom: 10%;
-  padding: 0.3rem 1rem;
-  border-radius: 8px;
-  font-size: 3rem;
-  font-weight: 700;
-  z-index: 50;
-  color: ${({ theme }) => theme.color.text.main};
-  backdrop-filter: blur(20px);
 `;
 const SlideButton = styled.button`
   width: fit-content;

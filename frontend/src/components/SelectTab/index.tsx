@@ -1,9 +1,11 @@
 import React, { ElementType, forwardRef, Ref, useState } from "react";
-import { useTheme } from "@emotion/react";
+
+import { css, useTheme } from "@emotion/react";
 import styled from "@emotion/styled";
 
 import type { SelectTabProps } from "@/types/props";
 import type { ColorMap } from "@/types/utils";
+import Text from "@/components/Text";
 import { cssConvex } from "@/styles/utils";
 
 /**
@@ -14,7 +16,7 @@ function SelectTab<T extends ElementType = "div">(
   props: SelectTabProps<T>,
   ref: Ref<any>
 ) {
-  const { menus, type = "purple", selectHandler, ...rest } = props;
+  const { menus, type = "purple", onSelectHandler, ...rest } = props;
   const theme = useTheme();
   const colorMap: ColorMap = {
     background: {
@@ -26,7 +28,7 @@ function SelectTab<T extends ElementType = "div">(
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const current = e.target.value;
     setSelect(current);
-    selectHandler(current);
+    onSelectHandler(current);
   };
 
   return (
@@ -41,7 +43,17 @@ function SelectTab<T extends ElementType = "div">(
               onChange={handleChange}
             />
             <Selects>
-              <SelectItem>{menu}</SelectItem>
+              <Text
+                as="p"
+                role="select-item"
+                css={css`
+                  font-size: 1.2rem;
+                  font-weight: 700;
+                  color: ${theme.color.text.main};
+                `}
+              >
+                {menu}
+              </Text>
             </Selects>
           </label>
         ))}
@@ -87,11 +99,6 @@ const Selects = styled.div`
   &:active {
     transform: translateY(5px);
   }
-`;
-const SelectItem = styled.p`
-  font-size: 1.2rem;
-  font-weight: 700;
-  color: ${({ theme }) => theme.color.text.main};
 `;
 const Hr = styled.hr`
   width: 100%;

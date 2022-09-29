@@ -10,33 +10,40 @@ import Card from "@/components/Card";
 import Text from "@/components/Text";
 import Avatar from "@/components/Avatar";
 import ProgressBar from "../ProgressBar";
+import { Startup } from "@/types/api_responses";
 
-type CorporationCardProps = {
-  corpName: string;
-  corpAvatar: string | StaticImageData;
-  title: string;
-  date: string;
-  progress: number;
-};
+type CorporationCardProps =
+  | {
+      progress: number;
+    }
+  | Startup;
 
 /**
- * @props
- * `corpName`: `string`
+ * @params
+ * `startupName`: `string`
  *
- * `corpAvatar`: `string` | `StaticImageData`
+ * `profileImage`: `string` | `StaticImageData`
  *
  * `title`: `string`
  *
  * `date`: `string`
  *
  * `progress`: `number`
- * @return `ReactElement`
+ * @returns `ReactElement`
  */
 function CorporationCard<T extends ElementType = "div">(
   props: Combine<CorporationCardProps, CardProps<T>>,
   ref: Ref<any>
 ) {
-  const { corpName, corpAvatar, title, date, progress, ...rest } = props;
+  const {
+    startupId,
+    startupName,
+    profileImage,
+    title,
+    dueDate,
+    progress,
+    ...rest
+  } = props;
 
   const theme = useTheme();
 
@@ -60,7 +67,7 @@ function CorporationCard<T extends ElementType = "div">(
             font-size: 0.7rem;
           `}
         >
-          {corpName}
+          {startupName}
         </Text>
         <Text
           as="h1"
@@ -74,13 +81,13 @@ function CorporationCard<T extends ElementType = "div">(
         </Text>
         <Text
           as="h3"
-          role="date"
+          role="due-date"
           css={css`
             color: ${theme.color.text.sub};
             font-size: 0.7rem;
           `}
         >
-          {date}
+          {dueDate}
         </Text>
         <Text
           role="status"
@@ -114,7 +121,7 @@ function CorporationCard<T extends ElementType = "div">(
       <Avatar
         style={{ marginRight: "2rem" }}
         role="corp-avatar"
-        image={corpAvatar}
+        image={profileImage}
         outline={false}
       />
     </Card>

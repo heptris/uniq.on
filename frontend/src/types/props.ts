@@ -36,7 +36,9 @@ export type GridProps<T extends ElementType> = OverridableProps<
   GridBaseProps
 >;
 
-export type CardBaseProps = {};
+export type CardBaseProps = {
+  clickable?: boolean;
+};
 export type CardProps<T extends ElementType> = OverridableProps<
   T,
   CardBaseProps
@@ -63,7 +65,7 @@ export type AlertProps<T extends ElementType> = OverridableProps<
 export type SelectTabBaseProps = {
   menus: string[];
   type?: "purple" | "blue";
-  selectHandler(val: string): void;
+  onSelectHandler(val: string): void;
 };
 export type SelectTabProps<T extends ElementType> = CombineElementProps<
   T,
@@ -120,7 +122,7 @@ export type LabelInputProps<T extends ElementType> = OverridableProps<
 >;
 
 export type CarouselItem = {
-  corpName: string;
+  startupName: string;
   image: string | StaticImageData;
 };
 export type CarouselProps = {

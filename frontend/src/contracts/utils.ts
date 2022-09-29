@@ -1,7 +1,11 @@
 import { useEffect, useState } from "react";
 import Web3 from "web3";
 import { Contract } from "web3-eth-contract";
-import { AbiItem } from "web3-utils";
+
+import type { AbiItem } from "web3-utils";
+import type { Maybe } from "@metamask/providers/dist/utils";
+import { useAppDispatch, useAppSelector } from "@/hooks";
+import { _setAccount } from "@/store";
 
 const contracts = {
   useWeb3: () => {
@@ -13,8 +17,8 @@ const contracts = {
 
     const getWeb3 = () => {
       if (!window.ethereum) {
-        alert("Metamask를 설치해주세요!");
-        throw new Error("Metamask is not installed.");
+        alert("MetaMask를 설치해주세요!");
+        throw new Error("MetaMask is not installed.");
       }
 
       setWeb3(new Web3(window.ethereum as any));
@@ -63,31 +67,49 @@ const contracts = {
   },
 
   useAccount: () => {
-    const [account, _setAccount] = useState("");
+    const { walletAddress: account } = useAppSelector((state) => state.auth);
+    const dispatch = useAppDispatch();
 
-    const setAccount = async () => {
+    const connect = async () => {
+      if (!window.ethereum) {
+        alert("MetaMask를 설치해주세요!");
+        throw new Error("MetaMask is not installed.");
+      }
+
+      return await window.ethereum
+        .request({
+          method: "eth_requestAccounts",
+        })
+        .then(handleAccountsChanged)
+        .catch((error) => {
+          console.error(error);
+        });
+    };
+
+    const checkConnection = async () => {
       if (!window.ethereum) {
         alert("Metamask를 설치해주세요!");
         throw new Error("Metamask is not installed.");
       }
-
-      const accounts = await window.ethereum
-        .request({
-          method: "eth_requestAccounts",
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-      if (!(accounts && Array.isArray(accounts))) return;
-
-      _setAccount(accounts[0]);
+      return await window.ethereum
+        .request({ method: "eth_accounts" })
+        .then(handleAccountsChanged)
+        .catch(console.error);
     };
 
-    useEffect(() => {
-      setAccount();
-    }, []);
+    function handleAccountsChanged(response: Maybe<unknown>) {
+      if (!(response && Array.isArray(response))) return;
 
-    return { account, setAccount };
+      // 0이면 지갑 미연결 상태
+      if (response.length === 0) return false;
+      // 지갑 연결되어 잇으면 공개주소를 account에 넣고 연결되어 있음 반환
+      else {
+        dispatch(_setAccount(response[0]));
+        return true;
+      }
+    }
+
+    return { account, connect, checkConnection };
   },
 };
 

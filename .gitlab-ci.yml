@@ -7,8 +7,6 @@
 # Official framework image. Look for the different tagged releases at:
 # https://hub.docker.com/r/library/node/tags/
 stages:
-  - spring-build
-  - spring-dockerize
   - react-test
   - react-dockerize
   - deploy
@@ -32,24 +30,24 @@ stages:
 #     - develop
 #     - feature/backend
 
-spring-dockerize:
-  image: docker:latest
-  stage: spring-dockerize
-  variables:
-    DOCKER_TLS_CERTDIR: ""
-  services:
-    - docker:dind
-  before_script: |
-    cd backend/uniqon
-    echo $BACK_DOCKER_HUB_PW | docker login -u $BACK_DOCKER_HUB_USER --password-stdin
-  script: |
-    docker build -t $BACK_IMAGE_NAME .
-    docker push $BACK_IMAGE_NAME
-  after_script: |
-    docker logout
-  only:
-    - master
-    - develop
+# spring-dockerize:
+#   image: docker:latest
+#   stage: spring-dockerize
+#   variables:
+#     DOCKER_TLS_CERTDIR: ""
+#   services:
+#     - docker:dind
+#   before_script: |
+#     cd backend/uniqon
+#     echo $BACK_DOCKER_HUB_PW | docker login -u $BACK_DOCKER_HUB_USER --password-stdin
+#   script: |
+#     docker build -t $BACK_IMAGE_NAME .
+#     docker push $BACK_IMAGE_NAME
+#   after_script: |
+#     docker logout
+#   only:
+#     - master
+#     - develop
 
 react-test:
   image: node:16.16
@@ -82,6 +80,7 @@ react-dockerize:
   only:
     - master
     - develop
+    - frontend
 
 deploy:
   image: docker:latest
@@ -103,3 +102,4 @@ deploy:
   only:
     - master
     - develop
+    - frontend

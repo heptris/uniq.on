@@ -24,13 +24,13 @@ function Avatar<T extends ElementType = "div">(
   return (
     <Component
       css={css`
+        border-radius: 8px;
         width: 5rem;
         height: 5rem;
-        border-radius: 8px;
         overflow: hidden;
-        outline: ${outline
-          ? `6px solid ${theme.color.border.main}`
-          : `1px solid ${theme.color.border.main}`};
+        box-shadow: ${outline
+          ? `0 0 0 6px ${theme.color.border.main}`
+          : `0 0 0 1px ${theme.color.border.main}`};
         filter: drop-shadow(0 0 10px ${theme.color.background.item});
       `}
       ref={ref}

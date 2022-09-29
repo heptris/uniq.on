@@ -48,7 +48,7 @@ describe("LabelInput", () => {
     const input = screen.getByPlaceholderText(plchldr);
     expect(input).toBeInTheDocument();
     expect(input).toHaveStyle(
-      `border-radius: 4px;
+      `border-radius: 8px;
       `
     );
   });

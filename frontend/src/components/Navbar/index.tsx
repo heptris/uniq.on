@@ -22,6 +22,8 @@ import styled from "@emotion/styled";
 import Link from "next/link";
 import contracts from "@/contracts/utils";
 import Text from "../Text";
+import { useAuth } from "@/hooks";
+import { HEADER_HEIGHT } from "@/constants";
 
 /**
  * @params
@@ -31,17 +33,11 @@ function Navbar(
   { ...props }: ComponentPropsWithoutRef<"header">,
   ref: Ref<any>
 ) {
-  const [isLoggedIn, setIsLogin] = useState(true);
+  const { isLogined } = useAuth();
   const [active, setActive] = useState(false);
-  const toggleHandler = () => {
+  const activeHandler = () => {
     setActive(!active);
   };
-
-  const { account, setAccount } = contracts.useAccount();
-  useEffect(() => {
-    if (!account) setIsLogin(false);
-    else setIsLogin(true);
-  }, [account]);
 
   const theme = useTheme();
 
@@ -50,7 +46,11 @@ function Navbar(
       <HeaderContainer>
         <HeaderIcon>
           <Link href="/">
-            <Text css={LogoText}>
+<<<<<<< frontend/src/components/Navbar/index.tsx
+            <Text css={LogoText} onClick={() => setActive(false)}>
+=======
+          
+>>>>>>> frontend/src/components/Navbar/index.tsx
               <Text
                 css={css`
                   color: ${theme.color.background.main};
@@ -61,7 +61,7 @@ function Navbar(
               .on
             </Text>
           </Link>
-          <LogoImage>
+          <LogoImage onClick={() => setActive(false)}>
             <Image src={logo} alt="logo" width={30} height={40} />
           </LogoImage>
         </HeaderIcon>
@@ -70,22 +70,22 @@ function Navbar(
             className={active ? "main-navigation active" : "main-navigation"}
           >
             <Link href="/list">
-              <Text css={ListTextStyle({ theme })} onClick={toggleHandler}>
+              <Text css={ListTextStyle({ theme })} onClick={activeHandler}>
                 투자리스트
               </Text>
             </Link>
             <Link href="/apply">
-              <Text css={ListTextStyle({ theme })} onClick={toggleHandler}>
+              <Text css={ListTextStyle({ theme })} onClick={activeHandler}>
                 투자신청
               </Text>
             </Link>
             <Link href="/question">
-              <Text css={ListTextStyle({ theme })} onClick={toggleHandler}>
+              <Text css={ListTextStyle({ theme })} onClick={activeHandler}>
                 자주하는질문
               </Text>
             </Link>
           </nav>
-          {isLoggedIn ? (
+          {isLogined ? (
             <HeaderIcon
               css={css`
                 padding-left: 50px;
@@ -93,11 +93,11 @@ function Navbar(
             >
               <Link href="/mypage">
                 <FontAwesomeIcon
+                  onClick={() => setActive(false)}
                   icon={faCircleUser}
                   css={css`
                     width: 1.5rem;
                     color: ${theme.color.text.main};
-                    margin-right: 2rem;
 
                     &:hover {
                       color: ${theme.color.text.hover};
@@ -107,6 +107,7 @@ function Navbar(
               </Link>
               <Link href="/alarm">
                 <FontAwesomeIcon
+                  onClick={() => setActive(false)}
                   icon={faBell}
                   css={css`
                     width: 1.3rem;
@@ -119,6 +120,7 @@ function Navbar(
               </Link>
               <Link href="/alarm">
                 <FontAwesomeIcon
+                  onClick={() => setActive(false)}
                   icon={faCircle}
                   css={css`
                     width: 7px;
@@ -132,6 +134,7 @@ function Navbar(
             <HeaderIcon>
               <Link href="/login">
                 <FontAwesomeIcon
+                  onClick={() => setActive(false)}
                   icon={faWallet}
                   css={css`
                     width: 19px;
@@ -143,7 +146,7 @@ function Navbar(
           )}
           <MoreBtn
             className="more-btn"
-            onClick={toggleHandler}
+            onClick={activeHandler}
             css={css`
               margin-left: 1rem;
             `}
@@ -176,7 +179,7 @@ const HeaderWrapper = styled.header`
   top: 0;
   left: 0;
   width: 100%;
-  height: 80px;
+  height: ${HEADER_HEIGHT};
   padding: 20px 10px;
   z-index: 9960;
   border-bottom: 1px solid ${({ theme }) => theme.color.background.item};

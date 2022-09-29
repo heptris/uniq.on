@@ -10,17 +10,28 @@ import nft1 from "@/assets/nfts/1.png";
 import nft2 from "@/assets/nfts/2.png";
 import nft3 from "@/assets/nfts/3.png";
 
-import type { Member } from "@/types/api_responses";
+import { useNFTModal } from "@/hooks";
+
 import Avatar from "@/components/Avatar";
 import Text from "@/components/Text";
 import Grid from "@/components/Grid";
 import NFTItemCard from "@/components/Card/NFTItemCard";
 import SelectTab from "@/components/SelectTab";
+import Modal from "@/components/Modal";
+import Button from "@/components/Button";
+
 import { minTabletWidth } from "@/styles/utils";
+import { useSelectTab } from "@/hooks";
+import { Member, NFTItem } from "@/types/api_responses";
 
 function MyPage() {
   const theme = useTheme();
-  const { account, setAccount } = contracts.useAccount();
+  const { account } = contracts.useAccount();
+  const { isShowModal, modalContent, handleModalClose, handleModalOpen } =
+    useNFTModal();
+  const menus = ["보유 NFT", "관심목록", "예약내역"];
+  const { selectedMenu, onSelectHandler } = useSelectTab(menus);
+
   const member: Member = {
     id: 1,
     name: "tester",
@@ -30,29 +41,37 @@ function MyPage() {
     email: "test@gmail.com",
     memberType: "USER",
   };
-  const nfts = [
+  const nfts: NFTItem[] = [
     {
+      startupId: 1,
       nftImage: nft1,
       tokenId: 1243,
-      corpName: "test",
+      startupName: "test",
       price: 0.99,
-      progress: 60,
     },
     {
+      startupId: 2,
       nftImage: nft2,
       tokenId: 1243,
-      corpName: "test",
+      startupName: "test",
       price: 0.99,
-      progress: 60,
     },
     {
+      startupId: 3,
       nftImage: nft3,
       tokenId: 1243,
-      corpName: "test",
+      startupName: "test",
       price: 0.99,
-      progress: 60,
     },
   ];
+
+  const handleModalSubmit = () => {
+    // 보유 NFT 목록일 경우
+    // discordUrl로 이동
+    // 예약 목록일 경우
+    // 해당 /list/:companyId로 이동
+    handleModalClose();
+  };
 
   return (
     <>
@@ -104,24 +123,36 @@ function MyPage() {
       </ProfileContainer>
 
       <SelectTab
-        menus={["보유 NFT", "관심목록", "구매내역"]}
+        menus={menus}
+        onSelectHandler={onSelectHandler}
         css={css`
           margin-top: 2rem;
         `}
       />
 
       <Grid column="double">
-        {nfts.map((nft1, i) => (
+        {nfts.map((nft: NFTItem) => (
           <NFTItemCard
-            key={i}
-            nftImage={nft1.nftImage}
-            tokenId={nft1.tokenId}
-            corpName={nft1.corpName}
-            price={nft1.price}
-            progress={nft1.progress}
+            key={nft.startupId}
+            nftImage={nft.nftImage}
+            tokenId={nft.tokenId}
+            startupName={nft.startupName}
+            price={nft.price}
+            onClick={() => handleModalOpen(nft)}
+            clickable={true}
           />
         ))}
       </Grid>
+      <Modal
+        isOpen={isShowModal}
+        onCancel={handleModalClose}
+        onSubmit={handleModalSubmit}
+      >
+        <div>
+          {modalContent?.startupName}
+          <Button onClick={handleModalSubmit}>어디로 이동하는 버튼</Button>
+        </div>
+      </Modal>
     </>
   );
 }

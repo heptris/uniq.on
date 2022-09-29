@@ -13,37 +13,38 @@ export type Member = {
 };
 /** Investment Request */
 export type IR = {
-  id: number;
-  corpName: string;
+  startupId: number;
+  startupName: string;
+  description: string;
   planPaper: string;
   roadmap: string;
   title: string;
   dueDate: string;
-  targetAmount: number;
-  curTotalAmount: number;
+  nftTargetCount: number;
   nftImage: string | StaticImageData;
-  nftTypeCount: number;
-  nftTokenCount: number;
+  nftReserveCount: number;
   nftPrice: number;
-  isClosed: boolean;
-  isAchieved: boolean;
+  nftDescription: string;
+  isFinished: boolean;
+  isGoal: boolean;
   discordUrl: string;
-  enrollStatus: "PENDING" | "ACCEPT" | "REJECT";
-  rejectReason: string;
-  description: string;
-  memberId: number;
+  enrollStatus?: "PENDING" | "ACCEPT" | "REJECT";
+  rejectReason?: string;
+  memberId?: number;
 };
 export type NFTItem = {
-  nftImage: string | StaticImageData;
   tokenId: number;
-  corpName: string;
+  startupId: number;
+  nftImage: string | StaticImageData;
+  startupName: string;
   price: number;
-  progress: number;
 };
-export type Corp = {
-  corpName: string;
-  corpAvatar: string | StaticImageData;
+export type Startup = {
+  startupId: number;
+  startupName: string;
   title: string;
-  date: string;
-  progress: number;
+  dueDate: string;
+  nftTargetCount: number;
+  nftReserveCount: number;
+  profileImage: string | StaticImageData;
 };

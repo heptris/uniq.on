@@ -8,47 +8,59 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import type { Combine } from "@/types/utils";
 import type { CardProps } from "@/types/props";
+import type { NFTItem } from "@/types/api_responses";
 import Card from "@/components/Card";
 import Text from "@/components/Text";
 import ProgressBar from "@/components/ProgressBar";
 
-type NFTItemCardProps = {
-  nftImage: string | StaticImageData;
-  tokenId: number;
-  corpName: string;
-  price?: number;
-  status?: string;
-  progress?: number;
-};
+type NFTItemCardProps =
+  | {
+      progress?: number;
+    }
+  | NFTItem;
 
 /**
- * @props
+ * @params
  * `nftImage`: `string` | `StaticImageData`
  *
  * `tokenId`: `string`
  *
- * `corpName`: `string`
+ * `startupName`: `string`
  *
  * `price`: `number`
  *
  * `status`: `string`
  *
  * `progress`: `number`
- * @return `ReactElement`
+ * @returns `ReactElement`
  */
 function NFTItemCard<T extends ElementType = "div">(
   props: Combine<NFTItemCardProps, CardProps<T>>,
   ref: Ref<any>
 ) {
-  const { nftImage, tokenId, corpName, price, status, progress, ...rest } =
-    props;
+  const {
+    tokenId,
+    startupId,
+    nftImage,
+    startupName,
+    price,
+    progress,
+    ...rest
+  } = props;
 
   const theme = useTheme();
 
   return (
     <Card style={{ height: "fit-content" }} ref={ref} {...rest}>
       <ImageContainer>
-        <Image src={nftImage} layout={"fill"} objectFit={"cover"} />
+        <Image
+          src={nftImage}
+          layout={"fill"}
+          objectFit={"cover"}
+          css={css`
+            z-index: -2;
+          `}
+        />
       </ImageContainer>
       <InfoContainer>
         <Text
@@ -57,7 +69,7 @@ function NFTItemCard<T extends ElementType = "div">(
             font-weight: 600;
           `}
         >
-          {corpName} #{tokenId}
+          {startupName} #{tokenId}
         </Text>
         <Text
           role="corp-name"
@@ -67,7 +79,7 @@ function NFTItemCard<T extends ElementType = "div">(
             margin-bottom: 0.5rem;
           `}
         >
-          {corpName}
+          {startupName}
         </Text>
         <Text
           as="div"
@@ -102,7 +114,7 @@ function NFTItemCard<T extends ElementType = "div">(
             <>
               <ProgressBar
                 css={css`
-                  margin-right: 10px;
+                  margin-right: 5px;
                 `}
                 progress={progress}
                 type={"blue"}
@@ -110,6 +122,7 @@ function NFTItemCard<T extends ElementType = "div">(
               <Text
                 css={css`
                   font-size: 0.7rem;
+                  font-weight: 600;
                 `}
               >
                 {progress}%
