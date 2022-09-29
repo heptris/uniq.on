@@ -16,7 +16,7 @@ export type IR = {
   startupId: number;
   startupName: string;
   description: string;
-  planPaper: string;
+  planPaperImg: string;
   roadmap: string;
   title: string;
   dueDate: string;
