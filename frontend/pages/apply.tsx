@@ -1,3 +1,4 @@
+import axios from "axios";
 import Text from "@/components/Text";
 import { css, useTheme } from "@emotion/react";
 import styled from "@emotion/styled";
@@ -8,10 +9,13 @@ import CircleBar from "@/components/CircleBar";
 import { uniqonThemes } from "@/styles/theme";
 import FileUpload from "@/components/FileUpload";
 import { useRouter } from "next/router";
+import { useAlert } from "@/hooks";
+import { ENDPOINT_API } from "@/api/endpoints";
 
 export default function apply() {
   const theme = useTheme();
   const router = useRouter();
+  const { handleAlertOpen } = useAlert();
   const [current, setCurrent] = useState(1);
 
   //1단계 정보
@@ -23,17 +27,28 @@ export default function apply() {
   const [roadMapFile, setRoadMapFile] = useState(null);
 
   const onFirstNextHandler = () => {
-    setCurrent(current + 1);
+    title &&
+    dueDate &&
+    description &&
+    discordUrl &&
+    businessPlanFile &&
+    roadMapFile
+      ? setCurrent(current + 1)
+      : handleAlertOpen(2000, "모든 칸을 채워주세요.", false);
   };
 
+  const today = new Date().toISOString().slice(0, 10);
+
   //2단계 정보
-  const [nftTargetCount, setNftTargetCount] = useState("10");
-  const [nftPrice, setNftPrice] = useState("");
+  const [nftTargetCount, setNftTargetCount] = useState(10);
+  const [nftPrice, setNftPrice] = useState<Number>();
   const [nftDescription, setNftDescription] = useState("");
   const [nftImageFile, setNftImageFile] = useState(null);
 
   const onSecondNextHandler = () => {
-    setCurrent(current + 1);
+    nftTargetCount && nftPrice && nftDescription && nftImageFile
+      ? setCurrent(current + 1)
+      : handleAlertOpen(2000, "모든 칸을 채워주세요.", false);
   };
 
   //3단계 정보
@@ -41,14 +56,13 @@ export default function apply() {
 
   const onSubmit = () => {
     if (!isChecked) {
-      alert("개인정보 동의를 체크해주세요");
+      handleAlertOpen(2000, "개인정보 동의를 체크해주세요", false);
     } else {
-      alert("신청이 완료되었습니다.");
       setCurrent(1);
       setIsChecked(false);
 
       const formData = new FormData();
-      businessPlanFile && formData.append("business_plan", businessPlanFile);
+      businessPlanFile && formData.append("plan_paper", businessPlanFile);
       nftImageFile && formData.append("nft_image", nftImageFile);
       roadMapFile && formData.append("road_map", roadMapFile);
       const data = {
@@ -64,18 +78,49 @@ export default function apply() {
         "startupRequestDto",
         new Blob([JSON.stringify(data)], { type: "application/json" })
       );
-      // axios
-      //   .post("/api/invest/regist", formData)
+      console.log(data);
+      console.log(businessPlanFile);
+      console.log(nftImageFile);
+      console.log(roadMapFile);
+      formData && console.log(formData);
+      const config = {
+        headers: {
+          "content-type": "multipart/form-data;charset=UTF-8;",
+        },
+      };
+      // axios({
+      //   method: "post",
+      //   url: "api/apply",
+      //   data: formData,
+      //   headers: {
+      //     "Content-Type": "multipart/form-data;charset=UTF-8;",
+      //   },
+      // })
       //   .then((res) => {
       //     console.log(res);
-      //     alert("신청이 성공하였습니다.");
+      //     handleAlertOpen(2000, "투자 신청이 완료되었습니다.", true);
       //   })
       //   .catch((err) => {
       //     console.log(err);
-      //     alert("신청이 실패했습니다.");
+      //     handleAlertOpen(2000, "투자 신청이 실패했습니다.", false);
       //   });
 
-      router.push("/");
+      axios.defaults.headers.common[
+        "Autorization"
+      ] = `eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI5IiwiYXV0aCI6IlVTRVIiLCJleHAiOjE2NjQ1MTkwODN9.Ts4caoKe3rtLORZrJaFXisD-DtGmzLuq3a_y5doZrGz_3eeRrLRM3VJ_NM82HAUu20WmicX3OyuZiOyZeT8_ig`;
+
+      axios
+        .post(`${ENDPOINT_API}/invest/regist`, formData, config)
+        .then((res) => {
+          console.log(res);
+          handleAlertOpen(2000, "투자 신청이 완료되었습니다.", true);
+        })
+        .catch((err) => {
+          console.log(err);
+          handleAlertOpen(2000, "투자 신청이 실패했습니다.", false);
+        });
+
+      // router.push("/");
     }
   };
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -115,8 +160,9 @@ export default function apply() {
             type="date"
             css={LabelInputStyle}
             labelText="투자 마감일"
+            min={today}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              setDueDate(e.target.value)
+              setDueDate(e.target.value + "T23:59:59.999Z")
             }
           />
           <LabelInput
@@ -128,7 +174,7 @@ export default function apply() {
           />
           <FileUpload
             type="pdf"
-            text="사업소개서 및 프로젝트 소개서(파일용량 50MB까지)"
+            text="사업소개서 및 프로젝트 소개서(파일용량 5MB까지)"
             onFileSelectSuccess={(file: any) => setBusinessPlanFile(file)}
             onFileSelectError={({ error }) => alert(error)}
           />
@@ -150,7 +196,7 @@ export default function apply() {
           <SelectInput
             id="토큰 발행 개수"
             onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
-              setNftTargetCount(e.target.value)
+              setNftTargetCount(Number(e.target.value))
             }
             value={nftTargetCount}
           >
@@ -163,7 +209,7 @@ export default function apply() {
             labelText="토큰 개당 가격(SSH)"
             type="number"
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              setNftPrice(e.target.value)
+              setNftPrice(Number(e.target.value))
             }
           />
           <LabelInput
