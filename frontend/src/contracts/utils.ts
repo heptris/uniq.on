@@ -2,12 +2,31 @@ import { useEffect, useState } from "react";
 import Web3 from "web3";
 import { Contract } from "web3-eth-contract";
 
+import { NFTStorage } from "nft.storage";
+
 import type { AbiItem } from "web3-utils";
 import type { Maybe } from "@metamask/providers/dist/utils";
+import type { StoreNFTParams } from "@/types/api_requests";
 import { useAppDispatch, useAppSelector } from "@/hooks";
 import { _setAccount } from "@/store";
 
 const contracts = {
+  APIToken: process.env.NFT_STORAGE_API_TOKEN,
+
+  storeNFT: async (params: StoreNFTParams) => {
+    const { startupId, nftImage, startupName, price } = params;
+    if (!contracts.APIToken || !nftImage) return;
+
+    const description = `${startupId}::${price}`;
+    const nftstorage = new NFTStorage({ token: contracts.APIToken });
+
+    return nftstorage.store({
+      image: nftImage,
+      name: startupName,
+      description,
+    });
+  },
+
   useWeb3: () => {
     const [web3, setWeb3] = useState<Web3>();
     const [mintUniqonNFTContract, setMintUniqonNFTContract] =
@@ -109,6 +128,53 @@ const contracts = {
     }
 
     return { account, connect, checkConnection };
+  },
+
+  useContract: () => {
+    const { account } = contracts.useAccount();
+    const { web3, mintUniqonNFTContract, uniqonTokenContract } =
+      contracts.useWeb3();
+
+    const checkBalance = async () => {
+      if (!mintUniqonNFTContract || !uniqonTokenContract) return;
+      const res = await uniqonTokenContract.methods.balanceOf(account).call();
+      console.log(res);
+    };
+    const buyToken = async (tokenId: number) => {
+      if (!mintUniqonNFTContract || !uniqonTokenContract) return;
+      const res = new Array(3);
+
+      res[0] = await uniqonTokenContract.methods.balanceOf(account).call();
+      res[1] = await uniqonTokenContract.methods
+        .approve("0xb619e5e1dF0E6295346949F4393a7e54a1500B3D", res[0])
+        .send({ from: account });
+      if (!res[0] || !res[1]) {
+        alert("토큰 잔액이 부족합니다.");
+        return;
+      }
+
+      res[2] = await mintUniqonNFTContract.methods
+        .purchaseUniqonToken(tokenId)
+        .send({ from: account });
+      console.log(res);
+    };
+    const mintToken = async ({
+      tokenURI,
+      totalAmount,
+      price,
+    }: {
+      tokenURI: string;
+      totalAmount: number;
+      price: number;
+    }) => {
+      if (!mintUniqonNFTContract || !uniqonTokenContract) return;
+      const res = await mintUniqonNFTContract.methods
+        .create(account, tokenURI, totalAmount, price)
+        .send({ from: account });
+      console.log(res);
+    };
+
+    return { checkBalance, buyToken, mintToken };
   },
 };
 
