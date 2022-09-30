@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 import axios from "axios";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { QUERY_KEYS } from "@/api/query_key_schema";
 
 import { css } from "@emotion/react";
@@ -20,7 +20,6 @@ import SelectTab from "@/components/SelectTab";
 import { useSelectTab } from "@/hooks";
 
 export default function InvestmentList() {
-  const { account } = contracts.useAccount();
   const menus = ["전체 목록", "Top 10"];
   const { selectedMenu, onSelectHandler } = useSelectTab(menus);
 
@@ -38,19 +37,8 @@ export default function InvestmentList() {
       image: nft3,
     },
   ];
-
-  const { isLoading, isError, data } = useQuery(
-    [QUERY_KEYS.INVEST_LIST],
-    async () => {
-      const data: Startup[] = await (
-        await axios.get("/api/invest")
-      ).data.content;
-      return data;
-    }
-  );
-  if (isLoading) return;
-  if (isError) return;
-  const startups = data;
+  const client = useQueryClient();
+  const startups = client.getQueryData<Startup[]>([QUERY_KEYS.INVEST_LIST]);
 
   return (
     <>
@@ -65,7 +53,7 @@ export default function InvestmentList() {
       />
 
       <Grid>
-        {startups.map((startup) => (
+        {startups?.map((startup) => (
           <Link href={`/list/${encodeURIComponent(startup.startupId)}`}>
             <CorporationCard
               key={startup.startupId}
