@@ -13,8 +13,16 @@ import { uniqonThemes } from "@/styles/theme";
 import Layout from "@/components/Layout";
 import { Provider } from "react-redux";
 import store from "@/store";
+import { Suspense } from "react";
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      suspense: true,
+      retry: 0,
+    },
+  },
+});
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -25,9 +33,11 @@ export default function MyApp({ Component, pageProps }: AppProps) {
             <title>uniq.on | NFT를 통한 스타트업 투자 플랫폼</title>
             <link rel="icon" href="/favicon.ico" />
           </Head>
-          <Layout>
-            <Component {...pageProps} />
-          </Layout>
+          <Suspense fallback={<div>App Loading...</div>}>
+            <Layout>
+              <Component {...pageProps} />
+            </Layout>
+          </Suspense>
         </ThemeProvider>
         <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>
