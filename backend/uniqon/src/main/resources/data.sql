@@ -15,6 +15,7 @@ values (now(), now(), "aa@naver.com", "USER", "aaa", "0XA", "", "https://picsum.
        (now(), now(), "test@naver.com", "USER", "test", "0XF", "", "https://picsum.photos/200"),
        (now(), now(), "ahj@naver.com", "USER", "ahj", "0xba919124c708c11fd15a59b150ead9cb75616a56", "", "https://uniqon-bucket.s3.ap-northeast-2.amazonaws.com/member/default/3.jpg");
 
+
 insert into startup (created_date, last_modified_date, description, plan_paper, plan_paper_img
                     , discord_url, enroll_status, due_date, nft_image, nft_reserve_count, is_finished, is_goal, nft_target_count
                     , nft_price, road_map, reject_reason, startup_name, title, member_id, nft_description)

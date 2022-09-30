@@ -5,6 +5,7 @@ import com.ssafy.uniqon.domain.startup.Startup;
 import com.ssafy.uniqon.domain.startup.StartupFavorite;
 import com.ssafy.uniqon.dto.startup.StartupDetailResponseDto;
 import com.ssafy.uniqon.dto.startup.StartupRequestDto;
+import com.ssafy.uniqon.repository.member.MemberRepository;
 import com.ssafy.uniqon.repository.startup.StartupRepository;
 import com.ssafy.uniqon.repository.startup.fav.StartupFavoriteRepository;
 import org.apache.pdfbox.pdmodel.PDDocument;
@@ -18,22 +19,24 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.BDDMockito.given;
 
 @ExtendWith(MockitoExtension.class)
@@ -42,6 +45,8 @@ class StartupServiceTest {
     @Mock
     private StartupRepository startupRepository;
 
+    @Mock
+    private MemberRepository memberRepository;
     @Mock
     private StartupFavoriteRepository startupFavoriteRepository;
 
@@ -63,6 +68,21 @@ class StartupServiceTest {
         assertThat(startupDetailResponseDto.getStartupId()).isEqualTo(1L);
     }
 
-
-
+//    @Test
+//    public void 투자등록() {
+//        //given
+//        given(startupRepository.save(any(Startup.class))).willReturn(Startup.builder().id(1L).build());
+//        given(memberRepository.findById(anyLong())).willReturn(Optional.of(new Member()));
+//
+//        //when
+//        Long startupId = startupService.investRegist(1L, any(StartupRequestDto.class), any(MultipartFile.class)
+//                , any(MultipartFile.class), any(MultipartFile.class));
+//        //then
+//        assertThat(startupId).isEqualTo(1L);
+//    }
+//
+//    private MockMultipartFile getMockMultipartFile(String fileName, String contentType, String path) throws IOException {
+//        FileInputStream fileInputStream = new FileInputStream(new File(path));
+//        return new MockMultipartFile(fileName, fileName + "." + contentType, contentType, fileInputStream);
+//    }
 }
