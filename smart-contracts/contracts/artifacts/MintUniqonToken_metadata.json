@@ -90,20 +90,26 @@
 				"inputs": [
 					{
 						"indexed": true,
-						"internalType": "string",
+						"internalType": "uint256",
+						"name": "lastTokenId",
+						"type": "uint256"
+					}
+				],
+				"name": "lastTokenId",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "string[]",
 						"name": "tokenURI",
-						"type": "string"
+						"type": "string[]"
 					}
 				],
 				"name": "showTokenURI",
 				"type": "event"
-			},
-			{
-				"inputs": [],
-				"name": "UniqonTApprove",
-				"outputs": [],
-				"stateMutability": "nonpayable",
-				"type": "function"
 			},
 			{
 				"inputs": [
@@ -250,7 +256,7 @@
 						"type": "string[]"
 					}
 				],
-				"stateMutability": "view",
+				"stateMutability": "nonpayable",
 				"type": "function"
 			},
 			{
@@ -701,11 +707,11 @@
 	},
 	"sources": {
 		"contracts/MintUniqonToken.sol": {
-			"keccak256": "0x6828d58a31074f23de2401659b76c324e3f635fa3e2b7522338e22314e0c4ebd",
+			"keccak256": "0x437e0bc8124ef688d6960f00ae3f39c93ff3f7cb14acca7d54a05c305b6e5096",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://ae4dc1a3dc71459bdce7ee3b4e6c7b0f5ebbddba24cc68573969df576a0ba472",
-				"dweb:/ipfs/QmNnbNC7V6xbLGeGiB49mNmQAFD59pywBY1KL9qxTb1yEQ"
+				"bzz-raw://8bb96c5fc378430720b995cad330c7924de3ce6fad0eb206ef1405d36e15c0a5",
+				"dweb:/ipfs/Qmcdh9mxJVqcvncVovfNSbjygzHYBBitz6yB6a8Pzmguk3"
 			]
 		},
 		"contracts/SSF.sol": {

@@ -17,7 +17,8 @@ contract MintUniqonToken is ERC721Enumerable{
     uint256[] public onSaleUniqonToken;
     SSF public erc20Contract;
     
-    event showTokenURI(string indexed tokenURI);
+    event lastTokenId(uint indexed lastTokenId);
+    event showTokenURI(string[] indexed tokenURI);
 
     constructor() ERC721("Uniq.on-NFT", "UNFT") {
         erc20Contract = SSF(0xB39D41Fe05d0cC6271513A47C89aC829f88952bF);
@@ -70,10 +71,11 @@ contract MintUniqonToken is ERC721Enumerable{
             setForSaleUniqonToken(_tokenIds, price);
         }
 
+        emit lastTokenId(_tokenIds);
         return _tokenIds;
     }
 
-    function getOwnedTokens(address owner) public view returns (string[] memory) {
+    function getOwnedTokens(address owner) public returns (string[] memory) {
         uint256 tokenCount = balanceOf(owner);
 
         uint256[] memory tokens = new uint[](tokenCount);
@@ -82,6 +84,7 @@ contract MintUniqonToken is ERC721Enumerable{
             tokens[i] = (tokenOfOwnerByIndex(owner, i));
             tokensURI[i] = tokenURI(tokens[i]);
         }
+        emit showTokenURI(tokensURI); // block에 저장 + print 기능
         return tokensURI;
     }
 
@@ -133,6 +136,5 @@ contract MintUniqonToken is ERC721Enumerable{
             }
         }
         
-        emit showTokenURI(tokenURIs[_uniqonTokenId]); // block에 저장 + print 기능
     }
 }
