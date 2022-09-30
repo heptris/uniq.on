@@ -15,7 +15,7 @@ export default function Video() {
         overflow: hidden;
         @media screen and (max-width: 768px) {
           width: 100%;
-          height: 75vh;
+          height: 150vh;
         }
       `}
     >
@@ -45,7 +45,7 @@ export default function Video() {
         css={css`
           width: 80rem;
           height: 100vh;
-          padding: 17rem 2rem;
+          padding: 12rem 2rem;
           position: absolute;
           z-index: 1;
 
@@ -61,7 +61,7 @@ export default function Video() {
           as="h1"
           css={css`
             color: ${theme.color.text.main};
-            font-size: 6rem;
+            font-size: 5rem;
             line-height: 1.25;
             font-weight: lighter;
             margin-bottom: 3rem;
