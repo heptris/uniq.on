@@ -1,69 +1,71 @@
-import contracts from "@/contracts/utils";
-
 import styled from "@emotion/styled";
 import { css, useTheme } from "@emotion/react";
 import { faWallet } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import img from "@/assets/nfts/animals/1.png";
-import nft1 from "@/assets/nfts/1.png";
-import nft2 from "@/assets/nfts/2.png";
-import nft3 from "@/assets/nfts/3.png";
-
-import { useNFTModal } from "@/hooks";
-
 import Avatar from "@/components/Avatar";
 import Text from "@/components/Text";
-import Grid from "@/components/Grid";
-import NFTItemCard from "@/components/Card/NFTItemCard";
 import SelectTab from "@/components/SelectTab";
 import Modal from "@/components/Modal";
 import Button from "@/components/Button";
 
 import { minTabletWidth } from "@/styles/utils";
-import { useSelectTab } from "@/hooks";
+import { useNFTModal, useSelectTab } from "@/hooks";
 import { Member, NFTItem } from "@/types/api_responses";
+
+import MypageListContainer from "@/container/MypageListContainer";
+import { useQueryClient } from "@tanstack/react-query";
+import { QUERY_KEYS } from "@/api/query_key_schema";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
+
+const {
+  MY_USER_INFO,
+  MY_APPLY_LIST,
+  MY_FAVORITE_LIST,
+  MY_NFT_LIST,
+  MY_RESERVE_LIST,
+} = QUERY_KEYS;
 
 function MyPage() {
   const theme = useTheme();
-  const { account } = contracts.useAccount();
+  const client = useQueryClient();
+  const router = useRouter();
+
   const { isShowModal, modalContent, handleModalClose, handleModalOpen } =
     useNFTModal();
-  const menus = ["보유 NFT", "관심목록", "예약내역"];
+
+  const [nfts, setNfts] = useState<NFTItem[]>([]);
+
+  const menus = ["보유 NFT", "관심목록", "예약내역", "투자신청내역"];
   const { selectedMenu, onSelectHandler } = useSelectTab(menus);
 
-  const member: Member = {
-    id: 1,
-    name: "tester",
-    profileImage: img,
-    nickname: "Anonymous",
-    walletAddress: account,
-    email: "test@gmail.com",
-    memberType: "USER",
-  };
-  const nfts: NFTItem[] = [
-    {
-      startupId: 1,
-      nftImage: nft1,
-      tokenId: 1243,
-      startupName: "test",
-      price: 0.99,
-    },
-    {
-      startupId: 2,
-      nftImage: nft2,
-      tokenId: 1243,
-      startupName: "test",
-      price: 0.99,
-    },
-    {
-      startupId: 3,
-      nftImage: nft3,
-      tokenId: 1243,
-      startupName: "test",
-      price: 0.99,
-    },
-  ];
+  const member = client.getQueryData<Member>([MY_USER_INFO]);
+  if (!member) {
+    router.push("/");
+    return <Text>Loading...</Text>;
+  }
+
+  useEffect(() => {
+    switch (selectedMenu) {
+      case menus[0]:
+        const nftList = client.getQueryData<NFTItem[]>([MY_NFT_LIST]);
+        nftList && setNfts(nftList);
+        break;
+      case menus[1]:
+        const favList = client.getQueryData<NFTItem[]>([MY_FAVORITE_LIST]);
+        favList && setNfts(favList);
+        break;
+      case menus[2]:
+        const rsrvList = client.getQueryData<NFTItem[]>([MY_RESERVE_LIST]);
+        rsrvList && setNfts(rsrvList);
+        break;
+      case menus[3]:
+        const applyList = client.getQueryData<NFTItem[]>([MY_APPLY_LIST]);
+        applyList && setNfts(applyList);
+        break;
+    }
+  }, [selectedMenu]);
 
   const handleModalSubmit = () => {
     // 보유 NFT 목록일 경우
@@ -130,19 +132,12 @@ function MyPage() {
         `}
       />
 
-      <Grid column="double">
-        {nfts.map((nft: NFTItem) => (
-          <NFTItemCard
-            key={nft.startupId}
-            nftImage={nft.nftImage}
-            tokenId={nft.tokenId}
-            startupName={nft.startupName}
-            price={nft.price}
-            onClick={() => handleModalOpen(nft)}
-            clickable={true}
-          />
-        ))}
-      </Grid>
+      <MypageListContainer
+        handleModalOpen={handleModalOpen}
+        nfts={nfts}
+        mypageListType={"FAVOTIRES"}
+      />
+
       <Modal
         isOpen={isShowModal}
         onCancel={handleModalClose}
