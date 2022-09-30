@@ -11,14 +11,17 @@ import { useAppDispatch, useAppSelector } from "@/hooks";
 import { _setAccount } from "@/store";
 
 const contracts = {
-  APIToken: process.env.NFT_STORAGE_API_TOKEN,
+  data: {
+    APIToken: process.env.NFT_STORAGE_API_TOKEN,
+    "ERC-20": "0xb619e5e1dF0E6295346949F4393a7e54a1500B3D",
+  },
 
   storeNFT: async (params: StoreNFTParams) => {
     const { startupId, nftImage, startupName, price } = params;
-    if (!contracts.APIToken || !nftImage) return;
+    if (!contracts.data.APIToken || !nftImage) return;
 
     const description = `${startupId}::${price}`;
-    const nftstorage = new NFTStorage({ token: contracts.APIToken });
+    const nftstorage = new NFTStorage({ token: contracts.data.APIToken });
 
     return nftstorage.store({
       image: nftImage,
@@ -140,13 +143,14 @@ const contracts = {
       const res = await uniqonTokenContract.methods.balanceOf(account).call();
       console.log(res);
     };
+
     const buyToken = async (tokenId: number) => {
       if (!mintUniqonNFTContract || !uniqonTokenContract) return;
       const res = new Array(3);
 
       res[0] = await uniqonTokenContract.methods.balanceOf(account).call();
       res[1] = await uniqonTokenContract.methods
-        .approve("0xb619e5e1dF0E6295346949F4393a7e54a1500B3D", res[0])
+        .approve(contracts.data["ERC-20"], res[0])
         .send({ from: account });
       if (!res[0] || !res[1]) {
         alert("토큰 잔액이 부족합니다.");
@@ -158,6 +162,7 @@ const contracts = {
         .send({ from: account });
       console.log(res);
     };
+
     const mintToken = async ({
       tokenURI,
       totalAmount,
