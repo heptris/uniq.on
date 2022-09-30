@@ -13,7 +13,8 @@ values (now(), now(), "aa@naver.com", "USER", "aaa", "0XA", "", "https://picsum.
        (now(), now(), "dd@naver.com", "USER", "ddd", "0XD", "", "https://picsum.photos/200"),
        (now(), now(), "ee@naver.com", "USER", "eee", "0XE", "", "https://picsum.photos/200"),
        (now(), now(), "test@naver.com", "USER", "test", "0XF", "", "https://picsum.photos/200"),
-       (now(), now(), "ahj@naver.com", "USER", "ahj", "0xba919124c708c11fd15a59b150ead9cb75616a56", "", "https://uniqon-bucket.s3.ap-northeast-2.amazonaws.com/member/default/3.jpg");
+       (now(), now(), "ahj@naver.com", "USER", "ahj", "0xba919124c708c11fd15a59b150ead9cb75616a56", "", "https://uniqon-bucket.s3.ap-northeast-2.amazonaws.com/member/default/3.jpg"),
+       (now(), now(), "ejshin0213@naver.com", "USER", "신라면", "0x892bef9c95ad82bdf6fb1207eebd3959be7c1c42", "", "https://uniqon-bucket.s3.ap-northeast-2.amazonaws.com/member/default/3.jpg");
 
 
 insert into startup (created_date, last_modified_date, description, plan_paper, plan_paper_img
@@ -67,7 +68,10 @@ values (now(), now(), "INVESTING", 1, 1),
        (now(), now(), "INVESTING", 6, 2),
        (now(), now(), "INVESTED", 7, 1),
        (now(), now(), "INVESTING", 7, 2),
-       (now(), now(), "CANCELED", 7, 3);
+       (now(), now(), "CANCELED", 7, 3),
+       (now(), now(), "INVESTED", 8, 1),
+       (now(), now(), "INVESTING", 8, 2),
+       (now(), now(), "CANCELED", 8, 3);
 --        (now(), now(), "INVESTING", 6, 3);
 
 insert into alarm  (created_date, last_modified_date, content, is_read, member_id)
@@ -86,7 +90,11 @@ values (now(), now(), "예약한 펀딩이 성공했습니다 !!", false, 1),
        (now(), now(), "예약한 펀딩이 실패했습니다 !!", false, 7),
        (now(), now(), "예약한 펀딩이 성공했습니다 !!", false, 7),
        (now(), now(), "SSF를 입금하시겠습니까 ?", true, 7),
-       (now(), now(), "입금이 완료되었습니다 !!", false, 7);
+       (now(), now(), "입금이 완료되었습니다 !!", false, 7),
+       (now(), now(), "예약한 펀딩이 실패했습니다 !!", false, 8),
+       (now(), now(), "예약한 펀딩이 성공했습니다 !!", false, 8),
+       (now(), now(), "SSF를 입금하시겠습니까 ?", true, 8),
+       (now(), now(), "입금이 완료되었습니다 !!", false, 8);
 
 insert into startup_favorite (created_date, last_modified_date, is_fav, member_id, startup_id)
 values (now(), now(), true, 1, 1),
@@ -95,6 +103,10 @@ values (now(), now(), true, 1, 1),
        (now(), now(), true, 6, 2),
        (now(), now(), false, 7, 1),
        (now(), now(), true, 7, 2),
-       (now(), now(), true, 7, 3);
+       (now(), now(), true, 7, 3),
+       (now(), now(), false, 8, 1),
+       (now(), now(), true, 8, 2),
+       (now(), now(), true, 8, 3);
+
 
 
