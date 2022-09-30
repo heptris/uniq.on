@@ -105,10 +105,6 @@ export default function apply() {
       //     handleAlertOpen(2000, "투자 신청이 실패했습니다.", false);
       //   });
 
-      axios.defaults.headers.common[
-        "Autorization"
-      ] = `eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI5IiwiYXV0aCI6IlVTRVIiLCJleHAiOjE2NjQ1MTkwODN9.Ts4caoKe3rtLORZrJaFXisD-DtGmzLuq3a_y5doZrGz_3eeRrLRM3VJ_NM82HAUu20WmicX3OyuZiOyZeT8_ig`;
-
       axios
         .post(`${ENDPOINT_API}/invest/regist`, formData, config)
         .then((res) => {
