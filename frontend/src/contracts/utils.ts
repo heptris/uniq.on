@@ -10,10 +10,9 @@ import { _setAccount } from "@/store";
 const contracts = {
   useWeb3: () => {
     const [web3, setWeb3] = useState<Web3>();
-    const [mintUniqonTokenContract, setMintUniqonTokenContract] =
+    const [mintUniqonNFTContract, setMintUniqonNFTContract] =
       useState<Contract>();
-    const [saleUniqonTokenContract, setSaleUniqonTokenContract] =
-      useState<Contract>();
+    const [uniqonTokenContract, setUniqonTokenContract] = useState<Contract>();
 
     const getWeb3 = () => {
       if (!window.ethereum) {
@@ -28,28 +27,28 @@ const contracts = {
       if (!web3) return;
 
       const mintContractJSON = require("./MintUniqonToken.json");
-      const mintUniqonTokenContractAbi: AbiItem[] = mintContractJSON.abi;
-      const mintUniqonTokenContractAccount: string =
+      const mintUniqonNFTContractAbi: AbiItem[] = mintContractJSON.abi;
+      const mintUniqonNFTContractAccount: string =
         mintContractJSON.networks[networkId].address;
       const contractInstance = new web3.eth.Contract(
-        mintUniqonTokenContractAbi,
-        mintUniqonTokenContractAccount
+        mintUniqonNFTContractAbi,
+        mintUniqonNFTContractAccount
       );
-      setMintUniqonTokenContract(contractInstance);
+      setMintUniqonNFTContract(contractInstance);
     };
 
-    const getSale = (networkId: number) => {
+    const getToken = (networkId: number) => {
       if (!web3) return;
 
-      const saleContractJSON = require("./SaleUniqonToken.json");
-      const saleUniqonTokenContractAbi: AbiItem[] = saleContractJSON.abi;
-      const saleUniqonTokenContractAccount: string =
-        saleContractJSON.networks[networkId].address;
+      const tokenContractJSON = require("./UniqonToken.json");
+      const uniqonTokenContractAbi: AbiItem[] = tokenContractJSON.abi;
+      const uniqonTokenContractAccount: string =
+        tokenContractJSON.networks[networkId].address;
       const contractInstance = new web3.eth.Contract(
-        saleUniqonTokenContractAbi,
-        saleUniqonTokenContractAccount
+        uniqonTokenContractAbi,
+        uniqonTokenContractAccount
       );
-      setSaleUniqonTokenContract(contractInstance);
+      setUniqonTokenContract(contractInstance);
     };
 
     useEffect(() => {
@@ -58,12 +57,12 @@ const contracts = {
         (async () => {
           const networkId: number = await web3.eth.net.getId();
           getMint(networkId);
-          getSale(networkId);
+          getToken(networkId);
         })();
       }
     }, [web3]);
 
-    return { web3, mintUniqonTokenContract, saleUniqonTokenContract };
+    return { web3, mintUniqonNFTContract, uniqonTokenContract };
   },
 
   useAccount: () => {
@@ -102,7 +101,7 @@ const contracts = {
 
       // 0이면 지갑 미연결 상태
       if (response.length === 0) return false;
-      // 지갑 연결되어 잇으면 공개주소를 account에 넣고 연결되어 있음 반환
+      // 지갑 연결되어 있으면 공개주소를 account에 넣고 연결되어 있음 반환
       else {
         dispatch(_setAccount(response[0]));
         return true;
