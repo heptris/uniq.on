@@ -35,7 +35,7 @@ function FileUpload<T extends ElementType = "div">(
   };
 
   return (
-    <FileUploadWrapper ref={ref} {...rest}>
+    <FileUploadWrapper>
       <LabelInput
         type="file"
         css={FileUploadStyle}
@@ -45,6 +45,7 @@ function FileUpload<T extends ElementType = "div">(
         }
         labelText={text}
         onChange={handleFileInput}
+        {...rest}
       />
       {imageSrc && (
         <ImageWrapper>
