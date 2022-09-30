@@ -128,3 +128,5 @@ export type CarouselItem = {
 export type CarouselProps = {
   items: CarouselItem[];
 };
+
+export type MypageListType = "APPLY" | "NFT" | "FAVOTIRES" | "RESERVE";
