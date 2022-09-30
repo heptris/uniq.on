@@ -3049,13 +3049,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/mime@npm:^3.0.1":
-  version: 3.0.1
-  resolution: "@types/mime@npm:3.0.1"
-  checksum: 4040fac73fd0cea2460e29b348c1a6173da747f3a87da0dbce80dd7a9355a3d0e51d6d9a401654f3e5550620e3718b5a899b2ec1debf18424e298a2c605346e7
-  languageName: node
-  linkType: hard
-
 "@types/minimatch@npm:^3.0.4":
   version: 3.0.5
   resolution: "@types/minimatch@npm:3.0.5"
@@ -8726,15 +8719,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mime@npm:^3.0.0":
-  version: 3.0.0
-  resolution: "mime@npm:3.0.0"
-  bin:
-    mime: cli.js
-  checksum: f43f9b7bfa64534e6b05bd6062961681aeb406a5b53673b53b683f27fcc4e739989941836a355eef831f4478923651ecc739f4a5f6e20a76487b432bfd4db928
-  languageName: node
-  linkType: hard
-
 "mimic-fn@npm:^2.1.0":
   version: 2.1.0
   resolution: "mimic-fn@npm:2.1.0"
@@ -10535,7 +10519,6 @@ next@latest:
     "@testing-library/react": 13.2.0
     "@testing-library/user-event": 14.2.0
     "@types/jest": ^29.0.3
-    "@types/mime": ^3.0.1
     "@types/node": ^18.7.17
     "@types/react": 18.0.9
     "@types/react-redux": ^7.1.24
@@ -10545,7 +10528,6 @@ next@latest:
     eslint-config-react-app: ^7.0.1
     jest: 28.1.0
     jest-environment-jsdom: 28.1.0
-    mime: ^3.0.0
     next: latest
     nft.storage: ^7.0.0
     react: ^18.1.0
