@@ -13,7 +13,7 @@ import { _setAccount } from "@/store";
 const contracts = {
   data: {
     APIToken: process.env.NFT_STORAGE_API_TOKEN,
-    "ERC-20": "0xb619e5e1dF0E6295346949F4393a7e54a1500B3D",
+    "ERC-721": "0xb619e5e1dF0E6295346949F4393a7e54a1500B3D",
   },
 
   storeNFT: async (params: StoreNFTParams) => {
@@ -150,7 +150,7 @@ const contracts = {
 
       res[0] = await uniqonTokenContract.methods.balanceOf(account).call();
       res[1] = await uniqonTokenContract.methods
-        .approve(contracts.data["ERC-20"], res[0])
+        .approve(contracts.data["ERC-721"], res[0])
         .send({ from: account });
       if (!res[0] || !res[1]) {
         alert("토큰 잔액이 부족합니다.");
