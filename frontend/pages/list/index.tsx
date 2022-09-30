@@ -54,9 +54,11 @@ export default function InvestmentList() {
 
       <Grid>
         {startups?.map((startup) => (
-          <Link href={`/list/${encodeURIComponent(startup.startupId)}`}>
+          <Link
+            href={`/list/${encodeURIComponent(startup.startupId)}`}
+            key={startup.startupId}
+          >
             <CorporationCard
-              key={startup.startupId}
               startupName={startup.startupName}
               profileImage={startup.profileImage}
               title={startup.title}
