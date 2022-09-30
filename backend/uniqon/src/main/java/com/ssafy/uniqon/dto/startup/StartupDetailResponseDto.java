@@ -16,6 +16,8 @@ import java.time.LocalDateTime;
 public class StartupDetailResponseDto {
     private Long startupId;
     private String startupName;
+
+    private String profileImage;
     private String title;
     private String description;
     private Integer nftTargetCount;
@@ -42,6 +44,7 @@ public class StartupDetailResponseDto {
     public StartupDetailResponseDto(Startup startup) {
         this.startupId = startup.getId();
         this.startupName = startup.getStartupName();
+        this.profileImage = startup.getMember().getProfileImage();
         this.title = startup.getTitle();
         this.description = startup.getDescription();
         this.roadMap = startup.getRoadMap();

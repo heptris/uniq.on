@@ -1,5 +1,6 @@
 package com.ssafy.uniqon.service.startup;
 
+import com.ssafy.uniqon.domain.member.Member;
 import com.ssafy.uniqon.domain.startup.Startup;
 import com.ssafy.uniqon.domain.startup.StartupFavorite;
 import com.ssafy.uniqon.dto.startup.StartupDetailResponseDto;
@@ -32,6 +33,7 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.BDDMockito.given;
 
 @ExtendWith(MockitoExtension.class)
@@ -49,8 +51,9 @@ class StartupServiceTest {
     @Test
     public void 투자상세정보() {
         //given
-        given(startupRepository.findById(1L)).willReturn(Optional.ofNullable(Startup.builder().id(1L).build()));
-        given(startupFavoriteRepository.findByMemberIdAndStartupId(1L, 1L))
+        given(startupRepository.findById(anyLong())).willReturn(Optional.ofNullable(Startup.builder().id(1L)
+                .member(Member.builder().profileImage("profileImage").build()).build()));
+        given(startupFavoriteRepository.findByMemberIdAndStartupId(anyLong(), anyLong()))
                 .willReturn(Optional.of(StartupFavorite.builder().build()));
 
         //when

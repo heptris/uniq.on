@@ -7,6 +7,8 @@ import com.ssafy.uniqon.controller.startup.StartupController;
 import com.ssafy.uniqon.dto.response.CursorResult;
 import com.ssafy.uniqon.dto.startup.StartupDetailResponseDto;
 import com.ssafy.uniqon.dto.startup.qna.*;
+import com.ssafy.uniqon.exception.ex.CustomException;
+import com.ssafy.uniqon.exception.ex.ErrorCode;
 import com.ssafy.uniqon.service.startup.qna.StartupQuestionService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -27,7 +29,9 @@ import java.util.List;
 import static com.ssafy.uniqon.config.RestDocsConfig.field;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.doThrow;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.restdocs.request.RequestDocumentation.*;
@@ -203,6 +207,33 @@ class StartupQuestionControllerTest extends RestDocsTestSupport {
                 );
     }
 
+    @DisplayName(value = "스타트업 question 수정 권한 없을 경우")
+    @WithMockCustomUser
+    @Test
+    public void 스타트업_질문_수정_권한X() throws Exception {
+        StartupQuestionUpdateReqDto questionUpdateReqDto = new StartupQuestionUpdateReqDto("update");
+
+        doThrow(new CustomException(ErrorCode.INVALID_ACCESS_MEMBER)).when(startupQuestionService)
+                        .질문수정(anyLong(), anyLong(), any(StartupQuestionUpdateReqDto.class));
+
+        mockMvc.perform(
+                        put("/api/invest/question/{startupQuestionId}", 1L).
+                                header("Authorization", "Bearer " + accessToken)
+                                .content(objectMapper.writeValueAsString(questionUpdateReqDto))
+                                .contentType(MediaType.APPLICATION_JSON)
+                ).andExpect(status().is4xxClientError())
+                .andDo(
+                        restDocs.document(
+                                pathParameters(parameterWithName("startupQuestionId").description("스타트업 question ID")),
+                                requestFields(
+                                        fieldWithPath("question").description("스타트업에 대한 질문(수정본)").type(JsonFieldType.STRING).attributes(field(
+                                                "constraints", "길이 100 이하"
+                                        ))
+                                )
+                        )
+                );
+    }
+
     @DisplayName(value = "스타트업 question 삭제")
     @WithMockCustomUser
     @Test
@@ -219,4 +250,23 @@ class StartupQuestionControllerTest extends RestDocsTestSupport {
                 );
     }
 
+    @DisplayName(value = "스타트업 question 삭제권한 없을 경우")
+    @WithMockCustomUser
+    @Test
+    public void 스타트업_질문_삭제_권한X() throws Exception {
+
+        doThrow(new CustomException(ErrorCode.INVALID_ACCESS_MEMBER)).when(startupQuestionService)
+                        .질문삭제(anyLong(), anyLong());
+
+        mockMvc.perform(
+                        delete("/api/invest/question/{startupQuestionId}", 1L)
+                                .header("Authorization", "Bearer " + accessToken)
+                                .contentType(MediaType.APPLICATION_JSON)
+                ).andExpect(status().is4xxClientError())
+                .andDo(
+                        restDocs.document(
+                                pathParameters(parameterWithName("startupQuestionId").description("startupQuestionID"))
+                        )
+                );
+    }
 }

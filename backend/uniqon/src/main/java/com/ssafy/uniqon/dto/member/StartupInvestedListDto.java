@@ -18,6 +18,7 @@ public class StartupInvestedListDto {
     private Long memberId;
     private Long startupId;
     private String startupName;
+    private String profileImage;
     private String title;
     private String description;
 

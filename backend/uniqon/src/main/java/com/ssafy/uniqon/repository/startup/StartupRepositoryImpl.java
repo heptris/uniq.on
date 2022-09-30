@@ -40,7 +40,8 @@ public class StartupRepositoryImpl implements StartupRepositoryCustom{
                         startup.dueDate,
                         startup.nftTargetCount,
                         startup.nftReserveCount,
-                        member.profileImage
+                        startup.member.profileImage,
+                        startup.nftImage
                         ))
                 .from(startup)
                 .innerJoin(startup.member, member)

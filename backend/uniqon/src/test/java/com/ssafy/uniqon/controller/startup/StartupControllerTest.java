@@ -12,6 +12,8 @@ import com.ssafy.uniqon.dto.startup.StartupRequestDto;
 import com.ssafy.uniqon.dto.startup.StartupResponseListDto;
 import com.ssafy.uniqon.dto.startup.StartupSearchCondition;
 import com.ssafy.uniqon.dto.startup.community.StartupCommunityResponseListDto;
+import com.ssafy.uniqon.exception.ex.CustomException;
+import com.ssafy.uniqon.exception.ex.ErrorCode;
 import com.ssafy.uniqon.service.startup.StartupService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -33,6 +35,7 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
@@ -40,6 +43,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static com.ssafy.uniqon.config.RestDocsConfig.field;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
 import static org.junit.jupiter.api.Assertions.*;
@@ -68,6 +72,7 @@ class StartupControllerTest extends RestDocsTestSupport {
                 .description("스타트업1 상세 정보 글입니다.")
                 .startupId(1L)
                 .startupName("스타트업1")
+                .profileImage("profileImage")
                 .title("스타트업1 제목")
                 .nftReserveCount(5)
                 .nftTargetCount(10)
@@ -177,13 +182,79 @@ class StartupControllerTest extends RestDocsTestSupport {
 //                                )
                         )
                 );
+    }
+
+    @DisplayName(value = "스타트업 등록 실패(파일 업로드시)")
+    @WithMockCustomUser
+    @Test
+    public void 스타트업_등록_실패_파일업로드시() throws Exception {
+        StartupRequestDto startupRequestDto = StartupRequestDto.builder()
+                .dueDate(LocalDateTime.now().plusDays(3))
+                .discordUrl("discordUrl")
+                .description("description")
+                .title("title")
+                .nftDescription("nft description")
+                .nftTargetCount(10)
+                .nftPrice(new Double(2))
+                .build();
+        String requestDtoJson = objectMapper.writeValueAsString(startupRequestDto);
+        MockMultipartFile request = new MockMultipartFile("startupRequestDto", "jsondata",
+                "application/json", requestDtoJson.getBytes(StandardCharsets.UTF_8));
+
+        MockMultipartFile planPaper = new MockMultipartFile("plan_paper", "business_plan.pdf",
+                "application/pdf", "<<pdf file>>".getBytes(StandardCharsets.UTF_8));
+
+        MockMultipartFile nftImage = new MockMultipartFile("nft_image", "nft_image.jpeg",
+                "image/jpeg", "<<jpeg data>>".getBytes(StandardCharsets.UTF_8));
+
+        MockMultipartFile roadMap = new MockMultipartFile("road_map", "road_map.jpeg",
+                "image/jpeg", "<<jpeg data>>".getBytes(StandardCharsets.UTF_8));
+
+        given(startupService.investRegist(anyLong(), any(StartupRequestDto.class), any(MultipartFile.class)
+                , any(MultipartFile.class), any(MultipartFile.class))).willThrow(
+                new CustomException(ErrorCode.FILE_UPLOAD_ERROR)
+        );
+
+        mockMvc.perform(
+                        multipart("/api/invest/regist")
+                                .file(request)
+                                .file(planPaper)
+                                .file(nftImage)
+                                .file(roadMap)
+                                .header("Authorization", "Bearer " + accessToken)
+                )
+                .andExpect(status().is4xxClientError())
+                .andDo(
+                        restDocs.document(
+                                requestParts(
+                                        partWithName("plan_paper").description("사업계획서 pdf"),
+                                        partWithName("nft_image").description("NFT 이미지"),
+                                        partWithName("road_map").description("스타트업 로드맵"),
+                                        partWithName("startupRequestDto").description("스타트업 등록 요청 폼")
+                                ),
+                                requestPartFields("startupRequestDto",
+                                        fieldWithPath("dueDate").description("투자 마감 기한").attributes(field("constraints", "yyyy-MM-dd HH:MM")),
+                                        fieldWithPath("discordUrl").description("스타트업 디스코드 주소").attributes(field("constraints", "")),
+                                        fieldWithPath("description").description("간단한 소개글").attributes(field("constraints", "길이 50자 이하")),
+                                        fieldWithPath("title").description("제목").attributes(field("constraints", "길이 30자 이하")),
+                                        fieldWithPath("nftTargetCount").description("목표 발행 개수").attributes(field("constraints", "")),
+                                        fieldWithPath("nftPrice").description("NFT 1개당 가격").attributes(field("constraints", "")),
+                                        fieldWithPath("nftDescription").description("NFT 간단한 설명").attributes(field("constraints", "길이 50자 이하"))
+                                )
+//                                responseFields(
+//                                        fieldWithPath("status").description("status"),
+//                                        fieldWithPath("message").description("message"),
+//                                        fieldWithPath("data").description("data")
+//                                )
+                        )
+                );
 
     }
 
-    @DisplayName(value = "스타트업 즐겨찾기 등록")
+    @DisplayName(value = "스타트업 즐겨찾기 등록 / 해제")
     @WithMockCustomUser
     @Test
-    public void 스타트업_즐겨찾기() throws Exception {
+    public void 스타트업_즐겨찾기_등록_해제() throws Exception {
 
         mockMvc.perform(
                         get("/api/invest/{startupId}/favorite", 1L)
@@ -205,10 +276,10 @@ class StartupControllerTest extends RestDocsTestSupport {
 
         Pageable pageable = Pageable.ofSize(10).withPage(0);
         StartupSearchCondition condition = new StartupSearchCondition("title", "startupName");
-        StartupResponseListDto startupResponseListDto = new StartupResponseListDto(1L, "startupName1", "title1", LocalDateTime.now().plusDays(2),
-                10, 5, "profileImage");
+        StartupResponseListDto startupResponseListDto = new StartupResponseListDto(1L, "startupName1", "title1",
+                LocalDateTime.now().plusDays(2), 10, 5, "profileImage", "nftImage");
         StartupResponseListDto startupResponseListDto2 = new StartupResponseListDto(2L, "startupName2", "title2", LocalDateTime.now().plusDays(2),
-                10, 5, "profileImage");
+                10, 5, "profileImage", "nftImage");
         List<StartupResponseListDto> startupResponseListDtos = Arrays.asList(startupResponseListDto, startupResponseListDto2);
         PageImpl page = new PageImpl(startupResponseListDtos, pageable, 2);
         given(startupService.startupList(condition, pageable)).willReturn(page);

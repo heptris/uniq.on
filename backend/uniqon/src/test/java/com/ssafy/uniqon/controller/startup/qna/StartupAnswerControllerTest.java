@@ -7,6 +7,8 @@ import com.ssafy.uniqon.controller.WithMockCustomUser;
 import com.ssafy.uniqon.dto.startup.qna.AnswerRequestDto;
 import com.ssafy.uniqon.dto.startup.qna.AnswerUpdateRequestDto;
 import com.ssafy.uniqon.dto.startup.qna.StartupQuestionUpdateReqDto;
+import com.ssafy.uniqon.exception.ex.CustomException;
+import com.ssafy.uniqon.exception.ex.ErrorCode;
 import com.ssafy.uniqon.service.startup.qna.StartupAnswerService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -18,7 +20,10 @@ import org.springframework.http.MediaType;
 import org.springframework.restdocs.payload.JsonFieldType;
 
 import static com.ssafy.uniqon.config.RestDocsConfig.field;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.doThrow;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
@@ -86,8 +91,35 @@ public class StartupAnswerControllerTest extends RestDocsTestSupport {
                                 )
                         )
                 );
-
     }
+
+    @DisplayName(value = "스타트업 answer 수정 권한 없을 경우")
+    @WithMockCustomUser
+    @Test
+    public void 스타트업_댓글수정_권한_없을_경우() throws Exception {
+        AnswerUpdateRequestDto answerUpdateRequestDto = new AnswerUpdateRequestDto("Answer Update");
+
+        doThrow(new CustomException(ErrorCode.INVALID_ACCESS_MEMBER)).when(answerService)
+                        .답변수정(anyLong(), anyLong(), any(AnswerUpdateRequestDto.class));
+
+        mockMvc.perform(
+                        put("/api/invest/answer/{startupAnswerId}", 1L).
+                                header("Authorization", "Bearer " + accessToken)
+                                .content(objectMapper.writeValueAsString(answerUpdateRequestDto))
+                                .contentType(MediaType.APPLICATION_JSON)
+                ).andExpect(status().is4xxClientError())
+                .andDo(
+                        restDocs.document(
+                                pathParameters(parameterWithName("startupAnswerId").description("스타트업 Answer ID")),
+                                requestFields(
+                                        fieldWithPath("answer").description("질문에 대한 댓글(수정)").type(JsonFieldType.STRING).attributes(field(
+                                                "constraints", "길이 100 이하"
+                                        ))
+                                )
+                        )
+                );
+    }
+
 
     @DisplayName(value = "스타트업 answer 삭제")
     @WithMockCustomUser
@@ -98,6 +130,26 @@ public class StartupAnswerControllerTest extends RestDocsTestSupport {
                                 .header("Authorization", "Bearer " + accessToken)
                                 .contentType(MediaType.APPLICATION_JSON)
                 ).andExpect(status().isOk())
+                .andDo(
+                        restDocs.document(
+                                pathParameters(parameterWithName("startupAnswerId").description("스타트업 answer ID"))
+                        )
+                );
+    }
+
+    @DisplayName(value = "스타트업 answer 삭제 권한 없을 경우")
+    @WithMockCustomUser
+    @Test
+    public void 스타트업_댓글삭제_권한X() throws Exception {
+
+        doThrow(new CustomException(ErrorCode.INVALID_ACCESS_MEMBER)).when(answerService)
+                        .답변삭제(anyLong(), anyLong());
+
+        mockMvc.perform(
+                        delete("/api/invest/answer/{startupAnswerId}", 1L)
+                                .header("Authorization", "Bearer " + accessToken)
+                                .contentType(MediaType.APPLICATION_JSON)
+                ).andExpect(status().is4xxClientError())
                 .andDo(
                         restDocs.document(
                                 pathParameters(parameterWithName("startupAnswerId").description("스타트업 answer ID"))

@@ -27,5 +27,6 @@ public class StartupResponseListDto {
     private Integer nftReserveCount;
 
     private String profileImage;
+    private String nftImage;
 
 }

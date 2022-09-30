@@ -10,6 +10,7 @@ import com.ssafy.uniqon.dto.member.MemberJoinDto;
 import com.ssafy.uniqon.dto.token.TokenDto;
 import com.ssafy.uniqon.dto.token.TokenRequestDto;
 import com.ssafy.uniqon.exception.ex.CustomException;
+import com.ssafy.uniqon.exception.ex.CustomValidationException;
 import com.ssafy.uniqon.exception.ex.ErrorCode;
 import com.ssafy.uniqon.service.auth.AuthService;
 import com.ssafy.uniqon.service.member.MemberService;
@@ -23,10 +24,12 @@ import org.springframework.http.MediaType;
 
 import javax.persistence.SecondaryTable;
 
+import static com.ssafy.uniqon.exception.ex.ErrorCode.MEMBER_WALLET_ADDRESS_NOT_FOUND;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 import static com.ssafy.uniqon.config.RestDocsConfig.field;
@@ -86,9 +89,9 @@ class AuthControllerTest extends RestDocsTestSupport {
 
     }
 
-    @DisplayName(value = "회원 가입 실패")
+    @DisplayName(value = "회원 가입 실패(이미 회원가입돼 있는 경우)")
     @Test
-    public void 회원가입_실패() throws Exception {
+    public void 회원가입_실패_이미_가입되어있는_경우() throws Exception {
         MemberJoinDto memberJoinDto = MemberJoinDto.builder()
                 .walletAddress("0X1234")
                 .email("test@naver.com")
@@ -118,6 +121,38 @@ class AuthControllerTest extends RestDocsTestSupport {
                 );
     }
 
+    @DisplayName(value = "회원 가입 실패")
+    @Test
+    public void 회원가입_실패() throws Exception {
+        MemberJoinDto memberJoinDto = MemberJoinDto.builder()
+                .walletAddress("")
+                .email("test")
+                .nickName("n")
+                .build();
+
+        doThrow(new CustomValidationException("유효성 검사 실패", new HashMap<>()))
+                .when(authService).signup(memberJoinDto);
+
+        mockMvc.perform(
+                        post("/auth/signup")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(objectMapper.writeValueAsString(memberJoinDto))
+                ).andExpect(status().is4xxClientError())
+                .andDo(
+                        restDocs.document(
+                                requestFields(
+                                        fieldWithPath("walletAddress").description("지갑 주소")
+                                                .attributes(field("constraints", "")),
+                                        fieldWithPath("email").description("이메일")
+                                                .attributes(field("constraints", "")),
+                                        fieldWithPath("nickName").description("닉네임")
+                                                .attributes(field("constraints", "닉네임은 3~30자리입니다."))
+                                )
+
+                        )
+                );
+    }
+
     @DisplayName(value = "로그인")
     @Test
     public void 로그인() throws Exception {
@@ -132,6 +167,31 @@ class AuthControllerTest extends RestDocsTestSupport {
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(objectMapper.writeValueAsString(authLoginDto))
                 ).andExpect(status().isOk())
+                .andDo(
+                        restDocs.document(
+                                requestFields(
+                                        fieldWithPath("walletAddress").description("지갑 주소").attributes(
+                                                field("constraints", "")
+                                        )
+                                )
+                        )
+                );
+    }
+
+    @DisplayName(value = "로그인 실패")
+    @Test
+    public void 로그인_실패_잘못된_지갑주소() throws Exception {
+        AuthLoginDto authLoginDto = new AuthLoginDto("0X_Wrong_WALLET_ADDRESS");
+
+        given(authService.metaMasklogin(authLoginDto.getWalletAddress())).willThrow(
+                new CustomException(MEMBER_WALLET_ADDRESS_NOT_FOUND)
+        );
+
+        mockMvc.perform(
+                        post("/auth/login")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(objectMapper.writeValueAsString(authLoginDto))
+                ).andExpect(status().is4xxClientError())
                 .andDo(
                         restDocs.document(
                                 requestFields(

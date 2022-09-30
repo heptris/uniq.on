@@ -6,12 +6,20 @@
 operation::startup-question-controller-test/스타트업_질문_등록[snippets='http-request,http-response,path-parameters,request-fields']
 
 [[스타트업_질문_수정]]
-=== 6.2. Startup 질문 수정
+=== 6.2.1. Startup 질문 수정
 operation::startup-question-controller-test/스타트업_질문_수정[snippets='http-request,http-response,path-parameters,request-fields']
 
+[[스타트업_질문_수정_권한X]]
+=== 6.2.2. Startup 질문 수정 권한 X
+operation::startup-question-controller-test/스타트업_질문_수정_권한x[snippets='http-request,http-response,path-parameters,request-fields']
+
 [[스타트업_질문_삭제]]
-=== 6.3. Startup 질문 삭제
+=== 6.3.1. Startup 질문 삭제
 operation::startup-question-controller-test/스타트업_질문_삭제[snippets='http-request,http-response,path-parameters']
+
+[[스타트업_질문_삭제_권한X]]
+=== 6.3.2. Startup 질문 삭제 권한X
+operation::startup-question-controller-test/스타트업_질문_삭제_권한x[snippets='http-request,http-response,path-parameters']
 
 [[스타트업_질문_조회]]
 === 6.4. Startup 질문 조회(Cursor 페이징)

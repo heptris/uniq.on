@@ -450,11 +450,16 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <ul class="sectlevel1">
 <li><a href="#Auth-API">1. Auth API</a>
 <ul class="sectlevel2">
-<li><a href="#로그인">1. 1. 로그인</a></li>
-<li><a href="#회원가입">1.2. 회원가입</a></li>
-<li><a href="#토큰_재발행">1.3. 토큰 재발행</a></li>
+<li><a href="#로그인">1.1.1. 로그인 성공</a></li>
+<li><a href="#_1_1_2_로그인_실패_잘못된_지갑_주소">1.1.2. 로그인 실패 (잘못된 지갑 주소)</a></li>
+<li><a href="#회원가입">1.2.1. 회원가입</a></li>
+<li><a href="#회원가입_실패_이미가입되어있는경우">1.2.2. 회원가입 실패 (이미 가입되어 있는 경우)</a></li>
+<li><a href="#회원가입_실패_잘못된_요청값">1.2.3 회원가입 실패 (잘못된 요청 값)</a></li>
+<li><a href="#토큰_재발행">1.3.1. 토큰 재발행</a></li>
+<li><a href="#토큰_재발행_실패">1.3.2. 토큰 재발행 실패</a></li>
 <li><a href="#로그아웃">1.4. 로그아웃</a></li>
-<li><a href="#닉네임_중복검사">1.5. 닉네임 중복검사</a></li>
+<li><a href="#닉네임_중복검사">1.5.1. 닉네임 중복검사</a></li>
+<li><a href="#_1_5_2_닉네임_중복검사닉네임_중복일_경우">1.5.2. 닉네임 중복검사(닉네임 중복일 경우)</a></li>
 </ul>
 </li>
 <li><a href="#Member-API">2. Member API</a>
@@ -463,7 +468,9 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#마이페이지_스타트업_투자_신청_목록">2.2 마이페이지 스타트업 투자 신청 목록</a></li>
 <li><a href="#마이페이지_투자자_투자한_스타트업_목록">2.3. 마이페이지 투자자 투자한 스타트업 목록</a></li>
 <li><a href="#회원_프로필_조회">2.4. 회원 프로필 조회</a></li>
-<li><a href="#회원_프로필_수정">2.5. 회원 프로필 수정</a></li>
+<li><a href="#회원_프로필_수정">2.5.1. 회원 프로필 수정</a></li>
+<li><a href="#회원_프로필_수정_실패">2.5.2. 회원 프로필 수정 실패</a></li>
+<li><a href="#회원_프로필_수정_실패_파일업로드시">2.5.3. 회원 프로필 수정 실패(파일업로드 시)</a></li>
 <li><a href="#회원_탈퇴">2.6. 회원 탈퇴</a></li>
 </ul>
 </li>
@@ -471,9 +478,12 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <ul class="sectlevel2">
 <li><a href="#전체_알람_조회">3.1. 전체 알람 조회</a></li>
 <li><a href="#안읽은_알람_조회">3.2. 안읽은 알람 조회</a></li>
-<li><a href="#알람_읽기">3.3. 알람 읽기</a></li>
-<li><a href="#스타트업_NFT_민팅_성공후_알람_읽기">3.4. 스타트업 NFT 민팅 성공 후 알람 읽기</a></li>
-<li><a href="#투자자_NFT_구매_성공후_알람_읽기">3.5. 투자자 NFT 구매 성공 후 알람 읽기</a></li>
+<li><a href="#알람_읽기">3.3.1. 알람 읽기</a></li>
+<li><a href="#알람_읽기_실패">3.3.2. 알람 읽기 실패</a></li>
+<li><a href="#스타트업_NFT_민팅_성공후_알람_읽기">3.4.1. 스타트업 NFT 민팅 성공 후 알람 읽기</a></li>
+<li><a href="#스타트업_NFT_민팅_성공후_알람_읽기_실패">3.4.2. 스타트업 NFT 민팅 성공 후 알람 읽기 실패</a></li>
+<li><a href="#투자자_NFT_구매_성공후_알람_읽기">3.5.1. 투자자 NFT 구매 성공 후 알람 읽기</a></li>
+<li><a href="#투자자_NFT_구매_성공후_알람_읽기_실패">3.5.2. 투자자 NFT 구매 성공 후 알람 읽기 실패</a></li>
 </ul>
 </li>
 <li><a href="#Startup-API">4. Startup API</a>
@@ -492,16 +502,20 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#Startup-Question-API">6. Startup Question API</a>
 <ul class="sectlevel2">
 <li><a href="#스타트업_질문_등록">6.1. Startup 질문 등록</a></li>
-<li><a href="#스타트업_질문_수정">6.2. Startup 질문 수정</a></li>
-<li><a href="#스타트업_질문_삭제">6.3. Startup 질문 삭제</a></li>
+<li><a href="#스타트업_질문_수정">6.2.1. Startup 질문 수정</a></li>
+<li><a href="#스타트업_질문_수정_권한X">6.2.2. Startup 질문 수정 권한 X</a></li>
+<li><a href="#스타트업_질문_삭제">6.3.1. Startup 질문 삭제</a></li>
+<li><a href="#스타트업_질문_삭제_권한X">6.3.2. Startup 질문 삭제 권한X</a></li>
 <li><a href="#스타트업_질문_조회">6.4. Startup 질문 조회(Cursor 페이징)</a></li>
 </ul>
 </li>
 <li><a href="#Startup-Answer-API">7. Startup Answer API</a>
 <ul class="sectlevel2">
 <li><a href="#스타트업_댓글_등록">7.1. Startup 댓글 등록</a></li>
-<li><a href="#스타트업_댓글_수정">7.2. Startup 댓글 수정</a></li>
-<li><a href="#스타트업_댓글_삭제">7.3. Startup 댓글 삭제</a></li>
+<li><a href="#스타트업_댓글_수정">7.2.1. Startup 댓글 수정</a></li>
+<li><a href="#스타트업_댓글_수정_권한X">7.2.2. Startup 댓글 수정 권한X</a></li>
+<li><a href="#스타트업_댓글_삭제">7.3.1. Startup 댓글 삭제</a></li>
+<li><a href="#스타트업_댓글_삭제_권한X">7.3.2. Startup 댓글 삭제 권한X</a></li>
 </ul>
 </li>
 <li><a href="#Startup-Community-API">8. Startup Community API</a>
@@ -528,7 +542,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h2 id="Auth-API"><a class="link" href="#Auth-API">1. Auth API</a></h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="로그인"><a class="link" href="#로그인">1. 1. 로그인</a></h3>
+<h3 id="로그인"><a class="link" href="#로그인">1.1.1. 로그인 성공</a></h3>
 <div class="sect3">
 <h4 id="로그인_http_request"><a class="link" href="#로그인_http_request">HTTP request</a></h4>
 <div class="listingblock">
@@ -595,7 +609,69 @@ Content-Length: 216
 </div>
 </div>
 <div class="sect2">
-<h3 id="회원가입"><a class="link" href="#회원가입">1.2. 회원가입</a></h3>
+<h3 id="_1_1_2_로그인_실패_잘못된_지갑_주소"><a class="link" href="#_1_1_2_로그인_실패_잘못된_지갑_주소">1.1.2. 로그인 실패 (잘못된 지갑 주소)</a></h3>
+<div class="sect3">
+<h4 id="_1_1_2_로그인_실패_잘못된_지갑_주소_http_request"><a class="link" href="#_1_1_2_로그인_실패_잘못된_지갑_주소_http_request">HTTP request</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /auth/login HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Content-Length: 51
+Host: localhost:8080
+
+{
+  "walletAddress" : "0X_Wrong_WALLET_ADDRESS"
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_1_1_2_로그인_실패_잘못된_지갑_주소_http_response"><a class="link" href="#_1_1_2_로그인_실패_잘못된_지갑_주소_http_response">HTTP response</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 404 Not Found
+Content-Type: application/json;charset=UTF-8
+Content-Length: 101
+
+{
+  "status" : 404,
+  "message" : "존재하지 않는 지갑주소입니다.",
+  "data" : null
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_1_1_2_로그인_실패_잘못된_지갑_주소_request_fields"><a class="link" href="#_1_1_2_로그인_실패_잘못된_지갑_주소_request_fields">Request fields</a></h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">필드명</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">타입</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">필수여부</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">제약조건</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">설명</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>walletAddress</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">지갑 주소</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="회원가입"><a class="link" href="#회원가입">1.2.1. 회원가입</a></h3>
 <div class="sect3">
 <h4 id="회원가입_http_request"><a class="link" href="#회원가입_http_request">HTTP request</a></h4>
 <div class="listingblock">
@@ -673,7 +749,167 @@ Content-Length: 83
 </div>
 </div>
 <div class="sect2">
-<h3 id="토큰_재발행"><a class="link" href="#토큰_재발행">1.3. 토큰 재발행</a></h3>
+<h3 id="회원가입_실패_이미가입되어있는경우"><a class="link" href="#회원가입_실패_이미가입되어있는경우">1.2.2. 회원가입 실패 (이미 가입되어 있는 경우)</a></h3>
+<div class="sect3">
+<h4 id="회원가입_실패_이미가입되어있는경우_http_request"><a class="link" href="#회원가입_실패_이미가입되어있는경우_http_request">HTTP request</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /auth/signup HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Content-Length: 93
+Host: localhost:8080
+
+{
+  "walletAddress" : "0X1234",
+  "nickName" : "nickName",
+  "email" : "test@naver.com"
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="회원가입_실패_이미가입되어있는경우_http_response"><a class="link" href="#회원가입_실패_이미가입되어있는경우_http_response">HTTP response</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 409 Conflict
+Content-Type: application/json;charset=UTF-8
+Content-Length: 102
+
+{
+  "status" : 409,
+  "message" : "이미 가입되어 있는 회원입니다.",
+  "data" : null
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="회원가입_실패_이미가입되어있는경우_request_fields"><a class="link" href="#회원가입_실패_이미가입되어있는경우_request_fields">Request fields</a></h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">필드명</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">타입</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">필수여부</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">제약조건</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">설명</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>walletAddress</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">지갑 주소</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>email</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">이메일</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>nickName</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">닉네임은 3~30자리입니다.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">닉네임</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="회원가입_실패_잘못된_요청값"><a class="link" href="#회원가입_실패_잘못된_요청값">1.2.3 회원가입 실패 (잘못된 요청 값)</a></h3>
+<div class="sect3">
+<h4 id="회원가입_실패_잘못된_요청값_http_request"><a class="link" href="#회원가입_실패_잘못된_요청값_http_request">HTTP request</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /auth/signup HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Content-Length: 70
+Host: localhost:8080
+
+{
+  "walletAddress" : "",
+  "nickName" : "n",
+  "email" : "test"
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="회원가입_실패_잘못된_요청값_http_response"><a class="link" href="#회원가입_실패_잘못된_요청값_http_response">HTTP response</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 400 Bad Request
+Content-Type: application/json;charset=UTF-8
+Content-Length: 265
+
+{
+  "status" : 400,
+  "message" : "유효성 검사 실패",
+  "data" : {
+    "nickName" : "닉네임은 3~30자리수여야 합니다.",
+    "walletAddress" : "지갑 주소를 입력해주세요.",
+    "email" : "must be a well-formed email address"
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="회원가입_실패_잘못된_요청값_request_fields"><a class="link" href="#회원가입_실패_잘못된_요청값_request_fields">Request fields</a></h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">필드명</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">타입</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">필수여부</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">제약조건</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">설명</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>walletAddress</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">지갑 주소</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>email</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">이메일</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>nickName</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">닉네임은 3~30자리입니다.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">닉네임</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="토큰_재발행"><a class="link" href="#토큰_재발행">1.3.1. 토큰 재발행</a></h3>
 <div class="sect3">
 <h4 id="토큰_재발행_http_request"><a class="link" href="#토큰_재발행_http_request">HTTP request</a></h4>
 <div class="listingblock">
@@ -748,6 +984,76 @@ Content-Length: 215
 </div>
 </div>
 <div class="sect2">
+<h3 id="토큰_재발행_실패"><a class="link" href="#토큰_재발행_실패">1.3.2. 토큰 재발행 실패</a></h3>
+<div class="sect3">
+<h4 id="토큰_재발행_실패_http_request"><a class="link" href="#토큰_재발행_실패_http_request">HTTP request</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /auth/reissue HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Content-Length: 73
+Host: localhost:8080
+
+{
+  "accessToken" : "accessToken",
+  "refreshToken" : "refreshToken"
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="토큰_재발행_실패_http_response"><a class="link" href="#토큰_재발행_실패_http_response">HTTP response</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 401 Unauthorized
+Content-Type: application/json;charset=UTF-8
+Content-Length: 102
+
+{
+  "status" : 401,
+  "message" : "유효하지 않은 RefreshToken 입니다.",
+  "data" : null
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="토큰_재발행_실패_request_fields"><a class="link" href="#토큰_재발행_실패_request_fields">Request fields</a></h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">필드명</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">타입</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">필수여부</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">제약조건</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">설명</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>accessToken</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">accessToken</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>refreshToken</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">refreshToken</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect2">
 <h3 id="로그아웃"><a class="link" href="#로그아웃">1.4. 로그아웃</a></h3>
 <div class="sect3">
 <h4 id="로그아웃_http_request"><a class="link" href="#로그아웃_http_request">HTTP request</a></h4>
@@ -777,7 +1083,7 @@ Content-Length: 78
 </div>
 </div>
 <div class="sect2">
-<h3 id="닉네임_중복검사"><a class="link" href="#닉네임_중복검사">1.5. 닉네임 중복검사</a></h3>
+<h3 id="닉네임_중복검사"><a class="link" href="#닉네임_중복검사">1.5.1. 닉네임 중복검사</a></h3>
 <div class="sect3">
 <h4 id="닉네임_중복검사_http_request"><a class="link" href="#닉네임_중복검사_http_request">HTTP request</a></h4>
 <div class="listingblock">
@@ -826,6 +1132,56 @@ Content-Length: 98
 </table>
 </div>
 </div>
+<div class="sect2">
+<h3 id="_1_5_2_닉네임_중복검사닉네임_중복일_경우"><a class="link" href="#_1_5_2_닉네임_중복검사닉네임_중복일_경우">1.5.2. 닉네임 중복검사(닉네임 중복일 경우)</a></h3>
+<div class="sect3">
+<h4 id="_1_5_2_닉네임_중복검사닉네임_중복일_경우_http_request"><a class="link" href="#_1_5_2_닉네임_중복검사닉네임_중복일_경우_http_request">HTTP request</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /auth/nickname/check HTTP/1.1
+Host: localhost:8080</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_1_5_2_닉네임_중복검사닉네임_중복일_경우_http_response"><a class="link" href="#_1_5_2_닉네임_중복검사닉네임_중복일_경우_http_response">HTTP response</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 409 Conflict
+Content-Type: application/json;charset=UTF-8
+Content-Length: 98
+
+{
+  "status" : 409,
+  "message" : "이미 사용중인 닉네임입니다.",
+  "data" : null
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_1_5_2_닉네임_중복검사닉네임_중복일_경우_path_parameters"><a class="link" href="#_1_5_2_닉네임_중복검사닉네임_중복일_경우_path_parameters">Path parameters</a></h4>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 1. /auth/{nickname}/check</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>nickname</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">닉네임</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 </div>
 <div class="sect1">
@@ -850,7 +1206,7 @@ Host: localhost:8080</code></pre>
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
 Content-Type: application/json;charset=UTF-8
-Content-Length: 952
+Content-Length: 1028
 
 {
   "status" : 200,
@@ -859,12 +1215,13 @@ Content-Length: 952
     "memberId" : 2,
     "startupId" : 1,
     "startupName" : "스타트업A",
+    "profileImage" : "profileImage",
     "title" : "title",
     "description" : "description",
     "nftTargetCount" : 10,
     "nftReserveCount" : 5,
     "nftPrice" : 2.0,
-    "dueDate" : "2022-10-01 17",
+    "dueDate" : "2022-10-02 14",
     "planPaper" : "planPaper",
     "planPaperImg" : "planPaperImg",
     "roadMap" : "roadMap",
@@ -875,12 +1232,13 @@ Content-Length: 952
     "memberId" : 3,
     "startupId" : 2,
     "startupName" : "스타트업B",
+    "profileImage" : "profileImage",
     "title" : "title2",
     "description" : "description2",
     "nftTargetCount" : 10,
     "nftReserveCount" : 5,
     "nftPrice" : 2.0,
-    "dueDate" : "2022-10-01 17",
+    "dueDate" : "2022-10-02 14",
     "planPaper" : "planPaper",
     "planPaperImg" : "planPaperImg",
     "roadMap" : "roadMap",
@@ -912,7 +1270,7 @@ Host: localhost:8080</code></pre>
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
 Content-Type: application/json;charset=UTF-8
-Content-Length: 954
+Content-Length: 1030
 
 {
   "status" : 200,
@@ -921,12 +1279,13 @@ Content-Length: 954
     "memberId" : 1,
     "startupId" : 1,
     "startupName" : "startupName",
+    "profileImage" : "profileImage",
     "title" : "title",
     "description" : "description",
     "nftTargetCount" : 10,
     "nftReserveCount" : 5,
     "nftPrice" : 2.0,
-    "dueDate" : "2022-09-30 17",
+    "dueDate" : "2022-10-01 14",
     "planPaper" : "planPaper",
     "planPaperImg" : "planPaperImg",
     "roadMap" : "roadMap",
@@ -936,12 +1295,13 @@ Content-Length: 954
     "memberId" : 1,
     "startupId" : 2,
     "startupName" : "startupName",
+    "profileImage" : "profileImage",
     "title" : "title",
     "description" : "description",
     "nftTargetCount" : 10,
     "nftReserveCount" : 5,
     "nftPrice" : 2.0,
-    "dueDate" : "2022-09-30 17",
+    "dueDate" : "2022-10-01 14",
     "planPaper" : "planPaper",
     "planPaperImg" : "planPaperImg",
     "roadMap" : "roadMap",
@@ -972,7 +1332,7 @@ Host: localhost:8080</code></pre>
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
 Content-Type: application/json;charset=UTF-8
-Content-Length: 1000
+Content-Length: 1066
 
 {
   "status" : 200,
@@ -981,12 +1341,13 @@ Content-Length: 1000
     "memberId" : 1,
     "startupId" : 1,
     "startupName" : "startupName",
+    "profileImage" : null,
     "title" : "title",
     "description" : "description",
     "nftTargetCount" : 10,
     "nftReserveCount" : 5,
     "nftPrice" : 2.0,
-    "dueDate" : "2022-09-30 17",
+    "dueDate" : "2022-10-01 14",
     "planPaper" : "planPaper",
     "planPaperImg" : "planPaperImg",
     "roadMap" : "roadMap",
@@ -997,12 +1358,13 @@ Content-Length: 1000
     "memberId" : 2,
     "startupId" : 2,
     "startupName" : "startupName",
+    "profileImage" : "profileImage",
     "title" : "title",
     "description" : "description",
     "nftTargetCount" : 10,
     "nftReserveCount" : 5,
     "nftPrice" : 2.0,
-    "dueDate" : "2022-09-30 17",
+    "dueDate" : "2022-10-01 14",
     "planPaper" : "planPaper",
     "planPaperImg" : "planPaperImg",
     "roadMap" : "roadMap",
@@ -1052,7 +1414,7 @@ Content-Length: 246
 </div>
 </div>
 <div class="sect2">
-<h3 id="회원_프로필_수정"><a class="link" href="#회원_프로필_수정">2.5. 회원 프로필 수정</a></h3>
+<h3 id="회원_프로필_수정"><a class="link" href="#회원_프로필_수정">2.5.1. 회원 프로필 수정</a></h3>
 <div class="sect3">
 <h4 id="회원_프로필_수정_http_request"><a class="link" href="#회원_프로필_수정_http_request">HTTP request</a></h4>
 <div class="listingblock">
@@ -1119,6 +1481,198 @@ Content-Length: 80
 </div>
 <div class="sect3">
 <h4 id="회원_프로필_수정_request_part-memberUpdateDto-fields"><a class="link" href="#회원_프로필_수정_request_part-memberUpdateDto-fields">Request part-memberupdatedto-fields</a></h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">필드명</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">타입</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">필수여부</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">제약조건</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">설명</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>nickName</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">닉네임은 3~30자여야 합니다.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">nickname</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="회원_프로필_수정_실패"><a class="link" href="#회원_프로필_수정_실패">2.5.2. 회원 프로필 수정 실패</a></h3>
+<div class="sect3">
+<h4 id="회원_프로필_수정_실패_http_request"><a class="link" href="#회원_프로필_수정_실패_http_request">HTTP request</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">PUT /api/member HTTP/1.1
+Content-Type: multipart/form-data;charset=UTF-8; boundary=6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
+Authorization: Bearer accessToken
+Host: localhost:8080
+
+--6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
+Content-Disposition: form-data; name=memberUpdateDto; filename=jsondata
+Content-Type: application/json
+
+{"nickName":"ab"}
+--6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
+Content-Disposition: form-data; name=file; filename=member_profile.jpeg
+Content-Type: image/jpeg
+
+&lt;&lt;jpeg data&gt;&gt;
+--6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm--</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="회원_프로필_수정_실패_http_response"><a class="link" href="#회원_프로필_수정_실패_http_response">HTTP response</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 400 Bad Request
+Content-Type: application/json;charset=UTF-8
+Content-Length: 148
+
+{
+  "status" : 400,
+  "message" : "유효성 검사 실패",
+  "data" : {
+    "nickName" : "닉네임은 3~30자리수여야 합니다."
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="회원_프로필_수정_실패_request_parts"><a class="link" href="#회원_프로필_수정_실패_request_parts">Request parts</a></h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Part</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>file</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">회원 프로필 이미지</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>memberUpdateDto</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">회원 프로필 수정 DTO</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="회원_프로필_수정_실패_request_part-memberUpdateDto-fields"><a class="link" href="#회원_프로필_수정_실패_request_part-memberUpdateDto-fields">Request part-memberupdatedto-fields</a></h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">필드명</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">타입</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">필수여부</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">제약조건</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">설명</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>nickName</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">닉네임은 3~30자여야 합니다.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">nickname</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="회원_프로필_수정_실패_파일업로드시"><a class="link" href="#회원_프로필_수정_실패_파일업로드시">2.5.3. 회원 프로필 수정 실패(파일업로드 시)</a></h3>
+<div class="sect3">
+<h4 id="회원_프로필_수정_실패_파일업로드시_http_request"><a class="link" href="#회원_프로필_수정_실패_파일업로드시_http_request">HTTP request</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">PUT /api/member HTTP/1.1
+Content-Type: multipart/form-data;charset=UTF-8; boundary=6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
+Authorization: Bearer accessToken
+Host: localhost:8080
+
+--6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
+Content-Disposition: form-data; name=memberUpdateDto; filename=jsondata
+Content-Type: application/json
+
+{"nickName":"nickname"}
+--6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
+Content-Disposition: form-data; name=file; filename=member_profile.jpeg
+Content-Type: image/jpeg
+
+&lt;&lt;jpeg data&gt;&gt;
+--6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm--</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="회원_프로필_수정_실패_파일업로드시_http_response"><a class="link" href="#회원_프로필_수정_실패_파일업로드시_http_response">HTTP response</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 400 Bad Request
+Content-Type: application/json;charset=UTF-8
+Content-Length: 82
+
+{
+  "status" : 400,
+  "message" : "파일 업로드 에러",
+  "data" : null
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="회원_프로필_수정_실패_파일업로드시_request_parts"><a class="link" href="#회원_프로필_수정_실패_파일업로드시_request_parts">Request parts</a></h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Part</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>file</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">회원 프로필 이미지</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>memberUpdateDto</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">회원 프로필 수정 DTO</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="회원_프로필_수정_실패_파일업로드시_request_part-memberUpdateDto-fields"><a class="link" href="#회원_프로필_수정_실패_파일업로드시_request_part-memberUpdateDto-fields">Request part-memberupdatedto-fields</a></h4>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 20%;">
@@ -1284,7 +1838,7 @@ Content-Length: 437
 </div>
 </div>
 <div class="sect2">
-<h3 id="알람_읽기"><a class="link" href="#알람_읽기">3.3. 알람 읽기</a></h3>
+<h3 id="알람_읽기"><a class="link" href="#알람_읽기">3.3.1. 알람 읽기</a></h3>
 <div class="sect3">
 <h4 id="알람_읽기_http_request"><a class="link" href="#알람_읽기_http_request">HTTP request</a></h4>
 <div class="listingblock">
@@ -1336,7 +1890,59 @@ Content-Length: 84
 </div>
 </div>
 <div class="sect2">
-<h3 id="스타트업_NFT_민팅_성공후_알람_읽기"><a class="link" href="#스타트업_NFT_민팅_성공후_알람_읽기">3.4. 스타트업 NFT 민팅 성공 후 알람 읽기</a></h3>
+<h3 id="알람_읽기_실패"><a class="link" href="#알람_읽기_실패">3.3.2. 알람 읽기 실패</a></h3>
+<div class="sect3">
+<h4 id="알람_읽기_실패_http_request"><a class="link" href="#알람_읽기_실패_http_request">HTTP request</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /api/alarm/readAlarm/1 HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Authorization: Bearer accessToken
+Host: localhost:8080</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="알람_읽기_실패_http_response"><a class="link" href="#알람_읽기_실패_http_response">HTTP response</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 404 Not Found
+Content-Type: application/json;charset=UTF-8
+Content-Length: 98
+
+{
+  "status" : 404,
+  "message" : "존재하지 않은 Alarm ID 입니다.",
+  "data" : null
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="알람_읽기_실패_path_parameters"><a class="link" href="#알람_읽기_실패_path_parameters">Path parameters</a></h4>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 1. /api/alarm/readAlarm/{alarmId}</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>alarmId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">alarmID</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="스타트업_NFT_민팅_성공후_알람_읽기"><a class="link" href="#스타트업_NFT_민팅_성공후_알람_읽기">3.4.1. 스타트업 NFT 민팅 성공 후 알람 읽기</a></h3>
 <div class="sect3">
 <h4 id="스타트업_NFT_민팅_성공후_알람_읽기_http_request"><a class="link" href="#스타트업_NFT_민팅_성공후_알람_읽기_http_request">HTTP request</a></h4>
 <div class="listingblock">
@@ -1421,7 +2027,92 @@ Content-Length: 87
 </div>
 </div>
 <div class="sect2">
-<h3 id="투자자_NFT_구매_성공후_알람_읽기"><a class="link" href="#투자자_NFT_구매_성공후_알람_읽기">3.5. 투자자 NFT 구매 성공 후 알람 읽기</a></h3>
+<h3 id="스타트업_NFT_민팅_성공후_알람_읽기_실패"><a class="link" href="#스타트업_NFT_민팅_성공후_알람_읽기_실패">3.4.2. 스타트업 NFT 민팅 성공 후 알람 읽기 실패</a></h3>
+<div class="sect3">
+<h4 id="스타트업_NFT_민팅_성공후_알람_읽기_실패_http_request"><a class="link" href="#스타트업_NFT_민팅_성공후_알람_읽기_실패_http_request">HTTP request</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /api/alarm/mintSuccess/1 HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Authorization: Bearer accessToken
+Content-Length: 26
+Host: localhost:8080
+
+{
+  "lastTokenId" : 10
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="스타트업_NFT_민팅_성공후_알람_읽기_실패_http_response"><a class="link" href="#스타트업_NFT_민팅_성공후_알람_읽기_실패_http_response">HTTP response</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 404 Not Found
+Content-Type: application/json;charset=UTF-8
+Content-Length: 98
+
+{
+  "status" : 404,
+  "message" : "존재하지 않은 Alarm ID 입니다.",
+  "data" : null
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="스타트업_NFT_민팅_성공후_알람_읽기_실패_path_parameters"><a class="link" href="#스타트업_NFT_민팅_성공후_알람_읽기_실패_path_parameters">Path parameters</a></h4>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 1. /api/alarm/mintSuccess/{alarmId}</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>alarmId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">alarmID</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="스타트업_NFT_민팅_성공후_알람_읽기_실패_request_fields"><a class="link" href="#스타트업_NFT_민팅_성공후_알람_읽기_실패_request_fields">Request fields</a></h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">필드명</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">타입</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">필수여부</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">제약조건</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">설명</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>lastTokenId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">마지막으로 발행한 NFT 토큰 ID</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="투자자_NFT_구매_성공후_알람_읽기"><a class="link" href="#투자자_NFT_구매_성공후_알람_읽기">3.5.1. 투자자 NFT 구매 성공 후 알람 읽기</a></h3>
 <div class="sect3">
 <h4 id="투자자_NFT_구매_성공후_알람_읽기_http_request"><a class="link" href="#투자자_NFT_구매_성공후_알람_읽기_http_request">HTTP request</a></h4>
 <div class="listingblock">
@@ -1451,6 +2142,58 @@ Content-Length: 87
 </div>
 <div class="sect3">
 <h4 id="투자자_NFT_구매_성공후_알람_읽기_path_parameters"><a class="link" href="#투자자_NFT_구매_성공후_알람_읽기_path_parameters">Path parameters</a></h4>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 1. /api/alarm/investSuccess/{alarmId}</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>alarmId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">alarmID</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="투자자_NFT_구매_성공후_알람_읽기_실패"><a class="link" href="#투자자_NFT_구매_성공후_알람_읽기_실패">3.5.2. 투자자 NFT 구매 성공 후 알람 읽기 실패</a></h3>
+<div class="sect3">
+<h4 id="투자자_NFT_구매_성공후_알람_읽기_실패_http_request"><a class="link" href="#투자자_NFT_구매_성공후_알람_읽기_실패_http_request">HTTP request</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /api/alarm/investSuccess/1 HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Authorization: Bearer accessToken
+Host: localhost:8080</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="투자자_NFT_구매_성공후_알람_읽기_실패_http_response"><a class="link" href="#투자자_NFT_구매_성공후_알람_읽기_실패_http_response">HTTP response</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 404 Not Found
+Content-Type: application/json;charset=UTF-8
+Content-Length: 98
+
+{
+  "status" : 404,
+  "message" : "존재하지 않은 Alarm ID 입니다.",
+  "data" : null
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="투자자_NFT_구매_성공후_알람_읽기_실패_path_parameters"><a class="link" href="#투자자_NFT_구매_성공후_알람_읽기_실패_path_parameters">Path parameters</a></h4>
 <table class="tableblock frame-all grid-all stretch">
 <caption class="title">Table 1. /api/alarm/investSuccess/{alarmId}</caption>
 <colgroup>
@@ -1517,7 +2260,7 @@ Host: localhost:8080</code></pre>
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
 Content-Type: application/json;charset=UTF-8
-Content-Length: 1183
+Content-Length: 1221
 
 {
   "status" : 200,
@@ -1525,12 +2268,13 @@ Content-Length: 1183
   "data" : {
     "startupId" : 1,
     "startupName" : "스타트업1",
+    "profileImage" : "profileImage",
     "title" : "스타트업1 제목",
     "description" : "스타트업1 상세 정보 글입니다.",
     "nftTargetCount" : 10,
     "nftReserveCount" : 5,
     "nftPrice" : 2.0,
-    "dueDate" : "2022-10-02 17:10",
+    "dueDate" : "2022-10-03 14:10",
     "planPaper" : "https://uniqon-bucket.s3.ap-northeast-2.amazonaws.com/startup/4cfd6171-b839-404a-94e9-615e3cc93402uniqon%EB%B8%94%EB%A1%9D%EC%B2%B4%EC%9D%B8_%EC%A1%B0%EC%98%81%EB%8F%84%EB%A9%98%ED%86%A0%EB%8B%98.pdf",
     "planPaperImg" : "https://uniqon-bucket.s3.ap-northeast-2.amazonaws.com/startup/e95ca4c9-b7c3-4f8a-87da-e718a97c2926uniqonuniqon%EB%B8%94%EB%A1%9D%EC%B2%B4%EC%9D%B8_%EC%A1%B0%EC%98%81%EB%8F%84%EB%A9%98%ED%86%A0%EB%8B%98.jpg",
     "roadMap" : "https://uniqon-bucket.s3.ap-northeast-2.amazonaws.com/startup/2ceda00d-e53f-4b8d-ba17-89fa74e759a1uniqon5dc267300fefd2738de6.jpg",
@@ -1558,7 +2302,7 @@ Host: localhost:8080
 Content-Disposition: form-data; name=startupRequestDto; filename=jsondata
 Content-Type: application/json
 
-{"dueDate":"2022-10-02T17:09:25.1","discordUrl":"discordUrl","description":"description","title":"title","nftTargetCount":10,"nftPrice":2.0,"nftDescription":"nft description"}
+{"dueDate":"2022-10-03T14:33:32.999","discordUrl":"discordUrl","description":"description","title":"title","nftTargetCount":10,"nftPrice":2.0,"nftDescription":"nft description"}
 --6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
 Content-Disposition: form-data; name=plan_paper; filename=business_plan.pdf
 Content-Type: application/pdf
@@ -1716,7 +2460,7 @@ Host: localhost:8080</code></pre>
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
 Content-Type: application/json;charset=UTF-8
-Content-Length: 1111
+Content-Length: 1175
 
 {
   "status" : 200,
@@ -1726,18 +2470,20 @@ Content-Length: 1111
       "startupId" : 1,
       "startupName" : "startupName1",
       "title" : "title1",
-      "dueDate" : "2022-10-01 17:10",
+      "dueDate" : "2022-10-02 14:10",
       "nftTargetCount" : 10,
       "nftReserveCount" : 5,
-      "profileImage" : "profileImage"
+      "profileImage" : "profileImage",
+      "nftImage" : "nftImage"
     }, {
       "startupId" : 2,
       "startupName" : "startupName2",
       "title" : "title2",
-      "dueDate" : "2022-10-01 17:10",
+      "dueDate" : "2022-10-02 14:10",
       "nftTargetCount" : 10,
       "nftReserveCount" : 5,
-      "profileImage" : "profileImage"
+      "profileImage" : "profileImage",
+      "nftImage" : "nftImage"
     } ],
     "pageable" : {
       "sort" : {
@@ -1746,14 +2492,14 @@ Content-Length: 1111
         "unsorted" : true
       },
       "offset" : 0,
-      "pageNumber" : 0,
       "pageSize" : 10,
+      "pageNumber" : 0,
       "unpaged" : false,
       "paged" : true
     },
-    "totalPages" : 1,
-    "totalElements" : 2,
     "last" : true,
+    "totalElements" : 2,
+    "totalPages" : 1,
     "number" : 0,
     "size" : 10,
     "sort" : {
@@ -2003,7 +2749,7 @@ Content-Length: 81
 </div>
 </div>
 <div class="sect2">
-<h3 id="스타트업_질문_수정"><a class="link" href="#스타트업_질문_수정">6.2. Startup 질문 수정</a></h3>
+<h3 id="스타트업_질문_수정"><a class="link" href="#스타트업_질문_수정">6.2.1. Startup 질문 수정</a></h3>
 <div class="sect3">
 <h4 id="스타트업_질문_수정_http_request"><a class="link" href="#스타트업_질문_수정_http_request">HTTP request</a></h4>
 <div class="listingblock">
@@ -2088,7 +2834,92 @@ Content-Length: 81
 </div>
 </div>
 <div class="sect2">
-<h3 id="스타트업_질문_삭제"><a class="link" href="#스타트업_질문_삭제">6.3. Startup 질문 삭제</a></h3>
+<h3 id="스타트업_질문_수정_권한X"><a class="link" href="#스타트업_질문_수정_권한X">6.2.2. Startup 질문 수정 권한 X</a></h3>
+<div class="sect3">
+<h4 id="스타트업_질문_수정_권한X_http_request"><a class="link" href="#스타트업_질문_수정_권한X_http_request">HTTP request</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">PUT /api/invest/question/1 HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Authorization: Bearer accessToken
+Content-Length: 29
+Host: localhost:8080
+
+{
+  "question" : "update"
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="스타트업_질문_수정_권한X_http_response"><a class="link" href="#스타트업_질문_수정_권한X_http_response">HTTP response</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 401 Unauthorized
+Content-Type: application/json;charset=UTF-8
+Content-Length: 96
+
+{
+  "status" : 401,
+  "message" : "유효하지 않은 Member 입니다.",
+  "data" : null
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="스타트업_질문_수정_권한X_path_parameters"><a class="link" href="#스타트업_질문_수정_권한X_path_parameters">Path parameters</a></h4>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 1. /api/invest/question/{startupQuestionId}</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>startupQuestionId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">스타트업 question ID</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="스타트업_질문_수정_권한X_request_fields"><a class="link" href="#스타트업_질문_수정_권한X_request_fields">Request fields</a></h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">필드명</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">타입</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">필수여부</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">제약조건</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">설명</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>question</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">길이 100 이하</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">스타트업에 대한 질문(수정본)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="스타트업_질문_삭제"><a class="link" href="#스타트업_질문_삭제">6.3.1. Startup 질문 삭제</a></h3>
 <div class="sect3">
 <h4 id="스타트업_질문_삭제_http_request"><a class="link" href="#스타트업_질문_삭제_http_request">HTTP request</a></h4>
 <div class="listingblock">
@@ -2140,6 +2971,58 @@ Content-Length: 81
 </div>
 </div>
 <div class="sect2">
+<h3 id="스타트업_질문_삭제_권한X"><a class="link" href="#스타트업_질문_삭제_권한X">6.3.2. Startup 질문 삭제 권한X</a></h3>
+<div class="sect3">
+<h4 id="스타트업_질문_삭제_권한X_http_request"><a class="link" href="#스타트업_질문_삭제_권한X_http_request">HTTP request</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">DELETE /api/invest/question/1 HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Authorization: Bearer accessToken
+Host: localhost:8080</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="스타트업_질문_삭제_권한X_http_response"><a class="link" href="#스타트업_질문_삭제_권한X_http_response">HTTP response</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 401 Unauthorized
+Content-Type: application/json;charset=UTF-8
+Content-Length: 96
+
+{
+  "status" : 401,
+  "message" : "유효하지 않은 Member 입니다.",
+  "data" : null
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="스타트업_질문_삭제_권한X_path_parameters"><a class="link" href="#스타트업_질문_삭제_권한X_path_parameters">Path parameters</a></h4>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 1. /api/invest/question/{startupQuestionId}</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>startupQuestionId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">startupQuestionID</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect2">
 <h3 id="스타트업_질문_조회"><a class="link" href="#스타트업_질문_조회">6.4. Startup 질문 조회(Cursor 페이징)</a></h3>
 <div class="sect3">
 <h4 id="스타트업_질문_조회_http_request"><a class="link" href="#스타트업_질문_조회_http_request">HTTP request</a></h4>
@@ -2166,7 +3049,7 @@ Content-Length: 2225
     "values" : [ {
       "nickname" : "투자자0",
       "memberId" : 1,
-      "createDate" : "2022-09-29 17:09:28",
+      "createDate" : "2022-09-30 14:33:37",
       "startupQuestionId" : 1,
       "question" : "질문0",
       "myQuestion" : true,
@@ -2175,7 +3058,7 @@ Content-Length: 2225
         "memberId" : 4,
         "nickname" : "스타트업A",
         "answer" : "답변 0",
-        "createDate" : "2022-09-29 17:09:28",
+        "createDate" : "2022-09-30 14:33:37",
         "parentId" : null,
         "myAnswer" : false,
         "answerChildren" : [ {
@@ -2183,7 +3066,7 @@ Content-Length: 2225
           "memberId" : 1,
           "nickname" : "투자자0",
           "answer" : "답변 Test",
-          "createDate" : "2022-09-29 17:09:28",
+          "createDate" : "2022-09-30 14:33:37",
           "parentId" : 1,
           "myAnswer" : true
         }, {
@@ -2191,7 +3074,7 @@ Content-Length: 2225
           "memberId" : 4,
           "nickname" : "스타트업A",
           "answer" : "답변 Test2",
-          "createDate" : "2022-09-29 17:09:28",
+          "createDate" : "2022-09-30 14:33:37",
           "parentId" : 1,
           "myAnswer" : true
         } ]
@@ -2200,7 +3083,7 @@ Content-Length: 2225
         "memberId" : 4,
         "nickname" : "스타트업A",
         "answer" : "답변 1",
-        "createDate" : "2022-09-29 17:09:28",
+        "createDate" : "2022-09-30 14:33:37",
         "parentId" : null,
         "myAnswer" : false,
         "answerChildren" : [ ]
@@ -2209,7 +3092,7 @@ Content-Length: 2225
         "memberId" : 4,
         "nickname" : "스타트업A",
         "answer" : "답변 2",
-        "createDate" : "2022-09-29 17:09:28",
+        "createDate" : "2022-09-30 14:33:37",
         "parentId" : null,
         "myAnswer" : false,
         "answerChildren" : [ ]
@@ -2217,7 +3100,7 @@ Content-Length: 2225
     }, {
       "nickname" : "투자자1",
       "memberId" : 2,
-      "createDate" : "2022-09-29 17:09:28",
+      "createDate" : "2022-09-30 14:33:37",
       "startupQuestionId" : 2,
       "question" : "질문1",
       "myQuestion" : false,
@@ -2225,7 +3108,7 @@ Content-Length: 2225
     }, {
       "nickname" : "투자자2",
       "memberId" : 3,
-      "createDate" : "2022-09-29 17:09:28",
+      "createDate" : "2022-09-30 14:33:37",
       "startupQuestionId" : 3,
       "question" : "질문2",
       "myQuestion" : false,
@@ -2385,7 +3268,7 @@ Content-Length: 72
 </div>
 </div>
 <div class="sect2">
-<h3 id="스타트업_댓글_수정"><a class="link" href="#스타트업_댓글_수정">7.2. Startup 댓글 수정</a></h3>
+<h3 id="스타트업_댓글_수정"><a class="link" href="#스타트업_댓글_수정">7.2.1. Startup 댓글 수정</a></h3>
 <div class="sect3">
 <h4 id="스타트업_댓글_수정_http_request"><a class="link" href="#스타트업_댓글_수정_http_request">HTTP request</a></h4>
 <div class="listingblock">
@@ -2470,7 +3353,92 @@ Content-Length: 79
 </div>
 </div>
 <div class="sect2">
-<h3 id="스타트업_댓글_삭제"><a class="link" href="#스타트업_댓글_삭제">7.3. Startup 댓글 삭제</a></h3>
+<h3 id="스타트업_댓글_수정_권한X"><a class="link" href="#스타트업_댓글_수정_권한X">7.2.2. Startup 댓글 수정 권한X</a></h3>
+<div class="sect3">
+<h4 id="스타트업_댓글_수정_권한X_http_request"><a class="link" href="#스타트업_댓글_수정_권한X_http_request">HTTP request</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">PUT /api/invest/answer/1 HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Authorization: Bearer accessToken
+Content-Length: 34
+Host: localhost:8080
+
+{
+  "answer" : "Answer Update"
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="스타트업_댓글_수정_권한X_http_response"><a class="link" href="#스타트업_댓글_수정_권한X_http_response">HTTP response</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 401 Unauthorized
+Content-Type: application/json;charset=UTF-8
+Content-Length: 96
+
+{
+  "status" : 401,
+  "message" : "유효하지 않은 Member 입니다.",
+  "data" : null
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="스타트업_댓글_수정_권한X_path_parameters"><a class="link" href="#스타트업_댓글_수정_권한X_path_parameters">Path parameters</a></h4>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 1. /api/invest/answer/{startupAnswerId}</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>startupAnswerId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">스타트업 Answer ID</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="스타트업_댓글_수정_권한X_request_fields"><a class="link" href="#스타트업_댓글_수정_권한X_request_fields">Request fields</a></h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">필드명</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">타입</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">필수여부</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">제약조건</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">설명</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>answer</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">길이 100 이하</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">질문에 대한 댓글(수정)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="스타트업_댓글_삭제"><a class="link" href="#스타트업_댓글_삭제">7.3.1. Startup 댓글 삭제</a></h3>
 <div class="sect3">
 <h4 id="스타트업_댓글_삭제_http_request"><a class="link" href="#스타트업_댓글_삭제_http_request">HTTP request</a></h4>
 <div class="listingblock">
@@ -2500,6 +3468,58 @@ Content-Length: 79
 </div>
 <div class="sect3">
 <h4 id="스타트업_댓글_삭제_path_parameters"><a class="link" href="#스타트업_댓글_삭제_path_parameters">Path parameters</a></h4>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 1. /api/invest/answer/{startupAnswerId}</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>startupAnswerId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">스타트업 answer ID</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="스타트업_댓글_삭제_권한X"><a class="link" href="#스타트업_댓글_삭제_권한X">7.3.2. Startup 댓글 삭제 권한X</a></h3>
+<div class="sect3">
+<h4 id="스타트업_댓글_삭제_권한X_http_request"><a class="link" href="#스타트업_댓글_삭제_권한X_http_request">HTTP request</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">DELETE /api/invest/answer/1 HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Authorization: Bearer accessToken
+Host: localhost:8080</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="스타트업_댓글_삭제_권한X_http_response"><a class="link" href="#스타트업_댓글_삭제_권한X_http_response">HTTP response</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 401 Unauthorized
+Content-Type: application/json;charset=UTF-8
+Content-Length: 96
+
+{
+  "status" : 401,
+  "message" : "유효하지 않은 Member 입니다.",
+  "data" : null
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="스타트업_댓글_삭제_권한X_path_parameters"><a class="link" href="#스타트업_댓글_삭제_권한X_path_parameters">Path parameters</a></h4>
 <table class="tableblock frame-all grid-all stretch">
 <caption class="title">Table 1. /api/invest/answer/{startupAnswerId}</caption>
 <colgroup>
@@ -2800,12 +3820,12 @@ Content-Length: 338
     "title" : "title",
     "nickName" : "nickName",
     "commentsCount" : 10,
-    "createdDate" : "2022-09-29T17:09:26.808"
+    "createdDate" : "2022-09-30T14:33:34.911"
   }, {
     "title" : "title2",
     "nickName" : "nickName2",
     "commentsCount" : 10,
-    "createdDate" : "2022-09-29T17:09:26.808"
+    "createdDate" : "2022-09-30T14:33:34.911"
   } ]
 }</code></pre>
 </div>
@@ -2868,24 +3888,24 @@ Content-Length: 1259
       "content" : "댓글1",
       "nickName" : "nickName1",
       "myComment" : true,
-      "createdDate" : "2022-09-29 17:09:26",
-      "updateDate" : "2022-09-29 17:09:26",
+      "createdDate" : "2022-09-30 14:33:34",
+      "updateDate" : "2022-09-30 14:33:34",
       "children" : [ {
         "parentId" : 1,
         "commentId" : 2,
         "content" : "댓글2",
         "nickName" : "nickName2",
         "myComment" : false,
-        "createdDate" : "2022-09-29 17:09:26",
-        "updateDate" : "2022-09-29 17:09:26"
+        "createdDate" : "2022-09-30 14:33:34",
+        "updateDate" : "2022-09-30 14:33:34"
       }, {
         "parentId" : 1,
         "commentId" : 3,
         "content" : "댓글3",
         "nickName" : "nickName3",
         "myComment" : false,
-        "createdDate" : "2022-09-29 17:09:26",
-        "updateDate" : "2022-09-29 17:09:26"
+        "createdDate" : "2022-09-30 14:33:34",
+        "updateDate" : "2022-09-30 14:33:34"
       } ]
     }, {
       "parentId" : null,
@@ -2893,11 +3913,11 @@ Content-Length: 1259
       "content" : "댓글4",
       "nickName" : "nickName4",
       "myComment" : true,
-      "createdDate" : "2022-09-29 17:09:26",
-      "updateDate" : "2022-09-29 17:09:26",
+      "createdDate" : "2022-09-30 14:33:34",
+      "updateDate" : "2022-09-30 14:33:34",
       "children" : [ ]
     } ],
-    "createdDate" : "2022-09-29T17:09:26.825"
+    "createdDate" : "2022-09-30T14:33:34.931"
   }
 }</code></pre>
 </div>

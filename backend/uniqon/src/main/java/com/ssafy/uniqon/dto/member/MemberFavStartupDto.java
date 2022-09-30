@@ -17,6 +17,7 @@ public class MemberFavStartupDto {
     private Long memberId;
     private Long startupId;
     private String startupName;
+    private String profileImage;
     private String title;
     private String description;
 
@@ -42,7 +43,6 @@ public class MemberFavStartupDto {
     private String nftImage;
 
     private String nftDescription;
-
 
     private Boolean isFav;
 }
