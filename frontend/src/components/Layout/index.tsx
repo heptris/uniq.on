@@ -1,16 +1,14 @@
-import { useAppSelector } from "@/hooks";
+import { useAppSelector, useServerState } from "@/hooks";
 import Alert from "../Alert";
 import { useEffect } from "react";
 
 import { useTheme } from "@emotion/react";
-
 
 import Container from "../Container";
 import Footer from "../Footer";
 import Navbar from "../Navbar";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
-
   const { isAlertOn, isSuccess, message } = useAppSelector(
     (state) => state.alert
   );
@@ -19,7 +17,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     document.body.style.backgroundColor = theme.color.background.page;
   }, []);
-
+  useServerState();
 
   return (
     <Container>

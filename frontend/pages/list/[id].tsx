@@ -181,7 +181,6 @@ const ImageContainer = styled.div`
   width: 100%;
   height: fit-content;
   overflow: hidden;
-  border-radius: 8px;
 `;
 
 export default InvestmentDetail;
