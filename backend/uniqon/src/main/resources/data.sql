@@ -18,9 +18,9 @@ values (now(), now(), "aa@naver.com", "USER", "aaa", "0XA", "", "https://picsum.
 insert into startup (created_date, last_modified_date, description, plan_paper, plan_paper_img
                     , discord_url, enroll_status, due_date, nft_image, nft_reserve_count, is_finished, is_goal, nft_target_count
                     , nft_price, road_map, reject_reason, startup_name, title, member_id, nft_description)
-values (now(), now(), "startup description", "https://ipfs.io/ipfs/bafybeihqoym3kapp5y5omzreooit2d5ngk6w26vin226xvyl644xbwu674/2.png",
-        "https://uniqon-bucket.s3.ap-northeast-2.amazonaws.com/startup/fb45f1bc-0130-4932-a908-7e9f6b4b5985uniqonuniqon%EB%B8%94%EB%A1%9D%EC%B2%B4%EC%9D%B8_%EC%A1%B0%EC%98%81%EB%8F%84%EB%A9%98%ED%86%A0%EB%8B%98.jpg", null, null,
-        DATE_ADD(now(), interval 1 day), "https://uniqon-bucket.s3.ap-northeast-2.amazonaws.com/startup/22f3d64a-ddfd-49f8-900d-be43a60affe7uniqon5dc267300fefd2738de6.jpg", 0, false, false, 10, 5, null, null, "ccc", "title", 3, "nft description"),
+values (now(), now(), "startup description", "https://uniqon-bucket.s3.ap-northeast-2.amazonaws.com/startup/13e35725-8b22-4065-975e-fe15a840a1cduniqon%EB%B8%94%EB%A1%9D%EC%B2%B4%EC%9D%B8_%EC%A1%B0%EC%98%81%EB%8F%84%EB%A9%98%ED%86%A0%EB%8B%98.pdf",
+        "https://ipfs.io/ipfs/bafybeihqoym3kapp5y5omzreooit2d5ngk6w26vin226xvyl644xbwu674/2.png", null, null,
+        DATE_ADD(now(), interval 1 day), "https://ipfs.io/ipfs/bafybeihqoym3kapp5y5omzreooit2d5ngk6w26vin226xvyl644xbwu674/2.png", 0, false, false, 10, 5, null, null, "ccc", "title", 3, "nft description"),
        (now(), now(), "startup description2", "https://uniqon-bucket.s3.ap-northeast-2.amazonaws.com/startup/13e35725-8b22-4065-975e-fe15a840a1cduniqon%EB%B8%94%EB%A1%9D%EC%B2%B4%EC%9D%B8_%EC%A1%B0%EC%98%81%EB%8F%84%EB%A9%98%ED%86%A0%EB%8B%98.pdf",
         "https://uniqon-bucket.s3.ap-northeast-2.amazonaws.com/startup/fb45f1bc-0130-4932-a908-7e9f6b4b5985uniqonuniqon%EB%B8%94%EB%A1%9D%EC%B2%B4%EC%9D%B8_%EC%A1%B0%EC%98%81%EB%8F%84%EB%A9%98%ED%86%A0%EB%8B%98.jpg",null, null,
         DATE_ADD(now(), interval 1 day), "https://uniqon-bucket.s3.ap-northeast-2.amazonaws.com/startup/22f3d64a-ddfd-49f8-900d-be43a60affe7uniqon5dc267300fefd2738de6.jpg", 0, false, false, 10, 5, null, null, "ddd", "title2", 4, "nft description2"),
