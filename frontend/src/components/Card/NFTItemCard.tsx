@@ -43,7 +43,7 @@ function NFTItemCard<T extends ElementType = "div">(
     startupId,
     nftImage,
     startupName,
-    price,
+    nftPrice,
     progress,
     ...rest
   } = props;
@@ -99,7 +99,7 @@ function NFTItemCard<T extends ElementType = "div">(
             `}
             icon={faEthereum}
           />
-          {price} ETH
+          {nftPrice} ETH
         </Text>
         <Text
           role="status"
