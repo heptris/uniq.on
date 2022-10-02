@@ -16,6 +16,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   const theme = useTheme();
   useEffect(() => {
     document.body.style.backgroundColor = theme.color.background.page;
+    document.body.style.color = theme.color.text.main;
   }, []);
   useServerState();
 
