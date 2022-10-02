@@ -7,7 +7,7 @@ import { uniqonThemes } from "@/styles/theme";
 expect.extend(matchers);
 
 describe("Alert", () => {
-  const renderAlert = (isSuccess: boolean, testId: string, message?: string) =>
+  const renderAlert = (isSuccess: boolean, testId: string, message: string) =>
     render(
       <MyApp>
         <Alert isSuccess={isSuccess} data-testid={testId} message={message} />
@@ -15,8 +15,9 @@ describe("Alert", () => {
     );
 
   it("renders success with default msg", () => {
+    const msg = "404 에러 잘못된 요청입니다.";
     const testId = "success";
-    const { container } = renderAlert(true, testId);
+    const { container } = renderAlert(true, testId, msg);
     const alert = getByTestId(container, testId);
     expect(alert).toHaveStyleRule(
       "background-color",
@@ -33,8 +34,9 @@ describe("Alert", () => {
   });
 
   it("renders fail", () => {
+    const msg = "404 에러 잘못된 요청입니다.";
     const testId = "fail";
-    const { container } = renderAlert(false, testId);
+    const { container } = renderAlert(false, testId, msg);
     expect(getByTestId(container, testId)).toHaveStyleRule(
       "background-color",
       uniqonThemes.darkTheme.color.status.fail

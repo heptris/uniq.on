@@ -43,8 +43,10 @@ function InvestmentDetail(props: IDProps) {
     <Grid
       css={css`
         padding-top: 2rem;
+        width: 100%;
 
         @media (${minDesktopWidth}) {
+          width: 70%;
           grid-template-columns: repeat(2, 1fr);
         }
       `}
@@ -55,7 +57,7 @@ function InvestmentDetail(props: IDProps) {
           startupId={InvestmentRequest.startupId}
           nftImage={InvestmentRequest.nftImage}
           startupName={InvestmentRequest.startupName}
-          price={InvestmentRequest.nftPrice}
+          nftPrice={InvestmentRequest.nftPrice}
         />
         <Card
           css={css`
@@ -79,7 +81,7 @@ function InvestmentDetail(props: IDProps) {
 
             <Text as="h1">상세정보</Text>
             <InlineInfo>
-              <Text as="h2">Blockchain</Text>
+              <Text as="h2">블록체인</Text>
               <Text as="p">Ethereum</Text>
             </InlineInfo>
             <InlineInfo>
@@ -87,7 +89,7 @@ function InvestmentDetail(props: IDProps) {
               <Text as="p">{InvestmentRequest.nftTargetCount}</Text>
             </InlineInfo>
             <InlineInfo>
-              <Text as="h2">Token Standard</Text>
+              <Text as="h2">토큰 표준</Text>
               <Text as="p">ERC-721</Text>
             </InlineInfo>
             <InlineInfo>

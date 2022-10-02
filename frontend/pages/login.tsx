@@ -24,20 +24,16 @@ export default function Login() {
     <LoginContainer>
       <Text
         as="h1"
-        role="guide"
+        role="page-header"
         css={css`
           font-size: 2rem;
           font-weight: 700;
+          margin-bottom: 2rem;
         `}
       >
         지갑을 연결하세요.
       </Text>
-      <Card
-        role="wallet-menu"
-        css={css`
-          margin-top: 2rem;
-        `}
-      >
+      <Card role="wallet-menu">
         {wallets.map((wallet) => (
           <MenuItem key={wallet.id} onClick={handleWallet}>
             <ImageContainer>
@@ -64,7 +60,7 @@ const LoginContainer = styled.div`
   width: 100%;
 
   @media (${minDesktopWidth}) {
-    width: 50%;
+    width: 33.33%;
   }
 `;
 const MenuItem = styled.div`

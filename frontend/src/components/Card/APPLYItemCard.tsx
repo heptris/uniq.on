@@ -13,7 +13,7 @@ import Card from "@/components/Card";
 import Text from "@/components/Text";
 import ProgressBar from "@/components/ProgressBar";
 
-type NFTItemCardProps =
+type APPLYItemCardProps =
   | {
       progress?: number;
     }
@@ -34,8 +34,8 @@ type NFTItemCardProps =
  * `progress`: `number`
  * @returns `ReactElement`
  */
-function NFTItemCard<T extends ElementType = "div">(
-  props: Combine<NFTItemCardProps, CardProps<T>>,
+function APPLYItemCard<T extends ElementType = "div">(
+  props: Combine<APPLYItemCardProps, CardProps<T>>,
   ref: Ref<any>
 ) {
   const {
@@ -148,4 +148,4 @@ const ImageContainer = styled.div`
   overflow: hidden;
 `;
 
-export default forwardRef(NFTItemCard) as typeof NFTItemCard;
+export default forwardRef(APPLYItemCard) as typeof APPLYItemCard;
