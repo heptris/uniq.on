@@ -8,16 +8,16 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import type { Combine } from "@/types/utils";
 import type { CardProps } from "@/types/props";
-import type { NFTItem } from "@/types/api_responses";
+import type { RSRVItem } from "@/types/api_responses";
 import Card from "@/components/Card";
 import Text from "@/components/Text";
 import ProgressBar from "@/components/ProgressBar";
 
-type NFTItemCardProps =
+type RSRVItemCardProps =
   | {
-      progress?: number;
+      nftReserveCount?: number;
     }
-  | NFTItem;
+  | RSRVItem;
 
 /**
  * @params
@@ -34,8 +34,8 @@ type NFTItemCardProps =
  * `progress`: `number`
  * @returns `ReactElement`
  */
-function NFTItemCard<T extends ElementType = "div">(
-  props: Combine<NFTItemCardProps, CardProps<T>>,
+function RSRVItemCard<T extends ElementType = "div">(
+  props: Combine<RSRVItemCardProps, CardProps<T>>,
   ref: Ref<any>
 ) {
   const {
@@ -44,7 +44,7 @@ function NFTItemCard<T extends ElementType = "div">(
     nftImage,
     startupName,
     nftPrice,
-    progress,
+    nftReserveCount,
     ...rest
   } = props;
 
@@ -110,13 +110,13 @@ function NFTItemCard<T extends ElementType = "div">(
             align-items: center;
           `}
         >
-          {progress !== undefined && (
+          {nftReserveCount !== undefined && (
             <>
               <ProgressBar
                 css={css`
                   margin-right: 5px;
                 `}
-                progress={progress}
+                progress={nftReserveCount}
                 type={"blue"}
               />
               <Text
@@ -125,7 +125,7 @@ function NFTItemCard<T extends ElementType = "div">(
                   font-weight: 600;
                 `}
               >
-                {progress}%
+                {nftReserveCount}%
               </Text>
             </>
           )}
@@ -148,4 +148,4 @@ const ImageContainer = styled.div`
   overflow: hidden;
 `;
 
-export default forwardRef(NFTItemCard) as typeof NFTItemCard;
+export default forwardRef(RSRVItemCard) as typeof RSRVItemCard;

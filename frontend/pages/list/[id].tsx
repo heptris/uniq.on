@@ -57,7 +57,7 @@ function InvestmentDetail(props: IDProps) {
           startupId={InvestmentRequest.startupId}
           nftImage={InvestmentRequest.nftImage}
           startupName={InvestmentRequest.startupName}
-          price={InvestmentRequest.nftPrice}
+          nftPrice={InvestmentRequest.nftPrice}
         />
         <Card
           css={css`

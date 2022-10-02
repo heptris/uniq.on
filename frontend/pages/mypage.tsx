@@ -11,7 +11,13 @@ import Button from "@/components/Button";
 
 import { minTabletWidth } from "@/styles/utils";
 import { useNFTModal, useSelectTab } from "@/hooks";
-import { Member, NFTItem } from "@/types/api_responses";
+import {
+  APPLYItem,
+  FAVItem,
+  Member,
+  NFTItem,
+  RSRVItem,
+} from "@/types/api_responses";
 
 import MypageListContainer from "@/container/MypageListContainer";
 import { useQueryClient } from "@tanstack/react-query";
@@ -36,6 +42,9 @@ function MyPage() {
     useNFTModal();
 
   const [nfts, setNfts] = useState<NFTItem[]>([]);
+  const [favs, setFavs] = useState<FAVItem[]>([]);
+  const [rsrvs, setRsrvs] = useState<RSRVItem[]>([]);
+  const [applys, setApplys] = useState<APPLYItem[]>([]);
 
   const menus = ["보유 NFT", "관심목록", "예약내역", "투자신청내역"];
   const { selectedMenu, onSelectHandler } = useSelectTab(menus);
@@ -53,16 +62,16 @@ function MyPage() {
         nftList && setNfts(nftList);
         break;
       case menus[1]:
-        const favList = client.getQueryData<NFTItem[]>([MY_FAVORITE_LIST]);
-        favList && setNfts(favList);
+        const favList = client.getQueryData<FAVItem[]>([MY_FAVORITE_LIST]);
+        favList && setFavs(favList);
         break;
       case menus[2]:
-        const rsrvList = client.getQueryData<NFTItem[]>([MY_RESERVE_LIST]);
-        rsrvList && setNfts(rsrvList);
+        const rsrvList = client.getQueryData<RSRVItem[]>([MY_RESERVE_LIST]);
+        rsrvList && setRsrvs(rsrvList);
         break;
       case menus[3]:
-        const applyList = client.getQueryData<NFTItem[]>([MY_APPLY_LIST]);
-        applyList && setNfts(applyList);
+        const applyList = client.getQueryData<APPLYItem[]>([MY_APPLY_LIST]);
+        applyList && setApplys(applyList);
         break;
     }
   }, [selectedMenu]);
@@ -85,7 +94,6 @@ function MyPage() {
             margin-left: 1vw;
             width: 6rem;
             height: 6rem;
-
             @media (${minTabletWidth}) {
               width: 10rem;
               height: 10rem;
@@ -132,11 +140,21 @@ function MyPage() {
         `}
       />
 
-      <MypageListContainer
-        handleModalOpen={handleModalOpen}
-        nfts={nfts}
-        mypageListType={"FAVOTIRES"}
-      />
+      {selectedMenu === menus[0] && (
+        <MypageListContainer handleModalOpen={handleModalOpen} nfts={nfts} />
+      )}
+      {selectedMenu === menus[1] && (
+        <MypageListContainer handleModalOpen={handleModalOpen} favs={favs} />
+      )}
+      {selectedMenu === menus[2] && (
+        <MypageListContainer handleModalOpen={handleModalOpen} rsrvs={rsrvs} />
+      )}
+      {selectedMenu === menus[3] && (
+        <MypageListContainer
+          handleModalOpen={handleModalOpen}
+          applys={applys}
+        />
+      )}
 
       <Modal
         isOpen={isShowModal}

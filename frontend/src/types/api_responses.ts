@@ -32,12 +32,40 @@ export type IR = {
   rejectReason?: string;
   memberId?: number;
 };
+
 export type NFTItem = {
   tokenId: number;
   startupId: number;
   nftImage: string | StaticImageData;
   startupName: string;
-  price: number;
+  nftPrice: number;
+};
+
+export type FAVItem = {
+  tokenId: number;
+  startupId: number;
+  nftImage: string | StaticImageData;
+  startupName: string;
+  dueDate: string;
+  nftDescription: string;
+  nftPrice: number;
+};
+
+export type RSRVItem = {
+  tokenId: number;
+  startupId: number;
+  nftImage: string | StaticImageData;
+  startupName: string;
+  nftPrice: number;
+  nftReserveCount: number;
+};
+
+export type APPLYItem = {
+  tokenId: number;
+  startupId: number;
+  nftImage: string | StaticImageData;
+  startupName: string;
+  nftPrice: number;
 };
 export type Startup = {
   startupId: number;
