@@ -24,7 +24,7 @@ function Container<T extends ElementType = "section">(
         background-color: ${theme.color.background.page};
         min-height: 100vh;
         margin-top: 80px;
-        padding: 0 2vw;
+        padding: 0 6vw;
         display: flex;
         flex-direction: column;
         align-items: center;
