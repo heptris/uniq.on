@@ -1,71 +1,44 @@
-import { cssConvex } from "@/styles/utils";
-import { css, useTheme } from "@emotion/react";
 import Link from "next/link";
-import Button from "../Button";
-import Text from "../Text";
+
+import { css, useTheme } from "@emotion/react";
+import styled from "@emotion/styled";
+
+import Button from "@/components/Button";
+import Text from "@/components/Text";
+import { minDesktopWidth } from "@/styles/utils";
+import { HEADER_HEIGHT } from "@/constants";
 
 export default function Video() {
   const theme = useTheme();
+
   return (
-    <div
-      css={css`
-        position: relative;
-        width: 100%;
-        height: 100vh;
-        overflow: hidden;
-        @media screen and (max-width: 768px) {
-          width: 100%;
-          height: 75vh;
-        }
-      `}
-    >
-      <div
+    <VideoContainer>
+      <video
+        muted
+        autoPlay
+        loop
+        playsInline
         css={css`
           position: absolute;
           width: 100%;
-          height: 100vh;
-          z-index: 1;
+          height: 100%;
+          object-fit: cover;
         `}
       >
-        <video
-          muted
-          autoPlay
-          loop
-          css={css`
-            position: absolute;
-            display: block;
-            width: 100%;
-          `}
-        >
-          <source src="/videos/main1.mp4" type="video/mp4" />
-        </video>
-      </div>
+        <source src="/videos/main1.mp4" type="video/mp4" />
+      </video>
 
-      <div
-        css={css`
-          width: 80rem;
-          height: 100vh;
-          padding: 17rem 2rem;
-          position: absolute;
-          z-index: 1;
-
-          @media screen and (max-width: 768px) {
-            width: 100%;
-            height: auto;
-            padding: 20px;
-            top: 15rem;
-          }
-        `}
-      >
+      <Content>
         <Text
           as="h1"
           css={css`
-            color: ${theme.color.text.main};
-            font-size: 6rem;
-            line-height: 1.25;
-            font-weight: lighter;
-            margin-bottom: 3rem;
-            @media screen and (max-width: 768px) {
+            font-size: 2rem;
+            font-weight: 500;
+            word-break: keep-all;
+            margin-bottom: 2rem;
+
+            @media (${minDesktopWidth}) {
+              margin-bottom: 3rem;
               font-size: 3rem;
             }
           `}
@@ -73,77 +46,67 @@ export default function Video() {
           유니크한 NFT를 구매해보세요.
         </Text>
         <Text
-          as="h3"
-          css={css`
-            color: ${theme.color.text.main};
-            font-size: 2rem;
-            line-height: 1.25;
-            margin-bottom: 1.5rem;
-            @media screen and (max-width: 768px) {
-              font-size: 1.5rem;
-            }
-          `}
-        >
-          누구나 쉽게 NFT에 투자하고{" "}
-          <br
-            css={css`
-              display: none;
-              @media screen and (max-width: 768px) {
-                display: block;
-              }
-            `}
-          />
-          투자받는 것이 가능한 곳
-        </Text>
-        <Text
           as="p"
           css={css`
-            color: ${theme.color.text.main};
-            font-size: 1.5rem;
-            line-height: 1.8;
+            font-size: 1rem;
+            font-weight: 300;
             margin-bottom: 1.5rem;
-            @media screen and (max-width: 768px) {
-              font-size: 1rem;
+
+            @media (${minDesktopWidth}) {
+              font-size: 1.3rem;
             }
           `}
         >
-          스타트업과 투자자가 NFT를 기반으로 소통하며 상생하는 플랫폼입니다.
+          누구나 쉽게 유니콘 기업에 투자하는 것이 가능한 곳
+          <br />
+          스타트업과 투자자가 NFT를 통해 새로운 기회를 만듭니다.
         </Text>
-        <div>
-          <Link href="/apply">
-            <Button
-              css={css`
-                display: inline-block;
-                color: ${theme.color.text.main};
-                font-weight: bold;
-                padding: 0.8rem 1.3rem;
-                margin-right: 1rem;
-                border-radius: 2rem;
-                background-color: ${theme.color.background.main};
-                ${cssConvex}
-              `}
-            >
-              투자받기
-            </Button>
-          </Link>
+        <ButtonContainer>
           <Link href="/list">
             <Button
               css={css`
                 display: inline-block;
-                color: ${theme.color.text.main};
-                font-weight: bold;
-                padding: 0.8rem 1.3rem;
-                border-radius: 2rem;
-                background-color: ${theme.color.background.page};
-                border: 1px solid ${theme.color.background.main};
-                ${cssConvex}
+                font-weight: 700;
+                padding: 1rem 1.5rem;
+                margin-right: 1rem;
+                background-color: ${theme.color.background.main};
               `}
             >
               투자하기
             </Button>
           </Link>
-        </div>
-      </div>
-    </div>
+          <Link href="/apply">
+            <Button
+              css={css`
+                display: inline-block;
+                font-weight: 700;
+                padding: 1rem 1.5rem;
+                background-color: ${theme.color.background.page};
+                border: 1px solid ${theme.color.background.main};
+              `}
+            >
+              투자신청
+            </Button>
+          </Link>
+        </ButtonContainer>
+      </Content>
+    </VideoContainer>
   );
 }
+
+const VideoContainer = styled.div`
+  position: relative;
+  width: 100vw;
+  height: calc(100vh - ${HEADER_HEIGHT});
+  overflow: hidden;
+`;
+const Content = styled.div`
+  width: 100vw;
+  height: calc(100vh - ${HEADER_HEIGHT});
+  position: absolute;
+  padding: 0 6vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+`;
+const ButtonContainer = styled.div``;
