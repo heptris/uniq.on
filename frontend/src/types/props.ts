@@ -3,6 +3,7 @@
 import { ElementType, ReactElement } from "react";
 import { CombineElementProps, OverridableProps } from "@/types/utils";
 import { StaticImageData } from "next/image";
+import { APPLYItem, FAVItem, NFTItem, RSRVItem } from "./api_responses";
 
 export type TextBaseProps = {
   typography?: "content";
@@ -129,4 +130,5 @@ export type CarouselProps = {
   items: CarouselItem[];
 };
 
-export type MypageListType = "APPLY" | "NFT" | "FAVOTIRES" | "RESERVE";
+// export type MypageListType = "APPLY" | "NFT" | "FAVOTIRES" | "RESERVE";
+export type MypageListType = NFTItem | FAVItem | RSRVItem | APPLYItem;
