@@ -5,7 +5,7 @@ import SelectTab from "@/components/SelectTab";
 import Button from "@/components/Button";
 import Card from "@/components/Card";
 import Text from "@/components/Text";
-import { minDesktopWidth } from "@/styles/utils";
+import { minDesktopWidth, minTabletWidth } from "@/styles/utils";
 import { useSelectTab } from "@/hooks";
 
 const dummyData = {
@@ -50,13 +50,13 @@ export default function alarm() {
             align-items: center;
             width: 100%;
             height: 6rem;
-            margin-bottom: 0.5rem;
+            margin-bottom: 3vw;
             padding: 0 1rem;
-            font-weight: 600;
+            font-weight: 500;
 
-            @media (${minDesktopWidth}) {
+            @media (${minTabletWidth}) {
               padding: 0;
-              margin-bottom: 1rem;
+              margin-bottom: 1vw;
             }
           `}
         >
@@ -97,7 +97,7 @@ const AlarmContainer = styled.div`
   flex-direction: column;
 
   @media (${minDesktopWidth}) {
-    width: 50%;
+    width: 33.33%;
   }
 `;
 const TextContainer = styled.div`
