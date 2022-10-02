@@ -60,7 +60,7 @@ const LoginContainer = styled.div`
   width: 100%;
 
   @media (${minDesktopWidth}) {
-    width: 50%;
+    width: 33.33%;
   }
 `;
 const MenuItem = styled.div`
