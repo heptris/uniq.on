@@ -1,89 +1,108 @@
 import { css, useTheme } from "@emotion/react";
+import styled from "@emotion/styled";
 
 import SelectTab from "@/components/SelectTab";
 import Button from "@/components/Button";
+import Card from "@/components/Card";
+import Text from "@/components/Text";
+import { minDesktopWidth, minTabletWidth } from "@/styles/utils";
 import { useSelectTab } from "@/hooks";
 
 const dummyData = {
   checked: [
     {
-      text: "NFT가 발급되었어요! 마이페이지에서 확인해주세요.",
-      date: "1일 전",
-    },
-    {
-      text: "예약한 펀딩이 성공 했어요! 확인 버튼을 눌러 NFT 구매를 진행해주세요",
-      date: "14일 전",
-    },
-  ],
-  unchecked: [
-    {
       text: "A 기업 Q&A에 댓글이 달렸어요! 확인 버튼을 눌러 해당 페이지로 이동하세요",
-      date: "10일 전",
+      date: "14일 전",
     },
     {
       text: "회원가입이 완료되었습니다. 가입 축하드립니다.",
       date: "30일 전",
     },
   ],
+  unchecked: [
+    {
+      text: "NFT가 발급되었어요! 마이페이지에서 확인해주세요.",
+      date: "1일 전",
+    },
+    {
+      text: "예약한 펀딩이 성공 했어요! 확인 버튼을 눌러 NFT 구매를 진행해주세요",
+      date: "10일 전",
+    },
+  ],
 };
 
 export default function alarm() {
   const theme = useTheme();
-  const menus = ["확인한 알림", "읽지 않은 알림"];
+  const menus = ["읽지 않은 알림", "확인한 알림"];
   const { selectedMenu, onSelectHandler } = useSelectTab(menus);
 
   return (
-    <>
+    <AlarmContainer>
       <SelectTab menus={menus} onSelectHandler={onSelectHandler} />
-      {(selectedMenu === "확인한 알림"
+      {(selectedMenu === "읽지 않은 알림"
         ? dummyData.checked
         : dummyData.unchecked
-      ).map((alarm: { text: any; date: any }) => (
-        <div
+      ).map((alarm: { text: string; date: string }) => (
+        <Card
           css={css`
             display: flex;
-            flex-direction: row;
             justify-content: center;
             align-items: center;
             width: 100%;
             height: 6rem;
-            margin-top: 2rem;
-            padding: 0 0.5rem;
-            border-radius: 10px;
-            background-color: ${theme.color.background.item};
-            color: ${theme.color.text.main};
+            margin-bottom: 3vw;
+            padding: 0 1rem;
+            font-weight: 500;
+
+            @media (${minTabletWidth}) {
+              padding: 0;
+              margin-bottom: 1vw;
+            }
           `}
         >
-          <div
-            css={css`
-              display: flex;
-              flex-direction: column;
-              justify-content: center;
-              width: 80%;
-            `}
-          >
-            <p
+          <TextContainer>
+            <Text
+              as="p"
+              role="alarm-text"
               css={css`
-                margin-bottom: 0.5rem;
                 overflow: hidden;
+                word-break: keep-all;
                 text-overflow: ellipsis;
-                line-height: 1.2em;
               `}
             >
               {alarm.text}
-            </p>
-            <p
+            </Text>
+            <Text
+              as="p"
+              role="alarm-date"
               css={css`
                 font-size: 0.8rem;
                 color: ${theme.color.text.hover};
               `}
             >
               {alarm.date}
-            </p>
-          </div>
+            </Text>
+          </TextContainer>
           <Button>확인</Button>
-        </div>
+        </Card>
       ))}
-    </>
+    </AlarmContainer>
   );
 }
+
+const AlarmContainer = styled.div`
+  padding-top: 5rem;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+
+  @media (${minDesktopWidth}) {
+    width: 33.33%;
+  }
+`;
+const TextContainer = styled.div`
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+`;

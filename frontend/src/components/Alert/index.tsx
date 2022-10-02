@@ -10,19 +10,12 @@ import { faInfoCircle, faWarning } from "@fortawesome/free-solid-svg-icons";
 import { HEADER_HEIGHT } from "@/constants";
 
 /**
- * @params
- * isSuccess : boolean
- *
- * message : string
- * @return ReactElement
+ * @param isSuccess `boolean`
+ * @param message `string`
+ * @returns ReactElement
  */
 function Alert<T extends ElementType = "div">(
-  {
-    as,
-    isSuccess = false,
-    message = "404 에러 잘못된 요청입니다.",
-    ...props
-  }: AlertProps<T>,
+  { as, isSuccess = false, message, ...props }: AlertProps<T>,
   ref: Ref<any>
 ) {
   const target = as ?? "div";
@@ -35,17 +28,18 @@ function Alert<T extends ElementType = "div">(
       ref={ref}
       css={css`
         position: fixed;
-        top: ${HEADER_HEIGHT};
-        width: 100vw;
+        bottom: ${HEADER_HEIGHT};
+        width: fit-content;
         min-height: 3.5rem;
         padding: 1rem 1rem;
         border: 1px solid transparent;
-        border-radius: 0.25rem;
+        border-radius: 8px;
         background-color: ${isSuccess
           ? color.status.success
           : color.status.fail};
         color: ${color.text.main};
-        z-index: 1000;
+        z-index: 9990;
+        transition: all 0.3s ease 0s;
       `}
       {...props}
     >
@@ -58,19 +52,20 @@ function Alert<T extends ElementType = "div">(
           text-align: center;
         `}
       >
-        <FontAwesomeIcon
-          icon={isSuccess ? faInfoCircle : faWarning}
+        <div
           css={css`
-            height: 2rem;
-          `}
-        />
-        <Text
-          css={css`
-            width: 70%;
+            display: flex;
           `}
         >
-          {message}
-        </Text>
+          <FontAwesomeIcon
+            icon={isSuccess ? faInfoCircle : faWarning}
+            css={css`
+              height: 1.3rem;
+              margin-right: 0.5rem;
+            `}
+          />
+          <Text>{message}</Text>
+        </div>
       </div>
     </Component>
   );

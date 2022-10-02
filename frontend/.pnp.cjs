@@ -51,7 +51,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@testing-library/react", "virtual:dc3fc578bfa5e06182a4d2be39ede0bc5b74940b1ffe0d70c26892ab140a4699787750fba175dc306292e80b4aa2c8c5f68c2a821e69b2c37e360c0dff36ff66#npm:13.2.0"],\
             ["@testing-library/user-event", "virtual:dc3fc578bfa5e06182a4d2be39ede0bc5b74940b1ffe0d70c26892ab140a4699787750fba175dc306292e80b4aa2c8c5f68c2a821e69b2c37e360c0dff36ff66#npm:14.2.0"],\
             ["@types/jest", "npm:29.0.3"],\
-            ["@types/mime", "npm:3.0.1"],\
             ["@types/node", "npm:18.7.17"],\
             ["@types/react", "npm:18.0.9"],\
             ["@types/react-redux", "npm:7.1.24"],\
@@ -61,7 +60,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint-config-react-app", "virtual:dc3fc578bfa5e06182a4d2be39ede0bc5b74940b1ffe0d70c26892ab140a4699787750fba175dc306292e80b4aa2c8c5f68c2a821e69b2c37e360c0dff36ff66#npm:7.0.1"],\
             ["jest", "virtual:dc3fc578bfa5e06182a4d2be39ede0bc5b74940b1ffe0d70c26892ab140a4699787750fba175dc306292e80b4aa2c8c5f68c2a821e69b2c37e360c0dff36ff66#npm:28.1.0"],\
             ["jest-environment-jsdom", "npm:28.1.0"],\
-            ["mime", "npm:3.0.0"],\
             ["next", "virtual:dc3fc578bfa5e06182a4d2be39ede0bc5b74940b1ffe0d70c26892ab140a4699787750fba175dc306292e80b4aa2c8c5f68c2a821e69b2c37e360c0dff36ff66#npm:12.3.0"],\
             ["nft.storage", "npm:7.0.0"],\
             ["react", "npm:18.2.0"],\
@@ -4727,15 +4725,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/@types-long-npm-4.0.2-e7bdc00dd4-d16cde7240.zip/node_modules/@types/long/",\
           "packageDependencies": [\
             ["@types/long", "npm:4.0.2"]\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
-      ["@types/mime", [\
-        ["npm:3.0.1", {\
-          "packageLocation": "./.yarn/cache/@types-mime-npm-3.0.1-dec03536dc-4040fac73f.zip/node_modules/@types/mime/",\
-          "packageDependencies": [\
-            ["@types/mime", "npm:3.0.1"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -11488,13 +11477,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["mime", "npm:1.6.0"]\
           ],\
           "linkType": "HARD"\
-        }],\
-        ["npm:3.0.0", {\
-          "packageLocation": "./.yarn/cache/mime-npm-3.0.0-8d911e4c06-f43f9b7bfa.zip/node_modules/mime/",\
-          "packageDependencies": [\
-            ["mime", "npm:3.0.0"]\
-          ],\
-          "linkType": "HARD"\
         }]\
       ]],\
       ["mime-db", [\
@@ -13549,7 +13531,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@testing-library/react", "virtual:dc3fc578bfa5e06182a4d2be39ede0bc5b74940b1ffe0d70c26892ab140a4699787750fba175dc306292e80b4aa2c8c5f68c2a821e69b2c37e360c0dff36ff66#npm:13.2.0"],\
             ["@testing-library/user-event", "virtual:dc3fc578bfa5e06182a4d2be39ede0bc5b74940b1ffe0d70c26892ab140a4699787750fba175dc306292e80b4aa2c8c5f68c2a821e69b2c37e360c0dff36ff66#npm:14.2.0"],\
             ["@types/jest", "npm:29.0.3"],\
-            ["@types/mime", "npm:3.0.1"],\
             ["@types/node", "npm:18.7.17"],\
             ["@types/react", "npm:18.0.9"],\
             ["@types/react-redux", "npm:7.1.24"],\
@@ -13559,7 +13540,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint-config-react-app", "virtual:dc3fc578bfa5e06182a4d2be39ede0bc5b74940b1ffe0d70c26892ab140a4699787750fba175dc306292e80b4aa2c8c5f68c2a821e69b2c37e360c0dff36ff66#npm:7.0.1"],\
             ["jest", "virtual:dc3fc578bfa5e06182a4d2be39ede0bc5b74940b1ffe0d70c26892ab140a4699787750fba175dc306292e80b4aa2c8c5f68c2a821e69b2c37e360c0dff36ff66#npm:28.1.0"],\
             ["jest-environment-jsdom", "npm:28.1.0"],\
-            ["mime", "npm:3.0.0"],\
             ["next", "virtual:dc3fc578bfa5e06182a4d2be39ede0bc5b74940b1ffe0d70c26892ab140a4699787750fba175dc306292e80b4aa2c8c5f68c2a821e69b2c37e360c0dff36ff66#npm:12.3.0"],\
             ["nft.storage", "npm:7.0.0"],\
             ["react", "npm:18.2.0"],\

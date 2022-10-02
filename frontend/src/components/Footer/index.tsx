@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 import Link from "next/link";
 
 import { css, useTheme } from "@emotion/react";
@@ -9,14 +11,24 @@ import Text from "@/components/Text";
 import { minDesktopWidth, minTabletWidth } from "@/styles/utils";
 
 /**
- * @params
- * @return
+ * @param
+ * @returns
  */
 function Footer() {
   const theme = useTheme();
+  const router = useRouter();
+  const [routePath, setRoutePath] = useState("/");
+
+  useEffect(() => {
+    setRoutePath(router.asPath);
+  }, [router.asPath]);
 
   return (
-    <FooterContainer>
+    <FooterContainer
+      css={css`
+        margin: ${routePath === "/" ? "0 0 0 0" : "10rem 0 0 0"};
+      `}
+    >
       <Link href="/">
         <Text
           as="h1"
@@ -102,7 +114,6 @@ function Footer() {
 
 const FooterContainer = styled.footer`
   border: 0;
-  margin: 10rem 0 0 0;
   width: 100vw;
   height: 50rem;
   display: flex;
