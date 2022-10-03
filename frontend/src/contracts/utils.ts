@@ -17,7 +17,7 @@ const contracts = {
   },
 
   storeNFT: async (params: StoreNFTParams) => {
-    const { startupId, nftImage, startupName, price } = params;
+    const { startupId, nftImage, startupName, nftPrice: price } = params;
     if (!contracts.data.APIToken || !nftImage) return;
 
     const description = `${startupId}::${price}`;
