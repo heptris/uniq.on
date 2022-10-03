@@ -1,15 +1,26 @@
 import { css } from "@emotion/react";
-
-import { useSignupForm, useAuth } from "@/hooks";
-import LabelInput from "@/components/LabelInput";
-import Card from "@/components/Card";
-import Button from "@/components/Button";
-import { minDesktopWidth } from "@/styles/utils";
 import styled from "@emotion/styled";
+import { minDesktopWidth } from "@/styles/utils";
+
+import { useForm, useAuth, useServer } from "@/hooks";
+
+import LabelInput from "@/components/LabelInput";
+import Button from "@/components/Button";
 import Text from "@/components/Text";
 
+import contracts from "@/contracts/utils";
+
+import { SignupFormType } from "@/types/api_requests";
+
 function SignUp() {
-  const { form, onChangeForm, handleNicknameCheck } = useSignupForm();
+  const { account } = contracts.useAccount();
+  const { form, onChangeForm } = useForm<SignupFormType>({
+    email: "",
+    name: "",
+    nickname: "",
+    walletAddress: account,
+  });
+  const { handleNicknameCheck } = useServer();
   const { handleSignup } = useAuth();
 
   return (
@@ -52,7 +63,7 @@ function SignUp() {
               bottom: 50%;
               transform: translate(0, 80%);
             `}
-            onClick={handleNicknameCheck}
+            onClick={() => handleNicknameCheck(form.nickname)}
           >
             중복 확인
           </Button>
