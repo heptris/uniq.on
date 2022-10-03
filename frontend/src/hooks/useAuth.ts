@@ -8,9 +8,9 @@ import { ROUTES } from "@/constants";
 import { useAppDispatch, useAppSelector } from ".";
 import { useAlert } from "./useAlert";
 
-import type { SignupForm } from "@/types/api_requests";
+import type { SignupFormType } from "@/types/api_requests";
 
-const { SIGNUP, HOME } = ROUTES;
+const { SIGNUP, HOME, LOGIN } = ROUTES;
 
 export const useAuth = () => {
   const router = useRouter();
@@ -41,24 +41,21 @@ export const useAuth = () => {
     const accessTokenExpiresIn = data.accessTokenExpiresIn;
     axios.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
     setTimeout(() => {
-      handleRefreshToken();
+      silentRefresh();
     }, accessTokenExpiresIn - Date.now() - 5 * 60 * 1000);
   };
 
-  const handleRefreshToken = async () => {
-    await axios
-      .get("api/login")
-      .then(({ data }) => {
+  const silentRefresh = async () => {
+    if (await checkConnection()) {
+      axios.get("api/login").then(({ data }) => {
         handleLoginProcess(data);
-      })
-      .catch((e) => {
-        const { response } = e;
-        const { status } = response;
-        if (status === 404) {
-          handleAlertOpen(2000, "로그인을 다시 해주세요", false);
-          router.push(SIGNUP);
-        }
       });
+    } else {
+      // 로그아웃 시키기
+      axios
+        .get("api/logout")
+        .then(() => (axios.defaults.headers.common.Authorization = ``));
+    }
   };
 
   const handleLogin = async () => {
@@ -68,7 +65,8 @@ export const useAuth = () => {
       .post("api/login", { walletAddress: account })
       .then(({ data }) => {
         handleLoginProcess(data);
-        router.push(HOME);
+        if (router.pathname === SIGNUP || router.pathname === LOGIN)
+          router.push(HOME);
       })
       .catch((e) => {
         const { response } = e;
@@ -80,7 +78,7 @@ export const useAuth = () => {
       });
   };
 
-  const handleSignup = async (signupForm: SignupForm) => {
+  const handleSignup = async (signupForm: SignupFormType) => {
     await axios
       .post("api/signup", signupForm)
       .then(() => handleLogin())
@@ -94,5 +92,10 @@ export const useAuth = () => {
     account && handleLogin();
   }, [account]);
 
-  return { isLogined, handleWallet, handleSignup, handleRefreshToken };
+  return {
+    isLogined,
+    handleWallet,
+    handleSignup,
+    silentRefresh,
+  };
 };
