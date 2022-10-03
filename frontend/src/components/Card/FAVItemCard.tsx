@@ -1,18 +1,12 @@
 import { ElementType, forwardRef, Ref } from "react";
-import Image, { StaticImageData } from "next/image";
+import Image from "next/image";
 
 import { css, useTheme } from "@emotion/react";
 import styled from "@emotion/styled";
 import { faEthereum } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import type { Combine } from "@/types/utils";
-import type {
-  CardProps,
-  FAVItemCardProps,
-  MypageListType,
-} from "@/types/props";
-import type { FAVItem } from "@/types/api_responses";
+import type { FAVItemCardProps } from "@/types/props";
 import Card from "@/components/Card";
 import Text from "@/components/Text";
 import ProgressBar from "@/components/ProgressBar";
@@ -178,7 +172,10 @@ function FAVItemCard<T extends ElementType>(
             css={css`
               width: 1.5rem;
               margin-right: 0.5rem;
-              color: ${theme.color.text.main};
+              color: ${theme.color.background.main};
+              &:hover {
+                color: ${theme.color.text.main};
+              }
             `}
             icon={faHeart}
           />
@@ -191,6 +188,7 @@ const FavInfoContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  margin: 0.5rem;
 `;
 const InfoContainer = styled.div`
   padding: 0.5rem 1rem;

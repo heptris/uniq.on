@@ -48,7 +48,7 @@ const MypageListContainer = ({
           dueDate={fav.dueDate}
           nftDescription={fav.nftDescription}
           favItem={fav}
-          handleModalOpen={() => handleModalOpen(fav)}
+          handleModalOpen={handleModalOpen}
           clickable={true}
         />
       ))}
