@@ -1,6 +1,12 @@
 export const ROUTES = {
-  SIGNUP: "/signup",
   HOME: "/",
+  SIGNUP: "/signup",
+  LOGIN: "/login",
+  LIST: "/list",
+  APPLY: "/apply",
+  QUESTION: "/question",
+  ALARM: "/alarm",
+  MYPAGE: "/mypage",
 };
 
 export const HEADER_HEIGHT = "80px";
