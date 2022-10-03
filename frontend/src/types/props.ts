@@ -72,7 +72,7 @@ export type AvatarProps<T extends ElementType> = OverridableProps<
 
 export type AlertBaseProps = {
   isSuccess: boolean;
-  message?: string;
+  message: string;
 };
 export type AlertProps<T extends ElementType> = OverridableProps<
   T,
