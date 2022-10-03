@@ -53,5 +53,5 @@ export const useServer = () => {
     isLogined && handleUnreadAlarm();
   }, [isLogined]);
 
-  return { hasUnreadAlarm, handleNicknameCheck };
+  return { hasUnreadAlarm, handleNicknameCheck, handleUnreadAlarm };
 };

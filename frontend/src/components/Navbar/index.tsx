@@ -1,5 +1,11 @@
 import Link from "next/link";
-import { ComponentPropsWithoutRef, forwardRef, Ref, useState } from "react";
+import {
+  ComponentPropsWithoutRef,
+  forwardRef,
+  Ref,
+  useEffect,
+  useState,
+} from "react";
 import Image from "next/image";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -33,12 +39,16 @@ function Navbar(
   const { isLogined } = useAuth();
   const theme = useTheme();
 
-  const { hasUnreadAlarm } = useServer();
+  const { hasUnreadAlarm, handleUnreadAlarm } = useServer();
 
   const [active, setActive] = useState(false);
   const activeHandler = () => {
     setActive(!active);
   };
+
+  useEffect(() => {
+    handleUnreadAlarm();
+  }, []);
 
   return (
     <HeaderWrapper theme={theme} ref={ref} {...props}>
