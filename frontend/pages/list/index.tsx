@@ -1,8 +1,6 @@
+import { GetServerSideProps } from "next";
 import Link from "next/link";
-
 import axios from "axios";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { QUERY_KEYS } from "@/api/query_key_schema";
 
 import { css } from "@emotion/react";
 
@@ -10,16 +8,35 @@ import nft1 from "@/assets/nfts/2.png";
 import nft2 from "@/assets/nfts/3.png";
 import nft3 from "@/assets/nfts/4.png";
 
-import type { Startup } from "@/types/api_responses";
-import type { CarouselItem } from "@/types/props";
+import { useSelectTab } from "@/hooks";
+
 import Grid from "@/components/Grid";
 import CorporationCard from "@/components/Card/CorporationCard";
 import Carousel from "@/components/Carousel";
-import contracts from "@/contracts/utils";
 import SelectTab from "@/components/SelectTab";
-import { useSelectTab } from "@/hooks";
 
-export default function InvestmentList() {
+import { ENDPOINT_API } from "@/api/endpoints";
+
+import { Startup } from "@/types/api_responses";
+import type { CarouselItem } from "@/types/props";
+type InvestListProps = {
+  startups: Startup[];
+};
+
+export const getServerSideProps: GetServerSideProps = async () => {
+  const { content: startups, ...rest } = await axios({
+    method: "get",
+    url: `${ENDPOINT_API}/invest`,
+    params: {
+      size: 10,
+      page: 0,
+    },
+  }).then(({ data }) => data.data);
+  return { props: { startups, ...rest } };
+};
+
+export default function InvestmentList(props: InvestListProps) {
+  const { startups, ...rest } = props;
   const menus = ["전체 목록", "Top 10"];
   const { selectedMenu, onSelectHandler } = useSelectTab(menus);
 
@@ -37,8 +54,6 @@ export default function InvestmentList() {
       image: nft3,
     },
   ];
-  const client = useQueryClient();
-  const startups = client.getQueryData<Startup[]>([QUERY_KEYS.INVEST_LIST]);
 
   return (
     <>
@@ -77,42 +92,3 @@ export default function InvestmentList() {
     </>
   );
 }
-
-// const startups: Startup[] = [
-//   {
-//     startupId: 1,
-//     startupName: "Samsung NEXT",
-//     profileImage: startup,
-//     title: "SNKRZ",
-//     dueDate: "2022.09.07",
-//     nftTargetCount: 33,
-//     nftReserveCount: 1,
-//   },
-//   {
-//     startupId: 2,
-//     startupName: "Samsung NEXT",
-//     profileImage: startup,
-//     title: "SNKRZ",
-//     dueDate: "2022.09.07",
-//     nftTargetCount: 33,
-//     nftReserveCount: 10,
-//   },
-//   {
-//     startupId: 3,
-//     startupName: "Samsung NEXT",
-//     profileImage: startup,
-//     title: "SNKRZ",
-//     dueDate: "2022.09.07",
-//     nftTargetCount: 33,
-//     nftReserveCount: 20,
-//   },
-//   {
-//     startupId: 4,
-//     startupName: "Samsung NEXT",
-//     profileImage: startup,
-//     title: "SNKRZ",
-//     dueDate: "2022.09.07",
-//     nftTargetCount: 33,
-//     nftReserveCount: 0,
-//   },
-// ];

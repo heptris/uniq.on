@@ -1,44 +1,36 @@
 import { GetServerSideProps } from "next";
-
 import axios from "axios";
-import { useQuery } from "@tanstack/react-query";
-import { QUERY_KEYS } from "@/api/query_key_schema";
+
+import { ENDPOINT_API } from "@/api/endpoints";
 
 import { css } from "@emotion/react";
 import styled from "@emotion/styled";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 
-import type { IR } from "@/types/api_responses";
 import Grid from "@/components/Grid";
 import Card from "@/components/Card";
 import NFTItemCard from "@/components/Card/NFTItemCard";
 import Text from "@/components/Text";
 import Button from "@/components/Button";
 import LabelInput from "@/components/LabelInput";
+
 import { cssFontFamily, minDesktopWidth } from "@/styles/utils";
 
+import { IR } from "@/types/api_responses";
 type IDProps = {
-  id: string;
+  InvestmentRequest: IR;
 };
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { id } = context.query;
-  return { props: { id } };
+  const InvestmentRequest = await axios
+    .get(`${ENDPOINT_API}/invest/${id}`)
+    .then(({ data }) => data.data);
+  return { props: { InvestmentRequest } };
 };
 
 function InvestmentDetail(props: IDProps) {
-  const menus = [];
-  const { isLoading, isError, data } = useQuery(
-    [QUERY_KEYS.IR_DETAIL],
-    async () => {
-      const data: IR = await (await axios.get(`/api/invest/${props.id}`)).data;
-      return data;
-    }
-  );
-  if (isLoading) return;
-  if (isError) return;
-  const InvestmentRequest = data;
-
+  const { InvestmentRequest } = props;
   return (
     <Grid
       css={css`

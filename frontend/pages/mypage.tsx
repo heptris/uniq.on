@@ -1,77 +1,76 @@
+import { useEffect, useState } from "react";
+import { GetServerSideProps } from "next";
+import axios from "axios";
+
 import styled from "@emotion/styled";
 import { css, useTheme } from "@emotion/react";
 import { faWallet } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { minTabletWidth } from "@/styles/utils";
+
+import { ENDPOINT_API } from "@/api/endpoints";
+
+import { useNFTModal, useSelectTab } from "@/hooks";
 
 import Avatar from "@/components/Avatar";
 import Text from "@/components/Text";
 import SelectTab from "@/components/SelectTab";
 import Modal from "@/components/Modal";
 import Button from "@/components/Button";
-
-import { minTabletWidth } from "@/styles/utils";
-import { useNFTModal, useSelectTab } from "@/hooks";
-import {
-  APPLYItem,
-  FAVItem,
-  Member,
-  NFTItem,
-  RSRVItem,
-} from "@/types/api_responses";
-
 import MypageListContainer from "@/container/MypageListContainer";
-import { useQueryClient } from "@tanstack/react-query";
-import { QUERY_KEYS } from "@/api/query_key_schema";
-import { useEffect, useState } from "react";
-import { useRouter } from "next/router";
 
-const {
-  MY_USER_INFO,
-  MY_APPLY_LIST,
-  MY_FAVORITE_LIST,
-  MY_NFT_LIST,
-  MY_RESERVE_LIST,
-} = QUERY_KEYS;
+import { APPLYItem, FAVItem, NFTItem, RSRVItem } from "@/types/api_responses";
+type MyPageProps = {
+  member: any;
+  applyList: any;
+  favoriteList: any;
+  reserveList: any;
+};
 
-function MyPage() {
+export const getServerSideProps: GetServerSideProps = async () => {
+  const member = await axios.get(`${ENDPOINT_API}/member`).then(({ data }) => {
+    return { ...data.data, nickname: data.data.nickName };
+  });
+  const applyList = await axios
+    .get(`${ENDPOINT_API}/member/mypage/startup`)
+    .then(({ data }) => data.data);
+  const favoriteList = await axios
+    .get(`${ENDPOINT_API}/member/mypage/favstartup`)
+    .then(({ data }) => data.data);
+  const reserveList = await axios
+    .get(`${ENDPOINT_API}/member/mypage/invest`)
+    .then(({ data }) => data.data);
+
+  return { props: { member, applyList, favoriteList, reserveList } };
+};
+
+function MyPage(props: MyPageProps) {
   const theme = useTheme();
-  const client = useQueryClient();
-  const router = useRouter();
-
   const { isShowModal, modalContent, handleModalClose, handleModalOpen } =
     useNFTModal();
-
   const [nfts, setNfts] = useState<NFTItem[]>([]);
   const [favs, setFavs] = useState<FAVItem[]>([]);
   const [rsrvs, setRsrvs] = useState<RSRVItem[]>([]);
   const [applys, setApplys] = useState<APPLYItem[]>([]);
 
+  const { member, applyList, favoriteList, reserveList } = props;
+
   const menus = ["보유 NFT", "관심목록", "예약내역", "투자신청내역"];
   const { selectedMenu, onSelectHandler } = useSelectTab(menus);
-
-  const member = client.getQueryData<Member>([MY_USER_INFO]);
-  if (!member) {
-    router.push("/");
-    return <Text>Loading...</Text>;
-  }
 
   useEffect(() => {
     switch (selectedMenu) {
       case menus[0]:
-        const nftList = client.getQueryData<NFTItem[]>([MY_NFT_LIST]);
-        nftList && setNfts(nftList);
+        // nftList && setNfts(nftList);
         break;
       case menus[1]:
-        const favList = client.getQueryData<FAVItem[]>([MY_FAVORITE_LIST]);
-        favList && setFavs(favList);
+        setFavs(favoriteList);
         break;
       case menus[2]:
-        const rsrvList = client.getQueryData<RSRVItem[]>([MY_RESERVE_LIST]);
-        rsrvList && setRsrvs(rsrvList);
+        setRsrvs(reserveList);
         break;
       case menus[3]:
-        const applyList = client.getQueryData<APPLYItem[]>([MY_APPLY_LIST]);
-        applyList && setApplys(applyList);
+        setApplys(applyList);
         break;
     }
   }, [selectedMenu]);

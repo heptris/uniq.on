@@ -1,37 +1,38 @@
+import { GetServerSideProps } from "next";
+import axios from "axios";
+
 import { css, useTheme } from "@emotion/react";
 import styled from "@emotion/styled";
+import { minDesktopWidth, minTabletWidth } from "@/styles/utils";
 
 import SelectTab from "@/components/SelectTab";
 import Button from "@/components/Button";
 import Card from "@/components/Card";
 import Text from "@/components/Text";
-import { minDesktopWidth, minTabletWidth } from "@/styles/utils";
-import { useSelectTab } from "@/hooks";
 
-const dummyData = {
-  checked: [
-    {
-      text: "A 기업 Q&A에 댓글이 달렸어요! 확인 버튼을 눌러 해당 페이지로 이동하세요",
-      date: "14일 전",
-    },
-    {
-      text: "회원가입이 완료되었습니다. 가입 축하드립니다.",
-      date: "30일 전",
-    },
-  ],
-  unchecked: [
-    {
-      text: "NFT가 발급되었어요! 마이페이지에서 확인해주세요.",
-      date: "1일 전",
-    },
-    {
-      text: "예약한 펀딩이 성공 했어요! 확인 버튼을 눌러 NFT 구매를 진행해주세요",
-      date: "10일 전",
-    },
-  ],
+import { useSelectTab } from "@/hooks";
+import { ENDPOINT_API } from "@/api/endpoints";
+
+import { AlarmItem } from "@/types/api_responses";
+type AlarmProps = {
+  unreadAlarmList: AlarmItem[];
+  readAlarmList: AlarmItem[];
 };
 
-export default function alarm() {
+export const getServerSideProps: GetServerSideProps = async () => {
+  const alarmList = await axios
+    .get(`${ENDPOINT_API}/alarm/alarmList`)
+    .then(({ data }) => data.data);
+  const unreadAlarmList: AlarmItem[] = [];
+  const readAlarmList: AlarmItem[] = [];
+  alarmList.forEach((alarm: AlarmItem) =>
+    alarm.read ? readAlarmList.push(alarm) : unreadAlarmList.push(alarm)
+  );
+  return { props: { unreadAlarmList, readAlarmList } };
+};
+
+export default function alarm(props: AlarmProps) {
+  const { readAlarmList, unreadAlarmList } = props;
   const theme = useTheme();
   const menus = ["읽지 않은 알림", "확인한 알림"];
   const { selectedMenu, onSelectHandler } = useSelectTab(menus);
@@ -40,9 +41,9 @@ export default function alarm() {
     <AlarmContainer>
       <SelectTab menus={menus} onSelectHandler={onSelectHandler} />
       {(selectedMenu === "읽지 않은 알림"
-        ? dummyData.checked
-        : dummyData.unchecked
-      ).map((alarm: { text: string; date: string }) => (
+        ? unreadAlarmList
+        : readAlarmList
+      ).map((alarm: AlarmItem) => (
         <Card
           css={css`
             display: flex;
@@ -70,7 +71,7 @@ export default function alarm() {
                 text-overflow: ellipsis;
               `}
             >
-              {alarm.text}
+              {alarm.content}
             </Text>
             <Text
               as="p"
@@ -80,10 +81,10 @@ export default function alarm() {
                 color: ${theme.color.text.hover};
               `}
             >
-              {alarm.date}
+              {alarm.read ? "읽음" : "안읽음"}
             </Text>
           </TextContainer>
-          <Button>확인</Button>
+          {selectedMenu === "읽지 않은 알림" ? <Button>확인</Button> : <></>}
         </Card>
       ))}
     </AlarmContainer>
