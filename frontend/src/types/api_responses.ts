@@ -13,24 +13,24 @@ export type Member = {
 };
 /** Investment Request */
 export type IR = {
+  memberId?: number;
   startupId: number;
   startupName: string;
-  description: string;
-  planPaperImg: string;
-  roadmap: string;
   title: string;
-  dueDate: string;
+  description: string;
   nftTargetCount: number;
-  nftImage: string | StaticImageData;
   nftReserveCount: number;
   nftPrice: number;
+  dueDate: string;
+  planPaperImg: string;
+  roadmap: string;
+  nftImage: string | StaticImageData;
   nftDescription: string;
   isFinished: boolean;
   isGoal: boolean;
   discordUrl: string;
   enrollStatus?: "PENDING" | "ACCEPT" | "REJECT";
   rejectReason?: string;
-  memberId?: number;
 };
 
 export type NFTItem = {
@@ -75,4 +75,12 @@ export type Startup = {
   nftTargetCount: number;
   nftReserveCount: number;
   profileImage: string | StaticImageData;
+};
+// export type MypageItem = Omit<IR> & { planPaper: string };
+export type AlarmItem = {
+  alarmId: number;
+  content: string;
+  investCount?: number;
+  read: boolean;
+  tokenId?: number;
 };

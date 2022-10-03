@@ -1,54 +1,89 @@
-import Text from "@/components/Text";
+import axios from "axios";
+import { useState } from "react";
+
 import { css, useTheme } from "@emotion/react";
 import styled from "@emotion/styled";
-import { useState } from "react";
+import { uniqonThemes } from "@/styles/theme";
+
+import Text from "@/components/Text";
 import Button from "@/components/Button";
 import LabelInput from "@/components/LabelInput";
 import CircleBar from "@/components/CircleBar";
-import { uniqonThemes } from "@/styles/theme";
 import FileUpload from "@/components/FileUpload";
-import { useRouter } from "next/router";
+
+import { useAlert, useForm } from "@/hooks";
+
+import { ENDPOINT_API } from "@/api/endpoints";
+import { ApplyFormType } from "@/types/api_requests";
+
+const initialApplyState = {
+  title: "",
+  dueDate: "",
+  description: "",
+  discordUrl: "",
+  businessPlanFile: null,
+  roadMapFile: null,
+  nftTargetCount: 10,
+  nftPrice: 0,
+  nftDescription: "",
+  nftImageFile: null,
+  isChecked: false,
+};
 
 export default function apply() {
   const theme = useTheme();
-  const router = useRouter();
+  const { handleAlertOpen } = useAlert();
   const [current, setCurrent] = useState(1);
+  const { form, onChangeForm, setForm } =
+    useForm<ApplyFormType>(initialApplyState);
+  const {
+    businessPlanFile,
+    description,
+    discordUrl,
+    dueDate,
+    isChecked,
+    nftDescription,
+    nftImageFile,
+    nftPrice,
+    nftTargetCount,
+    roadMapFile,
+    title,
+  } = form;
 
   //1단계 정보
-  const [title, setTitle] = useState("");
-  const [dueDate, setDueDate] = useState("");
-  const [description, setDescription] = useState("");
-  const [discordUrl, setDiscordUrl] = useState("");
-  const [businessPlanFile, setBusinessPlanFile] = useState(null);
-  const [roadMapFile, setRoadMapFile] = useState(null);
 
   const onFirstNextHandler = () => {
-    setCurrent(current + 1);
+    title &&
+    dueDate &&
+    description &&
+    discordUrl &&
+    businessPlanFile &&
+    roadMapFile
+      ? setCurrent(current + 1)
+      : handleAlertOpen(2000, "모든 칸을 채워주세요.", false);
   };
 
+  const today = new Date().toISOString().slice(0, 10);
+
   //2단계 정보
-  const [nftTargetCount, setNftTargetCount] = useState("10");
-  const [nftPrice, setNftPrice] = useState("");
-  const [nftDescription, setNftDescription] = useState("");
-  const [nftImageFile, setNftImageFile] = useState(null);
 
   const onSecondNextHandler = () => {
-    setCurrent(current + 1);
+    nftTargetCount && nftPrice && nftDescription && nftImageFile
+      ? setCurrent(current + 1)
+      : handleAlertOpen(2000, "모든 칸을 채워주세요.", false);
   };
 
   //3단계 정보
-  const [isChecked, setIsChecked] = useState(false); //개인정보 동의 체크여부
 
   const onSubmit = () => {
+    console.log(form, axios.defaults.headers.common);
     if (!isChecked) {
-      alert("개인정보 동의를 체크해주세요");
+      handleAlertOpen(2000, "개인정보 동의를 체크해주세요", false);
     } else {
-      alert("신청이 완료되었습니다.");
       setCurrent(1);
-      setIsChecked(false);
 
       const formData = new FormData();
-      businessPlanFile && formData.append("business_plan", businessPlanFile);
+      businessPlanFile && formData.append("plan_paper", businessPlanFile);
       nftImageFile && formData.append("nft_image", nftImageFile);
       roadMapFile && formData.append("road_map", roadMapFile);
       const data = {
@@ -64,23 +99,27 @@ export default function apply() {
         "startupRequestDto",
         new Blob([JSON.stringify(data)], { type: "application/json" })
       );
-      // axios
-      //   .post("/api/invest/regist", formData)
-      //   .then((res) => {
-      //     console.log(res);
-      //     alert("신청이 성공하였습니다.");
-      //   })
-      //   .catch((err) => {
-      //     console.log(err);
-      //     alert("신청이 실패했습니다.");
-      //   });
 
-      router.push("/");
+      const config = {
+        headers: {
+          "content-type": "multipart/form-data;charset=UTF-8;",
+        },
+      };
+
+      axios
+        .post(`${ENDPOINT_API}/invest/regist`, formData, config)
+        .then((res) => {
+          console.log(res);
+          handleAlertOpen(2000, "투자 신청이 완료되었습니다.", true);
+        })
+        .catch((err) => {
+          console.log(err);
+          handleAlertOpen(2000, "투자 신청이 실패했습니다.", false);
+        });
+
+      // router.push("/");
+      setForm(initialApplyState);
     }
-  };
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    //개인정보 동의 체크여부 확인 함수
-    e.target.checked ? setIsChecked(true) : setIsChecked(false);
   };
 
   return (
@@ -100,42 +139,44 @@ export default function apply() {
           <LabelInput
             css={LabelInputStyle}
             labelText="투자자 모집 제목"
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              setTitle(e.target.value)
-            }
+            name="title"
+            onChange={onChangeForm}
           />
           <LabelInput
             css={LabelInputStyle}
             labelText="회사 소개글"
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              setDescription(e.target.value)
-            }
+            name="description"
+            onChange={onChangeForm}
           />
           <LabelInput
             type="date"
             css={LabelInputStyle}
             labelText="투자 마감일"
+            min={today}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              setDueDate(e.target.value)
+              setForm({ ...form, dueDate: e.target.value + "T23:59:59.999Z" })
             }
           />
           <LabelInput
             css={LabelInputStyle}
             labelText="디스코드 주소"
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              setDiscordUrl(e.target.value)
-            }
+            name="discordUrl"
+            onChange={onChangeForm}
           />
           <FileUpload
             type="pdf"
-            text="사업소개서 및 프로젝트 소개서(파일용량 50MB까지)"
-            onFileSelectSuccess={(file: any) => setBusinessPlanFile(file)}
+            text="사업소개서 및 프로젝트 소개서(파일용량 5MB까지)"
+            onFileSelectSuccess={(file: any) =>
+              setForm({ ...form, businessPlanFile: file })
+            }
             onFileSelectError={({ error }) => alert(error)}
           />
           <FileUpload
             type="pdf"
             text="NFT 투자혜택 로드맵을 제출해주세요."
-            onFileSelectSuccess={(file: any) => setRoadMapFile(file)}
+            onFileSelectSuccess={(file: any) =>
+              setForm({ ...form, roadMapFile: file })
+            }
             onFileSelectError={({ error }) => alert(error)}
           />
           <Button css={ButtonStyle} onClick={onFirstNextHandler}>
@@ -150,7 +191,7 @@ export default function apply() {
           <SelectInput
             id="토큰 발행 개수"
             onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
-              setNftTargetCount(e.target.value)
+              setForm({ ...form, nftTargetCount: +e.target.value })
             }
             value={nftTargetCount}
           >
@@ -162,22 +203,22 @@ export default function apply() {
             css={LabelInputStyle}
             labelText="토큰 개당 가격(SSH)"
             type="number"
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              setNftPrice(e.target.value)
-            }
+            name="nftPrice"
+            onChange={onChangeForm}
           />
           <LabelInput
             css={LabelInputStyle}
             labelText="토큰 정보"
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              setNftDescription(e.target.value)
-            }
+            name="nftDescription"
+            onChange={onChangeForm}
           />
 
           <FileUpload
             type="img"
             text="NFT 이미지 파일을 첨부해주세요."
-            onFileSelectSuccess={(file: any) => setNftImageFile(file)}
+            onFileSelectSuccess={(file: any) =>
+              setForm({ ...form, nftImageFile: file })
+            }
             onFileSelectError={({ error }) => alert(error)}
           />
 
@@ -224,7 +265,12 @@ export default function apply() {
             </Text>
           </InfoAgreeBox>
           <AgreeCheckBox>
-            <LabelInput id="infoAgree" type="checkbox" onChange={onChange} />
+            <LabelInput
+              id="infoAgree"
+              type="checkbox"
+              name="isChecked"
+              onChange={onChangeForm}
+            />
             <label
               htmlFor="infoAgree"
               css={css`
