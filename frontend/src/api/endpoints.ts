@@ -1,6 +1,6 @@
 /* 백엔드 엔드포인트 스키마 */
 
-const PROTOCOL = "https://";
+const PROTOCOL = "http://";
 const HOST = "j7a507.p.ssafy.io:8080";
 const DOMAIN = PROTOCOL + HOST;
 
