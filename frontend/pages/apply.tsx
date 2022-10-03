@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { css, useTheme } from "@emotion/react";
 import styled from "@emotion/styled";
@@ -11,10 +11,12 @@ import LabelInput from "@/components/LabelInput";
 import CircleBar from "@/components/CircleBar";
 import FileUpload from "@/components/FileUpload";
 
-import { useAlert, useForm } from "@/hooks";
+import { useAlert, useAuth, useForm } from "@/hooks";
 
 import { ENDPOINT_API } from "@/api/endpoints";
 import { ApplyFormType } from "@/types/api_requests";
+import { useRouter } from "next/router";
+import { ROUTES } from "@/constants";
 
 const initialApplyState = {
   title: "",
@@ -30,12 +32,25 @@ const initialApplyState = {
   isChecked: false,
 };
 
+const { LOGIN } = ROUTES;
+
 export default function apply() {
+  const { isLogined } = useAuth();
+  const router = useRouter();
   const theme = useTheme();
   const { handleAlertOpen } = useAlert();
   const [current, setCurrent] = useState(1);
   const { form, onChangeForm, setForm } =
     useForm<ApplyFormType>(initialApplyState);
+
+  useEffect(() => {
+    isLogined ||
+      (() => {
+        handleAlertOpen(2000, "로그인이 필요한 서비스입니다", false);
+        router.push(LOGIN);
+      })();
+  }, []);
+
   const {
     businessPlanFile,
     description,
