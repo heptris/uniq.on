@@ -27,58 +27,54 @@ const MypageListContainer = ({
 }) => {
   return (
     <Grid column="double">
-      {nfts &&
-        nfts.map((nft: NFTItem) => (
-          <NFTItemCard
-            key={nft.startupId}
-            nftImage={nft.nftImage}
-            tokenId={nft.tokenId}
-            startupName={nft.startupName}
-            nftPrice={nft.nftPrice}
-            onClick={() => handleModalOpen(nft)}
-            clickable={true}
-          />
-        ))}
-      {favs &&
-        favs.map((fav: FAVItem) => (
-          <FAVItemCard
-            key={fav.startupId}
-            nftImage={fav.nftImage}
-            tokenId={fav.tokenId}
-            startupName={fav.startupName}
-            nftPrice={fav.nftPrice}
-            dueDate={fav.dueDate}
-            nftDescription={fav.nftDescription}
-            favItem={fav}
-            handleModalOpen={() => handleModalOpen(fav)}
-            clickable={true}
-          />
-        ))}
-      {rsrvs &&
-        rsrvs.map((rsrv: RSRVItem) => (
-          <RSRVItemCard
-            key={rsrv.startupId}
-            nftImage={rsrv.nftImage}
-            tokenId={rsrv.tokenId}
-            startupName={rsrv.startupName}
-            nftPrice={rsrv.nftPrice}
-            nftReserveCount={rsrv.nftReserveCount}
-            onClick={() => handleModalOpen(rsrv)}
-            clickable={true}
-          />
-        ))}
-      {applys &&
-        applys.map((apply: APPLYItem) => (
-          <NFTItemCard
-            key={apply.startupId}
-            nftImage={apply.nftImage}
-            tokenId={apply.tokenId}
-            startupName={apply.startupName}
-            nftPrice={apply.nftPrice}
-            onClick={() => handleModalOpen(apply)}
-            clickable={true}
-          />
-        ))}
+      {nfts?.map((nft: NFTItem) => (
+        <NFTItemCard
+          key={nft.startupId}
+          nftImage={nft.nftImage}
+          tokenId={nft.tokenId}
+          startupName={nft.startupName}
+          nftPrice={nft.nftPrice}
+          onClick={() => handleModalOpen(nft)}
+          clickable={true}
+        />
+      ))}
+      {favs?.map((fav: FAVItem) => (
+        <FAVItemCard
+          key={fav.startupId}
+          nftImage={fav.nftImage}
+          tokenId={fav.tokenId}
+          startupName={fav.startupName}
+          nftPrice={fav.nftPrice}
+          dueDate={fav.dueDate}
+          nftDescription={fav.nftDescription}
+          favItem={fav}
+          handleModalOpen={handleModalOpen}
+          clickable={true}
+        />
+      ))}
+      {rsrvs?.map((rsrv: RSRVItem) => (
+        <RSRVItemCard
+          key={rsrv.startupId}
+          nftImage={rsrv.nftImage}
+          tokenId={rsrv.tokenId}
+          startupName={rsrv.startupName}
+          nftPrice={rsrv.nftPrice}
+          nftReserveCount={rsrv.nftReserveCount}
+          onClick={() => handleModalOpen(rsrv)}
+          clickable={true}
+        />
+      ))}
+      {applys?.map((apply: APPLYItem) => (
+        <NFTItemCard
+          key={apply.startupId}
+          nftImage={apply.nftImage}
+          tokenId={apply.tokenId}
+          startupName={apply.startupName}
+          nftPrice={apply.nftPrice}
+          onClick={() => handleModalOpen(apply)}
+          clickable={true}
+        />
+      ))}
     </Grid>
   );
 };
