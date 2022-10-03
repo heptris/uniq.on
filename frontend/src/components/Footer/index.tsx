@@ -9,6 +9,7 @@ import { faCopyright } from "@fortawesome/free-solid-svg-icons";
 
 import Text from "@/components/Text";
 import { minDesktopWidth, minTabletWidth } from "@/styles/utils";
+import { useAuth } from "@/hooks";
 
 /**
  * @param
@@ -18,6 +19,7 @@ function Footer() {
   const theme = useTheme();
   const router = useRouter();
   const [routePath, setRoutePath] = useState("/");
+  const { isLogined } = useAuth();
 
   useEffect(() => {
     setRoutePath(router.asPath);
@@ -56,29 +58,30 @@ function Footer() {
             <Link href="/list">
               <Text as="li">투자리스트</Text>
             </Link>
-            <Link href="/apply">
-              <Text as="li">투자신청</Text>
-            </Link>
+            {isLogined ? (
+              <Link href="/apply">
+                <Text as="li">투자신청</Text>
+              </Link>
+            ) : (
+              <></>
+            )}
           </ul>
         </InfoItem>
-        <InfoItem>
-          <Text as="h1" role="info-header">
-            Account
-          </Text>
-          <ul>
-            <Link href="/mypage">
-              <Text as="li">마이페이지</Text>
-            </Link>
-          </ul>
-        </InfoItem>
-        <InfoItem>
-          <Text as="h1" role="info-header">
-            Q&A
-          </Text>
-          <ul>
-            <Text as="li">자주하는 질문</Text>
-          </ul>
-        </InfoItem>
+        {isLogined ? (
+          <InfoItem>
+            <Text as="h1" role="info-header">
+              Account
+            </Text>
+            <ul>
+              <Link href="/mypage">
+                <Text as="li">마이페이지</Text>
+              </Link>
+            </ul>
+          </InfoItem>
+        ) : (
+          <></>
+        )}
+
         <InfoItem>
           <Text as="h1" role="info-header">
             Contact
@@ -132,11 +135,11 @@ const InfoContainer = styled.div`
   row-gap: 5rem;
 
   @media (${minTabletWidth}) {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
   }
   @media (${minDesktopWidth}) {
     width: 50%;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
   }
 `;
 const InfoItem = styled.div`

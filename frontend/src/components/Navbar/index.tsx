@@ -69,16 +69,15 @@ function Navbar(
                 투자리스트
               </Text>
             </Link>
-            <Link href={APPLY}>
-              <Text css={ListTextStyle({ theme })} onClick={activeHandler}>
-                투자신청
-              </Text>
-            </Link>
-            <Link href={QUESTION}>
-              <Text css={ListTextStyle({ theme })} onClick={activeHandler}>
-                자주하는질문
-              </Text>
-            </Link>
+            {isLogined ? (
+              <Link href={APPLY}>
+                <Text css={ListTextStyle({ theme })} onClick={activeHandler}>
+                  투자신청
+                </Text>
+              </Link>
+            ) : (
+              <></>
+            )}
           </nav>
           {isLogined ? (
             <HeaderIcon
