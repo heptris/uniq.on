@@ -39,10 +39,14 @@ export const useServer = () => {
   };
 
   const handleUnreadAlarm = async () => {
-    await axios.get(`${ENDPOINT_API}/alarm/alarmList`).then(({ data }) => {
-      console.log(data.data);
-      data.data.length > 0 ? setHasUnreadAlarm(true) : setHasUnreadAlarm(false);
-    });
+    await axios
+      .get(`${ENDPOINT_API}/alarm/unReadAlarmList`)
+      .then(({ data }) => {
+        console.log(data.data);
+        data.data.length > 0
+          ? setHasUnreadAlarm(true)
+          : setHasUnreadAlarm(false);
+      });
   };
 
   useEffect(() => {
