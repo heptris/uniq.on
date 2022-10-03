@@ -45,6 +45,22 @@ export type CardProps<T extends ElementType> = OverridableProps<
   CardBaseProps
 >;
 
+export type FAVItemCardBaseProps = {
+  favItem: FAVItem;
+  handleModalOpen: (type: MypageListType) => void;
+  tokenId: number;
+  startupId: number;
+  nftImage: string | StaticImageData;
+  startupName: string;
+  dueDate: string;
+  nftDescription: string;
+  nftPrice: number;
+};
+export type FAVItemCardProps<T extends ElementType> = CombineElementProps<
+  T,
+  CardBaseProps
+>;
+
 export type AvatarBaseProps = {
   image: string | StaticImageData;
   outline?: boolean;

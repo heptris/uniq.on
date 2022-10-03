@@ -7,7 +7,11 @@ import { faEthereum } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import type { Combine } from "@/types/utils";
-import type { CardProps, MypageListType } from "@/types/props";
+import type {
+  CardProps,
+  FAVItemCardProps,
+  MypageListType,
+} from "@/types/props";
 import type { FAVItem } from "@/types/api_responses";
 import Card from "@/components/Card";
 import Text from "@/components/Text";
@@ -15,14 +19,6 @@ import ProgressBar from "@/components/ProgressBar";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { useAlert } from "@/hooks";
 import axios from "axios";
-
-type FAVItemCardProps =
-  | {
-      progress?: number;
-      favItem: FAVItem;
-      handleModalOpen: (type: MypageListType) => void;
-    }
-  | FAVItem;
 
 /**
  * @params
@@ -39,8 +35,8 @@ type FAVItemCardProps =
  * `progress`: `number`
  * @returns `ReactElement`
  */
-function FAVItemCard<T extends ElementType = "div">(
-  props: Combine<FAVItemCardProps, CardProps<T>>,
+function FAVItemCard<T extends ElementType>(
+  props: FAVItemCardProps<T>,
   ref: Ref<any>
 ) {
   const {
@@ -102,6 +98,7 @@ function FAVItemCard<T extends ElementType = "div">(
             {startupName} #{tokenId}
           </Text>
           <Text
+            as="h1"
             role="token-name"
             css={css`
               color: ${theme.color.text.sub};
