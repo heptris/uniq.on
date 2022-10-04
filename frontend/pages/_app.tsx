@@ -32,6 +32,10 @@ export default function MyApp({ Component, pageProps }: AppProps) {
           <Head>
             <title>uniq.on | NFT를 통한 스타트업 투자 플랫폼</title>
             <link rel="icon" href="/favicon.ico" />
+            <meta
+              httpEquiv="Content-Security-Policy"
+              content="upgrade-insecure-requests"
+            />
           </Head>
           <Suspense fallback={<div>App Loading...</div>}>
             <Layout>
