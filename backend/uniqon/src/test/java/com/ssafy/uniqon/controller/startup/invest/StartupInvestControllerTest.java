@@ -44,7 +44,7 @@ class StartupInvestControllerTest extends RestDocsTestSupport {
     @Test
     public void 투자_예약() throws Exception {
 
-        mockMvc.perform(get("/api/invest/reserve/{startupId}", 1L)
+        mockMvc.perform(get("/app/invest/reserve/{startupId}", 1L)
                         .header("Authorization", "Bearer " + accessToken)
                         .contentType(MediaType.APPLICATION_JSON)
                 ).andExpect(status().isCreated())

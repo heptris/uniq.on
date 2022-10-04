@@ -58,7 +58,7 @@ class StartupCommunityControllerTest extends RestDocsTestSupport {
 
         given(startupCommunityService.communityList(any())).willReturn(startupCommunityResponseListDtos);
 
-        mockMvc.perform(get("/api/invest/community/{startupId}", 1L)
+        mockMvc.perform(get("/app/invest/community/{startupId}", 1L)
                         .header("Authorization", "Bearer " + accessToken)
                         .contentType(MediaType.APPLICATION_JSON)
                 ).andExpect(status().isOk())
@@ -75,7 +75,7 @@ class StartupCommunityControllerTest extends RestDocsTestSupport {
         StartupCommunityRequestDto startupCommunityRequestDto = new StartupCommunityRequestDto("title", "content");
 
         mockMvc.perform(
-                        post("/api/invest/community/{startupId}", 1L)
+                        post("/app/invest/community/{startupId}", 1L)
                                 .header("Authorization", "Bearer " + accessToken)
                                 .content(objectMapper.writeValueAsString(startupCommunityRequestDto))
                                 .contentType(MediaType.APPLICATION_JSON)
@@ -101,7 +101,7 @@ class StartupCommunityControllerTest extends RestDocsTestSupport {
         StartupCommunityRequestModifyDto startupCommunityRequestModifyDto = new StartupCommunityRequestModifyDto("title", "content");
 
         mockMvc.perform(
-                        put("/api/invest/community/{startupId}/{communityId}", 1L, 1L)
+                        put("/app/invest/community/{startupId}/{communityId}", 1L, 1L)
                                 .header("Authorization", "Bearer " + accessToken)
                                 .content(objectMapper.writeValueAsString(startupCommunityRequestModifyDto))
                                 .contentType(MediaType.APPLICATION_JSON)
@@ -126,7 +126,7 @@ class StartupCommunityControllerTest extends RestDocsTestSupport {
     @Test
     public void 스타트업_커뮤니티_삭제() throws Exception {
         mockMvc.perform(
-                        delete("/api/invest/community/{startupId}/{communityId}", 1L, 1L)
+                        delete("/app/invest/community/{startupId}/{communityId}", 1L, 1L)
                                 .header("Authorization", "Bearer " + accessToken)
                                 .contentType(MediaType.APPLICATION_JSON)
                 ).andExpect(status().isOk())
@@ -164,7 +164,7 @@ class StartupCommunityControllerTest extends RestDocsTestSupport {
         given(startupCommunityService.communityDetail(1L)).willReturn(startupCommunityResponseDetailDto);
 
         mockMvc.perform(
-                        get("/api/invest/community/detail/{communityId}", 1L)
+                        get("/app/invest/community/detail/{communityId}", 1L)
                                 .header("Authorization", "Bearer " + accessToken)
                                 .contentType(MediaType.APPLICATION_JSON)
                 ).andExpect(status().isOk())

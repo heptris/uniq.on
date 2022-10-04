@@ -102,4 +102,17 @@ public class AlarmService {
         Invest_history investHistory = investHistoryRepository.findByMemberIdAndStartupId(alarm.getMember().getId(), alarm.getStartupId());
         investHistory.changeInvestStatus(InvestStatus.INVESTED);
     }
+
+    /**
+     * 투자자가 NFT 구매 실패할 경우
+     */
+    @Transactional
+    public void nftPurchaseFail(Long alarmId) {
+        Alarm alarm = alarmRepository.findById(alarmId).orElseThrow(
+                () -> new CustomException(ErrorCode.ALARM_NOT_FOUND)
+        );
+        alarm.changeIsRead();
+        Invest_history investHistory = investHistoryRepository.findByMemberIdAndStartupId(alarm.getMember().getId(), alarm.getStartupId());
+        investHistory.changeInvestStatus(InvestStatus.CANCELED);
+    }
 }

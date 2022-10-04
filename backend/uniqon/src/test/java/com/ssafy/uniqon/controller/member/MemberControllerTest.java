@@ -70,7 +70,7 @@ class MemberControllerTest extends RestDocsTestSupport {
 
 
         MockMultipartHttpServletRequestBuilder builder =
-                MockMvcRequestBuilders.fileUpload("/api/member");
+                MockMvcRequestBuilders.fileUpload("/app/member");
         builder.with(new RequestPostProcessor() {
             @Override
             public MockHttpServletRequest postProcessRequest(MockHttpServletRequest request) {
@@ -113,7 +113,7 @@ class MemberControllerTest extends RestDocsTestSupport {
 
 
         MockMultipartHttpServletRequestBuilder builder =
-                MockMvcRequestBuilders.fileUpload("/api/member");
+                MockMvcRequestBuilders.fileUpload("/app/member");
         builder.with(new RequestPostProcessor() {
             @Override
             public MockHttpServletRequest postProcessRequest(MockHttpServletRequest request) {
@@ -159,7 +159,7 @@ class MemberControllerTest extends RestDocsTestSupport {
 
 
         MockMultipartHttpServletRequestBuilder builder =
-                MockMvcRequestBuilders.fileUpload("/api/member");
+                MockMvcRequestBuilders.fileUpload("/app/member");
         builder.with(new RequestPostProcessor() {
             @Override
             public MockHttpServletRequest postProcessRequest(MockHttpServletRequest request) {
@@ -203,7 +203,7 @@ class MemberControllerTest extends RestDocsTestSupport {
         given(memberService.memberDetail(1L)).willReturn(memberProfileDto);
 
         mockMvc.perform(
-                get("/api/member")
+                get("/app/member")
                         .header("Authorization", "Bearer " + accessToken)
                         .contentType(MediaType.APPLICATION_JSON)
         ).andExpect(status().isOk());
@@ -214,7 +214,7 @@ class MemberControllerTest extends RestDocsTestSupport {
     @Test
     public void 회원_탈퇴() throws Exception {
         mockMvc.perform(
-                delete("/api/member")
+                delete("/app/member")
                         .header("Authorization", "Bearer " + accessToken)
                         .contentType(MediaType.APPLICATION_JSON)
         ).andExpect(status().isOk());
@@ -244,7 +244,7 @@ class MemberControllerTest extends RestDocsTestSupport {
         given(memberService.findMemberFavStartup(1L)).willReturn(favStartupDtoList);
 
         mockMvc.perform(
-                get("/api/member/mypage/favstartup")
+                get("/app/member/mypage/favstartup")
                         .header("Authorization", "Bearer " + accessToken)
                         .contentType(MediaType.APPLICATION_JSON)
         ).andExpect(status().isOk());
@@ -271,7 +271,7 @@ class MemberControllerTest extends RestDocsTestSupport {
         given(memberService.findInvestedStartup(any(Long.class))).willReturn(memberInvestedStartupDtoList);
 
         mockMvc.perform(
-                get("/api/member/mypage/invest")
+                get("/app/member/mypage/invest")
                         .header("Authorization", "Bearer " + accessToken)
                         .contentType(MediaType.APPLICATION_JSON)
         ).andExpect(status().isOk());
@@ -297,7 +297,7 @@ class MemberControllerTest extends RestDocsTestSupport {
         given(memberService.findStartupInvestedList(1L)).willReturn(startupInvestedListDtoList);
 
         mockMvc.perform(
-                get("/api/member/mypage/startup")
+                get("/app/member/mypage/startup")
                         .header("Authorization", "Bearer " + accessToken)
                         .contentType(MediaType.APPLICATION_JSON)
         ).andExpect(status().isOk());

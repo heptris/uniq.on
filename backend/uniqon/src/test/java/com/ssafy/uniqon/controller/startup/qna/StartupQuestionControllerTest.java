@@ -57,7 +57,7 @@ class StartupQuestionControllerTest extends RestDocsTestSupport {
         given(startupQuestionService.질문등록(1L, 1L, question)).willReturn(null);
 
         mockMvc.perform(
-                        post("/api/invest/question/{startupId}", 1L)
+                        post("/app/invest/question/{startupId}", 1L)
                                 .header("Authorization", "Bearer " + accessToken)
                                 .content(startupQuestionReqDto)
                                 .contentType(MediaType.APPLICATION_JSON)
@@ -143,7 +143,7 @@ class StartupQuestionControllerTest extends RestDocsTestSupport {
                 .willReturn(cursorResult);
 
         mockMvc.perform(
-                        get("/api/invest/question/{startupId}/page?cursorId=4&size=3", 1L)
+                        get("/app/invest/question/{startupId}/page?cursorId=4&size=3", 1L)
                                 .contentType(MediaType.APPLICATION_JSON)
                 ).andExpect(status().isOk())
                 .andDo(restDocs.document(
@@ -190,7 +190,7 @@ class StartupQuestionControllerTest extends RestDocsTestSupport {
         StartupQuestionUpdateReqDto questionUpdateReqDto = new StartupQuestionUpdateReqDto("update");
 
         mockMvc.perform(
-                        put("/api/invest/question/{startupQuestionId}", 1L).
+                        put("/app/invest/question/{startupQuestionId}", 1L).
                                 header("Authorization", "Bearer " + accessToken)
                                 .content(objectMapper.writeValueAsString(questionUpdateReqDto))
                                 .contentType(MediaType.APPLICATION_JSON)
@@ -217,7 +217,7 @@ class StartupQuestionControllerTest extends RestDocsTestSupport {
                         .질문수정(anyLong(), anyLong(), any(StartupQuestionUpdateReqDto.class));
 
         mockMvc.perform(
-                        put("/api/invest/question/{startupQuestionId}", 1L).
+                        put("/app/invest/question/{startupQuestionId}", 1L).
                                 header("Authorization", "Bearer " + accessToken)
                                 .content(objectMapper.writeValueAsString(questionUpdateReqDto))
                                 .contentType(MediaType.APPLICATION_JSON)
@@ -239,7 +239,7 @@ class StartupQuestionControllerTest extends RestDocsTestSupport {
     @Test
     public void 스타트업_질문_삭제() throws Exception {
         mockMvc.perform(
-                        delete("/api/invest/question/{startupQuestionId}", 1L)
+                        delete("/app/invest/question/{startupQuestionId}", 1L)
                                 .header("Authorization", "Bearer " + accessToken)
                                 .contentType(MediaType.APPLICATION_JSON)
                 ).andExpect(status().isOk())
@@ -259,7 +259,7 @@ class StartupQuestionControllerTest extends RestDocsTestSupport {
                         .질문삭제(anyLong(), anyLong());
 
         mockMvc.perform(
-                        delete("/api/invest/question/{startupQuestionId}", 1L)
+                        delete("/app/invest/question/{startupQuestionId}", 1L)
                                 .header("Authorization", "Bearer " + accessToken)
                                 .contentType(MediaType.APPLICATION_JSON)
                 ).andExpect(status().is4xxClientError())

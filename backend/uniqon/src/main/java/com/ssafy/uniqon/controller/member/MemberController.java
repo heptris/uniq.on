@@ -26,7 +26,7 @@ import static com.ssafy.uniqon.exception.ex.ErrorCode.NOT_EQUAL_PASSWORD;
 @RestController
 @RequiredArgsConstructor
 @Slf4j
-@RequestMapping("/api/member")
+@RequestMapping("/app/member")
 public class MemberController {
 
     private final MemberService memberService;

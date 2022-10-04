@@ -68,21 +68,5 @@ class StartupServiceTest {
         assertThat(startupDetailResponseDto.getStartupId()).isEqualTo(1L);
     }
 
-//    @Test
-//    public void 투자등록() {
-//        //given
-//        given(startupRepository.save(any(Startup.class))).willReturn(Startup.builder().id(1L).build());
-//        given(memberRepository.findById(anyLong())).willReturn(Optional.of(new Member()));
-//
-//        //when
-//        Long startupId = startupService.investRegist(1L, any(StartupRequestDto.class), any(MultipartFile.class)
-//                , any(MultipartFile.class), any(MultipartFile.class));
-//        //then
-//        assertThat(startupId).isEqualTo(1L);
-//    }
-//
-//    private MockMultipartFile getMockMultipartFile(String fileName, String contentType, String path) throws IOException {
-//        FileInputStream fileInputStream = new FileInputStream(new File(path));
-//        return new MockMultipartFile(fileName, fileName + "." + contentType, contentType, fileInputStream);
-//    }
+
 }

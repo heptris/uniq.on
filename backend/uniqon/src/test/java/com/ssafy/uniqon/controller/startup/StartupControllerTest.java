@@ -89,7 +89,7 @@ class StartupControllerTest extends RestDocsTestSupport {
         given(startupService.startupDetail(1L, 1L)).willReturn(startupDetailResponseDto);
 
         mockMvc.perform(
-                        get("/api/invest/{startupId}", 1L)
+                        get("/app/invest/{startupId}", 1L)
                                 .contentType(MediaType.APPLICATION_JSON)
                 )
                 .andExpect(status().isOk())
@@ -150,7 +150,7 @@ class StartupControllerTest extends RestDocsTestSupport {
         given(startupService.investRegist(1L, startupRequestDto, planPaper, nftImage, roadMap))
                 .willReturn(1L);
         mockMvc.perform(
-                        multipart("/api/invest/regist")
+                        multipart("/app/invest/regist")
                                 .file(request)
                                 .file(planPaper)
                                 .file(nftImage)
@@ -216,7 +216,7 @@ class StartupControllerTest extends RestDocsTestSupport {
         );
 
         mockMvc.perform(
-                        multipart("/api/invest/regist")
+                        multipart("/app/invest/regist")
                                 .file(request)
                                 .file(planPaper)
                                 .file(nftImage)
@@ -257,7 +257,7 @@ class StartupControllerTest extends RestDocsTestSupport {
     public void 스타트업_즐겨찾기_등록_해제() throws Exception {
 
         mockMvc.perform(
-                        get("/api/invest/{startupId}/favorite", 1L)
+                        get("/app/invest/{startupId}/favorite", 1L)
                                 .header("Authorization", "Bearer " + accessToken)
                                 .contentType(MediaType.APPLICATION_JSON)
                 )
@@ -285,7 +285,7 @@ class StartupControllerTest extends RestDocsTestSupport {
         given(startupService.startupList(condition, pageable)).willReturn(page);
 
         mockMvc.perform(
-                        get("/api/invest?size=10&page=0&startupName=startupName&title=title")
+                        get("/app/invest?size=10&page=0&startupName=startupName&title=title")
                                 .contentType(MediaType.APPLICATION_JSON)
                 ).andExpect(status().isOk())
                 .andDo(restDocs.document(
