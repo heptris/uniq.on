@@ -1,9 +1,9 @@
 /* 추상화된 컴포넌트들의 props 타입 */
 
-import { ElementType, ReactElement } from "react";
+import { ElementType } from "react";
 import { CombineElementProps, OverridableProps } from "@/types/utils";
 import { StaticImageData } from "next/image";
-import { APPLYItem, FAVItem, NFTItem, RSRVItem } from "./api_responses";
+import { APPLYItem, FAVItem, Member, NFTItem, RSRVItem } from "./api_responses";
 
 export type TextBaseProps = {
   typography?: "content";
@@ -149,3 +149,9 @@ export type CarouselProps = {
 
 // export type MypageListType = "APPLY" | "NFT" | "FAVOTIRES" | "RESERVE";
 export type MypageListType = NFTItem | FAVItem | RSRVItem | APPLYItem;
+export type MyPageProps = {
+  member: Member;
+  applyList: APPLYItem[];
+  favoriteList: FAVItem[];
+  reserveList: RSRVItem[];
+};
