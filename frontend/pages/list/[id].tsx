@@ -3,7 +3,7 @@ import axios from "axios";
 
 import { ENDPOINT_API } from "@/api/endpoints";
 
-import { css } from "@emotion/react";
+import { css, useTheme } from "@emotion/react";
 import styled from "@emotion/styled";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
@@ -18,6 +18,8 @@ import LabelInput from "@/components/LabelInput";
 import { cssFontFamily, minDesktopWidth } from "@/styles/utils";
 
 import { IR } from "@/types/api_responses";
+import { useAlert } from "@/hooks";
+import { useEffect, useState } from "react";
 type IDProps = {
   InvestmentRequest: IR;
 };
@@ -31,6 +33,31 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
 function InvestmentDetail(props: IDProps) {
   const { InvestmentRequest } = props;
+  const theme = useTheme();
+  const { handleAlertOpen } = useAlert();
+  const [fav, setFav] = useState(InvestmentRequest.isFav);
+  useEffect(() => {}, [fav]);
+  const handleFavorite = () => {
+    //관심목록 등록
+    axios
+      .get(`${ENDPOINT_API}/invest/${InvestmentRequest.startupId}/favorite`)
+      .then((response) => {
+        const { status } = response;
+        if (status === 200 && !fav) {
+          handleAlertOpen(2000, "즐겨찾기가 등록되었습니다.", true);
+          setFav((fav) => !fav);
+        } else if (status === 200 && fav) {
+          handleAlertOpen(2000, "즐겨찾기가 해제되었습니다.", true);
+          setFav((fav) => !fav);
+        }
+      })
+      .catch((err) => {
+        const { response } = err;
+        const { status, data } = response;
+        handleAlertOpen(2000, `${status}에러가 발생했습니다.`, false);
+      });
+  };
+  console.log(InvestmentRequest.isFav);
   return (
     <Grid
       css={css`
@@ -65,8 +92,25 @@ function InvestmentDetail(props: IDProps) {
               `}
             >
               <Text as="h1">NFT 소개</Text>
-              <FavoriteButton>
-                <FontAwesomeIcon icon={faHeart} width={"1.8rem"} />
+              <FavoriteButton
+                onClick={() => {
+                  handleFavorite();
+                }}
+              >
+                {fav ? (
+                  <FontAwesomeIcon
+                    icon={faHeart}
+                    width={"1.8rem"}
+                    css={css`
+                      color: ${theme.color.background.main};
+                      &:hover {
+                        color: ${theme.color.text.main};
+                      }
+                    `}
+                  />
+                ) : (
+                  <FontAwesomeIcon icon={faHeart} width={"1.8rem"} />
+                )}
               </FavoriteButton>
             </div>
             <Text as="p">{InvestmentRequest.nftDescription}</Text>
