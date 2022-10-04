@@ -6,4 +6,3 @@ const DOMAIN = PROTOCOL + HOST;
 
 export const ENDPOINT_API = DOMAIN + "/api";
 export const ENDPOINT_AUTH = DOMAIN + "/auth";
-export const ENDPOINT_FRONT = "http://localhost:3000";

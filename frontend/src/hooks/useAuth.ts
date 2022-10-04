@@ -9,7 +9,6 @@ import { useAppDispatch, useAppSelector } from ".";
 import { useAlert } from "./useAlert";
 
 import type { SignupFormType } from "@/types/api_requests";
-import { ENDPOINT_FRONT } from "@/api/endpoints";
 
 const { SIGNUP, HOME, LOGIN } = ROUTES;
 
@@ -48,13 +47,13 @@ export const useAuth = () => {
 
   const silentRefresh = async () => {
     if (await checkConnection()) {
-      axios.get(`${ENDPOINT_FRONT}/api/login`).then(({ data }) => {
+      axios.get("api/login").then(({ data }) => {
         handleLoginProcess(data);
       });
     } else {
       // 로그아웃 시키기
       axios
-        .get(`${ENDPOINT_FRONT}/api/logout`)
+        .get("api/logout")
         .then(() => (axios.defaults.headers.common.Authorization = ``));
     }
   };
@@ -63,7 +62,7 @@ export const useAuth = () => {
     // 지갑 연결 이후
     // 주소를 서버에 보내고 로그인 과정 처리
     await axios
-      .post(`${ENDPOINT_FRONT}/api/login`, { walletAddress: account })
+      .post("api/login", { walletAddress: account })
       .then(({ data }) => {
         handleLoginProcess(data);
         if (router.pathname === SIGNUP || router.pathname === LOGIN)
@@ -81,7 +80,7 @@ export const useAuth = () => {
 
   const handleSignup = async (signupForm: SignupFormType) => {
     await axios
-      .post(`${ENDPOINT_FRONT}/api/signup`, signupForm)
+      .post("api/signup", signupForm)
       .then(() => handleLogin())
       .catch((e) => {
         const { response } = e;

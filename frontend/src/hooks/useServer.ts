@@ -4,7 +4,7 @@ import axios from "axios";
 import { useAlert } from "./useAlert";
 import { useAppDispatch, useAppSelector } from ".";
 
-import { ENDPOINT_API, ENDPOINT_FRONT } from "@/api/endpoints";
+import { ENDPOINT_API } from "@/api/endpoints";
 
 import { _setHasUnreadAlarm } from "@/store";
 
@@ -24,7 +24,7 @@ export const useServer = () => {
 
   const handleNicknameCheck = async (nickname: string) => {
     return await axios
-      .get(`${ENDPOINT_FRONT}/api/signup/${nickname}`)
+      .get(`api/signup/${nickname}`)
       .then((res) => {
         const { status } = res;
         console.log(res);
