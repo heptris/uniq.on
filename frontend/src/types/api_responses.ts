@@ -32,6 +32,7 @@ export type IR = {
   discordUrl: string;
   enrollStatus?: "PENDING" | "ACCEPT" | "REJECT";
   rejectReason?: string;
+  isReserved: boolean;
 };
 
 export type NFTItem = {
