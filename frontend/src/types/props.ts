@@ -55,8 +55,9 @@ export type FAVItemCardBaseProps = {
   dueDate: string;
   nftDescription: string;
   nftPrice: number;
+  isFav: boolean;
 };
-export type FAVItemCardProps<T extends ElementType> = CombineElementProps<
+export type FAVItemCardProps<T extends ElementType> = OverridableProps<
   T,
   CardBaseProps
 >;

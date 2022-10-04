@@ -41,6 +41,8 @@ const MypageListContainer = ({
       {favs?.map((fav: FAVItem) => (
         <FAVItemCard
           key={fav.startupId}
+          startupId={fav.startupId}
+          isFav={fav.isFav}
           nftImage={fav.nftImage}
           tokenId={fav.tokenId}
           startupName={fav.startupName}
