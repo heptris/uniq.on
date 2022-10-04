@@ -2,6 +2,8 @@ package com.ssafy.uniqon.repository.startup;
 
 import com.ssafy.uniqon.domain.member.Member;
 import com.ssafy.uniqon.domain.startup.Startup;
+import com.ssafy.uniqon.exception.ex.CustomException;
+import com.ssafy.uniqon.exception.ex.ErrorCode;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -62,5 +64,13 @@ class StartupRepositoryTest {
         byInvestingStartupList.forEach(startup -> {
             System.out.println(startup.getId());
         });
+    }
+
+    @Test
+    public void test() {
+        Startup startup = startupRepository.findById(1L).orElseThrow(
+                () -> new CustomException(ErrorCode.STARTUP_NOT_FOUND)
+        );
+        System.out.println(startup);
     }
 }

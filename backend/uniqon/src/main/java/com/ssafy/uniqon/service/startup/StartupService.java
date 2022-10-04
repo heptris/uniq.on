@@ -9,6 +9,7 @@ import com.ssafy.uniqon.dto.startup.StartupRequestDto;
 import com.ssafy.uniqon.exception.ex.CustomException;
 import com.ssafy.uniqon.dto.startup.StartupResponseListDto;
 import com.ssafy.uniqon.dto.startup.StartupSearchCondition;
+import com.ssafy.uniqon.repository.invest.InvestHistoryRepository;
 import com.ssafy.uniqon.repository.member.MemberRepository;
 import com.ssafy.uniqon.repository.startup.StartupRepository;
 import com.ssafy.uniqon.repository.startup.fav.StartupFavoriteRepository;
@@ -44,7 +45,7 @@ public class StartupService {
 
     private final StartupRepository startupRepository;
     private final StartupFavoriteRepository startupFavoriteRepository;
-
+    private final InvestHistoryRepository investHistoryRepository;
     private final MemberRepository memberRepository;
     private final AwsS3Service awsS3Service;
 
@@ -126,7 +127,9 @@ public class StartupService {
     /**
      * 스타트업 상세정보 조회(로그인 상태)
      */
+    @Transactional
     public StartupDetailResponseDto startupDetail(Long memberId, Long startupId) {
+        System.out.println(memberId + " " +  startupId);
         Startup startup = startupRepository.findById(startupId).orElseThrow(
                 () -> new CustomException(STARTUP_NOT_FOUND)
         );
@@ -137,12 +140,16 @@ public class StartupService {
         } else {
             startupDetailResponseDto.setIsFav(Boolean.FALSE);
         }
+        Member member = new Member();
+        member.changeId(memberId);
+        startupDetailResponseDto.setIsReserved(investHistoryRepository.existsByMemberAndStartup(member, startup));
         return startupDetailResponseDto;
     }
 
     /**
      * 스타트업 상세조회(비로그인 상태)
      */
+    @Transactional
     public StartupDetailResponseDto startupDetail(Long startupId) {
         Startup startup = startupRepository.findById(startupId).orElseThrow(
                 () -> new CustomException(STARTUP_NOT_FOUND)

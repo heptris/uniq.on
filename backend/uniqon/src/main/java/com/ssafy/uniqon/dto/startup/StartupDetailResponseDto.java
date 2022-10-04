@@ -41,6 +41,9 @@ public class StartupDetailResponseDto {
 
     private Boolean isFav;
 
+    private Boolean isReserved;
+
+
     public StartupDetailResponseDto(Startup startup) {
         this.startupId = startup.getId();
         this.startupName = startup.getStartupName();

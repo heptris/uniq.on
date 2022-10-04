@@ -56,6 +56,7 @@ public class StartupInvestService {
 //    @Scheduled(cron = "*/20 * * * * *")
     @Scheduled(cron = "1 * * * * *")
     public void test() {
+        log.info("실행됨?");
         List<Alarm> alarmList = new ArrayList<>();
         List<Startup> startupList = startupRepository.findByInvestingStartupList();
         log.info("startupList count {}", startupList.size());
@@ -131,8 +132,8 @@ public class StartupInvestService {
         alarmRepository.saveAll(alarmList);
     }
 
-    @Scheduled(cron = "0 1 * * * * ")   // 매시각 1분에 실행
-    public void startupInvestCheck() {
-        log.info("test");
-    }
+//    @Scheduled(cron = "0 1 * * * * ")   // 매시각 1분에 실행
+//    public void startupInvestCheck() {
+//        log.info("test");
+//    }
 }

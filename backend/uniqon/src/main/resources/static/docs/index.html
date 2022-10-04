@@ -484,6 +484,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#스타트업_NFT_민팅_성공후_알람_읽기_실패">3.4.2. 스타트업 NFT 민팅 성공 후 알람 읽기 실패</a></li>
 <li><a href="#투자자_NFT_구매_성공후_알람_읽기">3.5.1. 투자자 NFT 구매 성공 후 알람 읽기</a></li>
 <li><a href="#투자자_NFT_구매_성공후_알람_읽기_실패">3.5.2. 투자자 NFT 구매 성공 후 알람 읽기 실패</a></li>
+<li><a href="#투자자_NFT_구매_실패후_알람_읽기">3.6.1. 투자자 NFT 구매 실패 후 알람 읽기</a></li>
 </ul>
 </li>
 <li><a href="#Startup-API">4. Startup API</a>
@@ -1193,7 +1194,7 @@ Content-Length: 98
 <h4 id="마이페이지_관심_목록_http_request"><a class="link" href="#마이페이지_관심_목록_http_request">HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /api/member/mypage/favstartup HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /app/member/mypage/favstartup HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Authorization: Bearer accessToken
 Host: localhost:8080</code></pre>
@@ -1221,7 +1222,7 @@ Content-Length: 1028
     "nftTargetCount" : 10,
     "nftReserveCount" : 5,
     "nftPrice" : 2.0,
-    "dueDate" : "2022-10-02 14",
+    "dueDate" : "2022-10-06 13",
     "planPaper" : "planPaper",
     "planPaperImg" : "planPaperImg",
     "roadMap" : "roadMap",
@@ -1238,7 +1239,7 @@ Content-Length: 1028
     "nftTargetCount" : 10,
     "nftReserveCount" : 5,
     "nftPrice" : 2.0,
-    "dueDate" : "2022-10-02 14",
+    "dueDate" : "2022-10-06 13",
     "planPaper" : "planPaper",
     "planPaperImg" : "planPaperImg",
     "roadMap" : "roadMap",
@@ -1257,7 +1258,7 @@ Content-Length: 1028
 <h4 id="마이페이지_스타트업_투자_신청_목록_http_request"><a class="link" href="#마이페이지_스타트업_투자_신청_목록_http_request">HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /api/member/mypage/startup HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /app/member/mypage/startup HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Authorization: Bearer accessToken
 Host: localhost:8080</code></pre>
@@ -1285,7 +1286,7 @@ Content-Length: 1030
     "nftTargetCount" : 10,
     "nftReserveCount" : 5,
     "nftPrice" : 2.0,
-    "dueDate" : "2022-10-01 14",
+    "dueDate" : "2022-10-05 13",
     "planPaper" : "planPaper",
     "planPaperImg" : "planPaperImg",
     "roadMap" : "roadMap",
@@ -1301,7 +1302,7 @@ Content-Length: 1030
     "nftTargetCount" : 10,
     "nftReserveCount" : 5,
     "nftPrice" : 2.0,
-    "dueDate" : "2022-10-01 14",
+    "dueDate" : "2022-10-05 13",
     "planPaper" : "planPaper",
     "planPaperImg" : "planPaperImg",
     "roadMap" : "roadMap",
@@ -1319,7 +1320,7 @@ Content-Length: 1030
 <h4 id="마이페이지_투자자_투자한_스타트업_목록_http_request"><a class="link" href="#마이페이지_투자자_투자한_스타트업_목록_http_request">HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /api/member/mypage/invest HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /app/member/mypage/invest HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Authorization: Bearer accessToken
 Host: localhost:8080</code></pre>
@@ -1347,7 +1348,7 @@ Content-Length: 1066
     "nftTargetCount" : 10,
     "nftReserveCount" : 5,
     "nftPrice" : 2.0,
-    "dueDate" : "2022-10-01 14",
+    "dueDate" : "2022-10-05 13",
     "planPaper" : "planPaper",
     "planPaperImg" : "planPaperImg",
     "roadMap" : "roadMap",
@@ -1364,7 +1365,7 @@ Content-Length: 1066
     "nftTargetCount" : 10,
     "nftReserveCount" : 5,
     "nftPrice" : 2.0,
-    "dueDate" : "2022-10-01 14",
+    "dueDate" : "2022-10-05 13",
     "planPaper" : "planPaper",
     "planPaperImg" : "planPaperImg",
     "roadMap" : "roadMap",
@@ -1383,7 +1384,7 @@ Content-Length: 1066
 <h4 id="회원_프로필_조회_http_request"><a class="link" href="#회원_프로필_조회_http_request">HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /api/member HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /app/member HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Authorization: Bearer accessToken
 Host: localhost:8080</code></pre>
@@ -1419,7 +1420,7 @@ Content-Length: 246
 <h4 id="회원_프로필_수정_http_request"><a class="link" href="#회원_프로필_수정_http_request">HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">PUT /api/member HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">PUT /app/member HTTP/1.1
 Content-Type: multipart/form-data;charset=UTF-8; boundary=6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
 Authorization: Bearer accessToken
 Host: localhost:8080
@@ -1514,7 +1515,7 @@ Content-Length: 80
 <h4 id="회원_프로필_수정_실패_http_request"><a class="link" href="#회원_프로필_수정_실패_http_request">HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">PUT /api/member HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">PUT /app/member HTTP/1.1
 Content-Type: multipart/form-data;charset=UTF-8; boundary=6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
 Authorization: Bearer accessToken
 Host: localhost:8080
@@ -1611,7 +1612,7 @@ Content-Length: 148
 <h4 id="회원_프로필_수정_실패_파일업로드시_http_request"><a class="link" href="#회원_프로필_수정_실패_파일업로드시_http_request">HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">PUT /api/member HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">PUT /app/member HTTP/1.1
 Content-Type: multipart/form-data;charset=UTF-8; boundary=6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
 Authorization: Bearer accessToken
 Host: localhost:8080
@@ -1706,7 +1707,7 @@ Content-Length: 82
 <h4 id="회원_탈퇴_http_request"><a class="link" href="#회원_탈퇴_http_request">HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">DELETE /api/member HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">DELETE /app/member HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Authorization: Bearer accessToken
 Host: localhost:8080</code></pre>
@@ -1741,7 +1742,7 @@ Content-Length: 80
 <h4 id="전체_알람_조회_http_request"><a class="link" href="#전체_알람_조회_http_request">HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /api/alarm/alarmList HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /app/alarm/alarmList HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Authorization: Bearer accessToken
 Host: localhost:8080</code></pre>
@@ -1795,7 +1796,7 @@ Content-Length: 562
 <h4 id="안읽은_알람_조회_http_request"><a class="link" href="#안읽은_알람_조회_http_request">HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /api/alarm/unReadAlarmList HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /app/alarm/unReadAlarmList HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Authorization: Bearer accessToken
 Host: localhost:8080</code></pre>
@@ -1843,7 +1844,7 @@ Content-Length: 437
 <h4 id="알람_읽기_http_request"><a class="link" href="#알람_읽기_http_request">HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /api/alarm/readAlarm/1 HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /app/alarm/readAlarm/1 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Authorization: Bearer accessToken
 Host: localhost:8080</code></pre>
@@ -1869,7 +1870,7 @@ Content-Length: 84
 <div class="sect3">
 <h4 id="알람_읽기_path_parameters"><a class="link" href="#알람_읽기_path_parameters">Path parameters</a></h4>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 1. /api/alarm/readAlarm/{alarmId}</caption>
+<caption class="title">Table 1. /app/alarm/readAlarm/{alarmId}</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -1895,7 +1896,7 @@ Content-Length: 84
 <h4 id="알람_읽기_실패_http_request"><a class="link" href="#알람_읽기_실패_http_request">HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /api/alarm/readAlarm/1 HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /app/alarm/readAlarm/1 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Authorization: Bearer accessToken
 Host: localhost:8080</code></pre>
@@ -1921,7 +1922,7 @@ Content-Length: 98
 <div class="sect3">
 <h4 id="알람_읽기_실패_path_parameters"><a class="link" href="#알람_읽기_실패_path_parameters">Path parameters</a></h4>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 1. /api/alarm/readAlarm/{alarmId}</caption>
+<caption class="title">Table 1. /app/alarm/readAlarm/{alarmId}</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -1947,7 +1948,7 @@ Content-Length: 98
 <h4 id="스타트업_NFT_민팅_성공후_알람_읽기_http_request"><a class="link" href="#스타트업_NFT_민팅_성공후_알람_읽기_http_request">HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /api/alarm/mintSuccess/1 HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /app/alarm/mintSuccess/1 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Authorization: Bearer accessToken
 Content-Length: 26
@@ -1978,7 +1979,7 @@ Content-Length: 87
 <div class="sect3">
 <h4 id="스타트업_NFT_민팅_성공후_알람_읽기_path_parameters"><a class="link" href="#스타트업_NFT_민팅_성공후_알람_읽기_path_parameters">Path parameters</a></h4>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 1. /api/alarm/mintSuccess/{alarmId}</caption>
+<caption class="title">Table 1. /app/alarm/mintSuccess/{alarmId}</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -2032,7 +2033,7 @@ Content-Length: 87
 <h4 id="스타트업_NFT_민팅_성공후_알람_읽기_실패_http_request"><a class="link" href="#스타트업_NFT_민팅_성공후_알람_읽기_실패_http_request">HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /api/alarm/mintSuccess/1 HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /app/alarm/mintSuccess/1 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Authorization: Bearer accessToken
 Content-Length: 26
@@ -2063,7 +2064,7 @@ Content-Length: 98
 <div class="sect3">
 <h4 id="스타트업_NFT_민팅_성공후_알람_읽기_실패_path_parameters"><a class="link" href="#스타트업_NFT_민팅_성공후_알람_읽기_실패_path_parameters">Path parameters</a></h4>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 1. /api/alarm/mintSuccess/{alarmId}</caption>
+<caption class="title">Table 1. /app/alarm/mintSuccess/{alarmId}</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -2117,7 +2118,7 @@ Content-Length: 98
 <h4 id="투자자_NFT_구매_성공후_알람_읽기_http_request"><a class="link" href="#투자자_NFT_구매_성공후_알람_읽기_http_request">HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /api/alarm/investSuccess/1 HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /app/alarm/investSuccess/1 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Authorization: Bearer accessToken
 Host: localhost:8080</code></pre>
@@ -2143,7 +2144,7 @@ Content-Length: 87
 <div class="sect3">
 <h4 id="투자자_NFT_구매_성공후_알람_읽기_path_parameters"><a class="link" href="#투자자_NFT_구매_성공후_알람_읽기_path_parameters">Path parameters</a></h4>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 1. /api/alarm/investSuccess/{alarmId}</caption>
+<caption class="title">Table 1. /app/alarm/investSuccess/{alarmId}</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -2169,7 +2170,7 @@ Content-Length: 87
 <h4 id="투자자_NFT_구매_성공후_알람_읽기_실패_http_request"><a class="link" href="#투자자_NFT_구매_성공후_알람_읽기_실패_http_request">HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /api/alarm/investSuccess/1 HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /app/alarm/investSuccess/1 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Authorization: Bearer accessToken
 Host: localhost:8080</code></pre>
@@ -2195,7 +2196,59 @@ Content-Length: 98
 <div class="sect3">
 <h4 id="투자자_NFT_구매_성공후_알람_읽기_실패_path_parameters"><a class="link" href="#투자자_NFT_구매_성공후_알람_읽기_실패_path_parameters">Path parameters</a></h4>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 1. /api/alarm/investSuccess/{alarmId}</caption>
+<caption class="title">Table 1. /app/alarm/investSuccess/{alarmId}</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>alarmId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">alarmID</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="투자자_NFT_구매_실패후_알람_읽기"><a class="link" href="#투자자_NFT_구매_실패후_알람_읽기">3.6.1. 투자자 NFT 구매 실패 후 알람 읽기</a></h3>
+<div class="sect3">
+<h4 id="투자자_NFT_구매_실패후_알람_읽기_http_request"><a class="link" href="#투자자_NFT_구매_실패후_알람_읽기_http_request">HTTP request</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /app/alarm/investFail/1 HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Authorization: Bearer accessToken
+Host: localhost:8080</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="투자자_NFT_구매_실패후_알람_읽기_http_response"><a class="link" href="#투자자_NFT_구매_실패후_알람_읽기_http_response">HTTP response</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
+Content-Type: application/json;charset=UTF-8
+Content-Length: 87
+
+{
+  "status" : 200,
+  "message" : "alarm read",
+  "data" : "알림 확인 완료"
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="투자자_NFT_구매_실패후_알람_읽기_path_parameters"><a class="link" href="#투자자_NFT_구매_실패후_알람_읽기_path_parameters">Path parameters</a></h4>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 1. /app/alarm/investFail/{alarmId}</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -2226,7 +2279,7 @@ Content-Length: 98
 <h4 id="Startup-상세-조회_http_request"><a class="link" href="#Startup-상세-조회_http_request">HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /api/invest/1 HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /app/invest/1 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Host: localhost:8080</code></pre>
 </div>
@@ -2235,7 +2288,7 @@ Host: localhost:8080</code></pre>
 <div class="sect3">
 <h4 id="Startup-상세-조회_path_parameters"><a class="link" href="#Startup-상세-조회_path_parameters">Path parameters</a></h4>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 1. /api/invest/{startupId}</caption>
+<caption class="title">Table 1. /app/invest/{startupId}</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -2274,7 +2327,7 @@ Content-Length: 1221
     "nftTargetCount" : 10,
     "nftReserveCount" : 5,
     "nftPrice" : 2.0,
-    "dueDate" : "2022-10-03 14:10",
+    "dueDate" : "2022-10-07 13:10",
     "planPaper" : "https://uniqon-bucket.s3.ap-northeast-2.amazonaws.com/startup/4cfd6171-b839-404a-94e9-615e3cc93402uniqon%EB%B8%94%EB%A1%9D%EC%B2%B4%EC%9D%B8_%EC%A1%B0%EC%98%81%EB%8F%84%EB%A9%98%ED%86%A0%EB%8B%98.pdf",
     "planPaperImg" : "https://uniqon-bucket.s3.ap-northeast-2.amazonaws.com/startup/e95ca4c9-b7c3-4f8a-87da-e718a97c2926uniqonuniqon%EB%B8%94%EB%A1%9D%EC%B2%B4%EC%9D%B8_%EC%A1%B0%EC%98%81%EB%8F%84%EB%A9%98%ED%86%A0%EB%8B%98.jpg",
     "roadMap" : "https://uniqon-bucket.s3.ap-northeast-2.amazonaws.com/startup/2ceda00d-e53f-4b8d-ba17-89fa74e759a1uniqon5dc267300fefd2738de6.jpg",
@@ -2293,7 +2346,7 @@ Content-Length: 1221
 <h4 id="Startup-등록_http_request"><a class="link" href="#Startup-등록_http_request">HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /api/invest/regist HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /app/invest/regist HTTP/1.1
 Content-Type: multipart/form-data;charset=UTF-8; boundary=6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
 Authorization: Bearer accessToken
 Host: localhost:8080
@@ -2302,7 +2355,7 @@ Host: localhost:8080
 Content-Disposition: form-data; name=startupRequestDto; filename=jsondata
 Content-Type: application/json
 
-{"dueDate":"2022-10-03T14:33:32.999","discordUrl":"discordUrl","description":"description","title":"title","nftTargetCount":10,"nftPrice":2.0,"nftDescription":"nft description"}
+{"dueDate":"2022-10-07T13:13:55.136","discordUrl":"discordUrl","description":"description","title":"title","nftTargetCount":10,"nftPrice":2.0,"nftDescription":"nft description"}
 --6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
 Content-Disposition: form-data; name=plan_paper; filename=business_plan.pdf
 Content-Type: application/pdf
@@ -2448,7 +2501,7 @@ Content-Length: 79
 <h4 id="Startup-리스트-조회_http_request"><a class="link" href="#Startup-리스트-조회_http_request">HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /api/invest?size=10&amp;page=0&amp;startupName=startupName&amp;title=title HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /app/invest?size=10&amp;page=0&amp;startupName=startupName&amp;title=title HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Host: localhost:8080</code></pre>
 </div>
@@ -2470,7 +2523,7 @@ Content-Length: 1175
       "startupId" : 1,
       "startupName" : "startupName1",
       "title" : "title1",
-      "dueDate" : "2022-10-02 14:10",
+      "dueDate" : "2022-10-06 13:10",
       "nftTargetCount" : 10,
       "nftReserveCount" : 5,
       "profileImage" : "profileImage",
@@ -2479,7 +2532,7 @@ Content-Length: 1175
       "startupId" : 2,
       "startupName" : "startupName2",
       "title" : "title2",
-      "dueDate" : "2022-10-02 14:10",
+      "dueDate" : "2022-10-06 13:10",
       "nftTargetCount" : 10,
       "nftReserveCount" : 5,
       "profileImage" : "profileImage",
@@ -2494,12 +2547,12 @@ Content-Length: 1175
       "offset" : 0,
       "pageSize" : 10,
       "pageNumber" : 0,
-      "unpaged" : false,
-      "paged" : true
+      "paged" : true,
+      "unpaged" : false
     },
     "last" : true,
-    "totalElements" : 2,
     "totalPages" : 1,
+    "totalElements" : 2,
     "number" : 0,
     "size" : 10,
     "sort" : {
@@ -2612,7 +2665,7 @@ Content-Length: 101
 <h4 id="스타트업_투자_예약_http_request"><a class="link" href="#스타트업_투자_예약_http_request">HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /api/invest/reserve/1 HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /app/invest/reserve/1 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Authorization: Bearer accessToken
 Host: localhost:8080</code></pre>
@@ -2638,7 +2691,7 @@ Content-Length: 86
 <div class="sect3">
 <h4 id="스타트업_투자_예약_path_parameters"><a class="link" href="#스타트업_투자_예약_path_parameters">Path parameters</a></h4>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 1. /api/invest/reserve/{startupId}</caption>
+<caption class="title">Table 1. /app/invest/reserve/{startupId}</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -2669,7 +2722,7 @@ Content-Length: 86
 <h4 id="스타트업_질문_등록_http_request"><a class="link" href="#스타트업_질문_등록_http_request">HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /api/invest/question/1 HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /app/invest/question/1 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Authorization: Bearer accessToken
 Content-Length: 44
@@ -2700,7 +2753,7 @@ Content-Length: 81
 <div class="sect3">
 <h4 id="스타트업_질문_등록_path_parameters"><a class="link" href="#스타트업_질문_등록_path_parameters">Path parameters</a></h4>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 1. /api/invest/question/{startupId}</caption>
+<caption class="title">Table 1. /app/invest/question/{startupId}</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -2754,7 +2807,7 @@ Content-Length: 81
 <h4 id="스타트업_질문_수정_http_request"><a class="link" href="#스타트업_질문_수정_http_request">HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">PUT /api/invest/question/1 HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">PUT /app/invest/question/1 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Authorization: Bearer accessToken
 Content-Length: 29
@@ -2785,7 +2838,7 @@ Content-Length: 81
 <div class="sect3">
 <h4 id="스타트업_질문_수정_path_parameters"><a class="link" href="#스타트업_질문_수정_path_parameters">Path parameters</a></h4>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 1. /api/invest/question/{startupQuestionId}</caption>
+<caption class="title">Table 1. /app/invest/question/{startupQuestionId}</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -2839,7 +2892,7 @@ Content-Length: 81
 <h4 id="스타트업_질문_수정_권한X_http_request"><a class="link" href="#스타트업_질문_수정_권한X_http_request">HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">PUT /api/invest/question/1 HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">PUT /app/invest/question/1 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Authorization: Bearer accessToken
 Content-Length: 29
@@ -2870,7 +2923,7 @@ Content-Length: 96
 <div class="sect3">
 <h4 id="스타트업_질문_수정_권한X_path_parameters"><a class="link" href="#스타트업_질문_수정_권한X_path_parameters">Path parameters</a></h4>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 1. /api/invest/question/{startupQuestionId}</caption>
+<caption class="title">Table 1. /app/invest/question/{startupQuestionId}</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -2924,7 +2977,7 @@ Content-Length: 96
 <h4 id="스타트업_질문_삭제_http_request"><a class="link" href="#스타트업_질문_삭제_http_request">HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">DELETE /api/invest/question/1 HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">DELETE /app/invest/question/1 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Authorization: Bearer accessToken
 Host: localhost:8080</code></pre>
@@ -2950,7 +3003,7 @@ Content-Length: 81
 <div class="sect3">
 <h4 id="스타트업_질문_삭제_path_parameters"><a class="link" href="#스타트업_질문_삭제_path_parameters">Path parameters</a></h4>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 1. /api/invest/question/{startupQuestionId}</caption>
+<caption class="title">Table 1. /app/invest/question/{startupQuestionId}</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -2976,7 +3029,7 @@ Content-Length: 81
 <h4 id="스타트업_질문_삭제_권한X_http_request"><a class="link" href="#스타트업_질문_삭제_권한X_http_request">HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">DELETE /api/invest/question/1 HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">DELETE /app/invest/question/1 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Authorization: Bearer accessToken
 Host: localhost:8080</code></pre>
@@ -3002,7 +3055,7 @@ Content-Length: 96
 <div class="sect3">
 <h4 id="스타트업_질문_삭제_권한X_path_parameters"><a class="link" href="#스타트업_질문_삭제_권한X_path_parameters">Path parameters</a></h4>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 1. /api/invest/question/{startupQuestionId}</caption>
+<caption class="title">Table 1. /app/invest/question/{startupQuestionId}</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -3028,7 +3081,7 @@ Content-Length: 96
 <h4 id="스타트업_질문_조회_http_request"><a class="link" href="#스타트업_질문_조회_http_request">HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /api/invest/question/1/page?cursorId=4&amp;size=3 HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /app/invest/question/1/page?cursorId=4&amp;size=3 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Host: localhost:8080</code></pre>
 </div>
@@ -3049,7 +3102,7 @@ Content-Length: 2225
     "values" : [ {
       "nickname" : "투자자0",
       "memberId" : 1,
-      "createDate" : "2022-09-30 14:33:37",
+      "createDate" : "2022-10-04 13:14:00",
       "startupQuestionId" : 1,
       "question" : "질문0",
       "myQuestion" : true,
@@ -3058,7 +3111,7 @@ Content-Length: 2225
         "memberId" : 4,
         "nickname" : "스타트업A",
         "answer" : "답변 0",
-        "createDate" : "2022-09-30 14:33:37",
+        "createDate" : "2022-10-04 13:14:00",
         "parentId" : null,
         "myAnswer" : false,
         "answerChildren" : [ {
@@ -3066,7 +3119,7 @@ Content-Length: 2225
           "memberId" : 1,
           "nickname" : "투자자0",
           "answer" : "답변 Test",
-          "createDate" : "2022-09-30 14:33:37",
+          "createDate" : "2022-10-04 13:14:00",
           "parentId" : 1,
           "myAnswer" : true
         }, {
@@ -3074,7 +3127,7 @@ Content-Length: 2225
           "memberId" : 4,
           "nickname" : "스타트업A",
           "answer" : "답변 Test2",
-          "createDate" : "2022-09-30 14:33:37",
+          "createDate" : "2022-10-04 13:14:00",
           "parentId" : 1,
           "myAnswer" : true
         } ]
@@ -3083,7 +3136,7 @@ Content-Length: 2225
         "memberId" : 4,
         "nickname" : "스타트업A",
         "answer" : "답변 1",
-        "createDate" : "2022-09-30 14:33:37",
+        "createDate" : "2022-10-04 13:14:00",
         "parentId" : null,
         "myAnswer" : false,
         "answerChildren" : [ ]
@@ -3092,7 +3145,7 @@ Content-Length: 2225
         "memberId" : 4,
         "nickname" : "스타트업A",
         "answer" : "답변 2",
-        "createDate" : "2022-09-30 14:33:37",
+        "createDate" : "2022-10-04 13:14:00",
         "parentId" : null,
         "myAnswer" : false,
         "answerChildren" : [ ]
@@ -3100,7 +3153,7 @@ Content-Length: 2225
     }, {
       "nickname" : "투자자1",
       "memberId" : 2,
-      "createDate" : "2022-09-30 14:33:37",
+      "createDate" : "2022-10-04 13:14:00",
       "startupQuestionId" : 2,
       "question" : "질문1",
       "myQuestion" : false,
@@ -3108,7 +3161,7 @@ Content-Length: 2225
     }, {
       "nickname" : "투자자2",
       "memberId" : 3,
-      "createDate" : "2022-09-30 14:33:37",
+      "createDate" : "2022-10-04 13:14:00",
       "startupQuestionId" : 3,
       "question" : "질문2",
       "myQuestion" : false,
@@ -3124,7 +3177,7 @@ Content-Length: 2225
 <div class="sect3">
 <h4 id="스타트업_질문_조회_path_parameters"><a class="link" href="#스타트업_질문_조회_path_parameters">Path parameters</a></h4>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 1. /api/invest/question/{startupId}/page</caption>
+<caption class="title">Table 1. /app/invest/question/{startupId}/page</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -3180,7 +3233,7 @@ Content-Length: 2225
 <h4 id="스타트업_댓글_등록_http_request"><a class="link" href="#스타트업_댓글_등록_http_request">HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /api/invest/answer/1 HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /app/invest/answer/1 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Authorization: Bearer accessToken
 Content-Length: 46
@@ -3212,7 +3265,7 @@ Content-Length: 72
 <div class="sect3">
 <h4 id="스타트업_댓글_등록_path_parameters"><a class="link" href="#스타트업_댓글_등록_path_parameters">Path parameters</a></h4>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 1. /api/invest/answer/{startupQuestionId}</caption>
+<caption class="title">Table 1. /app/invest/answer/{startupQuestionId}</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -3273,7 +3326,7 @@ Content-Length: 72
 <h4 id="스타트업_댓글_수정_http_request"><a class="link" href="#스타트업_댓글_수정_http_request">HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">PUT /api/invest/answer/1 HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">PUT /app/invest/answer/1 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Authorization: Bearer accessToken
 Content-Length: 34
@@ -3304,7 +3357,7 @@ Content-Length: 79
 <div class="sect3">
 <h4 id="스타트업_댓글_수정_path_parameters"><a class="link" href="#스타트업_댓글_수정_path_parameters">Path parameters</a></h4>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 1. /api/invest/answer/{startupAnswerId}</caption>
+<caption class="title">Table 1. /app/invest/answer/{startupAnswerId}</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -3358,7 +3411,7 @@ Content-Length: 79
 <h4 id="스타트업_댓글_수정_권한X_http_request"><a class="link" href="#스타트업_댓글_수정_권한X_http_request">HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">PUT /api/invest/answer/1 HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">PUT /app/invest/answer/1 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Authorization: Bearer accessToken
 Content-Length: 34
@@ -3389,7 +3442,7 @@ Content-Length: 96
 <div class="sect3">
 <h4 id="스타트업_댓글_수정_권한X_path_parameters"><a class="link" href="#스타트업_댓글_수정_권한X_path_parameters">Path parameters</a></h4>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 1. /api/invest/answer/{startupAnswerId}</caption>
+<caption class="title">Table 1. /app/invest/answer/{startupAnswerId}</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -3443,7 +3496,7 @@ Content-Length: 96
 <h4 id="스타트업_댓글_삭제_http_request"><a class="link" href="#스타트업_댓글_삭제_http_request">HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">DELETE /api/invest/answer/1 HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">DELETE /app/invest/answer/1 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Authorization: Bearer accessToken
 Host: localhost:8080</code></pre>
@@ -3469,7 +3522,7 @@ Content-Length: 79
 <div class="sect3">
 <h4 id="스타트업_댓글_삭제_path_parameters"><a class="link" href="#스타트업_댓글_삭제_path_parameters">Path parameters</a></h4>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 1. /api/invest/answer/{startupAnswerId}</caption>
+<caption class="title">Table 1. /app/invest/answer/{startupAnswerId}</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -3495,7 +3548,7 @@ Content-Length: 79
 <h4 id="스타트업_댓글_삭제_권한X_http_request"><a class="link" href="#스타트업_댓글_삭제_권한X_http_request">HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">DELETE /api/invest/answer/1 HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">DELETE /app/invest/answer/1 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Authorization: Bearer accessToken
 Host: localhost:8080</code></pre>
@@ -3521,7 +3574,7 @@ Content-Length: 96
 <div class="sect3">
 <h4 id="스타트업_댓글_삭제_권한X_path_parameters"><a class="link" href="#스타트업_댓글_삭제_권한X_path_parameters">Path parameters</a></h4>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 1. /api/invest/answer/{startupAnswerId}</caption>
+<caption class="title">Table 1. /app/invest/answer/{startupAnswerId}</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -3552,7 +3605,7 @@ Content-Length: 96
 <h4 id="스타트업_커뮤니티_글_등록_http_request"><a class="link" href="#스타트업_커뮤니티_글_등록_http_request">HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /api/invest/community/1 HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /app/invest/community/1 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Authorization: Bearer accessToken
 Content-Length: 51
@@ -3584,7 +3637,7 @@ Content-Length: 80
 <div class="sect3">
 <h4 id="스타트업_커뮤니티_글_등록_path_parameters"><a class="link" href="#스타트업_커뮤니티_글_등록_path_parameters">Path parameters</a></h4>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 1. /api/invest/community/{startupId}</caption>
+<caption class="title">Table 1. /app/invest/community/{startupId}</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -3645,7 +3698,7 @@ Content-Length: 80
 <h4 id="스타트업_커뮤니티_글_수정_http_request"><a class="link" href="#스타트업_커뮤니티_글_수정_http_request">HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">PUT /api/invest/community/1/1 HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">PUT /app/invest/community/1/1 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Authorization: Bearer accessToken
 Content-Length: 51
@@ -3677,7 +3730,7 @@ Content-Length: 81
 <div class="sect3">
 <h4 id="스타트업_커뮤니티_글_수정_path_parameters"><a class="link" href="#스타트업_커뮤니티_글_수정_path_parameters">Path parameters</a></h4>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 1. /api/invest/community/{startupId}/{communityId}</caption>
+<caption class="title">Table 1. /app/invest/community/{startupId}/{communityId}</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -3742,7 +3795,7 @@ Content-Length: 81
 <h4 id="스타트업_커뮤니티_글_삭제_http_request"><a class="link" href="#스타트업_커뮤니티_글_삭제_http_request">HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">DELETE /api/invest/community/1/1 HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">DELETE /app/invest/community/1/1 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Authorization: Bearer accessToken
 Host: localhost:8080</code></pre>
@@ -3768,7 +3821,7 @@ Content-Length: 81
 <div class="sect3">
 <h4 id="스타트업_커뮤니티_글_삭제_path_parameters"><a class="link" href="#스타트업_커뮤니티_글_삭제_path_parameters">Path parameters</a></h4>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 1. /api/invest/community/{startupId}/{communityId}</caption>
+<caption class="title">Table 1. /app/invest/community/{startupId}/{communityId}</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -3798,7 +3851,7 @@ Content-Length: 81
 <h4 id="스타트업_커뮤니티_리스트_조회_http_request"><a class="link" href="#스타트업_커뮤니티_리스트_조회_http_request">HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /api/invest/community/1 HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /app/invest/community/1 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Authorization: Bearer accessToken
 Host: localhost:8080</code></pre>
@@ -3811,7 +3864,7 @@ Host: localhost:8080</code></pre>
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
 Content-Type: application/json;charset=UTF-8
-Content-Length: 338
+Content-Length: 336
 
 {
   "status" : 200,
@@ -3820,12 +3873,12 @@ Content-Length: 338
     "title" : "title",
     "nickName" : "nickName",
     "commentsCount" : 10,
-    "createdDate" : "2022-09-30T14:33:34.911"
+    "createdDate" : "2022-10-04T13:13:57.15"
   }, {
     "title" : "title2",
     "nickName" : "nickName2",
     "commentsCount" : 10,
-    "createdDate" : "2022-09-30T14:33:34.911"
+    "createdDate" : "2022-10-04T13:13:57.15"
   } ]
 }</code></pre>
 </div>
@@ -3834,7 +3887,7 @@ Content-Length: 338
 <div class="sect3">
 <h4 id="스타트업_커뮤니티_리스트_조회_path_parameters"><a class="link" href="#스타트업_커뮤니티_리스트_조회_path_parameters">Path parameters</a></h4>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 1. /api/invest/community/{startupId}</caption>
+<caption class="title">Table 1. /app/invest/community/{startupId}</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -3860,7 +3913,7 @@ Content-Length: 338
 <h4 id="스타트업_커뮤니티_상세_조회_http_request"><a class="link" href="#스타트업_커뮤니티_상세_조회_http_request">HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /api/invest/community/detail/1 HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /app/invest/community/detail/1 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Authorization: Bearer accessToken
 Host: localhost:8080</code></pre>
@@ -3888,24 +3941,24 @@ Content-Length: 1259
       "content" : "댓글1",
       "nickName" : "nickName1",
       "myComment" : true,
-      "createdDate" : "2022-09-30 14:33:34",
-      "updateDate" : "2022-09-30 14:33:34",
+      "createdDate" : "2022-10-04 13:13:57",
+      "updateDate" : "2022-10-04 13:13:57",
       "children" : [ {
         "parentId" : 1,
         "commentId" : 2,
         "content" : "댓글2",
         "nickName" : "nickName2",
         "myComment" : false,
-        "createdDate" : "2022-09-30 14:33:34",
-        "updateDate" : "2022-09-30 14:33:34"
+        "createdDate" : "2022-10-04 13:13:57",
+        "updateDate" : "2022-10-04 13:13:57"
       }, {
         "parentId" : 1,
         "commentId" : 3,
         "content" : "댓글3",
         "nickName" : "nickName3",
         "myComment" : false,
-        "createdDate" : "2022-09-30 14:33:34",
-        "updateDate" : "2022-09-30 14:33:34"
+        "createdDate" : "2022-10-04 13:13:57",
+        "updateDate" : "2022-10-04 13:13:57"
       } ]
     }, {
       "parentId" : null,
@@ -3913,11 +3966,11 @@ Content-Length: 1259
       "content" : "댓글4",
       "nickName" : "nickName4",
       "myComment" : true,
-      "createdDate" : "2022-09-30 14:33:34",
-      "updateDate" : "2022-09-30 14:33:34",
+      "createdDate" : "2022-10-04 13:13:57",
+      "updateDate" : "2022-10-04 13:13:57",
       "children" : [ ]
     } ],
-    "createdDate" : "2022-09-30T14:33:34.931"
+    "createdDate" : "2022-10-04T13:13:57.182"
   }
 }</code></pre>
 </div>
@@ -3926,7 +3979,7 @@ Content-Length: 1259
 <div class="sect3">
 <h4 id="스타트업_커뮤니티_상세_조회_path_parameters"><a class="link" href="#스타트업_커뮤니티_상세_조회_path_parameters">Path parameters</a></h4>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 1. /api/invest/community/detail/{communityId}</caption>
+<caption class="title">Table 1. /app/invest/community/detail/{communityId}</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -3957,7 +4010,7 @@ Content-Length: 1259
 <h4 id="스타트업_커뮤니티_댓글_등록_http_request"><a class="link" href="#스타트업_커뮤니티_댓글_등록_http_request">HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /api/invest/community/1/comment HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /app/invest/community/1/comment HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Authorization: Bearer accessToken
 Content-Length: 48
@@ -3989,7 +4042,7 @@ Content-Length: 84
 <div class="sect3">
 <h4 id="스타트업_커뮤니티_댓글_등록_path_parameters"><a class="link" href="#스타트업_커뮤니티_댓글_등록_path_parameters">Path parameters</a></h4>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 1. /api/invest/community/{communityId}/comment</caption>
+<caption class="title">Table 1. /app/invest/community/{communityId}/comment</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -4050,7 +4103,7 @@ Content-Length: 84
 <h4 id="스타트업_커뮤니티_댓글_수정_http_request"><a class="link" href="#스타트업_커뮤니티_댓글_수정_http_request">HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">PUT /api/invest/community/1/1 HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">PUT /app/invest/community/1/1 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Authorization: Bearer accessToken
 Content-Length: 29
@@ -4081,7 +4134,7 @@ Content-Length: 84
 <div class="sect3">
 <h4 id="스타트업_커뮤니티_댓글_수정_path_parameters"><a class="link" href="#스타트업_커뮤니티_댓글_수정_path_parameters">Path parameters</a></h4>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 1. /api/invest/community/{communityId}/{commentId}</caption>
+<caption class="title">Table 1. /app/invest/community/{communityId}/{commentId}</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -4139,7 +4192,7 @@ Content-Length: 84
 <h4 id="스타트업_커뮤니티_댓글_삭제_http_request"><a class="link" href="#스타트업_커뮤니티_댓글_삭제_http_request">HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">DELETE /api/invest/community/1/1 HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">DELETE /app/invest/community/1/1 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Authorization: Bearer accessToken
 Host: localhost:8080</code></pre>
@@ -4165,7 +4218,7 @@ Content-Length: 84
 <div class="sect3">
 <h4 id="스타트업_커뮤니티_댓글_삭제_path_parameters"><a class="link" href="#스타트업_커뮤니티_댓글_삭제_path_parameters">Path parameters</a></h4>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 1. /api/invest/community/{communityId}/{commentId}</caption>
+<caption class="title">Table 1. /app/invest/community/{communityId}/{commentId}</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">

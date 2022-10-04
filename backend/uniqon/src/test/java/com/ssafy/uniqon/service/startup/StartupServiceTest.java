@@ -39,33 +39,17 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.BDDMockito.given;
 
-@ExtendWith(MockitoExtension.class)
+@Transactional
+@SpringBootTest
 class StartupServiceTest {
 
-    @Mock
-    private StartupRepository startupRepository;
-
-    @Mock
-    private MemberRepository memberRepository;
-    @Mock
-    private StartupFavoriteRepository startupFavoriteRepository;
-
-    @InjectMocks
+    @Autowired
     private StartupService startupService;
 
     @Test
     public void 투자상세정보() {
-        //given
-        given(startupRepository.findById(anyLong())).willReturn(Optional.ofNullable(Startup.builder().id(1L)
-                .member(Member.builder().profileImage("profileImage").build()).build()));
-        given(startupFavoriteRepository.findByMemberIdAndStartupId(anyLong(), anyLong()))
-                .willReturn(Optional.of(StartupFavorite.builder().build()));
-
-        //when
         StartupDetailResponseDto startupDetailResponseDto = startupService.startupDetail(1L, 1L);
-
-        //then
-        assertThat(startupDetailResponseDto.getStartupId()).isEqualTo(1L);
+        System.out.println(startupDetailResponseDto);
     }
 
 
