@@ -21,7 +21,7 @@ contract MintUniqonToken is ERC721Enumerable{
     event showTokenURI(string[] indexed tokenURI);
 
     constructor() ERC721("Uniq.on-NFT", "UNFT") {
-        erc20Contract = SSF(0xB39D41Fe05d0cC6271513A47C89aC829f88952bF);
+        erc20Contract = SSF(0x3a96aCDE779A14B0BC9b7E5FfCF37E1Ee07ce4bd);
     }
 
     function current() public view returns (uint256) {

@@ -707,11 +707,11 @@
 	},
 	"sources": {
 		"contracts/MintUniqonToken.sol": {
-			"keccak256": "0x437e0bc8124ef688d6960f00ae3f39c93ff3f7cb14acca7d54a05c305b6e5096",
+			"keccak256": "0x7a998a8d37a5d542b0144376500b2b8dea4b737289da436163ad694ca20da2c4",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://8bb96c5fc378430720b995cad330c7924de3ce6fad0eb206ef1405d36e15c0a5",
-				"dweb:/ipfs/Qmcdh9mxJVqcvncVovfNSbjygzHYBBitz6yB6a8Pzmguk3"
+				"bzz-raw://31dd7671b6b7198dcebb0e79969b51a4ea32df3818647155f584dc4139a384e9",
+				"dweb:/ipfs/QmeZpqicMdXaz58megkraLay3rFn6XKGFQs6JTKacB1DnL"
 			]
 		},
 		"contracts/SSF.sol": {
