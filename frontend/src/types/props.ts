@@ -3,7 +3,14 @@
 import { ElementType } from "react";
 import { CombineElementProps, OverridableProps } from "@/types/utils";
 import { StaticImageData } from "next/image";
-import { APPLYItem, FAVItem, Member, NFTItem, RSRVItem } from "./api_responses";
+import {
+  AlarmItem,
+  APPLYItem,
+  FAVItem,
+  Member,
+  NFTItem,
+  RSRVItem,
+} from "./api_responses";
 
 export type TextBaseProps = {
   typography?: "content";
@@ -154,4 +161,7 @@ export type MyPageProps = {
   applyList: APPLYItem[];
   favoriteList: FAVItem[];
   reserveList: RSRVItem[];
+};
+export type AlarmProps = {
+  alarmList: AlarmItem[];
 };
