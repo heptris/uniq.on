@@ -28,6 +28,7 @@ export type IR = {
   nftDescription: string;
   isFinished: boolean;
   isGoal: boolean;
+  isFav: boolean;
   discordUrl: string;
   enrollStatus?: "PENDING" | "ACCEPT" | "REJECT";
   rejectReason?: string;
@@ -43,6 +44,7 @@ export type NFTItem = {
 
 export type FAVItem = {
   tokenId: number;
+  isFav: boolean;
   startupId: number;
   nftImage: string | StaticImageData;
   startupName: string;

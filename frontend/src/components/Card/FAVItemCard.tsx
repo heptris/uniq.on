@@ -1,4 +1,4 @@
-import { ElementType, forwardRef, Ref } from "react";
+import { ElementType, forwardRef, Ref, useEffect, useState } from "react";
 import Image from "next/image";
 
 import { css, useTheme } from "@emotion/react";
@@ -14,6 +14,7 @@ import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { useAlert } from "@/hooks";
 import axios from "axios";
 import { UNIQON_TOKEN } from "@/constants";
+import { ENDPOINT_API } from "@/api/endpoints";
 
 /**
  * @params
@@ -44,6 +45,7 @@ function FAVItemCard<T extends ElementType>(
     nftPrice,
     progress,
     favItem,
+    isFav,
     handleModalOpen,
     ...rest
   } = props;
@@ -54,13 +56,11 @@ function FAVItemCard<T extends ElementType>(
   const handleFavorite = () => {
     //관심목록 해제
     axios
-      .get(`/api/invest/${startupId}/favorite`)
+      .get(`${ENDPOINT_API}/invest/${startupId}/favorite`)
       .then((response) => {
         const { status } = response;
         if (status === 200) {
           handleAlertOpen(2000, "즐겨찾기가 해제되었습니다.", true);
-        } else {
-          handleAlertOpen(2000, "즐겨찾기가 해제가 실패했습니다.", false);
         }
       })
       .catch((err) => {
