@@ -31,7 +31,7 @@ const MypageListContainer = ({
         <NFTItemCard
           key={nft.startupId}
           nftImage={nft.nftImage}
-          tokenId={nft.tokenId}
+          nftReserveCount={nft.nftReserveCount}
           startupName={nft.startupName}
           nftPrice={nft.nftPrice}
           onClick={() => handleModalOpen(nft)}
@@ -41,10 +41,10 @@ const MypageListContainer = ({
       {favs?.map((fav: FAVItem) => (
         <FAVItemCard
           key={fav.startupId}
+          nftReserveCount={fav.nftReserveCount}
           startupId={fav.startupId}
           isFav={fav.isFav}
           nftImage={fav.nftImage}
-          tokenId={fav.tokenId}
           startupName={fav.startupName}
           nftPrice={fav.nftPrice}
           dueDate={fav.dueDate}
@@ -58,7 +58,6 @@ const MypageListContainer = ({
         <RSRVItemCard
           key={rsrv.startupId}
           nftImage={rsrv.nftImage}
-          tokenId={rsrv.tokenId}
           startupName={rsrv.startupName}
           nftPrice={rsrv.nftPrice}
           nftReserveCount={rsrv.nftReserveCount}
@@ -69,8 +68,8 @@ const MypageListContainer = ({
       {applys?.map((apply: APPLYItem) => (
         <NFTItemCard
           key={apply.startupId}
+          nftReserveCount={apply.nftReserveCount}
           nftImage={apply.nftImage}
-          tokenId={apply.tokenId}
           startupName={apply.startupName}
           nftPrice={apply.nftPrice}
           onClick={() => handleModalOpen(apply)}
