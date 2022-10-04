@@ -36,7 +36,7 @@ function FAVItemCard<T extends ElementType>(
   ref: Ref<any>
 ) {
   const {
-    tokenId,
+    nftReserveCount,
     startupId,
     nftImage,
     nftDescription,
@@ -90,7 +90,7 @@ function FAVItemCard<T extends ElementType>(
               font-weight: 600;
             `}
           >
-            {startupName} #{tokenId}
+            {startupName} #{nftReserveCount}
           </Text>
           <Text
             as="h1"

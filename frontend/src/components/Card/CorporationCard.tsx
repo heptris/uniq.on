@@ -36,7 +36,7 @@ function CorporationCard<T extends ElementType = "div">(
   ref: Ref<any>
 ) {
   const {
-    startupId,
+    nftReserveCount,
     startupName,
     profileImage,
     title,

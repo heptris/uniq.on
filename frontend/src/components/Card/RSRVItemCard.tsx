@@ -40,8 +40,8 @@ function RSRVItemCard<T extends ElementType = "div">(
   ref: Ref<any>
 ) {
   const {
-    tokenId,
     startupId,
+    nftDescription,
     nftImage,
     startupName,
     nftPrice,
@@ -70,7 +70,7 @@ function RSRVItemCard<T extends ElementType = "div">(
             font-weight: 600;
           `}
         >
-          {startupName} #{tokenId}
+          {startupName} #{nftReserveCount}
         </Text>
         <Text
           role="corp-name"
