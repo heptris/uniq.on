@@ -47,7 +47,7 @@ public class StartupAnswerControllerTest extends RestDocsTestSupport {
         AnswerRequestDto answerRequestDto = new AnswerRequestDto(1L, "answer");
 
         mockMvc.perform(
-                        post("/api/invest/answer/{startupQuestionId}", 1L)
+                        post("/app/invest/answer/{startupQuestionId}", 1L)
                                 .header("Authorization", "Bearer " + accessToken)
                                 .content(objectMapper.writeValueAsString(answerRequestDto))
                                 .contentType(MediaType.APPLICATION_JSON)
@@ -76,7 +76,7 @@ public class StartupAnswerControllerTest extends RestDocsTestSupport {
         AnswerUpdateRequestDto answerUpdateRequestDto = new AnswerUpdateRequestDto("Answer Update");
 
         mockMvc.perform(
-                        put("/api/invest/answer/{startupAnswerId}", 1L).
+                        put("/app/invest/answer/{startupAnswerId}", 1L).
                                 header("Authorization", "Bearer " + accessToken)
                                 .content(objectMapper.writeValueAsString(answerUpdateRequestDto))
                                 .contentType(MediaType.APPLICATION_JSON)
@@ -103,7 +103,7 @@ public class StartupAnswerControllerTest extends RestDocsTestSupport {
                         .답변수정(anyLong(), anyLong(), any(AnswerUpdateRequestDto.class));
 
         mockMvc.perform(
-                        put("/api/invest/answer/{startupAnswerId}", 1L).
+                        put("/app/invest/answer/{startupAnswerId}", 1L).
                                 header("Authorization", "Bearer " + accessToken)
                                 .content(objectMapper.writeValueAsString(answerUpdateRequestDto))
                                 .contentType(MediaType.APPLICATION_JSON)
@@ -126,7 +126,7 @@ public class StartupAnswerControllerTest extends RestDocsTestSupport {
     @Test
     public void 스타트업_댓글삭제() throws Exception {
         mockMvc.perform(
-                        delete("/api/invest/answer/{startupAnswerId}", 1L)
+                        delete("/app/invest/answer/{startupAnswerId}", 1L)
                                 .header("Authorization", "Bearer " + accessToken)
                                 .contentType(MediaType.APPLICATION_JSON)
                 ).andExpect(status().isOk())
@@ -146,7 +146,7 @@ public class StartupAnswerControllerTest extends RestDocsTestSupport {
                         .답변삭제(anyLong(), anyLong());
 
         mockMvc.perform(
-                        delete("/api/invest/answer/{startupAnswerId}", 1L)
+                        delete("/app/invest/answer/{startupAnswerId}", 1L)
                                 .header("Authorization", "Bearer " + accessToken)
                                 .contentType(MediaType.APPLICATION_JSON)
                 ).andExpect(status().is4xxClientError())

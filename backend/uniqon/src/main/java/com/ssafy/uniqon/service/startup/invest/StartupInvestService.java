@@ -53,7 +53,8 @@ public class StartupInvestService {
     }
 
     @Transactional
-    @Scheduled(cron = "*/20 * * * * *")
+//    @Scheduled(cron = "*/20 * * * * *")
+    @Scheduled(cron = "1 * * * * *")
     public void test() {
         List<Alarm> alarmList = new ArrayList<>();
         List<Startup> startupList = startupRepository.findByInvestingStartupList();

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @Slf4j
-@RequestMapping("/api/alarm")
+@RequestMapping("/app/alarm")
 @RequiredArgsConstructor
 public class AlarmController {
     private final AlarmService alarmService;
@@ -57,4 +57,11 @@ public class AlarmController {
         );
     }
 
+    @PostMapping("/investFail/{alarmId}")
+    public ResponseEntity readInvestorAlarmFail(@PathVariable("alarmId") Long alarmId) {
+        alarmService.nftPurchaseFail(alarmId);
+        return ResponseEntity.status(HttpStatus.OK).body(
+                new ResponseDto(HttpStatus.OK.value(), "alarm read", "알림 확인 완료")
+        );
+    }
 }

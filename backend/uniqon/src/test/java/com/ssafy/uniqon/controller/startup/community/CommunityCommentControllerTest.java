@@ -45,7 +45,7 @@ class CommunityCommentControllerTest extends RestDocsTestSupport {
         CommunityCommentRequestDto commentRequestDto = new CommunityCommentRequestDto(1L, "content");
 
         mockMvc.perform(
-                        post("/api/invest/community/{communityId}/comment", 1L)
+                        post("/app/invest/community/{communityId}/comment", 1L)
                                 .header("Authorization", "Bearer " + accessToken)
                                 .content(objectMapper.writeValueAsString(commentRequestDto))
                                 .contentType(MediaType.APPLICATION_JSON)
@@ -71,7 +71,7 @@ class CommunityCommentControllerTest extends RestDocsTestSupport {
         CommunityCommentRequestModifyDto commentRequestModifyDto = new CommunityCommentRequestModifyDto("content");
 
         mockMvc.perform(
-                        put("/api/invest/community/{communityId}/{commentId}", 1L, 1L)
+                        put("/app/invest/community/{communityId}/{commentId}", 1L, 1L)
                                 .header("Authorization", "Bearer " + accessToken)
                                 .content(objectMapper.writeValueAsString(commentRequestModifyDto))
                                 .contentType(MediaType.APPLICATION_JSON)
@@ -94,7 +94,7 @@ class CommunityCommentControllerTest extends RestDocsTestSupport {
     @Test
     public void 스타트업_커뮤니티_댓글_삭제() throws Exception {
         mockMvc.perform(
-                        delete("/api/invest/community/{communityId}/{commentId}", 1L, 1L)
+                        delete("/app/invest/community/{communityId}/{commentId}", 1L, 1L)
                                 .header("Authorization", "Bearer " + accessToken)
                                 .contentType(MediaType.APPLICATION_JSON)
                 ).andExpect(status().isOk())

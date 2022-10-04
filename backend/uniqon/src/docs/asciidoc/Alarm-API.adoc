@@ -32,3 +32,7 @@ operation::alarm-controller-test/투자자_nft_구매_성공_알람_읽기[snipp
 [[투자자_NFT_구매_성공후_알람_읽기_실패]]
 === 3.5.2. 투자자 NFT 구매 성공 후 알람 읽기 실패
 operation::alarm-controller-test/투자자_nft_구매_성공_알람_읽기_실패[snippets='http-request,http-response,path-parameters']
+
+[[투자자_NFT_구매_실패후_알람_읽기]]
+=== 3.6.1. 투자자 NFT 구매 실패 후 알람 읽기
+operation::alarm-controller-test/투자자_nft_구매_실패_알람_읽기[snippets='http-request,http-response,path-parameters']

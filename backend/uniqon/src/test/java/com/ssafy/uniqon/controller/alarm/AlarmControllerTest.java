@@ -62,7 +62,7 @@ class AlarmControllerTest extends RestDocsTestSupport {
         given(alarmService.alarmList(1L)).willReturn(alarmDtoList);
 
         mockMvc.perform(
-                get("/api/alarm/alarmList")
+                get("/app/alarm/alarmList")
                         .header("Authorization", "Bearer " + accessToken)
                         .contentType(MediaType.APPLICATION_JSON)
         ).andExpect(status().isOk());
@@ -80,7 +80,7 @@ class AlarmControllerTest extends RestDocsTestSupport {
         given(alarmService.unReadAlarmList(any(Long.class))).willReturn(alarmDtoList);
 
         mockMvc.perform(
-                get("/api/alarm/unReadAlarmList")
+                get("/app/alarm/unReadAlarmList")
                         .header("Authorization", "Bearer " + accessToken)
                         .contentType(MediaType.APPLICATION_JSON)
         ).andExpect(status().isOk());
@@ -90,7 +90,7 @@ class AlarmControllerTest extends RestDocsTestSupport {
     @Test
     public void 알람_읽기() throws Exception {
         mockMvc.perform(
-                        post("/api/alarm/readAlarm/{alarmId}", 1L)
+                        post("/app/alarm/readAlarm/{alarmId}", 1L)
                                 .header("Authorization", "Bearer " + accessToken)
                                 .contentType(MediaType.APPLICATION_JSON)
                 ).andExpect(status().isOk())
@@ -106,7 +106,7 @@ class AlarmControllerTest extends RestDocsTestSupport {
         doThrow(new CustomException(ErrorCode.ALARM_NOT_FOUND)).when(alarmService).readAlarm(1L);
 
         mockMvc.perform(
-                        post("/api/alarm/readAlarm/{alarmId}", 1L)
+                        post("/app/alarm/readAlarm/{alarmId}", 1L)
                                 .header("Authorization", "Bearer " + accessToken)
                                 .contentType(MediaType.APPLICATION_JSON)
                 ).andExpect(status().is4xxClientError())
@@ -122,7 +122,7 @@ class AlarmControllerTest extends RestDocsTestSupport {
         AlarmRequestDto alarmRequestDto = new AlarmRequestDto(10);
 
         mockMvc.perform(
-                        post("/api/alarm/mintSuccess/{alarmId}", 1L)
+                        post("/app/alarm/mintSuccess/{alarmId}", 1L)
                                 .header("Authorization", "Bearer " + accessToken)
                                 .content(objectMapper.writeValueAsString(alarmRequestDto))
                                 .contentType(MediaType.APPLICATION_JSON)
@@ -147,7 +147,7 @@ class AlarmControllerTest extends RestDocsTestSupport {
         doThrow(new CustomException(ErrorCode.ALARM_NOT_FOUND)).when(alarmService).mintSuccess(10, 1L);
 
         mockMvc.perform(
-                        post("/api/alarm/mintSuccess/{alarmId}", 1L)
+                        post("/app/alarm/mintSuccess/{alarmId}", 1L)
                                 .header("Authorization", "Bearer " + accessToken)
                                 .content(objectMapper.writeValueAsString(alarmRequestDto))
                                 .contentType(MediaType.APPLICATION_JSON)
@@ -168,7 +168,7 @@ class AlarmControllerTest extends RestDocsTestSupport {
     @Test
     public void 투자자_NFT_구매_성공_알람_읽기() throws Exception {
         mockMvc.perform(
-                        post("/api/alarm/investSuccess/{alarmId}", 1L)
+                        post("/app/alarm/investSuccess/{alarmId}", 1L)
                                 .header("Authorization", "Bearer " + accessToken)
                                 .contentType(MediaType.APPLICATION_JSON)
                 ).andExpect(status().isOk())
@@ -186,10 +186,25 @@ class AlarmControllerTest extends RestDocsTestSupport {
         doThrow(new CustomException(ErrorCode.ALARM_NOT_FOUND)).when(alarmService).nftPurchase(1L);
 
         mockMvc.perform(
-                        post("/api/alarm/investSuccess/{alarmId}", 1L)
+                        post("/app/alarm/investSuccess/{alarmId}", 1L)
                                 .header("Authorization", "Bearer " + accessToken)
                                 .contentType(MediaType.APPLICATION_JSON)
                 ).andExpect(status().is4xxClientError())
+                .andDo(
+                        restDocs.document(
+                                pathParameters(parameterWithName("alarmId").description("alarmID"))
+                        )
+                );
+    }
+
+    @DisplayName(value = "투자자가 NFT 구매 실패 후 알람 읽기")
+    @Test
+    public void 투자자_NFT_구매_실패_알람_읽기() throws Exception {
+        mockMvc.perform(
+                        post("/app/alarm/investFail/{alarmId}", 1L)
+                                .header("Authorization", "Bearer " + accessToken)
+                                .contentType(MediaType.APPLICATION_JSON)
+                ).andExpect(status().isOk())
                 .andDo(
                         restDocs.document(
                                 pathParameters(parameterWithName("alarmId").description("alarmID"))
