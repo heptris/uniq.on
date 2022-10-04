@@ -1,5 +1,4 @@
 import { GetServerSideProps } from "next";
-import axios from "axios";
 
 import { css, useTheme } from "@emotion/react";
 import styled from "@emotion/styled";
@@ -10,32 +9,48 @@ import Button from "@/components/Button";
 import Card from "@/components/Card";
 import Text from "@/components/Text";
 
-import { useSelectTab } from "@/hooks";
-import { ENDPOINT_API } from "@/api/endpoints";
+import {
+  getAlarmList,
+  useAlarm,
+  useAlarmMutation,
+  useAlert,
+  useSelectTab,
+} from "@/hooks";
 
 import { AlarmItem } from "@/types/api_responses";
-type AlarmProps = {
-  unreadAlarmList: AlarmItem[];
-  readAlarmList: AlarmItem[];
-};
+import { AlarmProps } from "@/types/props";
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const alarmList = await axios
-    .get(`${ENDPOINT_API}/alarm/alarmList`)
-    .then(({ data }) => data.data);
-  const unreadAlarmList: AlarmItem[] = [];
-  const readAlarmList: AlarmItem[] = [];
-  alarmList.forEach((alarm: AlarmItem) =>
-    alarm.read ? readAlarmList.push(alarm) : unreadAlarmList.push(alarm)
-  );
-  return { props: { unreadAlarmList, readAlarmList } };
+  const alarmList = await getAlarmList();
+  return { props: { alarmList } };
 };
 
 export default function alarm(props: AlarmProps) {
-  const { readAlarmList, unreadAlarmList } = props;
+  const { data: alarmList, refetch } = useAlarm(props);
+  const { mutate: mutateAlarmRead } = useAlarmMutation();
+
+  const unreadAlarmList: AlarmItem[] = [];
+  const readAlarmList: AlarmItem[] = [];
+  alarmList.forEach((alarm) =>
+    alarm.read ? readAlarmList.push(alarm) : unreadAlarmList.push(alarm)
+  );
+
   const theme = useTheme();
   const menus = ["읽지 않은 알림", "확인한 알림"];
   const { selectedMenu, onSelectHandler } = useSelectTab(menus);
+  const { handleAlertOpen } = useAlert();
+
+  const handleAlarmRead = (alarmId: number) => {
+    // nft 구매 로직 or
+    // nft 발행 로직
+    mutateAlarmRead(
+      { alarmId },
+      {
+        onSuccess: () => handleAlertOpen(2000, "읽음 처리 완료", true),
+        onSettled: () => refetch(),
+      }
+    );
+  };
 
   return (
     <AlarmContainer>
@@ -43,50 +58,58 @@ export default function alarm(props: AlarmProps) {
       {(selectedMenu === "읽지 않은 알림"
         ? unreadAlarmList
         : readAlarmList
-      ).map((alarm: AlarmItem) => (
-        <Card
-          css={css`
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 100%;
-            height: 6rem;
-            margin-bottom: 3vw;
-            padding: 0 1rem;
-            font-weight: 500;
+      ).map((alarm: AlarmItem) => {
+        const { read, content, alarmId } = alarm;
+        return (
+          <Card
+            css={css`
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              width: 100%;
+              height: 6rem;
+              margin-bottom: 3vw;
+              padding: 0 1rem;
+              font-weight: 500;
 
-            @media (${minTabletWidth}) {
-              padding: 0;
-              margin-bottom: 1vw;
-            }
-          `}
-        >
-          <TextContainer>
-            <Text
-              as="p"
-              role="alarm-text"
-              css={css`
-                overflow: hidden;
-                word-break: keep-all;
-                text-overflow: ellipsis;
-              `}
+              @media (${minTabletWidth}) {
+                padding: 0;
+                margin-bottom: 1vw;
+              }
+            `}
+          >
+            <TextContainer>
+              <Text
+                as="p"
+                role="alarm-text"
+                css={css`
+                  overflow: hidden;
+                  word-break: keep-all;
+                  text-overflow: ellipsis;
+                `}
+              >
+                {content}
+              </Text>
+              <Text
+                as="p"
+                role="alarm-date"
+                css={css`
+                  font-size: 0.8rem;
+                  color: ${theme.color.text.hover};
+                `}
+              ></Text>
+            </TextContainer>
+            <Button
+              disabled={read}
+              onClick={() => {
+                read || handleAlarmRead(alarmId);
+              }}
             >
-              {alarm.content}
-            </Text>
-            <Text
-              as="p"
-              role="alarm-date"
-              css={css`
-                font-size: 0.8rem;
-                color: ${theme.color.text.hover};
-              `}
-            >
-              {alarm.read ? "읽음" : "안읽음"}
-            </Text>
-          </TextContainer>
-          {selectedMenu === "읽지 않은 알림" ? <Button>확인</Button> : <></>}
-        </Card>
-      ))}
+              {read ? "읽음" : "확인"}
+            </Button>
+          </Card>
+        );
+      })}
     </AlarmContainer>
   );
 }
