@@ -38,7 +38,7 @@ function InvestmentDetail(props: IDProps) {
   const [fav, setFav] = useState(InvestmentRequest.isFav);
   useEffect(() => {}, [fav]);
   const handleFavorite = () => {
-    //관심목록 등록
+    //관심목록 등록 및 해제
     axios
       .get(`${ENDPOINT_API}/invest/${InvestmentRequest.startupId}/favorite`)
       .then((response) => {
@@ -57,7 +57,6 @@ function InvestmentDetail(props: IDProps) {
         handleAlertOpen(2000, `${status}에러가 발생했습니다.`, false);
       });
   };
-  console.log(InvestmentRequest.isFav);
   return (
     <Grid
       css={css`
@@ -72,7 +71,8 @@ function InvestmentDetail(props: IDProps) {
     >
       <NFTInfo>
         <NFTItemCard
-          tokenId={InvestmentRequest.nftReserveCount}
+          nftDescription={InvestmentRequest.nftDescription}
+          nftReserveCount={InvestmentRequest.nftReserveCount}
           startupId={InvestmentRequest.startupId}
           nftImage={InvestmentRequest.nftImage}
           startupName={InvestmentRequest.startupName}

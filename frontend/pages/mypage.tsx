@@ -20,6 +20,10 @@ import Button from "@/components/Button";
 import MypageListContainer from "@/container/MypageListContainer";
 
 import { APPLYItem, FAVItem, NFTItem, RSRVItem } from "@/types/api_responses";
+import Link from "next/link";
+import ProgressBar from "@/components/ProgressBar";
+import FavModal from "@/components/Modal/FavModal";
+import NftModal from "@/components/Modal/NftModal";
 type MyPageProps = {
   member: any;
   applyList: any;
@@ -160,10 +164,18 @@ function MyPage(props: MyPageProps) {
         onCancel={handleModalClose}
         onSubmit={handleModalSubmit}
       >
-        <div>
-          {modalContent?.startupName}
-          <Button onClick={handleModalSubmit}>어디로 이동하는 버튼</Button>
-        </div>
+        {selectedMenu === menus[1] && modalContent && (
+          <FavModal
+            handleModalSubmit={handleModalSubmit}
+            modalContent={modalContent}
+          />
+        )}
+        {selectedMenu === menus[2] && modalContent && (
+          <NftModal
+            handleModalSubmit={handleModalSubmit}
+            modalContent={modalContent}
+          />
+        )}
       </Modal>
     </>
   );
