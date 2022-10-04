@@ -20,18 +20,18 @@ values (now(), now(), "aa@naver.com", "USER", "aaa", "0XA", "", "https://picsum.
 insert into startup (created_date, last_modified_date, description, plan_paper, plan_paper_img
                     , discord_url, enroll_status, due_date, nft_image, nft_reserve_count, is_finished, is_goal, nft_target_count
                     , nft_price, road_map, reject_reason, startup_name, title, member_id, nft_description)
-values (now(), now(), "startup description", "https://uniqon-bucket.s3.ap-northeast-2.amazonaws.com/startup/13e35725-8b22-4065-975e-fe15a840a1cduniqon%EB%B8%94%EB%A1%9D%EC%B2%B4%EC%9D%B8_%EC%A1%B0%EC%98%81%EB%8F%84%EB%A9%98%ED%86%A0%EB%8B%98.pdf",
-        "https://ipfs.io/ipfs/bafybeihqoym3kapp5y5omzreooit2d5ngk6w26vin226xvyl644xbwu674/2.png", null, null,
-        DATE_ADD(now(), interval 1 day), "https://ipfs.io/ipfs/bafybeihqoym3kapp5y5omzreooit2d5ngk6w26vin226xvyl644xbwu674/2.png", 0, false, false, 10, 5, null, null, "ccc", "title", 3, "nft description"),
-       (now(), now(), "startup description2", "https://uniqon-bucket.s3.ap-northeast-2.amazonaws.com/startup/13e35725-8b22-4065-975e-fe15a840a1cduniqon%EB%B8%94%EB%A1%9D%EC%B2%B4%EC%9D%B8_%EC%A1%B0%EC%98%81%EB%8F%84%EB%A9%98%ED%86%A0%EB%8B%98.pdf",
-        "https://uniqon-bucket.s3.ap-northeast-2.amazonaws.com/startup/fb45f1bc-0130-4932-a908-7e9f6b4b5985uniqonuniqon%EB%B8%94%EB%A1%9D%EC%B2%B4%EC%9D%B8_%EC%A1%B0%EC%98%81%EB%8F%84%EB%A9%98%ED%86%A0%EB%8B%98.jpg",null, null,
-        DATE_ADD(now(), interval 1 day), "https://ipfs.io/ipfs/bafybeihqoym3kapp5y5omzreooit2d5ngk6w26vin226xvyl644xbwu674/2.png", 0, false, false, 10, 5, null, null, "ddd", "title2", 4, "nft description2"),
-       (now(), now(), "startup description3", "https://uniqon-bucket.s3.ap-northeast-2.amazonaws.com/startup/13e35725-8b22-4065-975e-fe15a840a1cduniqon%EB%B8%94%EB%A1%9D%EC%B2%B4%EC%9D%B8_%EC%A1%B0%EC%98%81%EB%8F%84%EB%A9%98%ED%86%A0%EB%8B%98.pdf",
-        "https://uniqon-bucket.s3.ap-northeast-2.amazonaws.com/startup/fb45f1bc-0130-4932-a908-7e9f6b4b5985uniqonuniqon%EB%B8%94%EB%A1%9D%EC%B2%B4%EC%9D%B8_%EC%A1%B0%EC%98%81%EB%8F%84%EB%A9%98%ED%86%A0%EB%8B%98.jpg",null, null,
-        DATE_ADD(now(), interval 1 day), "https://ipfs.io/ipfs/bafybeihqoym3kapp5y5omzreooit2d5ngk6w26vin226xvyl644xbwu674/2.png", 0, false, false, 10, 5, null, null, "test", "title3", 6, "nft description3"),
-       (now(), now(), "startup description4", "https://uniqon-bucket.s3.ap-northeast-2.amazonaws.com/startup/13e35725-8b22-4065-975e-fe15a840a1cduniqon%EB%B8%94%EB%A1%9D%EC%B2%B4%EC%9D%B8_%EC%A1%B0%EC%98%81%EB%8F%84%EB%A9%98%ED%86%A0%EB%8B%98.pdf",
-        "https://uniqon-bucket.s3.ap-northeast-2.amazonaws.com/startup/fb45f1bc-0130-4932-a908-7e9f6b4b5985uniqonuniqon%EB%B8%94%EB%A1%9D%EC%B2%B4%EC%9D%B8_%EC%A1%B0%EC%98%81%EB%8F%84%EB%A9%98%ED%86%A0%EB%8B%98.jpg",null, null,
-        DATE_ADD(now(), interval 1 day), "https://ipfs.io/ipfs/bafybeihqoym3kapp5y5omzreooit2d5ngk6w26vin226xvyl644xbwu674/2.png", 0, false, false, 10, 5, null, null, "test", "title3", 7, "nft description4");
+values (now(), now(), "startup description", "https://uniqon-bucket.s3.ap-northeast-2.amazonaws.com/startup/491de458-5c1d-41d8-942f-71b625f17cdcuniqonUniq.on.pdf",
+        "https://uniqon-bucket.s3.ap-northeast-2.amazonaws.com/startup/23814390-aadd-4606-9c7b-406c1859de94uniqonuniqonUniq.on.jpg", null, null,
+        DATE_ADD(now(), interval 1 day), "https://ipfs.io/ipfs/bafybeihqoym3kapp5y5omzreooit2d5ngk6w26vin226xvyl644xbwu674/2.png", 0, false, false, 10, 5, "https://uniqon-bucket.s3.ap-northeast-2.amazonaws.com/startup/e945a496-2f1a-4e21-9479-5f0c5b50114buniqon%EC%A0%9C%EB%AA%A9%EC%9D%84-%EC%9E%85%EB%A0%A5%ED%95%B4%EC%A3%BC%EC%84%B8%EC%9A%94_-001.jpg", null, "ccc", "title", 3, "nft description"),
+       (now(), now(), "startup description2", "https://uniqon-bucket.s3.ap-northeast-2.amazonaws.com/startup/491de458-5c1d-41d8-942f-71b625f17cdcuniqonUniq.on.pdf",
+        "https://uniqon-bucket.s3.ap-northeast-2.amazonaws.com/startup/23814390-aadd-4606-9c7b-406c1859de94uniqonuniqonUniq.on.jpg",null, null,
+        DATE_ADD(now(), interval 1 day), "https://ipfs.io/ipfs/bafybeihqoym3kapp5y5omzreooit2d5ngk6w26vin226xvyl644xbwu674/2.png", 0, false, false, 10, 5, "https://uniqon-bucket.s3.ap-northeast-2.amazonaws.com/startup/e945a496-2f1a-4e21-9479-5f0c5b50114buniqon%EC%A0%9C%EB%AA%A9%EC%9D%84-%EC%9E%85%EB%A0%A5%ED%95%B4%EC%A3%BC%EC%84%B8%EC%9A%94_-001.jpg", null, "ddd", "title2", 4, "nft description2"),
+       (now(), now(), "startup description3", "https://uniqon-bucket.s3.ap-northeast-2.amazonaws.com/startup/491de458-5c1d-41d8-942f-71b625f17cdcuniqonUniq.on.pdf",
+        "https://uniqon-bucket.s3.ap-northeast-2.amazonaws.com/startup/23814390-aadd-4606-9c7b-406c1859de94uniqonuniqonUniq.on.jpg",null, null,
+        DATE_ADD(now(), interval 1 day), "https://ipfs.io/ipfs/bafybeihqoym3kapp5y5omzreooit2d5ngk6w26vin226xvyl644xbwu674/2.png", 0, false, false, 10, 5, "https://uniqon-bucket.s3.ap-northeast-2.amazonaws.com/startup/e945a496-2f1a-4e21-9479-5f0c5b50114buniqon%EC%A0%9C%EB%AA%A9%EC%9D%84-%EC%9E%85%EB%A0%A5%ED%95%B4%EC%A3%BC%EC%84%B8%EC%9A%94_-001.jpg", null, "test", "title3", 6, "nft description3"),
+       (now(), now(), "startup description4", "https://uniqon-bucket.s3.ap-northeast-2.amazonaws.com/startup/491de458-5c1d-41d8-942f-71b625f17cdcuniqonUniq.on.pdf",
+        "https://uniqon-bucket.s3.ap-northeast-2.amazonaws.com/startup/23814390-aadd-4606-9c7b-406c1859de94uniqonuniqonUniq.on.jpg",null, null,
+        DATE_ADD(now(), interval 1 day), "https://ipfs.io/ipfs/bafybeihqoym3kapp5y5omzreooit2d5ngk6w26vin226xvyl644xbwu674/2.png", 0, false, false, 10, 5, "https://uniqon-bucket.s3.ap-northeast-2.amazonaws.com/startup/e945a496-2f1a-4e21-9479-5f0c5b50114buniqon%EC%A0%9C%EB%AA%A9%EC%9D%84-%EC%9E%85%EB%A0%A5%ED%95%B4%EC%A3%BC%EC%84%B8%EC%9A%94_-001.jpg", null, "test", "title3", 7, "nft description4");
 
 insert into startup_question (created_date, last_modified_date, question, member_id, startup_id)
 values (now(), now(), "질문1", 1, 1),
