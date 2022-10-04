@@ -13,6 +13,7 @@ import ProgressBar from "@/components/ProgressBar";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { useAlert } from "@/hooks";
 import axios from "axios";
+import { UNIQON_TOKEN } from "@/constants";
 
 /**
  * @params
@@ -120,7 +121,7 @@ function FAVItemCard<T extends ElementType>(
               `}
               icon={faEthereum}
             />
-            {nftPrice} ETH
+            {nftPrice} {UNIQON_TOKEN}
           </Text>
           <Text
             role="due-date"

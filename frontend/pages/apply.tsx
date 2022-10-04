@@ -16,7 +16,7 @@ import { useAlert, useAuth, useForm } from "@/hooks";
 import { ENDPOINT_API } from "@/api/endpoints";
 import { ApplyFormType } from "@/types/api_requests";
 import { useRouter } from "next/router";
-import { ROUTES } from "@/constants";
+import { ROUTES, UNIQON_TOKEN } from "@/constants";
 
 const initialApplyState = {
   title: "",
@@ -216,7 +216,7 @@ export default function apply() {
           </SelectInput>
           <LabelInput
             css={LabelInputStyle}
-            labelText="토큰 개당 가격(SSH)"
+            labelText={`토큰 개당 가격(${UNIQON_TOKEN})`}
             type="number"
             name="nftPrice"
             onChange={onChangeForm}

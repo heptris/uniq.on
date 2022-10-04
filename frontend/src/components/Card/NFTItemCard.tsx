@@ -12,6 +12,7 @@ import type { NFTItem } from "@/types/api_responses";
 import Card from "@/components/Card";
 import Text from "@/components/Text";
 import ProgressBar from "@/components/ProgressBar";
+import { UNIQON_TOKEN } from "@/constants";
 
 type NFTItemCardProps =
   | {
@@ -99,7 +100,7 @@ function NFTItemCard<T extends ElementType = "div">(
             `}
             icon={faEthereum}
           />
-          {nftPrice} ETH
+          {nftPrice} {UNIQON_TOKEN}
         </Text>
         <Text
           role="status"

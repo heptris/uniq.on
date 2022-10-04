@@ -10,3 +10,5 @@ export const ROUTES = {
 };
 
 export const HEADER_HEIGHT = "80px";
+
+export const UNIQON_TOKEN = "UQT";
