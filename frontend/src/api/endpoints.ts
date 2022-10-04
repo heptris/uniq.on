@@ -4,5 +4,5 @@ const PROTOCOL = "https://";
 const HOST = "j7a507.p.ssafy.io";
 const DOMAIN = PROTOCOL + HOST;
 
-export const ENDPOINT_API = DOMAIN + "/api";
+export const ENDPOINT_API = DOMAIN + "/app";
 export const ENDPOINT_AUTH = DOMAIN + "/auth";
