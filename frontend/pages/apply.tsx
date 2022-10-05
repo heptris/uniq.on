@@ -147,14 +147,14 @@ export default function apply() {
           console.log(err);
           handleAlertOpen(2000, "투자 신청이 실패했습니다.", false);
         });
-      console.log(
-        await storeNFT({
-          startupId: 1,
-          nftImage: nftImageFile,
-          startupName,
-          nftPrice,
-        })
-      );
+      // console.log(
+      //   await storeNFT({
+      //     startupId: 1,
+      //     nftImage: nftImageFile,
+      //     startupName,
+      //     nftPrice,
+      //   })
+      // );
 
       // router.push("/");
       setForm(initialApplyState);
