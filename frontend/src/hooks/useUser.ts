@@ -31,33 +31,34 @@ const getReserveList = async () =>
     .get(`${ENDPOINT_API}/member/mypage/invest`)
     .then<RSRVItem[]>(({ data }) => data.data);
 
-const useUserQueries = ({
-  member,
-  applyList,
-  favoriteList,
-  reserveList,
-}: MyPageProps) =>
+const useUserQueries = () =>
+  //   {
+  //   member,
+  //   applyList,
+  //   favoriteList,
+  //   reserveList,
+  // }: MyPageProps
   useQueries({
     queries: [
       {
         queryKey: [MY_USER_INFO],
         queryFn: getUserInfo,
-        initialData: member,
+        // initialData: member,
       },
       {
         queryKey: [MY_APPLY_LIST],
         queryFn: getApplyList,
-        initialData: applyList,
+        // initialData: applyList,
       },
       {
         queryKey: [MY_FAVORITE_LIST],
         queryFn: getFavList,
-        initialData: favoriteList,
+        // initialData: favoriteList,
       },
       {
         queryKey: [MY_RESERVE_LIST],
         queryFn: getReserveList,
-        initialData: reserveList,
+        // initialData: reserveList,
       },
     ],
   });
