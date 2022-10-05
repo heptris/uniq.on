@@ -19,19 +19,23 @@ import {
 
 import { AlarmItem } from "@/types/api_responses";
 import { AlarmProps } from "@/types/props";
+import { ACCESS_TOKEN } from "@/api/utils";
 
-// export const getServerSideProps: GetServerSideProps = async () => {
-//   const alarmList = await getAlarmList();
-//   return { props: { alarmList } };
-// };
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const config = {
+    headers: { authorization: `Bearer ${context.req.cookies[ACCESS_TOKEN]}` },
+  };
+  const alarmList = await getAlarmList(config);
+  return { props: { alarmList } };
+};
 
 export default function alarm(props: AlarmProps) {
-  const { data: alarmList, refetch } = useAlarm();
+  const { data: alarmList, refetch } = useAlarm(props);
   const { mutate: mutateAlarmRead } = useAlarmMutation();
 
   const unreadAlarmList: AlarmItem[] = [];
   const readAlarmList: AlarmItem[] = [];
-  alarmList?.forEach((alarm) =>
+  alarmList.forEach((alarm) =>
     alarm.read ? readAlarmList.push(alarm) : unreadAlarmList.push(alarm)
   );
 

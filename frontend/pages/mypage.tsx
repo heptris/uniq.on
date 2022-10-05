@@ -24,24 +24,27 @@ import Modal from "@/components/Modal";
 import MypageListContainer from "@/container/MypageListContainer";
 
 import { MyPageProps } from "@/types/props";
-import { useRouter } from "next/router";
+
 import FavModal from "@/components/Modal/FavModal";
 import NftModal from "@/components/Modal/NftModal";
-import { ROUTES } from "@/constants";
 
-import { NFTItem } from "@/types/api_responses";
 import contracts from "@/contracts/utils";
 import axios from "axios";
+import { ACCESS_TOKEN } from "@/api/utils";
 
-const { HOME } = ROUTES;
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const config = {
+    headers: { authorization: `Bearer ${context.req.cookies[ACCESS_TOKEN]}` },
+  };
+  const member = await getUserInfo(config);
+  const applyList = await getApplyList(config);
+  const favoriteList = await getFavList(config);
+  const reserveList = await getReserveList(config);
 
-// export const getServerSideProps: GetServerSideProps = async () => {
-//   return { props: { myNftList } };
-// };
+  return { props: { member, applyList, favoriteList, reserveList } };
+};
 
-function MyPage() {
-  // props: { myNftList: string[] }
-  // props: MyPageProps
+function MyPage(props: MyPageProps) {
   const theme = useTheme();
   const { isShowModal, modalContent, handleModalClose, handleModalOpen } =
     useNFTModal();
@@ -49,16 +52,14 @@ function MyPage() {
   const { mintUniqonNFTContract } = useWeb3();
   const { account } = useAccount();
   const [nfts, setNfts] = useState<string[]>([]);
-  // const { myNftList: nfts } = props;
+
   const handleNftList = async () => {
     const myNftList: string[] = await mintUniqonNFTContract?.methods
       .getOwnedTokens(account)
       .call();
-    // console.log(account, myNftList);
-    setNfts(myNftList);
-    // const file = await ipfs.get(myNftList[0]);
 
-    // console.log(file);
+    setNfts(myNftList);
+
     axios
       .get(myNftList[0])
       .then((res) => {
@@ -75,7 +76,7 @@ function MyPage() {
     { data: applyList, isLoading: isApplyLoading },
     { data: favoriteList, isLoading: isFavLoading },
     { data: reserveList, isLoading: isReserveLoading },
-  ] = useUserQueries();
+  ] = useUserQueries(props);
   const menus = ["보유 NFT", "관심목록", "예약내역", "투자신청내역"];
   const { selectedMenu, onSelectHandler } = useSelectTab(menus);
 
@@ -152,11 +153,11 @@ function MyPage() {
         `}
       />
 
-      {nfts.map((el, i) => (
+      {/* {nfts.map((el, i) => (
         <div key={i}>{el}</div>
-      ))}
+      ))} */}
       {/* {selectedMenu === menus[0] &&
-        // <MypageListContainer handleModalOpen={handleModalOpen} nfts={nfts} />
+        <MypageListContainer handleModalOpen={handleModalOpen} nfts={nfts} /> */}
       {selectedMenu === menus[1] && (
         <MypageListContainer
           handleModalOpen={handleModalOpen}
@@ -174,7 +175,7 @@ function MyPage() {
           handleModalOpen={handleModalOpen}
           applys={applyList}
         />
-      )} */}
+      )}
 
       <Modal
         isOpen={isShowModal}
