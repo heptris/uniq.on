@@ -132,7 +132,7 @@ export default function apply() {
           handleAlertOpen(2000, "투자 신청이 실패했습니다.", false);
         });
 
-      // router.push("/");
+      router.push("/list");
       setForm(initialApplyState);
     }
   };

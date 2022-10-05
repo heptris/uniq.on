@@ -89,7 +89,7 @@ export default function write(props: CommunityProps) {
         onClick={onSubmit}
         css={css`
           margin-top: 1rem;
-          align-self: flex-end;
+          width: 100%;
         `}
       >
         등록
