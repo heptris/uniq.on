@@ -14,51 +14,50 @@ const {
   MY_USER_INFO,
 } = QUERY_KEYS;
 
-const getUserInfo = async () =>
-  await axios.get(`${ENDPOINT_API}/member`).then<Member>(({ data }) => {
+const getUserInfo = async (config?: object) =>
+  await axios.get(`${ENDPOINT_API}/member`, config).then<Member>(({ data }) => {
     return { ...data.data, nickname: data.data.nickName };
   });
-const getApplyList = async () =>
+const getApplyList = async (config?: object) =>
   await axios
-    .get(`${ENDPOINT_API}/member/mypage/startup`)
+    .get(`${ENDPOINT_API}/member/mypage/startup`, config)
     .then<APPLYItem[]>(({ data }) => data.data);
-const getFavList = async () =>
+const getFavList = async (config?: object) =>
   await axios
-    .get(`${ENDPOINT_API}/member/mypage/favstartup`)
+    .get(`${ENDPOINT_API}/member/mypage/favstartup`, config)
     .then<FAVItem[]>(({ data }) => data.data);
-const getReserveList = async () =>
+const getReserveList = async (config?: object) =>
   await axios
-    .get(`${ENDPOINT_API}/member/mypage/invest`)
+    .get(`${ENDPOINT_API}/member/mypage/invest`, config)
     .then<RSRVItem[]>(({ data }) => data.data);
 
-const useUserQueries = () =>
-  //   {
-  //   member,
-  //   applyList,
-  //   favoriteList,
-  //   reserveList,
-  // }: MyPageProps
+const useUserQueries = ({
+  member,
+  applyList,
+  favoriteList,
+  reserveList,
+}: MyPageProps) =>
   useQueries({
     queries: [
       {
         queryKey: [MY_USER_INFO],
         queryFn: getUserInfo,
-        // initialData: member,
+        initialData: member,
       },
       {
         queryKey: [MY_APPLY_LIST],
         queryFn: getApplyList,
-        // initialData: applyList,
+        initialData: applyList,
       },
       {
         queryKey: [MY_FAVORITE_LIST],
         queryFn: getFavList,
-        // initialData: favoriteList,
+        initialData: favoriteList,
       },
       {
         queryKey: [MY_RESERVE_LIST],
         queryFn: getReserveList,
-        // initialData: reserveList,
+        initialData: reserveList,
       },
     ],
   });

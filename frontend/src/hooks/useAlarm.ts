@@ -9,18 +9,13 @@ import { AlarmItem } from "@/types/api_responses";
 
 const { ALARM_LIST } = QUERY_KEYS;
 
-const getAlarmList = async () =>
+const getAlarmList = async (config?: object) =>
   await axios
-    .get(`${ENDPOINT_API}/alarm/alarmList`)
+    .get(`${ENDPOINT_API}/alarm/alarmList`, config)
     .then<AlarmItem[]>(({ data }) => data.data);
 
-const useAlarm = () =>
-  // { alarmList }: AlarmProps
-  useQuery(
-    [ALARM_LIST],
-    getAlarmList
-    // { initialData: alarmList }
-  );
+const useAlarm = ({ alarmList }: AlarmProps) =>
+  useQuery([ALARM_LIST], getAlarmList, { initialData: alarmList });
 
 const useAlarmMutation = () =>
   useMutation(({ alarmId }: { alarmId: number }) =>

@@ -27,7 +27,6 @@ export const useServer = () => {
       .get(`api/signup/${nickname}`)
       .then((res) => {
         const { status } = res;
-        console.log(res);
         handleAlertOpen(1000, res.data, true);
         return status === 200;
       })
@@ -42,7 +41,6 @@ export const useServer = () => {
     await axios
       .get(`${ENDPOINT_API}/alarm/unReadAlarmList`)
       .then(({ data }) => {
-        console.log(data.data);
         data.data.length > 0
           ? setHasUnreadAlarm(true)
           : setHasUnreadAlarm(false);
