@@ -1,6 +1,5 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { GetServerSideProps } from "next";
-import axios from "axios";
 
 import styled from "@emotion/styled";
 import { css, useTheme } from "@emotion/react";
@@ -8,42 +7,37 @@ import { faWallet } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { minTabletWidth } from "@/styles/utils";
 
-import { ENDPOINT_API } from "@/api/endpoints";
-
-import { useNFTModal, useSelectTab } from "@/hooks";
+import {
+  useNFTModal,
+  useSelectTab,
+  getApplyList,
+  getFavList,
+  getReserveList,
+  getUserInfo,
+  useUserQueries,
+} from "@/hooks";
 
 import Avatar from "@/components/Avatar";
 import Text from "@/components/Text";
 import SelectTab from "@/components/SelectTab";
 import Modal from "@/components/Modal";
-import Button from "@/components/Button";
 import MypageListContainer from "@/container/MypageListContainer";
 
-import { APPLYItem, FAVItem, NFTItem, RSRVItem } from "@/types/api_responses";
-import Link from "next/link";
-import ProgressBar from "@/components/ProgressBar";
+import { MyPageProps } from "@/types/props";
+import { useRouter } from "next/router";
 import FavModal from "@/components/Modal/FavModal";
 import NftModal from "@/components/Modal/NftModal";
-type MyPageProps = {
-  member: any;
-  applyList: any;
-  favoriteList: any;
-  reserveList: any;
-};
+import { ROUTES } from "@/constants";
+
+import { NFTItem } from "@/types/api_responses";
+
+const { HOME } = ROUTES;
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const member = await axios.get(`${ENDPOINT_API}/member`).then(({ data }) => {
-    return { ...data.data, nickname: data.data.nickName };
-  });
-  const applyList = await axios
-    .get(`${ENDPOINT_API}/member/mypage/startup`)
-    .then(({ data }) => data.data);
-  const favoriteList = await axios
-    .get(`${ENDPOINT_API}/member/mypage/favstartup`)
-    .then(({ data }) => data.data);
-  const reserveList = await axios
-    .get(`${ENDPOINT_API}/member/mypage/invest`)
-    .then(({ data }) => data.data);
+  const member = await getUserInfo();
+  const applyList = await getApplyList();
+  const favoriteList = await getFavList();
+  const reserveList = await getReserveList();
 
   return { props: { member, applyList, favoriteList, reserveList } };
 };
@@ -53,31 +47,23 @@ function MyPage(props: MyPageProps) {
   const { isShowModal, modalContent, handleModalClose, handleModalOpen } =
     useNFTModal();
   const [nfts, setNfts] = useState<NFTItem[]>([]);
-  const [favs, setFavs] = useState<FAVItem[]>([]);
-  const [rsrvs, setRsrvs] = useState<RSRVItem[]>([]);
-  const [applys, setApplys] = useState<APPLYItem[]>([]);
 
-  const { member, applyList, favoriteList, reserveList } = props;
+  const [
+    { data: member },
+    { data: applyList },
+    { data: favoriteList },
+    { data: reserveList },
+  ] = useUserQueries(props);
+
+  const router = useRouter();
+
+  if (!member || !applyList || !favoriteList || !reserveList) {
+    router.push(HOME);
+    return <div>Loading...</div>;
+  }
 
   const menus = ["보유 NFT", "관심목록", "예약내역", "투자신청내역"];
   const { selectedMenu, onSelectHandler } = useSelectTab(menus);
-
-  useEffect(() => {
-    switch (selectedMenu) {
-      case menus[0]:
-        // nftList && setNfts(nftList);
-        break;
-      case menus[1]:
-        setFavs(favoriteList);
-        break;
-      case menus[2]:
-        setRsrvs(reserveList);
-        break;
-      case menus[3]:
-        setApplys(applyList);
-        break;
-    }
-  }, [selectedMenu]);
 
   const handleModalSubmit = () => {
     // 보유 NFT 목록일 경우
@@ -147,15 +133,21 @@ function MyPage(props: MyPageProps) {
         <MypageListContainer handleModalOpen={handleModalOpen} nfts={nfts} />
       )}
       {selectedMenu === menus[1] && (
-        <MypageListContainer handleModalOpen={handleModalOpen} favs={favs} />
+        <MypageListContainer
+          handleModalOpen={handleModalOpen}
+          favs={favoriteList}
+        />
       )}
       {selectedMenu === menus[2] && (
-        <MypageListContainer handleModalOpen={handleModalOpen} rsrvs={rsrvs} />
+        <MypageListContainer
+          handleModalOpen={handleModalOpen}
+          rsrvs={reserveList}
+        />
       )}
       {selectedMenu === menus[3] && (
         <MypageListContainer
           handleModalOpen={handleModalOpen}
-          applys={applys}
+          applys={applyList}
         />
       )}
 

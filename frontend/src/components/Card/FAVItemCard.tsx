@@ -1,20 +1,25 @@
-import { ElementType, forwardRef, Ref, useEffect, useState } from "react";
+import { ElementType, forwardRef, Ref } from "react";
 import Image from "next/image";
+import { useQueryClient } from "@tanstack/react-query";
 
 import { css, useTheme } from "@emotion/react";
 import styled from "@emotion/styled";
 import { faEthereum } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHeart } from "@fortawesome/free-solid-svg-icons";
 
-import type { FAVItemCardProps } from "@/types/props";
 import Card from "@/components/Card";
 import Text from "@/components/Text";
 import ProgressBar from "@/components/ProgressBar";
-import { faHeart } from "@fortawesome/free-solid-svg-icons";
-import { useAlert } from "@/hooks";
-import axios from "axios";
+
+import { useAlert, useNftFavMutation } from "@/hooks";
 import { UNIQON_TOKEN } from "@/constants";
-import { ENDPOINT_API } from "@/api/endpoints";
+
+import { QUERY_KEYS } from "@/api/query_key_schema";
+
+import type { FAVItemCardProps } from "@/types/props";
+
+const { MY_FAVORITE_LIST } = QUERY_KEYS;
 
 /**
  * @params
@@ -53,21 +58,26 @@ function FAVItemCard<T extends ElementType>(
   const theme = useTheme();
   const { handleAlertOpen } = useAlert();
 
-  const handleFavorite = () => {
-    //관심목록 해제
-    axios
-      .get(`${ENDPOINT_API}/invest/${startupId}/favorite`)
-      .then((response) => {
-        const { status } = response;
-        if (status === 200) {
-          handleAlertOpen(2000, "즐겨찾기가 해제되었습니다.", true);
-        }
-      })
-      .catch((err) => {
-        const { response } = err;
-        const { status, data } = response;
-        handleAlertOpen(2000, `${status}에러가 발생했습니다.`, false);
-      });
+  const client = useQueryClient();
+
+  const { mutate: mutateNftFav } = useNftFavMutation();
+  const handleNftFav = () => {
+    mutateNftFav(
+      { startupId },
+      {
+        onSuccess: () => {
+          handleAlertOpen(
+            2000,
+            isFav ? "즐겨찾기가 해제되었습니다." : "즐겨찾기가 등록되었습니다.",
+            true
+          );
+        },
+        onError() {
+          handleAlertOpen(2000, `즐겨찾기 처리 중 에러가 발생했습니다.`, false);
+        },
+        onSettled: () => client.invalidateQueries([MY_FAVORITE_LIST]),
+      }
+    );
   };
 
   return (
@@ -164,11 +174,7 @@ function FAVItemCard<T extends ElementType>(
             )}
           </Text>
         </InfoContainer>
-        <FavContainer
-          onClick={() => {
-            handleFavorite();
-          }}
-        >
+        <FavContainer onClick={handleNftFav}>
           <FontAwesomeIcon
             css={css`
               width: 1.5rem;

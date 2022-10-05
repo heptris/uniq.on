@@ -8,4 +8,5 @@ export const QUERY_KEYS = {
   MY_APPLY_LIST: "myApplyList",
   INVEST_LIST: "investmentList",
   IR_DETAIL: "investmentRequest",
+  ALARM_LIST: "alarmList",
 };

@@ -70,6 +70,7 @@ function Button<T extends ElementType = "button">(
       `}
       ref={ref}
       type="button"
+      disabled={disabled}
       {...rest}
     />
   );

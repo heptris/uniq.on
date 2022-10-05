@@ -5,6 +5,9 @@ export * from "@/hooks/useAuth";
 export * from "@/hooks/useAlert";
 export * from "@/hooks/useServer";
 export * from "@/hooks/useForm";
+export * from "@/hooks/useIR";
+export * from "@/hooks/useUser";
+export * from "@/hooks/useAlarm";
 
 import { useDispatch, useSelector } from "react-redux";
 import type { TypedUseSelectorHook } from "react-redux";
