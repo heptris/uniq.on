@@ -37,7 +37,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
 
 export default function InvestmentList(props: InvestListProps) {
   const { startups, ...rest } = props;
-  const menus = ["전체 목록", "Top 10"];
+  const menus = ["전체 목록"];
   const { selectedMenu, onSelectHandler } = useSelectTab(menus);
 
   const carouselItems: CarouselItem[] = [

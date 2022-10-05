@@ -1,5 +1,7 @@
 import axios from "axios";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 
 import { css, useTheme } from "@emotion/react";
 import styled from "@emotion/styled";
@@ -11,12 +13,15 @@ import LabelInput from "@/components/LabelInput";
 import CircleBar from "@/components/CircleBar";
 import FileUpload from "@/components/FileUpload";
 
-import { useAlert, useAuth, useForm } from "@/hooks";
+import { getUserInfo, useAlert, useAuth, useForm } from "@/hooks";
 
 import { ENDPOINT_API } from "@/api/endpoints";
 import { ApplyFormType } from "@/types/api_requests";
-import { useRouter } from "next/router";
 import { ROUTES, UNIQON_TOKEN } from "@/constants";
+import contracts from "@/contracts/utils";
+
+import { QUERY_KEYS } from "@/api/query_key_schema";
+import { Member } from "@/types/api_responses";
 
 const initialApplyState = {
   title: "",
@@ -33,6 +38,7 @@ const initialApplyState = {
 };
 
 const { LOGIN } = ROUTES;
+const { MY_USER_INFO } = QUERY_KEYS;
 
 export default function apply() {
   const { isLogined } = useAuth();
@@ -42,13 +48,23 @@ export default function apply() {
   const [current, setCurrent] = useState(1);
   const { form, onChangeForm, setForm } =
     useForm<ApplyFormType>(initialApplyState);
+  const { storeNFT } = contracts;
+
+  const { data: member, refetch } = useQuery<Member>(
+    [MY_USER_INFO],
+    getUserInfo,
+    { initialData: {} as Member }
+  );
+
+  const { nickname: startupName, id: startupId } = member;
 
   useEffect(() => {
-    isLogined ||
-      (() => {
-        handleAlertOpen(2000, "로그인이 필요한 서비스입니다", false);
-        router.push(LOGIN);
-      })();
+    isLogined
+      ? refetch()
+      : (() => {
+          handleAlertOpen(2000, "로그인이 필요한 서비스입니다", false);
+          router.push(LOGIN);
+        })();
   }, []);
 
   const {
@@ -90,7 +106,7 @@ export default function apply() {
 
   //3단계 정보
 
-  const onSubmit = () => {
+  const onSubmit = async () => {
     console.log(form, axios.defaults.headers.common);
     if (!isChecked) {
       handleAlertOpen(2000, "개인정보 동의를 체크해주세요", false);
@@ -131,6 +147,14 @@ export default function apply() {
           console.log(err);
           handleAlertOpen(2000, "투자 신청이 실패했습니다.", false);
         });
+      console.log(
+        await storeNFT({
+          startupId: 1,
+          nftImage: nftImageFile,
+          startupName,
+          nftPrice,
+        })
+      );
 
       // router.push("/");
       setForm(initialApplyState);

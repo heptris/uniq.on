@@ -1,9 +1,11 @@
+import { useEffect } from "react";
 import { GetServerSideProps } from "next";
 
 import { css, useTheme } from "@emotion/react";
 import styled from "@emotion/styled";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
+import { cssFontFamily, minDesktopWidth } from "@/styles/utils";
 
 import Grid from "@/components/Grid";
 import Card from "@/components/Card";
@@ -11,17 +13,15 @@ import NFTItemCard from "@/components/Card/NFTItemCard";
 import Text from "@/components/Text";
 import Button from "@/components/Button";
 
-import { cssFontFamily, minDesktopWidth } from "@/styles/utils";
-
 import {
   getIR,
   useIR,
   useNftFavMutation,
   useNftReserveMutation,
+  useAlert,
 } from "@/hooks";
 
 import { IR } from "@/types/api_responses";
-import { useAlert } from "@/hooks";
 
 type IDProps = {
   irInfo: IR;
@@ -52,6 +52,10 @@ function InvestmentDetail(props: IDProps) {
     startupId,
     startupName,
   } = InvestmentRequest;
+
+  useEffect(() => {
+    refetch();
+  }, []);
 
   const { mutate: mutateNftReserve } = useNftReserveMutation();
   const { mutate: mutateNftFav } = useNftFavMutation();
