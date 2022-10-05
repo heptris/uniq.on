@@ -15,6 +15,7 @@ import {
   useAlarmMutation,
   useAlert,
   useSelectTab,
+  useServer,
 } from "@/hooks";
 
 import { AlarmItem } from "@/types/api_responses";
@@ -32,6 +33,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 export default function alarm(props: AlarmProps) {
   const { data: alarmList, refetch } = useAlarm(props);
   const { mutate: mutateAlarmRead } = useAlarmMutation();
+  const { handleUnreadAlarm } = useServer();
 
   const unreadAlarmList: AlarmItem[] = [];
   const readAlarmList: AlarmItem[] = [];
@@ -51,7 +53,7 @@ export default function alarm(props: AlarmProps) {
       { alarmId },
       {
         onSuccess: () => handleAlertOpen(2000, "읽음 처리 완료", true),
-        onSettled: () => refetch(),
+        onSettled: () => (refetch(), handleUnreadAlarm()),
       }
     );
   };

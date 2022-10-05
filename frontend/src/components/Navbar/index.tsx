@@ -1,11 +1,5 @@
 import Link from "next/link";
-import {
-  ComponentPropsWithoutRef,
-  forwardRef,
-  Ref,
-  useEffect,
-  useState,
-} from "react";
+import { ComponentPropsWithoutRef, forwardRef, Ref, useState } from "react";
 import Image from "next/image";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -26,7 +20,7 @@ import Text from "../Text";
 import { useAuth, useServer } from "@/hooks";
 import { HEADER_HEIGHT, ROUTES } from "@/constants";
 
-const { ALARM, APPLY, HOME, LIST, LOGIN, MYPAGE, QUESTION } = ROUTES;
+const { ALARM, APPLY, HOME, LIST, LOGIN, MYPAGE } = ROUTES;
 
 /**
  * @params
@@ -39,16 +33,12 @@ function Navbar(
   const { isLogined } = useAuth();
   const theme = useTheme();
 
-  const { hasUnreadAlarm, handleUnreadAlarm } = useServer();
+  const { hasUnreadAlarm } = useServer();
 
   const [active, setActive] = useState(false);
   const activeHandler = () => {
     setActive(!active);
   };
-
-  useEffect(() => {
-    isLogined && handleUnreadAlarm();
-  }, []);
 
   return (
     <HeaderWrapper theme={theme} ref={ref} {...props}>
