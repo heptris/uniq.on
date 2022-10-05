@@ -54,7 +54,7 @@ export default function CommunityList(props: InvestProps) {
           디스코드 입장
         </Button>
       </CommunityHeader>
-      <Link href={`/community/write/${startupId}`}>
+      <Link href={`/community/write/${startupId}/${startupName}`}>
         <Button
           css={css`
             align-self: flex-end;

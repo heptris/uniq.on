@@ -12,21 +12,19 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { id } = context.query;
-  return { props: { id } };
+  const { startupId, startupName } = context.query;
+  return { props: { startupId, startupName } };
 };
 
 type CommunityProps = {
-  id: number;
+  startupId: number;
+  startupName: string;
 };
 
 export default function write(props: CommunityProps) {
   const router = useRouter();
-  const { id } = props;
+  const { startupId, startupName } = props;
   const { handleAlertOpen } = useAlert();
-  // const { form, onChangeForm, setForm } =
-  //   useForm<CommunityFormType>(initialApplyState);
-  // const { title, content } = form;
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
 
@@ -43,7 +41,7 @@ export default function write(props: CommunityProps) {
         },
       };
       axios
-        .post(`${ENDPOINT_API}/invest/community/${id}`, data, config)
+        .post(`${ENDPOINT_API}/invest/community/${startupId}`, data, config)
         .then((res) => {
           console.log(res);
           handleAlertOpen(2000, "게시글 등록이 완료되었습니다..", true);
@@ -54,7 +52,7 @@ export default function write(props: CommunityProps) {
         });
       setTitle("");
       setContent("");
-      router.push(`/community/${id}`);
+      router.push(`/community/${startupId}/${startupName}`);
     } else {
       handleAlertOpen(2000, "모든 칸을 채워주세요.", false);
     }
@@ -91,7 +89,7 @@ export default function write(props: CommunityProps) {
         onClick={onSubmit}
         css={css`
           margin-top: 1rem;
-          algin-self: flex-end;
+          align-self: flex-end;
         `}
       >
         등록
