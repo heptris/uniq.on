@@ -31,7 +31,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
         <ThemeProvider theme={uniqonThemes.darkTheme}>
           <Head>
             <title>uniq.on | NFT를 통한 스타트업 투자 플랫폼</title>
-            <link rel="icon" href="/favicon.ico" />
+            <link rel="icon" href="/logo.png" />
             <meta
               httpEquiv="Content-Security-Policy"
               content="upgrade-insecure-requests"
