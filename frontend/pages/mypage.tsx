@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { GetServerSideProps } from "next";
 
 import styled from "@emotion/styled";
@@ -30,40 +30,66 @@ import NftModal from "@/components/Modal/NftModal";
 import { ROUTES } from "@/constants";
 
 import { NFTItem } from "@/types/api_responses";
+import contracts from "@/contracts/utils";
+import axios from "axios";
+
+import { create, urlSource } from "ipfs-http-client";
+const ipfs = create();
 
 const { HOME } = ROUTES;
 
-export const getServerSideProps: GetServerSideProps = async () => {
-  const member = await getUserInfo();
-  const applyList = await getApplyList();
-  const favoriteList = await getFavList();
-  const reserveList = await getReserveList();
+// export const getServerSideProps: GetServerSideProps = async () => {
+//   return { props: { myNftList } };
+// };
 
-  return { props: { member, applyList, favoriteList, reserveList } };
-};
-
-function MyPage(props: MyPageProps) {
+function MyPage() {
+  // props: { myNftList: string[] }
+  // props: MyPageProps
   const theme = useTheme();
   const { isShowModal, modalContent, handleModalClose, handleModalOpen } =
     useNFTModal();
-  const [nfts, setNfts] = useState<NFTItem[]>([]);
+  const { useWeb3, useAccount } = contracts;
+  const { mintUniqonNFTContract } = useWeb3();
+  const { account } = useAccount();
+  const [nfts, setNfts] = useState<string[]>([]);
+  // const { myNftList: nfts } = props;
+  const handleNftList = async () => {
+    const myNftList: string[] = await mintUniqonNFTContract?.methods
+      .getOwnedTokens(account)
+      .call();
+    // console.log(account, myNftList);
+    setNfts(myNftList);
+    // const file = await ipfs.get(myNftList[0]);
+
+    // console.log(file);
+    axios
+      .get(myNftList[0])
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => console.error(err));
+  };
+  useEffect(() => {
+    mintUniqonNFTContract && handleNftList();
+  }, [mintUniqonNFTContract]);
 
   const [
-    { data: member },
-    { data: applyList },
-    { data: favoriteList },
-    { data: reserveList },
-  ] = useUserQueries(props);
+    { data: member, isLoading: isMemberLoading },
+    { data: applyList, isLoading: isApplyLoading },
+    { data: favoriteList, isLoading: isFavLoading },
+    { data: reserveList, isLoading: isReserveLoading },
+  ] = useUserQueries();
+  const menus = ["보유 NFT", "관심목록", "예약내역", "투자신청내역"];
+  const { selectedMenu, onSelectHandler } = useSelectTab(menus);
 
-  const router = useRouter();
+  // const router = useRouter();
 
-  if (!member || !applyList || !favoriteList || !reserveList) {
-    router.push(HOME);
+  if (isMemberLoading || isApplyLoading || isFavLoading || isReserveLoading) {
     return <div>Loading...</div>;
   }
 
-  const menus = ["보유 NFT", "관심목록", "예약내역", "투자신청내역"];
-  const { selectedMenu, onSelectHandler } = useSelectTab(menus);
+  const { email, id, memberType, name, nickname, profileImage, walletAddress } =
+    member!;
 
   const handleModalSubmit = () => {
     // 보유 NFT 목록일 경우
@@ -78,7 +104,7 @@ function MyPage(props: MyPageProps) {
       <Background />
       <ProfileContainer>
         <Avatar
-          image={member.profileImage}
+          image={profileImage}
           css={css`
             margin-left: 1vw;
             width: 6rem;
@@ -98,7 +124,7 @@ function MyPage(props: MyPageProps) {
             font-weight: 700;
           `}
         >
-          {member.nickname}
+          {nickname}
         </Text>
         <Text
           as="h2"
@@ -115,9 +141,9 @@ function MyPage(props: MyPageProps) {
               margin-right: 0.5rem;
             `}
           />
-          {member.walletAddress.substring(0, 5) +
+          {walletAddress.substring(0, 5) +
             "..." +
-            member.walletAddress.substring(member.walletAddress.length - 4)}
+            walletAddress.substring(walletAddress.length - 4)}
         </Text>
       </ProfileContainer>
 
@@ -129,9 +155,11 @@ function MyPage(props: MyPageProps) {
         `}
       />
 
-      {selectedMenu === menus[0] && (
-        <MypageListContainer handleModalOpen={handleModalOpen} nfts={nfts} />
-      )}
+      {nfts.map((el, i) => (
+        <div key={i}>{el}</div>
+      ))}
+      {/* {selectedMenu === menus[0] &&
+        // <MypageListContainer handleModalOpen={handleModalOpen} nfts={nfts} />
       {selectedMenu === menus[1] && (
         <MypageListContainer
           handleModalOpen={handleModalOpen}
@@ -149,7 +177,7 @@ function MyPage(props: MyPageProps) {
           handleModalOpen={handleModalOpen}
           applys={applyList}
         />
-      )}
+      )} */}
 
       <Modal
         isOpen={isShowModal}
