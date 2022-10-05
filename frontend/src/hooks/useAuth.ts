@@ -9,6 +9,7 @@ import { useAppDispatch, useAppSelector } from ".";
 import { useAlert } from "./useAlert";
 
 import type { SignupFormType } from "@/types/api_requests";
+import { ENDPOINT_AUTH } from "@/api/endpoints";
 
 const { SIGNUP, HOME, LOGIN } = ROUTES;
 
@@ -53,7 +54,7 @@ export const useAuth = () => {
     } else {
       // 로그아웃 시키기
       axios
-        .get("api/logout")
+        .get(`${ENDPOINT_AUTH}/logout`)
         .then(() => (axios.defaults.headers.common.Authorization = ``));
     }
   };

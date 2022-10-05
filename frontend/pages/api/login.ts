@@ -2,6 +2,9 @@ import axios from "axios";
 import { NextApiRequest, NextApiResponse } from "next";
 
 import { ENDPOINT_AUTH } from "@/api/endpoints";
+import { ACCESS_TOKEN, apiSessionStorage } from "@/api/utils";
+
+import { setCookie } from "cookies-next";
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   const { method, body } = req;
@@ -16,14 +19,19 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   }) => {
     const accessToken = data.accessToken;
     const refreshToken = data.refreshToken;
-    console.log("로그인 하고서", accessToken, refreshToken);
     const accessTokenExpiresIn = data.accessTokenExpiresIn;
-    axios.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
-    axios.defaults.data = refreshToken;
     const clientData = {
       accessToken,
       accessTokenExpiresIn,
     };
+    apiSessionStorage.set(accessToken, refreshToken);
+    setCookie(ACCESS_TOKEN, accessToken, {
+      req,
+      res,
+      httpOnly: true,
+      secure: true,
+      sameSite: "strict",
+    });
     res.status(200).json(clientData);
   };
 
@@ -47,9 +55,11 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       break;
     // 토큰 재발행 케이스
     case "GET":
-      const accessToken =
-        `${axios.defaults.headers.common.Authorization}`.slice(7);
-      const refreshToken = axios.defaults.data;
+      const accessToken = req.headers.authorization?.split(" ")[1];
+
+      const refreshToken = apiSessionStorage.get(accessToken ?? "");
+      refreshToken && apiSessionStorage.delete(accessToken ?? "");
+
       await axios
         .post(`${ENDPOINT_AUTH}/reissue`, {
           accessToken,
