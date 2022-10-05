@@ -66,9 +66,11 @@ export default function CommunityList(props: InvestProps) {
       </Link>
       {CommunityRequest.length == 0 && "첫 게시글을 작성해주세요"}
       {CommunityRequest.map((community, i) => (
-        <Link href={`/community/detail/${community.communityId}/${startupId}`}>
+        <Link
+          href={`/community/detail/${community.communityId}/${startupId}`}
+          key={i}
+        >
           <Card
-            key={i}
             css={css`
               display: flex;
               justify-content: center;
