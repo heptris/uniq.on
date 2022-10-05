@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { GetServerSideProps } from "next";
-import axios from "axios";
 
 import styled from "@emotion/styled";
 import { css, useTheme } from "@emotion/react";
@@ -8,72 +7,89 @@ import { faWallet } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { minTabletWidth } from "@/styles/utils";
 
-import { ENDPOINT_API } from "@/api/endpoints";
-
-import { useNFTModal, useSelectTab } from "@/hooks";
+import {
+  useNFTModal,
+  useSelectTab,
+  getApplyList,
+  getFavList,
+  getReserveList,
+  getUserInfo,
+  useUserQueries,
+} from "@/hooks";
 
 import Avatar from "@/components/Avatar";
 import Text from "@/components/Text";
 import SelectTab from "@/components/SelectTab";
 import Modal from "@/components/Modal";
-import Button from "@/components/Button";
 import MypageListContainer from "@/container/MypageListContainer";
 
-import { APPLYItem, FAVItem, NFTItem, RSRVItem } from "@/types/api_responses";
-type MyPageProps = {
-  member: any;
-  applyList: any;
-  favoriteList: any;
-  reserveList: any;
-};
+import { MyPageProps } from "@/types/props";
+import { useRouter } from "next/router";
+import FavModal from "@/components/Modal/FavModal";
+import NftModal from "@/components/Modal/NftModal";
+import { ROUTES } from "@/constants";
 
-export const getServerSideProps: GetServerSideProps = async () => {
-  const member = await axios.get(`${ENDPOINT_API}/member`).then(({ data }) => {
-    return { ...data.data, nickname: data.data.nickName };
-  });
-  const applyList = await axios
-    .get(`${ENDPOINT_API}/member/mypage/startup`)
-    .then(({ data }) => data.data);
-  const favoriteList = await axios
-    .get(`${ENDPOINT_API}/member/mypage/favstartup`)
-    .then(({ data }) => data.data);
-  const reserveList = await axios
-    .get(`${ENDPOINT_API}/member/mypage/invest`)
-    .then(({ data }) => data.data);
+import { NFTItem } from "@/types/api_responses";
+import contracts from "@/contracts/utils";
+import axios from "axios";
 
-  return { props: { member, applyList, favoriteList, reserveList } };
-};
+import { create, urlSource } from "ipfs-http-client";
+const ipfs = create();
 
-function MyPage(props: MyPageProps) {
+const { HOME } = ROUTES;
+
+// export const getServerSideProps: GetServerSideProps = async () => {
+//   return { props: { myNftList } };
+// };
+
+function MyPage() {
+  // props: { myNftList: string[] }
+  // props: MyPageProps
   const theme = useTheme();
   const { isShowModal, modalContent, handleModalClose, handleModalOpen } =
     useNFTModal();
-  const [nfts, setNfts] = useState<NFTItem[]>([]);
-  const [favs, setFavs] = useState<FAVItem[]>([]);
-  const [rsrvs, setRsrvs] = useState<RSRVItem[]>([]);
-  const [applys, setApplys] = useState<APPLYItem[]>([]);
+  const { useWeb3, useAccount } = contracts;
+  const { mintUniqonNFTContract } = useWeb3();
+  const { account } = useAccount();
+  const [nfts, setNfts] = useState<string[]>([]);
+  // const { myNftList: nfts } = props;
+  const handleNftList = async () => {
+    const myNftList: string[] = await mintUniqonNFTContract?.methods
+      .getOwnedTokens(account)
+      .call();
+    // console.log(account, myNftList);
+    setNfts(myNftList);
+    // const file = await ipfs.get(myNftList[0]);
 
-  const { member, applyList, favoriteList, reserveList } = props;
+    // console.log(file);
+    axios
+      .get(myNftList[0])
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => console.error(err));
+  };
+  useEffect(() => {
+    mintUniqonNFTContract && handleNftList();
+  }, [mintUniqonNFTContract]);
 
+  const [
+    { data: member, isLoading: isMemberLoading },
+    { data: applyList, isLoading: isApplyLoading },
+    { data: favoriteList, isLoading: isFavLoading },
+    { data: reserveList, isLoading: isReserveLoading },
+  ] = useUserQueries();
   const menus = ["보유 NFT", "관심목록", "예약내역", "투자신청내역"];
   const { selectedMenu, onSelectHandler } = useSelectTab(menus);
 
-  useEffect(() => {
-    switch (selectedMenu) {
-      case menus[0]:
-        // nftList && setNfts(nftList);
-        break;
-      case menus[1]:
-        setFavs(favoriteList);
-        break;
-      case menus[2]:
-        setRsrvs(reserveList);
-        break;
-      case menus[3]:
-        setApplys(applyList);
-        break;
-    }
-  }, [selectedMenu]);
+  // const router = useRouter();
+
+  if (isMemberLoading || isApplyLoading || isFavLoading || isReserveLoading) {
+    return <div>Loading...</div>;
+  }
+
+  const { email, id, memberType, name, nickname, profileImage, walletAddress } =
+    member!;
 
   const handleModalSubmit = () => {
     // 보유 NFT 목록일 경우
@@ -88,7 +104,7 @@ function MyPage(props: MyPageProps) {
       <Background />
       <ProfileContainer>
         <Avatar
-          image={member.profileImage}
+          image={profileImage}
           css={css`
             margin-left: 1vw;
             width: 6rem;
@@ -108,7 +124,7 @@ function MyPage(props: MyPageProps) {
             font-weight: 700;
           `}
         >
-          {member.nickname}
+          {nickname}
         </Text>
         <Text
           as="h2"
@@ -125,9 +141,9 @@ function MyPage(props: MyPageProps) {
               margin-right: 0.5rem;
             `}
           />
-          {member.walletAddress.substring(0, 5) +
+          {walletAddress.substring(0, 5) +
             "..." +
-            member.walletAddress.substring(member.walletAddress.length - 4)}
+            walletAddress.substring(walletAddress.length - 4)}
         </Text>
       </ProfileContainer>
 
@@ -139,31 +155,47 @@ function MyPage(props: MyPageProps) {
         `}
       />
 
-      {selectedMenu === menus[0] && (
-        <MypageListContainer handleModalOpen={handleModalOpen} nfts={nfts} />
-      )}
+      {nfts.map((el, i) => (
+        <div key={i}>{el}</div>
+      ))}
+      {/* {selectedMenu === menus[0] &&
+        // <MypageListContainer handleModalOpen={handleModalOpen} nfts={nfts} />
       {selectedMenu === menus[1] && (
-        <MypageListContainer handleModalOpen={handleModalOpen} favs={favs} />
+        <MypageListContainer
+          handleModalOpen={handleModalOpen}
+          favs={favoriteList}
+        />
       )}
       {selectedMenu === menus[2] && (
-        <MypageListContainer handleModalOpen={handleModalOpen} rsrvs={rsrvs} />
+        <MypageListContainer
+          handleModalOpen={handleModalOpen}
+          rsrvs={reserveList}
+        />
       )}
       {selectedMenu === menus[3] && (
         <MypageListContainer
           handleModalOpen={handleModalOpen}
-          applys={applys}
+          applys={applyList}
         />
-      )}
+      )} */}
 
       <Modal
         isOpen={isShowModal}
         onCancel={handleModalClose}
         onSubmit={handleModalSubmit}
       >
-        <div>
-          {modalContent?.startupName}
-          <Button onClick={handleModalSubmit}>어디로 이동하는 버튼</Button>
-        </div>
+        {selectedMenu === menus[1] && modalContent && (
+          <FavModal
+            handleModalSubmit={handleModalSubmit}
+            modalContent={modalContent}
+          />
+        )}
+        {selectedMenu === menus[2] && modalContent && (
+          <NftModal
+            handleModalSubmit={handleModalSubmit}
+            modalContent={modalContent}
+          />
+        )}
       </Modal>
     </>
   );

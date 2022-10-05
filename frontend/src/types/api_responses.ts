@@ -32,10 +32,12 @@ export type IR = {
   discordUrl: string;
   enrollStatus?: "PENDING" | "ACCEPT" | "REJECT";
   rejectReason?: string;
+  isReserved: boolean;
 };
 
 export type NFTItem = {
-  tokenId: number;
+  nftReserveCount: number;
+  nftDescription: string;
   startupId: number;
   nftImage: string | StaticImageData;
   startupName: string;
@@ -43,7 +45,7 @@ export type NFTItem = {
 };
 
 export type FAVItem = {
-  tokenId: number;
+  nftReserveCount: number;
   isFav: boolean;
   startupId: number;
   nftImage: string | StaticImageData;
@@ -54,8 +56,8 @@ export type FAVItem = {
 };
 
 export type RSRVItem = {
-  tokenId: number;
   startupId: number;
+  nftDescription: string;
   nftImage: string | StaticImageData;
   startupName: string;
   nftPrice: number;
@@ -63,7 +65,8 @@ export type RSRVItem = {
 };
 
 export type APPLYItem = {
-  tokenId: number;
+  nftReserveCount: number;
+  nftDescription: string;
   startupId: number;
   nftImage: string | StaticImageData;
   startupName: string;

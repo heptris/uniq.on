@@ -40,7 +40,8 @@ function APPLYItemCard<T extends ElementType = "div">(
   ref: Ref<any>
 ) {
   const {
-    tokenId,
+    nftReserveCount,
+    nftDescription,
     startupId,
     nftImage,
     startupName,
@@ -70,7 +71,7 @@ function APPLYItemCard<T extends ElementType = "div">(
             font-weight: 600;
           `}
         >
-          {startupName} #{tokenId}
+          {startupName} #{nftReserveCount}
         </Text>
         <Text
           role="corp-name"

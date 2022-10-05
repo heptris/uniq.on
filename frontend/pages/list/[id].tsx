@@ -1,7 +1,4 @@
 import { GetServerSideProps } from "next";
-import axios from "axios";
-
-import { ENDPOINT_API } from "@/api/endpoints";
 
 import { css, useTheme } from "@emotion/react";
 import styled from "@emotion/styled";
@@ -13,51 +10,79 @@ import Card from "@/components/Card";
 import NFTItemCard from "@/components/Card/NFTItemCard";
 import Text from "@/components/Text";
 import Button from "@/components/Button";
-import LabelInput from "@/components/LabelInput";
 
 import { cssFontFamily, minDesktopWidth } from "@/styles/utils";
 
+import {
+  getIR,
+  useIR,
+  useNftFavMutation,
+  useNftReserveMutation,
+} from "@/hooks";
+
 import { IR } from "@/types/api_responses";
 import { useAlert } from "@/hooks";
-import { useEffect, useState } from "react";
+
 type IDProps = {
-  InvestmentRequest: IR;
+  irInfo: IR;
+  id: string | string[] | undefined;
 };
+
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { id } = context.query;
-  const InvestmentRequest = await axios
-    .get(`${ENDPOINT_API}/invest/${id}`)
-    .then(({ data }) => data.data);
-  return { props: { InvestmentRequest } };
+  const irInfo = await getIR(id);
+  return { props: { irInfo, id } };
 };
 
 function InvestmentDetail(props: IDProps) {
-  const { InvestmentRequest } = props;
-  const theme = useTheme();
+  const { irInfo, id } = props;
+  const { color } = useTheme();
   const { handleAlertOpen } = useAlert();
-  const [fav, setFav] = useState(InvestmentRequest.isFav);
-  useEffect(() => {}, [fav]);
-  const handleFavorite = () => {
-    //관심목록 등록
-    axios
-      .get(`${ENDPOINT_API}/invest/${InvestmentRequest.startupId}/favorite`)
-      .then((response) => {
-        const { status } = response;
-        if (status === 200 && !fav) {
-          handleAlertOpen(2000, "즐겨찾기가 등록되었습니다.", true);
-          setFav((fav) => !fav);
-        } else if (status === 200 && fav) {
-          handleAlertOpen(2000, "즐겨찾기가 해제되었습니다.", true);
-          setFav((fav) => !fav);
-        }
-      })
-      .catch((err) => {
-        const { response } = err;
-        const { status, data } = response;
-        handleAlertOpen(2000, `${status}에러가 발생했습니다.`, false);
-      });
+  const { data: InvestmentRequest, refetch } = useIR(id, irInfo);
+  const {
+    isReserved,
+    isFav,
+    dueDate,
+    nftDescription,
+    nftImage,
+    nftPrice,
+    nftReserveCount,
+    nftTargetCount,
+    planPaperImg,
+    startupId,
+    startupName,
+  } = InvestmentRequest;
+
+  const { mutate: mutateNftReserve } = useNftReserveMutation();
+  const { mutate: mutateNftFav } = useNftFavMutation();
+
+  const handleNftReserve = () => {
+    mutateNftReserve(
+      { startupId: id },
+      {
+        onSettled: () => refetch(),
+      }
+    );
   };
-  console.log(InvestmentRequest.isFav);
+  const handleNftFav = () => {
+    mutateNftFav(
+      { startupId: id },
+      {
+        onSuccess: () => {
+          handleAlertOpen(
+            2000,
+            isFav ? "즐겨찾기가 해제되었습니다." : "즐겨찾기가 등록되었습니다.",
+            true
+          );
+        },
+        onError() {
+          handleAlertOpen(2000, `즐겨찾기 처리 중 에러가 발생했습니다.`, false);
+        },
+        onSettled: () => refetch(),
+      }
+    );
+  };
+
   return (
     <Grid
       css={css`
@@ -72,11 +97,12 @@ function InvestmentDetail(props: IDProps) {
     >
       <NFTInfo>
         <NFTItemCard
-          tokenId={InvestmentRequest.nftReserveCount}
-          startupId={InvestmentRequest.startupId}
-          nftImage={InvestmentRequest.nftImage}
-          startupName={InvestmentRequest.startupName}
-          nftPrice={InvestmentRequest.nftPrice}
+          nftDescription={InvestmentRequest.nftDescription}
+          nftReserveCount={InvestmentRequest.nftReserveCount}
+          startupId={startupId}
+          nftImage={nftImage}
+          startupName={startupName}
+          nftPrice={nftPrice}
         />
         <Card
           css={css`
@@ -92,19 +118,15 @@ function InvestmentDetail(props: IDProps) {
               `}
             >
               <Text as="h1">NFT 소개</Text>
-              <FavoriteButton
-                onClick={() => {
-                  handleFavorite();
-                }}
-              >
-                {fav ? (
+              <FavoriteButton onClick={handleNftFav}>
+                {isFav ? (
                   <FontAwesomeIcon
                     icon={faHeart}
                     width={"1.8rem"}
                     css={css`
-                      color: ${theme.color.background.main};
+                      color: ${color.background.main};
                       &:hover {
-                        color: ${theme.color.text.main};
+                        color: ${color.text.main};
                       }
                     `}
                   />
@@ -113,7 +135,7 @@ function InvestmentDetail(props: IDProps) {
                 )}
               </FavoriteButton>
             </div>
-            <Text as="p">{InvestmentRequest.nftDescription}</Text>
+            <Text as="p">{nftDescription}</Text>
 
             <Text as="h1">상세정보</Text>
             <InlineInfo>
@@ -122,7 +144,7 @@ function InvestmentDetail(props: IDProps) {
             </InlineInfo>
             <InlineInfo>
               <Text as="h2">발행 토큰 수</Text>
-              <Text as="p">{InvestmentRequest.nftTargetCount}</Text>
+              <Text as="p">{nftTargetCount}</Text>
             </InlineInfo>
             <InlineInfo>
               <Text as="h2">토큰 표준</Text>
@@ -130,27 +152,35 @@ function InvestmentDetail(props: IDProps) {
             </InlineInfo>
             <InlineInfo>
               <Text as="h2">펀딩 마감일</Text>
-              <Text as="p">{InvestmentRequest.dueDate}</Text>
+              <Text as="p">{dueDate}</Text>
             </InlineInfo>
             <InlineInfo>
               <Text as="h2">펀딩 진행률</Text>
-              <Text as="p">
-                {(InvestmentRequest.nftReserveCount /
-                  InvestmentRequest.nftTargetCount) *
-                  100}
-                %
-              </Text>
+              <Text as="p">{(nftReserveCount / nftTargetCount) * 100}%</Text>
             </InlineInfo>
-
-            <Button
-              size="full"
-              css={css`
-                height: 3rem;
-                margin-top: 3rem;
-              `}
-            >
-              구매예약
-            </Button>
+            {isReserved ? (
+              <Button
+                size="full"
+                css={css`
+                  height: 3rem;
+                  margin-top: 3rem;
+                `}
+                disabled={true}
+              >
+                예약완료
+              </Button>
+            ) : (
+              <Button
+                size="full"
+                css={css`
+                  height: 3rem;
+                  margin-top: 3rem;
+                `}
+                onClick={handleNftReserve}
+              >
+                구매예약
+              </Button>
+            )}
           </CardContent>
         </Card>
       </NFTInfo>
@@ -159,12 +189,12 @@ function InvestmentDetail(props: IDProps) {
         <CardContent>
           <Text as="h1">기업 소개</Text>
           <ImageContainer>
-            <img src={InvestmentRequest.planPaperImg} width={"100%"} />
+            <img src={planPaperImg} width={"100%"} />
           </ImageContainer>
 
-          <Text as="h1">Q&A</Text>
+          {/* <Text as="h1">Q&A</Text>
 
-          <LabelInput placeholder={"NFT 구매 전, 질문을 할 수 있어요."} />
+          <LabelInput placeholder={"NFT 구매 전, 질문을 할 수 있어요."} /> */}
         </CardContent>
       </Card>
     </Grid>
