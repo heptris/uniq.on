@@ -50,7 +50,9 @@ export default function NftModal(props: NftModalType) {
         {modalContent.nftDescription}
       </Text>
       <ButtonWrapper>
-        <Link href={`/community/${encodeURIComponent(modalContent.startupId)}`}>
+        <Link
+          href={`/community/${modalContent.startupId}/${modalContent.startupName}`}
+        >
           <Button
             type="blue"
             onClick={handleModalSubmit}
