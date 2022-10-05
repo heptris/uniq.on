@@ -20,18 +20,18 @@ import {
 import { AlarmItem } from "@/types/api_responses";
 import { AlarmProps } from "@/types/props";
 
-export const getServerSideProps: GetServerSideProps = async () => {
-  const alarmList = await getAlarmList();
-  return { props: { alarmList } };
-};
+// export const getServerSideProps: GetServerSideProps = async () => {
+//   const alarmList = await getAlarmList();
+//   return { props: { alarmList } };
+// };
 
 export default function alarm(props: AlarmProps) {
-  const { data: alarmList, refetch } = useAlarm(props);
+  const { data: alarmList, refetch } = useAlarm();
   const { mutate: mutateAlarmRead } = useAlarmMutation();
 
   const unreadAlarmList: AlarmItem[] = [];
   const readAlarmList: AlarmItem[] = [];
-  alarmList.forEach((alarm) =>
+  alarmList?.forEach((alarm) =>
     alarm.read ? readAlarmList.push(alarm) : unreadAlarmList.push(alarm)
   );
 
