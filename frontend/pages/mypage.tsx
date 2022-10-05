@@ -33,9 +33,6 @@ import { NFTItem } from "@/types/api_responses";
 import contracts from "@/contracts/utils";
 import axios from "axios";
 
-import { create, urlSource } from "ipfs-http-client";
-const ipfs = create();
-
 const { HOME } = ROUTES;
 
 // export const getServerSideProps: GetServerSideProps = async () => {
