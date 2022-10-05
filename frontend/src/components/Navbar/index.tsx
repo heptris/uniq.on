@@ -47,7 +47,7 @@ function Navbar(
   };
 
   useEffect(() => {
-    handleUnreadAlarm();
+    isLogined && handleUnreadAlarm();
   }, []);
 
   return (
@@ -107,6 +107,7 @@ function Navbar(
                       color: ${theme.color.text.hover};
                     }
                   `}
+                  size={"2xl"}
                 />
               </Link>
               <Link href={ALARM}>
@@ -125,6 +126,7 @@ function Navbar(
                         color: ${theme.color.text.hover};
                       }
                     `}
+                    size={"2xl"}
                   />
                   {hasUnreadAlarm ? (
                     <FontAwesomeIcon
