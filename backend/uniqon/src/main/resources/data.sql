@@ -50,8 +50,8 @@ values (now(), now(),4,  "답변1", null, 1),
        (now(), now(), 3, "답변6", 5, 3),
        (now(), now(), 4, "답변7", 5, 3);
 
-insert into startup_community (created_date, last_modified_date, content, title, member_id, startup_id)
-values (now(), now(), "Content Test", "Title Test", 1, 1);
+insert into startup_community (created_date, last_modified_date, content, title, hit, member_id, startup_id)
+values (now(), now(), "Content Test", "Title Test", 0, 1, 1);
 
 insert into community_comment (created_date, last_modified_date, content, member_id, parent_id, startup_community_id)
 values (now(), now(), "Content Test", 1, null, 1),

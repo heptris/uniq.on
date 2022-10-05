@@ -19,6 +19,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.ssafy.uniqon.exception.ex.ErrorCode.*;
+
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -33,7 +35,7 @@ public class StartupCommunityService {
         List<StartupCommunityResponseListDto> responseDtoList = new ArrayList<>();
 
         for(StartupCommunity sc : communityList){
-            responseDtoList.add(new StartupCommunityResponseListDto(sc.getTitle(), sc.getMember().getNickname(), sc.getCommunityCommentList().size(), sc.getCreatedDate()));
+            responseDtoList.add(new StartupCommunityResponseListDto(sc.getId(), sc.getStartup().getStartupName(), sc.getTitle(), sc.getMember().getNickname(), sc.getHit(), sc.getCommunityCommentList().size(), sc.getCreatedDate()));
         }
 
         return responseDtoList;
@@ -43,14 +45,14 @@ public class StartupCommunityService {
 
         Member member = new Member();
         memberRepository.save(member);
-        Startup startup = startupRepository.findById(startupId).orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
+        Startup startup = startupRepository.findById(startupId).orElseThrow(() -> new CustomException(MEMBER_NOT_FOUND));
         StartupCommunity startupCommunity =
                 StartupCommunity.createStartupCommunity(requestDto.getTitle(), requestDto.getContent(), member, startup);
         startupCommunityRepository.save(startupCommunity);
     }
 
     public void communityModify(Long startupId, Long communityId, StartupCommunityRequestModifyDto requestDto){
-        StartupCommunity startupCommunity = startupCommunityRepository.findById(communityId).orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
+        StartupCommunity startupCommunity = startupCommunityRepository.findById(communityId).orElseThrow(() -> new CustomException(COMMUNITY_NOT_FOUND));
         startupCommunity.changePost(requestDto.getTitle(), requestDto.getContent());
     }
 
@@ -60,7 +62,10 @@ public class StartupCommunityService {
 
     public StartupCommunityResponseDetailDto communityDetail(Long communityId){
         Long memberId = 1L;
-        StartupCommunityResponseDetailDto detailDto = startupCommunityRepository.findDetail(communityId, memberId).orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
+        StartupCommunity startupCommunity = startupCommunityRepository.findById(communityId).orElseThrow(() -> new CustomException(COMMUNITY_NOT_FOUND));
+        startupCommunity.updateHit();
+
+        StartupCommunityResponseDetailDto detailDto = startupCommunityRepository.findDetail(communityId, memberId).orElseThrow(() -> new CustomException(COMMUNITY_NOT_FOUND));
         return detailDto;
     }
 }
