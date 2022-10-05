@@ -10,25 +10,37 @@ import axios from "axios";
 import { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
 import { useState } from "react";
+import { CommentListProps } from "../../detail/[communityId]/[startupId]";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { id } = context.query;
-  return { props: { id } };
+  const { startupId, communityId } = context.query;
+  const CommentRequest = await axios
+    .get(`${ENDPOINT_API}/invest/community/detail/${communityId}`)
+    .then(({ data }) => data.data);
+  return { props: { CommentRequest, startupId, communityId } };
 };
 
-type CommunityProps = {
-  id: number;
+type CommunityDetailProps = {
+  commentList: CommentListProps[];
+  content: string;
+  createdDate: string;
+  hit: number;
+  nickName: string;
+  title: string;
+};
+type UpdateProps = {
+  startupId: number;
+  communityId: number;
+  CommentRequest: CommunityDetailProps;
 };
 
-export default function write(props: CommunityProps) {
+export default function update(props: UpdateProps) {
   const router = useRouter();
-  const { id } = props;
+  const { startupId, communityId, CommentRequest } = props;
+  console.log(CommentRequest);
   const { handleAlertOpen } = useAlert();
-  // const { form, onChangeForm, setForm } =
-  //   useForm<CommunityFormType>(initialApplyState);
-  // const { title, content } = form;
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
+  const [title, setTitle] = useState(CommentRequest.title);
+  const [content, setContent] = useState(CommentRequest.content);
 
   const onSubmit = () => {
     if (title && content) {
@@ -43,18 +55,22 @@ export default function write(props: CommunityProps) {
         },
       };
       axios
-        .post(`${ENDPOINT_API}/invest/community/${id}`, data, config)
+        .put(
+          `${ENDPOINT_API}/invest/community/${startupId}/${communityId}`,
+          data,
+          config
+        )
         .then((res) => {
           console.log(res);
-          handleAlertOpen(2000, "게시글 등록이 완료되었습니다..", true);
+          handleAlertOpen(2000, "게시글 수정이 완료되었습니다.", true);
+          setTitle("");
+          setContent("");
+          // router.push(`/community/${startupId}`); //startupName 필요
         })
         .catch((err) => {
           console.log(err);
-          handleAlertOpen(2000, "게시글 등록이 실패했습니다.", false);
+          handleAlertOpen(2000, "게시글 수정이 실패했습니다.", false);
         });
-      setTitle("");
-      setContent("");
-      router.push(`/community/${id}`);
     } else {
       handleAlertOpen(2000, "모든 칸을 채워주세요.", false);
     }
@@ -73,6 +89,7 @@ export default function write(props: CommunityProps) {
       </Text>
       <LabelInput
         labelText="제목"
+        value={title}
         onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
           setTitle(e.target.value)
         }
@@ -80,6 +97,7 @@ export default function write(props: CommunityProps) {
       <br />
       <LabelInput
         labelText="내용"
+        value={content}
         css={css`
           height: 10rem;
         `}
@@ -91,10 +109,10 @@ export default function write(props: CommunityProps) {
         onClick={onSubmit}
         css={css`
           margin-top: 1rem;
-          algin-self: flex-end;
+          align-self: flex-end;
         `}
       >
-        등록
+        수정
       </Button>
     </WriteContainer>
   );

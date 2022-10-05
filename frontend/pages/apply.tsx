@@ -156,7 +156,7 @@ export default function apply() {
       //   })
       // );
 
-      // router.push("/");
+      router.push("/list");
       setForm(initialApplyState);
     }
   };

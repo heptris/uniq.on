@@ -10,11 +10,11 @@ import { GetServerSideProps } from "next";
 import Link from "next/link";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { id } = context.query;
-  const InvestmentRequest = await axios
-    .get(`${ENDPOINT_API}/invest/community/${id}`)
+  const { startupId, startupName } = context.query;
+  const CommunityRequest = await axios
+    .get(`${ENDPOINT_API}/invest/community/${startupId}`)
     .then(({ data }) => data.data);
-  return { props: { InvestmentRequest, id } };
+  return { props: { CommunityRequest, startupId, startupName } };
 };
 
 type CommunityListProps = {
@@ -27,14 +27,14 @@ type CommunityListProps = {
   createdDate: string;
 };
 type InvestProps = {
-  InvestmentRequest: CommunityListProps[];
-  id: number;
+  CommunityRequest: CommunityListProps[];
+  startupId: number;
+  startupName: string;
 };
 
 export default function CommunityList(props: InvestProps) {
   const theme = useTheme();
-  const { InvestmentRequest, id } = props;
-  console.log(InvestmentRequest);
+  const { CommunityRequest, startupId, startupName } = props;
   return (
     <CommunityContainer>
       <CommunityHeader>
@@ -44,7 +44,7 @@ export default function CommunityList(props: InvestProps) {
             font-weight: 600;
           `}
         >
-          {InvestmentRequest[0].startupName}
+          {startupName}
         </Text>
         <Button
           css={css`
@@ -54,7 +54,7 @@ export default function CommunityList(props: InvestProps) {
           디스코드 입장
         </Button>
       </CommunityHeader>
-      <Link href={`/community/write/${id}`}>
+      <Link href={`/community/write/${startupId}/${startupName}`}>
         <Button
           css={css`
             align-self: flex-end;
@@ -64,11 +64,13 @@ export default function CommunityList(props: InvestProps) {
           글작성
         </Button>
       </Link>
-
-      {InvestmentRequest.map((community, i) => (
-        <Link href={`/detail/${community.communityId}`}>
+      {CommunityRequest.length == 0 && "첫 게시글을 작성해주세요"}
+      {CommunityRequest.map((community, i) => (
+        <Link
+          href={`/community/detail/${community.communityId}/${startupId}`}
+          key={i}
+        >
           <Card
-            key={i}
             css={css`
               display: flex;
               justify-content: center;
@@ -81,6 +83,10 @@ export default function CommunityList(props: InvestProps) {
               @media (${minTabletWidth}) {
                 padding: 0;
                 margin-bottom: 1vw;
+              }
+              &:hover {
+                cursor: pointer;
+                background-color: ${theme.color.background.item};
               }
             `}
           >
