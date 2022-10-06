@@ -6,4 +6,7 @@ module.exports = {
       "ipfs.io",
     ],
   },
+  env: {
+    NFT_STORAGE_API_TOKEN: process.env.NFT_STORAGE_API_TOKEN,
+  },
 };

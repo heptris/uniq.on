@@ -1,7 +1,7 @@
 import { Member, NFTItem } from "./api_responses";
 
 export type SignupFormType = Omit<Member, "id" | "profileImage" | "memberType">;
-export type StoreNFTParams = Omit<NFTItem, "nftImage" | "tokenId"> & {
+export type StoreNFTParams = Omit<NFTItem, "nftImage" | "nftReserveCount"> & {
   nftImage: Blob | File;
 };
 export type ApplyFormType = {

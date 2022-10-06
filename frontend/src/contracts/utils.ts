@@ -13,14 +13,20 @@ import { _setAccount } from "@/store";
 const contracts = {
   data: {
     APIToken: process.env.NFT_STORAGE_API_TOKEN,
-    "ERC-721": "0xb619e5e1dF0E6295346949F4393a7e54a1500B3D",
+    "ERC-721": "0x3e4521303e18a8C5b4Bc9911B6f0D11C2992a769",
   },
 
   storeNFT: async (params: StoreNFTParams) => {
-    const { startupId, nftImage, startupName, nftPrice: price } = params;
+    const {
+      startupId,
+      nftImage,
+      startupName,
+      nftPrice: price,
+      nftDescription,
+    } = params;
     if (!contracts.data.APIToken || !nftImage) return;
 
-    const description = `${startupId}::${price}`;
+    const description = `${startupId}::${price}::${nftDescription}`;
     const nftstorage = new NFTStorage({ token: contracts.data.APIToken });
 
     return nftstorage.store({
@@ -142,6 +148,7 @@ const contracts = {
       if (!mintUniqonNFTContract || !uniqonTokenContract) return;
       const res = await uniqonTokenContract.methods.balanceOf(account).call();
       console.log(res);
+      return res;
     };
 
     const buyToken = async (tokenId: number) => {
@@ -161,8 +168,14 @@ const contracts = {
         .purchaseUniqonToken(tokenId)
         .send({ from: account });
       console.log(res);
+      return res;
     };
 
+    /**
+     *
+     * @param param0 : token 관련 metadata
+     * @returns
+     */
     const mintToken = async ({
       tokenURI,
       totalAmount,
@@ -177,6 +190,7 @@ const contracts = {
         .create(account, tokenURI, totalAmount, price)
         .send({ from: account });
       console.log(res);
+      return res;
     };
 
     return { checkBalance, buyToken, mintToken };
