@@ -1,4 +1,5 @@
 import { ENDPOINT_API } from "@/api/endpoints";
+import { ACCESS_TOKEN } from "@/api/utils";
 import Button from "@/components/Button";
 import Card from "@/components/Card";
 import Text from "@/components/Text";
@@ -11,8 +12,11 @@ import Link from "next/link";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { startupId, startupName } = context.query;
+  const config = {
+    headers: { authorization: `Bearer ${context.req.cookies[ACCESS_TOKEN]}` },
+  };
   const CommunityRequest = await axios
-    .get(`${ENDPOINT_API}/invest/community/${startupId}`)
+    .get(`${ENDPOINT_API}/invest/community/${startupId}`, config)
     .then(({ data }) => data.data);
   return { props: { CommunityRequest, startupId, startupName } };
 };

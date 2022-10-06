@@ -1,4 +1,5 @@
 import { ENDPOINT_API } from "@/api/endpoints";
+import { ACCESS_TOKEN } from "@/api/utils";
 import Button from "@/components/Button";
 import Card from "@/components/Card";
 import Grid from "@/components/Grid";
@@ -18,11 +19,14 @@ import { useState } from "react";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { communityId, startupId } = context.query;
+  const config = {
+    headers: { authorization: `Bearer ${context.req.cookies[ACCESS_TOKEN]}` },
+  };
   const CommentRequest = await axios
-    .get(`${ENDPOINT_API}/invest/community/detail/${communityId}`)
+    .get(`${ENDPOINT_API}/invest/community/detail/${communityId}`, config)
     .then(({ data }) => data.data);
   const ProfileRequest = await axios
-    .get(`${ENDPOINT_API}/member`)
+    .get(`${ENDPOINT_API}/member`, config)
     .then(({ data }) => data.data);
   return {
     props: {

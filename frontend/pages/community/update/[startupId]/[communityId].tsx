@@ -1,4 +1,5 @@
 import { ENDPOINT_API } from "@/api/endpoints";
+import { ACCESS_TOKEN } from "@/api/utils";
 import Button from "@/components/Button";
 import LabelInput from "@/components/LabelInput";
 import Text from "@/components/Text";
@@ -14,8 +15,11 @@ import { CommentListProps } from "../../detail/[communityId]/[startupId]";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { startupId, communityId } = context.query;
+  const config = {
+    headers: { authorization: `Bearer ${context.req.cookies[ACCESS_TOKEN]}` },
+  };
   const CommentRequest = await axios
-    .get(`${ENDPOINT_API}/invest/community/detail/${communityId}`)
+    .get(`${ENDPOINT_API}/invest/community/detail/${communityId}`, config)
     .then(({ data }) => data.data);
   return { props: { CommentRequest, startupId, communityId } };
 };
