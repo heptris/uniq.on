@@ -85,7 +85,9 @@ export type Startup = {
 export type AlarmItem = {
   alarmId: number;
   content: string;
+  tokenURI?: string;
   investCount?: number;
+  nftPrice?: number;
   read: boolean;
   tokenId?: number;
 };
