@@ -41,12 +41,18 @@ module.exports = {
     // tab if you use this network and you must also set the `host`, `port` and `network_id`
     // options below to some value.
     // e.g., 가나슈 환경 
-     development: {
-      host: "127.0.0.1",     // Localhost (default: none)
-      port: 7545,            // Standard Ethereum port (default: none)
-      network_id: 1337,       // Any network (default: none)
-      gas: 6721975
-     },
+    // development: {
+    //  host: "127.0.0.1",     // Localhost (default: none)
+    //  port: 7545,            // Standard Ethereum port (default: none)
+    //  network_id: 1337,       // Any network (default: none)
+    //  gas: 6721975
+    // },
+    development: {
+     host: "20.196.209.2",     // Localhost (default: none)
+     port: 8545,            // Standard Ethereum port (default: none)
+     network_id: 31221,       // Any network (default: none)
+     gas: 6721975
+    },
     // Another network with more advanced options...
     // advanced: {
     // port: 8777,             // Custom port
