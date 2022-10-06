@@ -56,17 +56,13 @@ public class StartupInvestService {
 //    @Scheduled(cron = "*/20 * * * * *")
     @Scheduled(cron = "1 * * * * *")
     public void test() {
-        log.info("현재시간 {}", LocalDateTime.now());
         List<Alarm> alarmList = new ArrayList<>();
         List<Startup> startupList = startupRepository.findByInvestingStartupList();
-        log.info("startupList count {}", startupList.size());
-        startupList.forEach(startup -> {
-            log.info("startupId {}", startup.getId());
-        });
 
         startupList.forEach(
                 startup -> {
                     if (startup.getDueDate().isBefore(LocalDateTime.now())) { // 마감일 지났을 때
+                        log.info("현재시간 {} startupId {} 마감 시간 {}", LocalDateTime.now(), startup.getId(), startup.getDueDate());
                         List<Invest_history> investHistoryList = investHistoryRepository.findByInvestingInvestHistoryList(startup.getId());
                         if (startup.getIsGoal() && !startup.getIsFinished()) { // 목표금액 달성 했을 경우
                             startup.changeIsFinish();   // 투자 마감 표시

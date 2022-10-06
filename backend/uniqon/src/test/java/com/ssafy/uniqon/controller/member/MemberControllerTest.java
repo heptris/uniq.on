@@ -123,7 +123,7 @@ class MemberControllerTest extends RestDocsTestSupport {
         });
 
         doThrow(new CustomException(ErrorCode.FILE_UPLOAD_ERROR)).when(memberService)
-                        .memberUpdate(anyLong(),any(MemberUpdateDto.class), any(MultipartFile.class));
+                .memberUpdate(anyLong(), any(MemberUpdateDto.class), any(MultipartFile.class));
 
         mockMvc.perform(
                         builder.file(request).file(memberProfile)
@@ -169,7 +169,7 @@ class MemberControllerTest extends RestDocsTestSupport {
         });
 
         doThrow(new CustomValidationException("유효성 검사 실패", new HashMap<>())).when(memberService)
-                        .memberUpdate(anyLong(), any(MemberUpdateDto.class), any(MultipartFile.class));
+                .memberUpdate(anyLong(), any(MemberUpdateDto.class), any(MultipartFile.class));
 
         mockMvc.perform(
                         builder.file(request).file(memberProfile)
@@ -298,6 +298,27 @@ class MemberControllerTest extends RestDocsTestSupport {
 
         mockMvc.perform(
                 get("/app/member/mypage/startup")
+                        .header("Authorization", "Bearer " + accessToken)
+                        .contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(status().isOk());
+    }
+
+    @DisplayName(value = "마이페이지 보유 NFT 목록")
+    @WithMockCustomUser
+    @Test
+    public void 마이페이지_보유_NFT_목록() throws Exception {
+
+        MemberOwnNftDto memberOwnNftDto = MemberOwnNftDto.builder().startupId(1L).nftDescription("nftDescription").nftImage("nftImage")
+                .price(new Double(2)).metaData("metaData").startupName("startupName").build();
+        MemberOwnNftDto memberOwnNftDto2 = MemberOwnNftDto.builder().startupId(2L).nftDescription("nftDescription").nftImage("nftImage")
+                .price(new Double(2)).metaData("metaData").startupName("startupName").build();
+
+        List<MemberOwnNftDto> memberOwnNftDtoList = Arrays.asList(memberOwnNftDto, memberOwnNftDto2);
+
+        given(memberService.findMemberOwnNftList(any(Long.class))).willReturn(memberOwnNftDtoList);
+
+        mockMvc.perform(
+                get("/app/member/mypage/own-nft")
                         .header("Authorization", "Bearer " + accessToken)
                         .contentType(MediaType.APPLICATION_JSON)
         ).andExpect(status().isOk());
