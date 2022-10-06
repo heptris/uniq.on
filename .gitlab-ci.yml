@@ -9,6 +9,7 @@
 stages:
   - spring-build
   - spring-dockerize
+  - react-test
   - react-dockerize
   - deploy
 
@@ -55,6 +56,18 @@ spring-dockerize:
     - develop
     - backend
 
+react-test:
+  image: node:16.16
+  stage: react-test
+  script: |
+    cd frontend/
+    yarn install
+    yarn test:ci
+  only:
+    - master
+    - develop
+    - frontend
+
 react-dockerize:
   image: docker:latest
   stage: react-dockerize
@@ -70,6 +83,7 @@ react-dockerize:
     docker push $FRONT_IMAGE_NAME
   after_script: |
     docker logout
+  when: on_success
   only:
     - master
     - develop
