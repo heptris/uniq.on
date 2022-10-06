@@ -90,9 +90,22 @@
 				"inputs": [
 					{
 						"indexed": true,
-						"internalType": "string",
+						"internalType": "uint256",
+						"name": "lastTokenId",
+						"type": "uint256"
+					}
+				],
+				"name": "lastTokenId",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "string[]",
 						"name": "tokenURI",
-						"type": "string"
+						"type": "string[]"
 					}
 				],
 				"name": "showTokenURI",
@@ -183,6 +196,19 @@
 				"type": "function"
 			},
 			{
+				"inputs": [],
+				"name": "erc20Contract",
+				"outputs": [
+					{
+						"internalType": "contract SSF",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
 				"inputs": [
 					{
 						"internalType": "uint256",
@@ -230,7 +256,7 @@
 						"type": "string[]"
 					}
 				],
-				"stateMutability": "view",
+				"stateMutability": "nonpayable",
 				"type": "function"
 			},
 			{
@@ -242,6 +268,32 @@
 					}
 				],
 				"name": "getTokenPrice",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "getUniqonTBalance",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "getUniqonTtotalSupply",
 				"outputs": [
 					{
 						"internalType": "uint256",
@@ -337,7 +389,7 @@
 				],
 				"name": "purchaseUniqonToken",
 				"outputs": [],
-				"stateMutability": "payable",
+				"stateMutability": "nonpayable",
 				"type": "function"
 			},
 			{
@@ -655,11 +707,51 @@
 	},
 	"sources": {
 		"contracts/MintUniqonToken.sol": {
-			"keccak256": "0xe878e689e457d8b3cd87cea49ebd61f411bdeb08db69491d69b75186cbdd2c0e",
+			"keccak256": "0x7a998a8d37a5d542b0144376500b2b8dea4b737289da436163ad694ca20da2c4",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://271737a5bf63ce90b5098e1c2b4b63ad8ea8e4bd33fbf396c67478c3c8936853",
-				"dweb:/ipfs/QmZkWkqbnNuCQFwg8Eb4zPYMrQmBgz3BGKRFbLU1xWhs5n"
+				"bzz-raw://31dd7671b6b7198dcebb0e79969b51a4ea32df3818647155f584dc4139a384e9",
+				"dweb:/ipfs/QmeZpqicMdXaz58megkraLay3rFn6XKGFQs6JTKacB1DnL"
+			]
+		},
+		"contracts/SSF.sol": {
+			"keccak256": "0xe37553a12b7780562ff3afee6e404777c46df9e7adab42c306c236d8ff9f5d46",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://36e010ba8c4ba02dea03a40c71553d8f511f99b71c3d5fc34c4e75aa66cdfd41",
+				"dweb:/ipfs/QmQWWa4jJjQkczzZDTTWa5DxNWZuWjZEnaX7qV7eYWBeF9"
+			]
+		},
+		"contracts/access/Ownable.sol": {
+			"keccak256": "0xd361a9c6589bb6d6616e5181ced8ce7b06f751d191c20fe3eb50fe1422f83734",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://f4ac7e3ec3b0f103d9c4ebe6f485bff79d58e781531fa157f02cd3a128d877dd",
+				"dweb:/ipfs/Qmf2azYYcqzpCFMZH99oveaAzkTurCQQuV6Q7LeT8d1DSy"
+			]
+		},
+		"contracts/token/ERC20/ERC20.sol": {
+			"keccak256": "0x40d568bcce1ee4f5ebb7d05ecb93b55eae3546df2c2215268072be7bf360ecc2",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://11e2f55e55d44bfdff043eaa22ace9d4751acd8a203446ed008e235d84a80faf",
+				"dweb:/ipfs/QmQqFU1N6Z5qKhLW2eeNdXWXkJ35i4wj1Uyac4fbowJ9Cv"
+			]
+		},
+		"contracts/token/ERC20/IERC20.sol": {
+			"keccak256": "0x74ae1a773c1ce27b59c22903469389a6aeb2c882c2485e014aaf50710b9bc32c",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://c399a2b2bcac88e61c5c617ef7f1341429fa589aba5a9563df6f422996a48b76",
+				"dweb:/ipfs/QmWEdyWLZLUy8aMSyYk4E4mD2WhPvrvtxC2KvA5pjBAzXn"
+			]
+		},
+		"contracts/token/ERC20/extensions/IERC20Metadata.sol": {
+			"keccak256": "0x625b87cf2c51463b99de1dda2afd18075618faafac512850ee78c205c82d1f93",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://02d72e8ea6e5c90e628b3b9391947658561c90809e4f9f18c76037ed2b3f61a9",
+				"dweb:/ipfs/QmXtdaEkMFehAN5C4F8TEW2HknLBhxfDzqorn3R1ZaGZaK"
 			]
 		},
 		"contracts/token/ERC721/ERC721.sol": {
