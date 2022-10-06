@@ -49,6 +49,7 @@ function InvestmentDetail(props: IDProps) {
     nftReserveCount,
     nftTargetCount,
     planPaperImg,
+    roadmap,
     startupId,
     startupName,
   } = InvestmentRequest;
@@ -110,7 +111,7 @@ function InvestmentDetail(props: IDProps) {
         />
         <Card
           css={css`
-            margin-top: 0.5rem;
+            margin-top: 1rem;
           `}
         >
           <CardContent>
@@ -126,7 +127,7 @@ function InvestmentDetail(props: IDProps) {
                 {isFav ? (
                   <FontAwesomeIcon
                     icon={faHeart}
-                    width={"1.8rem"}
+                    width={"1.4rem"}
                     css={css`
                       color: ${color.background.main};
                       &:hover {
@@ -135,7 +136,7 @@ function InvestmentDetail(props: IDProps) {
                     `}
                   />
                 ) : (
-                  <FontAwesomeIcon icon={faHeart} width={"1.8rem"} />
+                  <FontAwesomeIcon icon={faHeart} width={"1.4rem"} />
                 )}
               </FavoriteButton>
             </div>
@@ -147,7 +148,7 @@ function InvestmentDetail(props: IDProps) {
               <Text as="p">Ethereum</Text>
             </InlineInfo>
             <InlineInfo>
-              <Text as="h2">발행 토큰 수</Text>
+              <Text as="h2">최소 발행 토큰 수</Text>
               <Text as="p">{nftTargetCount}</Text>
             </InlineInfo>
             <InlineInfo>
@@ -194,6 +195,11 @@ function InvestmentDetail(props: IDProps) {
           <Text as="h1">기업 소개</Text>
           <ImageContainer>
             <img src={planPaperImg} width={"100%"} />
+          </ImageContainer>
+
+          <Text as="h1">투자 보상 로드맵</Text>
+          <ImageContainer>
+            <img src={roadmap} width={"100%"} />
           </ImageContainer>
 
           {/* <Text as="h1">Q&A</Text>
