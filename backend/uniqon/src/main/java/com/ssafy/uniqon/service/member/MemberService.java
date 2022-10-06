@@ -4,11 +4,11 @@ import com.ssafy.uniqon.domain.member.Member;
 import com.ssafy.uniqon.domain.s3.AwsS3;
 import com.ssafy.uniqon.dto.member.*;
 import com.ssafy.uniqon.exception.ex.CustomException;
-import com.ssafy.uniqon.exception.ex.ErrorCode;
 import com.ssafy.uniqon.repository.member.MemberRepository;
 import com.ssafy.uniqon.service.s3.AwsS3Service;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -79,6 +79,31 @@ public class MemberService {
 
     public List<StartupInvestedListDto> findStartupInvestedList(Long memberId){
         return memberRepository.findStartupInvestedList(memberId);
+    }
+
+    public List<MemberOwnNftDto> findMemberOwnNftList(Long memberId){
+        List<MemberOwnNftDto> ownNftList = memberRepository.findOwnNftList(memberId);
+
+        JSONParser jsonParser = new JSONParser();
+        JSONObject jsonObject = new JSONObject();
+
+        for (MemberOwnNftDto memberOwnNftListDto : ownNftList) {
+            String jsonString = memberOwnNftListDto.getMetaData();
+
+            try {
+                jsonObject = (JSONObject) jsonParser.parse(jsonString);
+                String nftImage = (String) jsonObject.get("image");
+                nftImage = nftImage.replace("ipfs://", "https://ipfs.io/ipfs/");
+
+                memberOwnNftListDto.setNftImage(nftImage);
+
+                System.out.println("nftImage = " + nftImage);
+            } catch (org.json.simple.parser.ParseException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        return ownNftList;
     }
 
 

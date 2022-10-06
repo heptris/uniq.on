@@ -82,6 +82,9 @@ dependencies {
 	// MockMvc 대신 WebTestClient을 사용하려면 spring-restdocs-webtestclient 추가
 	// MockMvc 대신 REST Assured를 사용하려면 spring-restdocs-restassured 를 추가
 	testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
+
+	// jsonparser, jsonobject 설정
+	implementation 'com.googlecode.json-simple:json-simple:1.1.1'
 }
 
 ext {
