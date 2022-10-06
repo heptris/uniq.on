@@ -19,9 +19,7 @@ export default function Comment(props: CommentProps) {
   const { comment, profileNickname, type, communityId } = props;
   console.log(comment);
   const [open, setOpen] = useState(false);
-  const [content, setContent] = useState(
-    type === "child" ? comment.content : ""
-  );
+  const [content, setContent] = useState(comment.content);
   const openToggleHandler = () => {
     setOpen((open) => !open);
   };
