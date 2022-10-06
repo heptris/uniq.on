@@ -1,13 +1,16 @@
 import { ENDPOINT_API } from "@/api/endpoints";
-import { useAlert } from "@/hooks";
+import { commentDeleteMutation, useAlert } from "@/hooks";
 import { CommentListProps } from "@/pages/community/detail/[communityId]/[startupId]";
 import { css, useTheme } from "@emotion/react";
 import styled from "@emotion/styled";
+import { useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { useState } from "react";
 import Button from "../Button";
 import LabelInput from "../LabelInput";
 import Text from "../Text";
+import { QUERY_KEYS } from "@/api/query_key_schema";
+const { MY_COMMUNITY_LIST } = QUERY_KEYS;
 
 type CommentProps = {
   comment: CommentListProps;
@@ -18,6 +21,8 @@ type CommentProps = {
 export default function Comment(props: CommentProps) {
   const { comment, profileNickname, type, communityId } = props;
   console.log(comment);
+  const client = useQueryClient();
+  const { mutate: mutateDeleteComment } = commentDeleteMutation();
   const [open, setOpen] = useState(false);
   const [content, setContent] = useState(comment.content);
   const openToggleHandler = () => {
@@ -25,19 +30,31 @@ export default function Comment(props: CommentProps) {
   };
   const theme = useTheme();
   const { handleAlertOpen } = useAlert();
+
   const onDeleteHandler = () => {
-    axios
-      .delete(
-        `${ENDPOINT_API}/invest/community-comments/${communityId}/${comment.commentId}`
-      )
-      .then((res) => {
-        console.log(res);
-        handleAlertOpen(2000, "댓글 삭제가 완료되었습니다", true);
-      })
-      .catch((err) => {
-        console.log(err);
-        handleAlertOpen(2000, "댓글 삭제가 실패했습니다", false);
-      });
+    const commentId = comment.commentId;
+    mutateDeleteComment(
+      { commentId, communityId },
+      {
+        onSuccess: () =>
+          handleAlertOpen(2000, "댓글 삭제가 완료되었습니다", true),
+        onError: () =>
+          handleAlertOpen(2000, "댓글 삭제가 실패했습니다.", false),
+        onSettled: () => client.invalidateQueries([MY_COMMUNITY_LIST]),
+      }
+    );
+    // axios
+    //   .delete(
+    //     `${ENDPOINT_API}/invest/community-comments/${communityId}/${comment.commentId}`
+    //   )
+    //   .then((res) => {
+    //     console.log(res);
+    //     handleAlertOpen(2000, "댓글 삭제가 완료되었습니다", true);
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //     handleAlertOpen(2000, "댓글 삭제가 실패했습니다", false);
+    //   });
   };
   const openCreateHandler = () => {
     const data = { content, parentId: comment.commentId };
