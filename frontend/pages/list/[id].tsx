@@ -161,7 +161,9 @@ function InvestmentDetail(props: IDProps) {
             </InlineInfo>
             <InlineInfo>
               <Text as="h2">펀딩 진행률</Text>
-              <Text as="p">{(nftReserveCount / nftTargetCount) * 100}%</Text>
+              <Text as="p">
+                {((nftReserveCount / nftTargetCount) * 100).toFixed(2)}%
+              </Text>
             </InlineInfo>
             {isReserved ? (
               <Button

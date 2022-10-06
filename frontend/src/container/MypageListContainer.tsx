@@ -30,6 +30,7 @@ const MypageListContainer = ({
       {nfts?.map((nft: NFTItem) => (
         <NFTItemCard
           key={nft.startupId}
+          startupId={nft.startupId}
           nftImage={nft.nftImage}
           nftReserveCount={nft.nftReserveCount}
           startupName={nft.startupName}
@@ -71,6 +72,7 @@ const MypageListContainer = ({
       {applys?.map((apply: APPLYItem) => (
         <NFTItemCard
           key={apply.startupId}
+          startupId={apply.startupId}
           nftReserveCount={apply.nftReserveCount}
           nftImage={apply.nftImage}
           startupName={apply.startupName}
