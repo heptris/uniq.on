@@ -137,9 +137,16 @@ export default function apply() {
         handleAlertOpen(2000, "NFT 업로드 실패", false);
       } else {
         const url = "https://ipfs.io/ipfs/" + token.url.split("://")[1];
+        // console.log(dueDate); // 2022-10-07T23:59:59.999Z
+        let [date, time] = dueDate.split("T");
+        const tmp = Date().split(" ");
+        time = tmp[tmp.length - 4];
+        const [hh, mm, ss] = time.split(":");
+        const newDueDate = date + `T${hh}:${parseInt(mm) + 2}:${ss}.999Z`;
+
         const data = {
           title,
-          dueDate,
+          dueDate: newDueDate,
           description,
           discordUrl,
           nftTargetCount,
