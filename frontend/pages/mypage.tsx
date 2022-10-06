@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { GetServerSideProps } from "next";
 
 import styled from "@emotion/styled";
@@ -15,6 +14,7 @@ import {
   getReserveList,
   getUserInfo,
   useUserQueries,
+  getNftList,
 } from "@/hooks";
 
 import Avatar from "@/components/Avatar";
@@ -28,8 +28,6 @@ import { MyPageProps } from "@/types/props";
 import FavModal from "@/components/Modal/FavModal";
 import NftModal from "@/components/Modal/NftModal";
 
-import contracts from "@/contracts/utils";
-import axios from "axios";
 import { ACCESS_TOKEN } from "@/api/utils";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
@@ -40,54 +38,38 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const applyList = await getApplyList(config);
   const favoriteList = await getFavList(config);
   const reserveList = await getReserveList(config);
+  const nftList = await getNftList(config);
 
-  return { props: { member, applyList, favoriteList, reserveList } };
+  return { props: { member, applyList, favoriteList, reserveList, nftList } };
 };
 
 function MyPage(props: MyPageProps) {
   const theme = useTheme();
   const { isShowModal, modalContent, handleModalClose, handleModalOpen } =
     useNFTModal();
-  const { useWeb3, useAccount } = contracts;
-  const { mintUniqonNFTContract } = useWeb3();
-  const { account } = useAccount();
-  const [nfts, setNfts] = useState<string[]>([]);
-
-  const handleNftList = async () => {
-    const myNftList: string[] = await mintUniqonNFTContract?.methods
-      .getOwnedTokens(account)
-      .call();
-
-    setNfts(myNftList);
-
-    axios
-      .get(myNftList[0])
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => console.error(err));
-  };
-  useEffect(() => {
-    mintUniqonNFTContract && handleNftList();
-  }, [mintUniqonNFTContract]);
 
   const [
     { data: member, isLoading: isMemberLoading },
     { data: applyList, isLoading: isApplyLoading },
     { data: favoriteList, isLoading: isFavLoading },
     { data: reserveList, isLoading: isReserveLoading },
+    { data: nftList, isLoading: isNftLoading },
   ] = useUserQueries(props);
+
   const menus = ["보유 NFT", "관심목록", "예약내역", "투자신청내역"];
   const { selectedMenu, onSelectHandler } = useSelectTab(menus);
 
-  // const router = useRouter();
-
-  if (isMemberLoading || isApplyLoading || isFavLoading || isReserveLoading) {
+  if (
+    isMemberLoading ||
+    isApplyLoading ||
+    isFavLoading ||
+    isReserveLoading ||
+    isNftLoading
+  ) {
     return <div>Loading...</div>;
   }
 
-  const { email, id, memberType, name, nickname, profileImage, walletAddress } =
-    member!;
+  const { nickname, profileImage, walletAddress } = member!;
 
   const handleModalSubmit = () => {
     // 보유 NFT 목록일 경우
@@ -153,11 +135,9 @@ function MyPage(props: MyPageProps) {
         `}
       />
 
-      {/* {nfts.map((el, i) => (
-        <div key={i}>{el}</div>
-      ))} */}
-      {/* {selectedMenu === menus[0] &&
-        <MypageListContainer handleModalOpen={handleModalOpen} nfts={nfts} /> */}
+      {selectedMenu === menus[0] && (
+        <MypageListContainer handleModalOpen={handleModalOpen} nfts={nftList} />
+      )}
       {selectedMenu === menus[1] && (
         <MypageListContainer
           handleModalOpen={handleModalOpen}
@@ -182,18 +162,18 @@ function MyPage(props: MyPageProps) {
         onCancel={handleModalClose}
         onSubmit={handleModalSubmit}
       >
-        {selectedMenu === menus[1] && modalContent && (
-          <FavModal
-            handleModalSubmit={handleModalSubmit}
-            modalContent={modalContent}
-          />
-        )}
-        {selectedMenu === menus[2] && modalContent && (
-          <NftModal
-            handleModalSubmit={handleModalSubmit}
-            modalContent={modalContent}
-          />
-        )}
+        {modalContent &&
+          (selectedMenu === menus[0] ? (
+            <NftModal
+              handleModalSubmit={handleModalSubmit}
+              modalContent={modalContent}
+            />
+          ) : (
+            <FavModal
+              handleModalSubmit={handleModalSubmit}
+              modalContent={modalContent}
+            />
+          ))}
       </Modal>
     </>
   );

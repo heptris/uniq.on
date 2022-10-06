@@ -161,6 +161,7 @@ export type MyPageProps = {
   applyList: APPLYItem[];
   favoriteList: FAVItem[];
   reserveList: RSRVItem[];
+  nftList: NFTItem[];
 };
 export type AlarmProps = {
   alarmList: AlarmItem[];
