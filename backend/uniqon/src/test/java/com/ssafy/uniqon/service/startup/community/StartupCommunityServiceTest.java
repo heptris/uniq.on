@@ -58,14 +58,14 @@ class StartupCommunityServiceTest {
         assertThat(startupCommunityService.communityList(1L).size()).isEqualTo(0);
     }
 
-    @Test
-    public void 글상세보기(){
-        StartupCommunityResponseDetailDto detailDto = startupCommunityService.communityDetail(1L);
-
-        assertThat(detailDto.getTitle()).isEqualTo("Title Test");
-        assertThat(detailDto.getContent()).isEqualTo("Content Test");
-        assertThat(detailDto.getCommentList().get(0).getNickName()).isEqualTo("aaa");
-        assertThat(detailDto.getCommentList().get(0).getChildren().get(0).getNickName()).isEqualTo("bbb");
-        assertThat(detailDto.getCommentList().get(0).getChildren().get(1).getNickName()).isEqualTo("ccc");
-    }
+//    @Test
+//    public void 글상세보기(){
+//        StartupCommunityResponseDetailDto detailDto = startupCommunityService.communityDetail(1L);
+//
+//        assertThat(detailDto.getTitle()).isEqualTo("Title Test");
+//        assertThat(detailDto.getContent()).isEqualTo("Content Test");
+//        assertThat(detailDto.getCommentList().get(0).getNickName()).isEqualTo("aaa");
+//        assertThat(detailDto.getCommentList().get(0).getChildren().get(0).getNickName()).isEqualTo("bbb");
+//        assertThat(detailDto.getCommentList().get(0).getChildren().get(1).getNickName()).isEqualTo("ccc");
+//    }
 }

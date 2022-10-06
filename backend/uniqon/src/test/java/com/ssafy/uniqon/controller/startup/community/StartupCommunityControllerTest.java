@@ -49,10 +49,10 @@ class StartupCommunityControllerTest extends RestDocsTestSupport {
 
 
         StartupCommunityResponseListDto startupCommunityResponseListDto = new StartupCommunityResponseListDto(
-                "title", "nickName", new Integer(10), LocalDateTime.now()
+                1L, "startupName", "title", "nickName", new Integer(2), new Integer(10), LocalDateTime.now()
         );
         StartupCommunityResponseListDto startupCommunityResponseListDto2 = new StartupCommunityResponseListDto(
-                "title2", "nickName2", new Integer(10), LocalDateTime.now()
+                2L, "startupName2", "title", "nickName", new Integer(2), new Integer(10), LocalDateTime.now()
         );
         List<StartupCommunityResponseListDto> startupCommunityResponseListDtos = Arrays.asList(startupCommunityResponseListDto, startupCommunityResponseListDto2);
 

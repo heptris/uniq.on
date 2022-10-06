@@ -1222,7 +1222,7 @@ Content-Length: 1028
     "nftTargetCount" : 10,
     "nftReserveCount" : 5,
     "nftPrice" : 2.0,
-    "dueDate" : "2022-10-06 13",
+    "dueDate" : "2022-10-08 09",
     "planPaper" : "planPaper",
     "planPaperImg" : "planPaperImg",
     "roadMap" : "roadMap",
@@ -1239,7 +1239,7 @@ Content-Length: 1028
     "nftTargetCount" : 10,
     "nftReserveCount" : 5,
     "nftPrice" : 2.0,
-    "dueDate" : "2022-10-06 13",
+    "dueDate" : "2022-10-08 09",
     "planPaper" : "planPaper",
     "planPaperImg" : "planPaperImg",
     "roadMap" : "roadMap",
@@ -1286,7 +1286,7 @@ Content-Length: 1030
     "nftTargetCount" : 10,
     "nftReserveCount" : 5,
     "nftPrice" : 2.0,
-    "dueDate" : "2022-10-05 13",
+    "dueDate" : "2022-10-07 09",
     "planPaper" : "planPaper",
     "planPaperImg" : "planPaperImg",
     "roadMap" : "roadMap",
@@ -1302,7 +1302,7 @@ Content-Length: 1030
     "nftTargetCount" : 10,
     "nftReserveCount" : 5,
     "nftPrice" : 2.0,
-    "dueDate" : "2022-10-05 13",
+    "dueDate" : "2022-10-07 09",
     "planPaper" : "planPaper",
     "planPaperImg" : "planPaperImg",
     "roadMap" : "roadMap",
@@ -1348,7 +1348,7 @@ Content-Length: 1066
     "nftTargetCount" : 10,
     "nftReserveCount" : 5,
     "nftPrice" : 2.0,
-    "dueDate" : "2022-10-05 13",
+    "dueDate" : "2022-10-07 09",
     "planPaper" : "planPaper",
     "planPaperImg" : "planPaperImg",
     "roadMap" : "roadMap",
@@ -1365,7 +1365,7 @@ Content-Length: 1066
     "nftTargetCount" : 10,
     "nftReserveCount" : 5,
     "nftPrice" : 2.0,
-    "dueDate" : "2022-10-05 13",
+    "dueDate" : "2022-10-07 09",
     "planPaper" : "planPaper",
     "planPaperImg" : "planPaperImg",
     "roadMap" : "roadMap",
@@ -1397,12 +1397,13 @@ Host: localhost:8080</code></pre>
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
 Content-Type: application/json;charset=UTF-8
-Content-Length: 246
+Content-Length: 270
 
 {
   "status" : 200,
   "message" : "멤버 프로필 조회",
   "data" : {
+    "memberId" : null,
     "walletAddress" : "0X1234",
     "nickName" : "nickName",
     "email" : "email@naver.com",
@@ -1755,7 +1756,7 @@ Host: localhost:8080</code></pre>
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
 Content-Type: application/json;charset=UTF-8
-Content-Length: 562
+Content-Length: 658
 
 {
   "status" : 200,
@@ -1765,24 +1766,28 @@ Content-Length: 562
     "content" : "알람1",
     "tokenId" : null,
     "investCount" : 10,
+    "nftPrice" : null,
     "read" : false
   }, {
     "alarmId" : 2,
     "content" : "알람2",
     "tokenId" : 1,
     "investCount" : null,
+    "nftPrice" : null,
     "read" : false
   }, {
     "alarmId" : 3,
     "content" : "알람3",
     "tokenId" : null,
     "investCount" : null,
+    "nftPrice" : null,
     "read" : false
   }, {
     "alarmId" : 4,
     "content" : "알람4",
     "tokenId" : null,
     "investCount" : null,
+    "nftPrice" : null,
     "read" : true
   } ]
 }</code></pre>
@@ -1809,7 +1814,7 @@ Host: localhost:8080</code></pre>
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
 Content-Type: application/json;charset=UTF-8
-Content-Length: 437
+Content-Length: 509
 
 {
   "status" : 200,
@@ -1819,18 +1824,21 @@ Content-Length: 437
     "content" : "알람1",
     "tokenId" : null,
     "investCount" : 10,
+    "nftPrice" : null,
     "read" : false
   }, {
     "alarmId" : 2,
     "content" : "알람2",
     "tokenId" : 1,
     "investCount" : null,
+    "nftPrice" : null,
     "read" : false
   }, {
     "alarmId" : 3,
     "content" : "알람3",
     "tokenId" : null,
     "investCount" : null,
+    "nftPrice" : null,
     "read" : false
   } ]
 }</code></pre>
@@ -2313,7 +2321,7 @@ Host: localhost:8080</code></pre>
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
 Content-Type: application/json;charset=UTF-8
-Content-Length: 1221
+Content-Length: 1247
 
 {
   "status" : 200,
@@ -2327,13 +2335,14 @@ Content-Length: 1221
     "nftTargetCount" : 10,
     "nftReserveCount" : 5,
     "nftPrice" : 2.0,
-    "dueDate" : "2022-10-07 13:10",
+    "dueDate" : "2022-10-09 09:10",
     "planPaper" : "https://uniqon-bucket.s3.ap-northeast-2.amazonaws.com/startup/4cfd6171-b839-404a-94e9-615e3cc93402uniqon%EB%B8%94%EB%A1%9D%EC%B2%B4%EC%9D%B8_%EC%A1%B0%EC%98%81%EB%8F%84%EB%A9%98%ED%86%A0%EB%8B%98.pdf",
     "planPaperImg" : "https://uniqon-bucket.s3.ap-northeast-2.amazonaws.com/startup/e95ca4c9-b7c3-4f8a-87da-e718a97c2926uniqonuniqon%EB%B8%94%EB%A1%9D%EC%B2%B4%EC%9D%B8_%EC%A1%B0%EC%98%81%EB%8F%84%EB%A9%98%ED%86%A0%EB%8B%98.jpg",
     "roadMap" : "https://uniqon-bucket.s3.ap-northeast-2.amazonaws.com/startup/2ceda00d-e53f-4b8d-ba17-89fa74e759a1uniqon5dc267300fefd2738de6.jpg",
     "nftImage" : "https://uniqon-bucket.s3.ap-northeast-2.amazonaws.com/startup/671c1f1b-e6f2-4c0b-af82-ada8ffc3ff3buniqon5dc267300fefd2738de6.jpg",
     "nftDescription" : "nft description",
-    "isFav" : false
+    "isFav" : false,
+    "isReserved" : true
   }
 }</code></pre>
 </div>
@@ -2355,7 +2364,7 @@ Host: localhost:8080
 Content-Disposition: form-data; name=startupRequestDto; filename=jsondata
 Content-Type: application/json
 
-{"dueDate":"2022-10-07T13:13:55.136","discordUrl":"discordUrl","description":"description","title":"title","nftTargetCount":10,"nftPrice":2.0,"nftDescription":"nft description"}
+{"dueDate":"2022-10-09T09:42:57.075","discordUrl":"discordUrl","description":"description","title":"title","nftTargetCount":10,"nftPrice":2.0,"nftDescription":"nft description"}
 --6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
 Content-Disposition: form-data; name=plan_paper; filename=business_plan.pdf
 Content-Type: application/pdf
@@ -2523,7 +2532,7 @@ Content-Length: 1175
       "startupId" : 1,
       "startupName" : "startupName1",
       "title" : "title1",
-      "dueDate" : "2022-10-06 13:10",
+      "dueDate" : "2022-10-08 09:10",
       "nftTargetCount" : 10,
       "nftReserveCount" : 5,
       "profileImage" : "profileImage",
@@ -2532,7 +2541,7 @@ Content-Length: 1175
       "startupId" : 2,
       "startupName" : "startupName2",
       "title" : "title2",
-      "dueDate" : "2022-10-06 13:10",
+      "dueDate" : "2022-10-08 09:10",
       "nftTargetCount" : 10,
       "nftReserveCount" : 5,
       "profileImage" : "profileImage",
@@ -2545,14 +2554,14 @@ Content-Length: 1175
         "unsorted" : true
       },
       "offset" : 0,
-      "pageSize" : 10,
       "pageNumber" : 0,
-      "paged" : true,
-      "unpaged" : false
+      "pageSize" : 10,
+      "unpaged" : false,
+      "paged" : true
     },
-    "last" : true,
-    "totalPages" : 1,
     "totalElements" : 2,
+    "totalPages" : 1,
+    "last" : true,
     "number" : 0,
     "size" : 10,
     "sort" : {
@@ -3102,7 +3111,7 @@ Content-Length: 2225
     "values" : [ {
       "nickname" : "투자자0",
       "memberId" : 1,
-      "createDate" : "2022-10-04 13:14:00",
+      "createDate" : "2022-10-06 09:43:00",
       "startupQuestionId" : 1,
       "question" : "질문0",
       "myQuestion" : true,
@@ -3111,7 +3120,7 @@ Content-Length: 2225
         "memberId" : 4,
         "nickname" : "스타트업A",
         "answer" : "답변 0",
-        "createDate" : "2022-10-04 13:14:00",
+        "createDate" : "2022-10-06 09:43:00",
         "parentId" : null,
         "myAnswer" : false,
         "answerChildren" : [ {
@@ -3119,7 +3128,7 @@ Content-Length: 2225
           "memberId" : 1,
           "nickname" : "투자자0",
           "answer" : "답변 Test",
-          "createDate" : "2022-10-04 13:14:00",
+          "createDate" : "2022-10-06 09:43:00",
           "parentId" : 1,
           "myAnswer" : true
         }, {
@@ -3127,7 +3136,7 @@ Content-Length: 2225
           "memberId" : 4,
           "nickname" : "스타트업A",
           "answer" : "답변 Test2",
-          "createDate" : "2022-10-04 13:14:00",
+          "createDate" : "2022-10-06 09:43:00",
           "parentId" : 1,
           "myAnswer" : true
         } ]
@@ -3136,7 +3145,7 @@ Content-Length: 2225
         "memberId" : 4,
         "nickname" : "스타트업A",
         "answer" : "답변 1",
-        "createDate" : "2022-10-04 13:14:00",
+        "createDate" : "2022-10-06 09:43:00",
         "parentId" : null,
         "myAnswer" : false,
         "answerChildren" : [ ]
@@ -3145,7 +3154,7 @@ Content-Length: 2225
         "memberId" : 4,
         "nickname" : "스타트업A",
         "answer" : "답변 2",
-        "createDate" : "2022-10-04 13:14:00",
+        "createDate" : "2022-10-06 09:43:00",
         "parentId" : null,
         "myAnswer" : false,
         "answerChildren" : [ ]
@@ -3153,7 +3162,7 @@ Content-Length: 2225
     }, {
       "nickname" : "투자자1",
       "memberId" : 2,
-      "createDate" : "2022-10-04 13:14:00",
+      "createDate" : "2022-10-06 09:43:00",
       "startupQuestionId" : 2,
       "question" : "질문1",
       "myQuestion" : false,
@@ -3161,7 +3170,7 @@ Content-Length: 2225
     }, {
       "nickname" : "투자자2",
       "memberId" : 3,
-      "createDate" : "2022-10-04 13:14:00",
+      "createDate" : "2022-10-06 09:43:00",
       "startupQuestionId" : 3,
       "question" : "질문2",
       "myQuestion" : false,
@@ -3864,21 +3873,27 @@ Host: localhost:8080</code></pre>
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
 Content-Type: application/json;charset=UTF-8
-Content-Length: 336
+Content-Length: 489
 
 {
   "status" : 200,
   "message" : "success",
   "data" : [ {
+    "communityId" : 1,
+    "startupName" : "startupName",
     "title" : "title",
     "nickName" : "nickName",
+    "hit" : 2,
     "commentsCount" : 10,
-    "createdDate" : "2022-10-04T13:13:57.15"
+    "createdDate" : "2022-10-06T09:42:58.627"
   }, {
-    "title" : "title2",
-    "nickName" : "nickName2",
+    "communityId" : 2,
+    "startupName" : "startupName2",
+    "title" : "title",
+    "nickName" : "nickName",
+    "hit" : 2,
     "commentsCount" : 10,
-    "createdDate" : "2022-10-04T13:13:57.15"
+    "createdDate" : "2022-10-06T09:42:58.627"
   } ]
 }</code></pre>
 </div>
@@ -3926,7 +3941,7 @@ Host: localhost:8080</code></pre>
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
 Content-Type: application/json;charset=UTF-8
-Content-Length: 1259
+Content-Length: 1278
 
 {
   "status" : 200,
@@ -3935,30 +3950,31 @@ Content-Length: 1259
     "title" : "title",
     "content" : "content",
     "nickName" : "nickName",
+    "hit" : null,
     "commentList" : [ {
       "parentId" : null,
       "commentId" : 1,
       "content" : "댓글1",
       "nickName" : "nickName1",
       "myComment" : true,
-      "createdDate" : "2022-10-04 13:13:57",
-      "updateDate" : "2022-10-04 13:13:57",
+      "createdDate" : "2022-10-06 09:42:58",
+      "updateDate" : "2022-10-06 09:42:58",
       "children" : [ {
         "parentId" : 1,
         "commentId" : 2,
         "content" : "댓글2",
         "nickName" : "nickName2",
         "myComment" : false,
-        "createdDate" : "2022-10-04 13:13:57",
-        "updateDate" : "2022-10-04 13:13:57"
+        "createdDate" : "2022-10-06 09:42:58",
+        "updateDate" : "2022-10-06 09:42:58"
       }, {
         "parentId" : 1,
         "commentId" : 3,
         "content" : "댓글3",
         "nickName" : "nickName3",
         "myComment" : false,
-        "createdDate" : "2022-10-04 13:13:57",
-        "updateDate" : "2022-10-04 13:13:57"
+        "createdDate" : "2022-10-06 09:42:58",
+        "updateDate" : "2022-10-06 09:42:58"
       } ]
     }, {
       "parentId" : null,
@@ -3966,11 +3982,11 @@ Content-Length: 1259
       "content" : "댓글4",
       "nickName" : "nickName4",
       "myComment" : true,
-      "createdDate" : "2022-10-04 13:13:57",
-      "updateDate" : "2022-10-04 13:13:57",
+      "createdDate" : "2022-10-06 09:42:58",
+      "updateDate" : "2022-10-06 09:42:58",
       "children" : [ ]
     } ],
-    "createdDate" : "2022-10-04T13:13:57.182"
+    "createdDate" : "2022-10-06T09:42:58.638"
   }
 }</code></pre>
 </div>

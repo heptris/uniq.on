@@ -56,7 +56,7 @@ public class StartupInvestService {
 //    @Scheduled(cron = "*/20 * * * * *")
     @Scheduled(cron = "1 * * * * *")
     public void test() {
-        log.info("실행됨?");
+        log.info("현재시간 {}", LocalDateTime.now());
         List<Alarm> alarmList = new ArrayList<>();
         List<Startup> startupList = startupRepository.findByInvestingStartupList();
         log.info("startupList count {}", startupList.size());
@@ -93,6 +93,7 @@ public class StartupInvestService {
                                     .startupId(startup.getId())
                                     .investCount(startup.getNftReserveCount())
                                     .content(startup.getStartupName() + " 투자 유치에 성공했습니다. NFT 토큰을 발급해주세요")
+                                    .nftPrice(startup.getNftPrice())
                                     .build();
                             alarmList.add(alarmToStartup);
 
