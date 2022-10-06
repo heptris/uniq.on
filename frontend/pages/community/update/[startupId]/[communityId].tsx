@@ -69,7 +69,7 @@ export default function update(props: UpdateProps) {
           handleAlertOpen(2000, "게시글 수정이 완료되었습니다.", true);
           setTitle("");
           setContent("");
-          // router.push(`/community/${startupId}`); //startupName 필요
+          router.push(`/community/detail/${communityId}/${startupId}`);
         })
         .catch((err) => {
           console.log(err);

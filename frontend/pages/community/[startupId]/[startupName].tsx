@@ -68,8 +68,8 @@ export default function CommunityList(props: InvestProps) {
           글작성
         </Button>
       </Link>
-      {CommunityRequest.length == 0 && "첫 게시글을 작성해주세요"}
-      {CommunityRequest.map((community, i) => (
+      {CommunityRequest?.length == 0 && "첫 게시글을 작성해주세요"}
+      {CommunityRequest?.map((community, i) => (
         <Link
           href={`/community/detail/${community.communityId}/${startupId}`}
           key={i}
