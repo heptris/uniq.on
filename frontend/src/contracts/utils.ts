@@ -14,7 +14,7 @@ import { _setAccount } from "@/store";
 const contracts = {
   data: {
     APIToken: process.env.NFT_STORAGE_API_TOKEN,
-    "ERC-721": "0x3e4521303e18a8C5b4Bc9911B6f0D11C2992a769",
+    "ERC-721": "0x29154C9cd166f8df49fC80d900EDC177028710c8",
   },
 
   storeNFT: async (params: StoreNFTParams) => {
@@ -148,7 +148,7 @@ const contracts = {
     const checkBalance = async () => {
       if (!mintUniqonNFTContract || !uniqonTokenContract) return;
       const res = await uniqonTokenContract.methods.balanceOf(account).call();
-      console.log(res);
+
       return res;
     };
 
@@ -169,7 +169,6 @@ const contracts = {
         .purchaseUniqonToken(tokenId)
         .send({ from: account });
 
-      console.log(res);
       return res;
     };
 
@@ -192,7 +191,6 @@ const contracts = {
         .create(account, tokenURI, totalAmount, price)
         .send({ from: account });
 
-      console.log(res);
       return res;
     };
 
