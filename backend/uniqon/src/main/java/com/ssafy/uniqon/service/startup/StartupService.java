@@ -74,7 +74,7 @@ public class StartupService {
                 .startupName(member.getNickname())
                 .title(startupRequestDto.getTitle())
                 .description(startupRequestDto.getDescription())
-                .dueDate(startupRequestDto.getDueDate().plusHours(9))
+                .dueDate(startupRequestDto.getDueDate())
                 .discordUrl(startupRequestDto.getDiscordUrl())
                 .member(member)
                 .nftPrice(startupRequestDto.getNftPrice())
