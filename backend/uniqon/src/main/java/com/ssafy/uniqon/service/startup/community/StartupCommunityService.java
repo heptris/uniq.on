@@ -75,6 +75,7 @@ public class StartupCommunityService {
         startupCommunity.updateHit();
 
         StartupCommunityResponseDetailDto detailDto = startupCommunityRepository.findDetail(communityId, memberId).orElseThrow(() -> new CustomException(COMMUNITY_NOT_FOUND));
+        detailDto.setCommentsCount(startupCommunity.getCommunityCommentList().size());
         return detailDto;
     }
 }

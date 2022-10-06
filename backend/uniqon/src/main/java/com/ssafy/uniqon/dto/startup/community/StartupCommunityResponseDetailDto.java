@@ -20,6 +20,7 @@ public class StartupCommunityResponseDetailDto {
     private String content;
     private String nickName;
     private Integer hit;
+    private Integer commentsCount;
     private List<CommunityCommentResponseDto> commentList;
     private LocalDateTime createdDate;
 
