@@ -2,6 +2,7 @@ import { ENDPOINT_API } from "@/api/endpoints";
 import { ACCESS_TOKEN } from "@/api/utils";
 import Button from "@/components/Button";
 import Card from "@/components/Card";
+import Comment from "@/components/Comment";
 import Grid from "@/components/Grid";
 import LabelInput from "@/components/LabelInput";
 import Text from "@/components/Text";
@@ -11,6 +12,7 @@ import { css, useTheme } from "@emotion/react";
 import styled from "@emotion/styled";
 import { faCommentDots, faEye } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { GetServerSideProps } from "next";
 import Link from "next/link";
@@ -38,6 +40,15 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   };
 };
 
+// export type ChildrenProps = {
+//   commentId: number;
+//   content: string;
+//   myComment: boolean;
+//   nickName: string;
+//   parentId: number;
+//   updateDate: string;
+// };
+
 export type CommentListProps = {
   children?: CommentListProps[];
   commentId: number;
@@ -57,6 +68,7 @@ type ProfileProps = {
 };
 type CommunityDetailProps = {
   commentList: CommentListProps[];
+  commentsCount: number;
   content: string;
   createdDate: string;
   hit: number;
@@ -92,21 +104,33 @@ export default function detail(props: DetailProps) {
         handleAlertOpen(2000, "게시글 삭제가 실패했습니다", false);
       });
   };
+  const data = {
+    content,
+  };
+  // const addComment = useMutation((data) =>
+  //   axios.post(
+  //     `${ENDPOINT_API}/invest/community-comments/${communityId}/comment`,
+  //     data
+  //   )
+  // );
   const onSubmitComment = () => {
-    const data = {
-      //parentId는 어떤거 보내야하는지 확인
-      content,
-    };
-    axios
-      .post(`${ENDPOINT_API}/invest/community/${communityId}/content`, data)
-      .then((res) => {
-        console.log(res);
-        handleAlertOpen(2000, "댓글이 등록되었습니다", true);
-      })
-      .catch((err) => {
-        console.log(err);
-        handleAlertOpen(2000, "댓글 등록이 실패했습니다.", false);
-      });
+    if (!content) {
+      handleAlertOpen(2000, "빈칸을 작성해주세요.", false);
+    } else {
+      axios
+        .post(
+          `${ENDPOINT_API}/invest/community-comments/${communityId}/comment`,
+          data
+        )
+        .then((res) => {
+          console.log(res);
+          handleAlertOpen(2000, "댓글이 등록되었습니다", true);
+        })
+        .catch((err) => {
+          console.log(err);
+          handleAlertOpen(2000, "댓글 등록이 실패했습니다.", false);
+        });
+    }
   };
 
   return (
@@ -175,7 +199,9 @@ export default function detail(props: DetailProps) {
                     font-size: 0.8rem;
                   `}
                 >
-                  {CommentRequest.createdDate.substring(0, 10)}
+                  {CommentRequest.createdDate.substring(0, 10) +
+                    " " +
+                    CommentRequest.createdDate.substring(11, 19)}
                 </Text>
               </div>
               <Text
@@ -244,7 +270,7 @@ export default function detail(props: DetailProps) {
               margin-right: 0.5rem;
             `}
           />
-          댓글 {CommentRequest.commentList.length}
+          댓글 {CommentRequest.commentsCount}
         </Text>
         <LabelInput
           css={css`
@@ -271,77 +297,26 @@ export default function detail(props: DetailProps) {
           width: 100%;
         `}
       />
-      {CommentRequest.commentList.map((comment, i) => (
+      {CommentRequest.commentList.map((comment: CommentListProps) => (
         <>
-          <div
-            css={css`
-              width: 100%;
-              display: flex;
-              flex-direction: row;
-              justify-content: space-between;
-              align-items: center;
-              padding: 0 2rem;
-              box-sizing: border-box;
-            `}
-            key={i}
-          >
-            <div
-              css={css`
-                display: flex;
-                flex-direction: column;
-              `}
-            >
-              <Text
-                as="h1"
-                css={css`
-                  font-size: 1.5rem;
-                `}
-              >
-                {comment.nickName}
-              </Text>
-              <Text
-                as="p"
-                css={css`
-                  font-size: 0.8rem;
-                  color: ${theme.color.text.hover};
-                `}
-              >
-                {comment.updateDate.substring(0, 10)}
-              </Text>
-            </div>
-
-            <Text>{comment.content}</Text>
-            {comment.nickName !== ProfileRequest.nickName ? (
-              <Text
-                css={css`
-                  color: ${theme.color.text.sub};
-                  &:hover {
-                    color: ${theme.color.text.hover};
-                    cursor: pointer;
-                  }
-                `}
-              >
-                댓글작성
-              </Text>
-            ) : (
-              <>
-                <Button
-                  css={css`
-                    margin-right: 1rem;
-                  `}
-                >
-                  수정
-                </Button>
-                <Button>삭제</Button>
-              </>
-            )}
-          </div>
-          <hr
-            css={css`
-              color: ${theme.color.text.hover};
-              width: 100%;
-            `}
+          <Comment
+            comment={comment}
+            profileNickname={ProfileRequest.nickName}
+            communityId={communityId}
+            key={comment.commentId}
+            type="parent"
           />
+          {comment.children?.map((child: CommentListProps) => (
+            <>
+              <Comment
+                comment={child}
+                communityId={communityId}
+                profileNickname={ProfileRequest.nickName}
+                key={child.commentId}
+                type="child"
+              />
+            </>
+          ))}
         </>
       ))}
     </Grid>
@@ -373,3 +348,5 @@ const CommentWriteWrapper = styled.div`
   flex-direction: column;
   padding-top: 3rem;
 `;
+
+const ParentComment = styled.div``;
