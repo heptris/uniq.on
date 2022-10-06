@@ -53,11 +53,20 @@ public class StartupCommunityService {
 
     public void communityModify(Long startupId, Long communityId, StartupCommunityRequestModifyDto requestDto){
         StartupCommunity startupCommunity = startupCommunityRepository.findById(communityId).orElseThrow(() -> new CustomException(COMMUNITY_NOT_FOUND));
-        startupCommunity.changePost(requestDto.getTitle(), requestDto.getContent());
+        if(startupCommunity.getStartup().getId() == startupId){
+            startupCommunity.changePost(requestDto.getTitle(), requestDto.getContent());
+        } else {
+            throw new CustomException(COMMUNITY_NOT_FOUND);
+        }
     }
 
     public void communityDelete(Long startupId, Long communityId){
-        startupCommunityRepository.deleteById(communityId);
+        StartupCommunity startupCommunity = startupCommunityRepository.findById(communityId).orElseThrow(() -> new CustomException(COMMUNITY_NOT_FOUND));
+        if(startupCommunity.getStartup().getId() == startupId){
+            startupCommunityRepository.deleteById(communityId);
+        } else {
+            throw new CustomException(COMMUNITY_NOT_FOUND);
+        }
     }
 
     public StartupCommunityResponseDetailDto communityDetail(Long communityId){

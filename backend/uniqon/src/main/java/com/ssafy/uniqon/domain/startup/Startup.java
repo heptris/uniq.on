@@ -63,6 +63,11 @@ public class Startup extends BaseEntity {
 
     private String rejectReason;
 
+    private String tokenURI;
+
+    @Lob
+    private String metadata;
+
     @Enumerated(EnumType.STRING)
     private EnrollStatus enrollStatus;
 
