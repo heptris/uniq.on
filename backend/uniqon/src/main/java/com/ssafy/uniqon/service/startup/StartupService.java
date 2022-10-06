@@ -137,14 +137,18 @@ public class StartupService {
         }
 
         if (road_map != null) {
-            try {
-                awsS3 = awsS3Service.upload(road_map, "startup");
-            }catch (IOException e){
-                throw new CustomException(FILE_UPLOAD_ERROR);
+//            try {
+//                awsS3 = awsS3Service.upload(road_map, "startup");
+//            }catch (IOException e){
+//                throw new CustomException(FILE_UPLOAD_ERROR);
+//            }
+//
+//            String roadMapUrl = awsS3.getPath();
+//            savedStartup.changeRoadMap(roadMapUrl);
+            if("application/pdf".equals(road_map.getContentType())) {
+                String imgUrl = awsS3Service.pdfToImg(road_map);
+                savedStartup.changeRoadMap(imgUrl);
             }
-
-            String roadMapUrl = awsS3.getPath();
-            savedStartup.changeRoadMap(roadMapUrl);
         }
         return savedStartup.getId();
     }
