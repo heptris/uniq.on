@@ -2,7 +2,6 @@ package com.ssafy.uniqon.controller.startup.community;
 
 import com.ssafy.uniqon.config.SecurityConfig;
 import com.ssafy.uniqon.controller.RestDocsTestSupport;
-import com.ssafy.uniqon.controller.startup.invest.StartupInvestController;
 import com.ssafy.uniqon.dto.startup.community.*;
 import com.ssafy.uniqon.service.startup.community.StartupCommunityService;
 import org.junit.jupiter.api.DisplayName;
@@ -12,11 +11,13 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
 
-import static org.springframework.restdocs.request.RequestDocumentation.*;
-
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.payload.JsonFieldType;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
@@ -24,7 +25,6 @@ import java.util.List;
 import static com.ssafy.uniqon.config.RestDocsConfig.field;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
@@ -43,31 +43,31 @@ class StartupCommunityControllerTest extends RestDocsTestSupport {
     @MockBean
     private StartupCommunityService startupCommunityService;
 
-    @DisplayName(value = "스타트업 커뮤니티 조회")
-    @Test
-    public void 스타트업_커뮤니티_조회() throws Exception {
-
-
-        StartupCommunityResponseListDto startupCommunityResponseListDto = new StartupCommunityResponseListDto(
-                1L, "startupName", "title", "nickName", new Integer(2), new Integer(10), LocalDateTime.now()
-        );
-        StartupCommunityResponseListDto startupCommunityResponseListDto2 = new StartupCommunityResponseListDto(
-                2L, "startupName2", "title", "nickName", new Integer(2), new Integer(10), LocalDateTime.now()
-        );
-        List<StartupCommunityResponseListDto> startupCommunityResponseListDtos = Arrays.asList(startupCommunityResponseListDto, startupCommunityResponseListDto2);
-
-        given(startupCommunityService.communityList(any())).willReturn(startupCommunityResponseListDtos);
-
-        mockMvc.perform(get("/app/invest/community/{startupId}", 1L)
-                        .header("Authorization", "Bearer " + accessToken)
-                        .contentType(MediaType.APPLICATION_JSON)
-                ).andExpect(status().isOk())
-                .andDo(
-                        restDocs.document(
-                                pathParameters(parameterWithName("startupId").description("startupID"))
-                        )
-                );
-    }
+//    @DisplayName(value = "스타트업 커뮤니티 조회")
+//    @Test
+//    public void 스타트업_커뮤니티_조회() throws Exception {
+//
+//
+//        StartupCommunityResponseListDto startupCommunityResponseListDto = new StartupCommunityResponseListDto(
+//                "title", "nickName", new Integer(10), LocalDateTime.now()
+//        );
+//        StartupCommunityResponseListDto startupCommunityResponseListDto2 = new StartupCommunityResponseListDto(
+//                "title2", "nickName2", new Integer(10), LocalDateTime.now()
+//        );
+//        List<StartupCommunityResponseListDto> startupCommunityResponseListDtos = Arrays.asList(startupCommunityResponseListDto, startupCommunityResponseListDto2);
+//
+//        given(startupCommunityService.communityList(any())).willReturn(startupCommunityResponseListDtos);
+//
+//        mockMvc.perform(get("/app/invest/community/{startupId}", 1L)
+//                        .header("Authorization", "Bearer " + accessToken)
+//                        .contentType(MediaType.APPLICATION_JSON)
+//                ).andExpect(status().isOk())
+//                .andDo(
+//                        restDocs.document(
+//                                pathParameters(parameterWithName("startupId").description("startupID"))
+//                        )
+//                );
+//    }
 
     @DisplayName(value = "스타트업 커뮤니티 등록")
     @Test
@@ -173,5 +173,25 @@ class StartupCommunityControllerTest extends RestDocsTestSupport {
                                 pathParameters(parameterWithName("communityId").description("community ID"))
                         )
                 );
+    }
+
+    @Test
+    public void httpTest(){
+        BufferedReader in = null;
+
+        try {
+            URL obj = new URL("https://ipfs.io/ipfs/bafyreienvkbfakzzpot56ae7mcipysyuuooygtwha4kqsduek2mxrczki4/metadata.json"); // 호출할 url
+            HttpURLConnection con = (HttpURLConnection)obj.openConnection();
+            con.setRequestMethod("GET");
+            in = new BufferedReader(new InputStreamReader(con.getInputStream(), "UTF-8"));
+            String line;
+            while((line = in.readLine()) != null) { // response를 차례대로 출력
+                System.out.println(line);
+            }
+        } catch(Exception e) {
+            e.printStackTrace();
+        } finally {
+            if(in != null) try { in.close(); } catch(Exception e) { e.printStackTrace(); }
+        }
     }
 }

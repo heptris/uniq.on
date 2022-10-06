@@ -63,6 +63,11 @@ public class Startup extends BaseEntity {
 
     private String rejectReason;
 
+    private String tokenUri;
+
+    @Lob
+    private String metadata;
+
     @Enumerated(EnumType.STRING)
     private EnrollStatus enrollStatus;
 
@@ -91,5 +96,9 @@ public class Startup extends BaseEntity {
 
     public void changePlanPaperImg(String imgUrl) {
         this.planPaperImg = imgUrl;
+    }
+
+    public void addMetadata(String metadata){
+        this.metadata = metadata;
     }
 }

@@ -24,4 +24,5 @@ public class StartupRequestDto {
     private Integer nftTargetCount; // 토큰 목표 발행 개수
     private Double nftPrice;    // NFT 1개당 가격
     private String nftDescription;
+    private String tokenURI; // ipfs uri : metadata
 }
