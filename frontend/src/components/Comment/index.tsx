@@ -1,5 +1,10 @@
 import { ENDPOINT_API } from "@/api/endpoints";
-import { commentDeleteMutation, useAlert } from "@/hooks";
+import {
+  commentCreateMutation,
+  commentDeleteMutation,
+  commentUpdateMutation,
+  useAlert,
+} from "@/hooks";
 import { CommentListProps } from "@/pages/community/detail/[communityId]/[startupId]";
 import { css, useTheme } from "@emotion/react";
 import styled from "@emotion/styled";
@@ -10,6 +15,7 @@ import Button from "../Button";
 import LabelInput from "../LabelInput";
 import Text from "../Text";
 import { QUERY_KEYS } from "@/api/query_key_schema";
+import InputComment from "./InputComment";
 const { MY_COMMUNITY_LIST } = QUERY_KEYS;
 
 type CommentProps = {
@@ -19,17 +25,23 @@ type CommentProps = {
   type: string;
 };
 export default function Comment(props: CommentProps) {
-  const { comment, profileNickname, type, communityId } = props;
-  console.log(comment);
-  const client = useQueryClient();
-  const { mutate: mutateDeleteComment } = commentDeleteMutation();
-  const [open, setOpen] = useState(false);
-  const [content, setContent] = useState(comment.content);
-  const openToggleHandler = () => {
-    setOpen((open) => !open);
-  };
   const theme = useTheme();
+  const client = useQueryClient();
   const { handleAlertOpen } = useAlert();
+  const { comment, profileNickname, type, communityId } = props;
+  const { mutate: mutateDeleteComment } = commentDeleteMutation();
+  const { mutate: mutateUpdateComment } = commentUpdateMutation();
+  const { mutate: mutateCreateComment } = commentCreateMutation();
+  const [openWrite, setOpenWrite] = useState(false);
+  const [openUpdate, setOpenUpdate] = useState(false);
+  const [updateContent, setUpdateContent] = useState(comment.content);
+  const [content, setContent] = useState("");
+  const openWriteHandler = () => {
+    setOpenWrite((openWrite) => !openWrite);
+  };
+  const openUpdateHandler = () => {
+    setOpenUpdate((openUpdate) => !openUpdate);
+  };
 
   const onDeleteHandler = () => {
     const commentId = comment.commentId;
@@ -43,35 +55,39 @@ export default function Comment(props: CommentProps) {
         onSettled: () => client.invalidateQueries([MY_COMMUNITY_LIST]),
       }
     );
-    // axios
-    //   .delete(
-    //     `${ENDPOINT_API}/invest/community-comments/${communityId}/${comment.commentId}`
-    //   )
-    //   .then((res) => {
-    //     console.log(res);
-    //     handleAlertOpen(2000, "댓글 삭제가 완료되었습니다", true);
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //     handleAlertOpen(2000, "댓글 삭제가 실패했습니다", false);
-    //   });
   };
-  const openCreateHandler = () => {
+  const onSubmitWrite = () => {
     const data = { content, parentId: comment.commentId };
-    console.log(data);
-    axios
-      .post(
-        `${ENDPOINT_API}/invest/community-comments/${communityId}/comment`,
-        data
-      )
-      .then((res) => {
-        console.log(res);
-        handleAlertOpen(2000, "댓글이 등록되었습니다", true);
-      })
-      .catch((err) => {
-        console.log(err);
-        handleAlertOpen(2000, "댓글 등록이 실패했습니다.", false);
-      });
+    mutateCreateComment(
+      { communityId, data },
+      {
+        onSuccess: () => {
+          handleAlertOpen(2000, "댓글이 등록되었습니다", true);
+          openWriteHandler();
+          setContent("");
+        },
+        onError: () =>
+          handleAlertOpen(2000, "댓글 등록이 실패했습니다.", false),
+        onSettled: () => client.invalidateQueries([MY_COMMUNITY_LIST]),
+      }
+    );
+  };
+
+  const onSubmitUpdate = () => {
+    const commentId = comment.commentId;
+    const data = { content: updateContent };
+    mutateUpdateComment(
+      { commentId, communityId, data },
+      {
+        onSuccess: () => {
+          handleAlertOpen(2000, "댓글 수정이 완료되었습니다", true);
+          openUpdateHandler();
+        },
+        onError: () =>
+          handleAlertOpen(2000, "댓글 수정이 실패했습니다.", false),
+        onSettled: () => client.invalidateQueries([MY_COMMUNITY_LIST]),
+      }
+    );
   };
   return (
     <ParentComment>
@@ -114,7 +130,7 @@ export default function Comment(props: CommentProps) {
 
         <Text>{comment.content}</Text>
         <Text
-          onClick={openToggleHandler}
+          onClick={openWriteHandler}
           css={css`
             color: ${theme.color.text.sub};
             &:hover {
@@ -123,12 +139,12 @@ export default function Comment(props: CommentProps) {
             }
           `}
         >
-          {!open && type === "parent" && "댓글작성"}
+          {!openWrite && type === "parent" && !openUpdate && "댓글작성"}
         </Text>
-        {comment.nickName === profileNickname && (
+        {comment.nickName === profileNickname && !openWrite && !openUpdate && (
           <div>
             <Button
-              onClick={openToggleHandler}
+              onClick={openUpdateHandler}
               css={css`
                 margin-right: 0.5rem;
               `}
@@ -145,45 +161,28 @@ export default function Comment(props: CommentProps) {
           width: 100%;
         `}
       />
-      {open && (
-        <div
-          css={css`
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            ${type === "child" ? `padding-left:6rem` : `padding-left:0rem`}
-          `}
-        >
-          <LabelInput
-            value={content}
-            css={css`
-              width: 100%;
-              height: 5rem;
-            `}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              setContent(e.target.value)
-            }
-          />
-          <span
-            css={css`
-              margin-top: 0.5rem;
-              align-self: flex-end;
-            `}
-          >
-            <Button
-              onClick={openCreateHandler}
-              type="blue"
-              css={css`
-                margin-right: 0.5rem;
-              `}
-            >
-              등록
-            </Button>
-            <Button type="blue" onClick={openToggleHandler}>
-              취소
-            </Button>
-          </span>
-        </div>
+      {openWrite && (
+        <InputComment
+          type={type}
+          content={content}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            setContent(e.target.value)
+          }
+          onSubmitHandler={onSubmitWrite}
+          openHandler={openWriteHandler}
+        />
+      )}
+      {openUpdate && (
+        <InputComment
+          type={type}
+          update="수정"
+          content={updateContent}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            setUpdateContent(e.target.value)
+          }
+          onSubmitHandler={onSubmitUpdate}
+          openHandler={openUpdateHandler}
+        />
       )}
     </ParentComment>
   );
