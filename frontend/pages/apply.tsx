@@ -139,10 +139,12 @@ export default function apply() {
         const url = "https://ipfs.io/ipfs/" + token.url.split("://")[1];
         // console.log(dueDate); // 2022-10-07T23:59:59.999Z
         let [date, time] = dueDate.split("T");
-        const tmp = Date().split(" ");
+        const dt = new Date();
+        dt.setMinutes(dt.getMinutes() + 2);
+        const tmp = dt.toString().split(" ");
         time = tmp[tmp.length - 4];
-        const [hh, mm, ss] = time.split(":");
-        const newDueDate = date + `T${hh}:${parseInt(mm) + 2}:${ss}.999Z`;
+
+        const newDueDate = date + `T${time}.999Z`;
 
         const data = {
           title,
@@ -233,12 +235,24 @@ export default function apply() {
           />
           <FileUpload
             type="pdf"
-            text="투자 보상 로드맵 (png, jpg, gif)"
+            text="투자 보상 로드맵 (pdf, 최대 5MB)"
             onFileSelectSuccess={(file: any) =>
               setForm({ ...form, roadMapFile: file })
             }
             onFileSelectError={({ error }) => alert(error)}
           />
+          <Text
+            css={css`
+              align-self: flex-start;
+            `}
+          >
+            <LoadmapLink
+              href="https://themetakongz.com/kr.html#sec_roadmap"
+              target="_blank"
+            >
+              투자 보상 로드맵 예시
+            </LoadmapLink>
+          </Text>
           <Button css={ButtonStyle} onClick={onFirstNextHandler}>
             다음단계
           </Button>
@@ -299,18 +313,6 @@ export default function apply() {
             onFileSelectError={({ error }) => alert(error)}
           />
 
-          <Text
-            css={css`
-              align-self: flex-start;
-            `}
-          >
-            <LoadmapLink
-              href="https://themetakongz.com/kr.html#sec_roadmap"
-              target="_blank"
-            >
-              투자 보상 로드맵 예시
-            </LoadmapLink>
-          </Text>
           <Button css={ButtonStyle} onClick={onSecondNextHandler}>
             다음단계
           </Button>

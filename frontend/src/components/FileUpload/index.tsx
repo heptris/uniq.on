@@ -101,6 +101,7 @@ const FileUploadBtn = styled.button`
   border: 0;
   border-radius: 8px;
   background-color: ${({ theme }) => theme.color.background.item};
+  transition: box-shadow 0.3s ease 0s;
 
   &:hover {
     cursor: pointer;
