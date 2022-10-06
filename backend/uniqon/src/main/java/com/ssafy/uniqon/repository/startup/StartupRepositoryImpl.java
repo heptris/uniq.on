@@ -50,6 +50,7 @@ public class StartupRepositoryImpl implements StartupRepositoryCustom{
                         startupNameEq(condition.getStartupName()))
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
+                .orderBy(startup.id.desc())
                 .fetch();
 
         long total = queryFactory

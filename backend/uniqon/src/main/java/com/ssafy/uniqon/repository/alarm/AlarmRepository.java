@@ -7,8 +7,8 @@ import java.util.List;
 
 public interface AlarmRepository extends JpaRepository<Alarm, Long> {
 
-    List<Alarm> findAllByMemberId(Long memberId);
+    List<Alarm> findAllByMemberIdOrderByIdDesc(Long memberId);
 
-    List<Alarm> findAllByMemberIdAndIsRead(Long memberId, boolean isRead);
+    List<Alarm> findAllByMemberIdAndIsReadOrderByIdDesc(Long memberId, boolean isRead);
 
 }
