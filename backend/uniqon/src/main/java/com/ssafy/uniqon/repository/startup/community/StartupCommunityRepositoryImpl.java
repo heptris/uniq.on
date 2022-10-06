@@ -35,6 +35,7 @@ public class StartupCommunityRepositoryImpl implements StartupCommunityRepositor
                         startupCommunity.title,
                         startupCommunity.content,
                         startupCommunity.member.nickname,
+                        startupCommunity.startup.startupName,
                         startupCommunity.hit,
                         startupCommunity.createdDate
                 ))
