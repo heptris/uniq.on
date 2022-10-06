@@ -36,7 +36,7 @@ export type IR = {
 };
 
 export type NFTItem = {
-  nftTargetCount: number;
+  nftTargetCount?: number;
   nftReserveCount: number;
   nftDescription: string;
   startupId: number;
