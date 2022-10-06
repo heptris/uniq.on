@@ -133,6 +133,7 @@ class StartupControllerTest extends RestDocsTestSupport {
                 .title("title")
                 .nftDescription("nft description")
                 .nftTargetCount(10)
+                .tokenURI("tokenURI")
                 .nftPrice(new Double(2))
                 .build();
         String requestDtoJson = objectMapper.writeValueAsString(startupRequestDto);
@@ -174,7 +175,8 @@ class StartupControllerTest extends RestDocsTestSupport {
                                         fieldWithPath("title").description("제목").attributes(field("constraints", "길이 30자 이하")),
                                         fieldWithPath("nftTargetCount").description("목표 발행 개수").attributes(field("constraints", "")),
                                         fieldWithPath("nftPrice").description("NFT 1개당 가격").attributes(field("constraints", "")),
-                                        fieldWithPath("nftDescription").description("NFT 간단한 설명").attributes(field("constraints", "길이 50자 이하"))
+                                        fieldWithPath("nftDescription").description("NFT 간단한 설명").attributes(field("constraints", "길이 50자 이하")),
+                                        fieldWithPath("tokenURI").description("tokenURI").attributes(field("constraints", ""))
                                 )
 //                                responseFields(
 //                                        fieldWithPath("status").description("status"),
@@ -196,6 +198,7 @@ class StartupControllerTest extends RestDocsTestSupport {
                 .title("title")
                 .nftDescription("nft description")
                 .nftTargetCount(10)
+                .tokenURI("tokenURI")
                 .nftPrice(new Double(2))
                 .build();
         String requestDtoJson = objectMapper.writeValueAsString(startupRequestDto);
@@ -240,7 +243,8 @@ class StartupControllerTest extends RestDocsTestSupport {
                                         fieldWithPath("title").description("제목").attributes(field("constraints", "길이 30자 이하")),
                                         fieldWithPath("nftTargetCount").description("목표 발행 개수").attributes(field("constraints", "")),
                                         fieldWithPath("nftPrice").description("NFT 1개당 가격").attributes(field("constraints", "")),
-                                        fieldWithPath("nftDescription").description("NFT 간단한 설명").attributes(field("constraints", "길이 50자 이하"))
+                                        fieldWithPath("nftDescription").description("NFT 간단한 설명").attributes(field("constraints", "길이 50자 이하")),
+                                        fieldWithPath("tokenURI").description("tokenURI").attributes(field("constraints", ""))
                                 )
 //                                responseFields(
 //                                        fieldWithPath("status").description("status"),

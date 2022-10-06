@@ -16,7 +16,6 @@ import java.util.List;
 @Data
 public class StartupRequestDto {
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH")
     private LocalDateTime dueDate; // 투자 마감일
     private String discordUrl;
     private String description; // 회사 소개글

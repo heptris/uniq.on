@@ -33,6 +33,10 @@ public class Alarm extends BaseEntity {
 
     private Integer tokenId;
 
+    private Double nftPrice;
+
+    private String tokenURI;
+
     public void changeIsRead(){
         this.isRead = true;
     }

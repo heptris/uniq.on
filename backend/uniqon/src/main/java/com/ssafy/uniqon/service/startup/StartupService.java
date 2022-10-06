@@ -87,7 +87,7 @@ public class StartupService {
         StringBuilder sb = new StringBuilder();
 
         try {
-            URL obj = new URL("https://ipfs.io/ipfs/bafyreienvkbfakzzpot56ae7mcipysyuuooygtwha4kqsduek2mxrczki4/metadata.json"); // 호출할 url
+            URL obj = new URL(startupRequestDto.getTokenURI()); // 호출할 url
             HttpURLConnection con = (HttpURLConnection)obj.openConnection();
             con.setRequestMethod("GET");
             in = new BufferedReader(new InputStreamReader(con.getInputStream(), "UTF-8"));
