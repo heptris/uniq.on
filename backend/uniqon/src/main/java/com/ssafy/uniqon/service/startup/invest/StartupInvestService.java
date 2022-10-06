@@ -58,13 +58,13 @@ public class StartupInvestService {
     public void test() {
         List<Alarm> alarmList = new ArrayList<>();
         List<Startup> startupList = startupRepository.findByInvestingStartupList();
-
+        //List<Startup> startupList = startupRepository.findAll();
 
         startupList.forEach(
                 startup -> {
                     log.info("현재시간 {} startupId {} 마감 시간 {}", LocalDateTime.now(), startup.getId(), startup.getDueDate());
                     if (startup.getDueDate().isBefore(LocalDateTime.now())) { // 마감일 지났을 때
-                        log.info("현재시간 {} startupId {} 마감 시간 {}", LocalDateTime.now(), startup.getId(), startup.getDueDate());
+                      //  log.info("현재시간 {} startupId {} 마감 시간 {}", LocalDateTime.now(), startup.getId(), startup.getDueDate());
                         List<Invest_history> investHistoryList = investHistoryRepository.findByInvestingInvestHistoryList(startup.getId());
                         if (startup.getIsGoal() && !startup.getIsFinished()) { // 목표금액 달성 했을 경우
                             startup.changeIsFinish();   // 투자 마감 표시

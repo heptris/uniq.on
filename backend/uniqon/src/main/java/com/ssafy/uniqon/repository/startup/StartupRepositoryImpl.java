@@ -19,6 +19,7 @@ import javax.persistence.EntityManager;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.ssafy.uniqon.domain.invest.InvestStatus.*;
 import static com.ssafy.uniqon.domain.invest.QInvest_history.*;
 import static com.ssafy.uniqon.domain.member.QMember.member;
 import static com.ssafy.uniqon.domain.startup.QStartup.startup;
@@ -64,8 +65,8 @@ public class StartupRepositoryImpl implements StartupRepositoryCustom{
     @Override
     public List<Startup> findByInvestingStartupList() {
         return queryFactory.selectFrom(startup)
-                .innerJoin(startup.investHistoryList, invest_history)
-                .where(invest_history.investStatus.eq(InvestStatus.INVESTING))
+                .leftJoin(startup.investHistoryList, invest_history)
+                .where(invest_history.investStatus.isNull().or(invest_history.investStatus.eq(INVESTING)))
                 .fetch().stream().distinct().collect(Collectors.toList());
     }
 

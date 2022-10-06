@@ -33,6 +33,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.*;
@@ -53,5 +56,13 @@ class StartupServiceTest {
         System.out.println(startupDetailResponseDto);
     }
 
-
+    @Test
+    public void test() {
+        List<Object> objects = new ArrayList<>();
+        objects.forEach(
+                o -> {
+                    System.out.println(o);
+                }
+        );
+    }
 }
