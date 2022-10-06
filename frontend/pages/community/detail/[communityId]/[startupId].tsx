@@ -6,25 +6,27 @@ import Comment from "@/components/Comment";
 import Grid from "@/components/Grid";
 import LabelInput from "@/components/LabelInput";
 import Text from "@/components/Text";
-import { useAlert } from "@/hooks";
+import { commentCreateMutation, useAlert, useCommunity } from "@/hooks";
 import { minDesktopWidth } from "@/styles/utils";
 import { css, useTheme } from "@emotion/react";
 import styled from "@emotion/styled";
 import { faCommentDots, faEye } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { GetServerSideProps } from "next";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
+import { QUERY_KEYS } from "@/api/query_key_schema";
+const { MY_COMMUNITY_LIST } = QUERY_KEYS;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { communityId, startupId } = context.query;
   const config = {
     headers: { authorization: `Bearer ${context.req.cookies[ACCESS_TOKEN]}` },
   };
-  const CommentRequest = await axios
+  const CommunityList = await axios
     .get(`${ENDPOINT_API}/invest/community/detail/${communityId}`, config)
     .then(({ data }) => data.data);
   const ProfileRequest = await axios
@@ -32,22 +34,13 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     .then(({ data }) => data.data);
   return {
     props: {
-      CommentRequest,
+      CommunityList,
       communityId,
       startupId,
       ProfileRequest,
     },
   };
 };
-
-// export type ChildrenProps = {
-//   commentId: number;
-//   content: string;
-//   myComment: boolean;
-//   nickName: string;
-//   parentId: number;
-//   updateDate: string;
-// };
 
 export type CommentListProps = {
   children?: CommentListProps[];
@@ -66,10 +59,11 @@ type ProfileProps = {
   profileImage: string;
   memberType: string;
 };
-type CommunityDetailProps = {
+export type CommunityDetailProps = {
   commentList: CommentListProps[];
   commentsCount: number;
   content: string;
+  startupName: string;
   createdDate: string;
   hit: number;
   nickName: string;
@@ -77,19 +71,25 @@ type CommunityDetailProps = {
 };
 
 type DetailProps = {
-  CommentRequest: CommunityDetailProps;
+  CommunityList: CommunityDetailProps;
   ProfileRequest: ProfileProps;
   communityId: number;
   startupId: number;
 };
 
 export default function detail(props: DetailProps) {
+  const { CommunityList, ProfileRequest, communityId, startupId } = props;
+  const { data: communityList } = useCommunity({
+    communityList: CommunityList,
+    communityId,
+  });
+  const client = useQueryClient();
+  const { mutate: mutateCreateComment } = commentCreateMutation();
   const router = useRouter();
   const theme = useTheme();
   const { handleAlertOpen } = useAlert();
-  const { CommentRequest, ProfileRequest, communityId, startupId } = props;
   const [content, setContent] = useState("");
-  console.log(CommentRequest);
+  console.log(CommunityList);
   console.log(ProfileRequest);
   const onDeleteHandler = async () => {
     await axios
@@ -97,7 +97,7 @@ export default function detail(props: DetailProps) {
       .then((res) => {
         console.log(res);
         handleAlertOpen(2000, "게시글 삭제가 완료되었습니다", true);
-        // router.push(`/community/${startupId}`); //startupName 필요
+        router.push(`/community/${startupId}/${CommunityList.startupName}`);
       })
       .catch((err) => {
         console.log(err);
@@ -107,29 +107,22 @@ export default function detail(props: DetailProps) {
   const data = {
     content,
   };
-  // const addComment = useMutation((data) =>
-  //   axios.post(
-  //     `${ENDPOINT_API}/invest/community-comments/${communityId}/comment`,
-  //     data
-  //   )
-  // );
   const onSubmitComment = () => {
     if (!content) {
       handleAlertOpen(2000, "빈칸을 작성해주세요.", false);
     } else {
-      axios
-        .post(
-          `${ENDPOINT_API}/invest/community-comments/${communityId}/comment`,
-          data
-        )
-        .then((res) => {
-          console.log(res);
-          handleAlertOpen(2000, "댓글이 등록되었습니다", true);
-        })
-        .catch((err) => {
-          console.log(err);
-          handleAlertOpen(2000, "댓글 등록이 실패했습니다.", false);
-        });
+      mutateCreateComment(
+        { communityId, data },
+        {
+          onSuccess: () => {
+            handleAlertOpen(2000, "댓글이 등록되었습니다", true);
+            setContent("");
+          },
+          onError: () =>
+            handleAlertOpen(2000, "댓글 등록이 실패했습니다.", false),
+          onSettled: () => client.invalidateQueries([MY_COMMUNITY_LIST]),
+        }
+      );
     }
   };
 
@@ -169,7 +162,7 @@ export default function detail(props: DetailProps) {
                 margin-bottom: 1rem;
               `}
             >
-              {CommentRequest.title}
+              {communityList.title}
             </Text>
             <div
               css={css`
@@ -191,7 +184,7 @@ export default function detail(props: DetailProps) {
                     font-size: 1.5rem;
                   `}
                 >
-                  {CommentRequest.nickName}
+                  {communityList.nickName}
                 </Text>
                 <Text
                   as="h2"
@@ -199,9 +192,9 @@ export default function detail(props: DetailProps) {
                     font-size: 0.8rem;
                   `}
                 >
-                  {CommentRequest.createdDate.substring(0, 10) +
+                  {communityList.createdDate.substring(0, 10) +
                     " " +
-                    CommentRequest.createdDate.substring(11, 19)}
+                    communityList.createdDate.substring(11, 19)}
                 </Text>
               </div>
               <Text
@@ -219,7 +212,7 @@ export default function detail(props: DetailProps) {
                     margin-right: 0.5rem;
                   `}
                 />
-                조회수 {CommentRequest.hit}
+                조회수 {communityList.hit}
               </Text>
             </div>
           </div>
@@ -230,10 +223,10 @@ export default function detail(props: DetailProps) {
               margin: 2rem 0;
             `}
           />
-          <Text>{CommentRequest.content}</Text>
+          <Text>{communityList.content}</Text>
         </CardContent>
       </Card>
-      {ProfileRequest.nickName === CommentRequest.nickName && (
+      {ProfileRequest.nickName === communityList.nickName && (
         <div
           css={css`
             align-self: flex-end;
@@ -270,9 +263,10 @@ export default function detail(props: DetailProps) {
               margin-right: 0.5rem;
             `}
           />
-          댓글 {CommentRequest.commentsCount}
+          댓글 {communityList.commentsCount}
         </Text>
         <LabelInput
+          value={content}
           css={css`
             width: 100%;
             height: 10rem;
@@ -297,7 +291,7 @@ export default function detail(props: DetailProps) {
           width: 100%;
         `}
       />
-      {CommentRequest.commentList.map((comment: CommentListProps) => (
+      {communityList.commentList.map((comment: CommentListProps) => (
         <>
           <Comment
             comment={comment}
