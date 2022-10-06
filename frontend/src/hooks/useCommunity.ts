@@ -26,7 +26,7 @@ const useCommunity = ({
 
 const commentDeleteMutation = () =>
   useMutation(
-    ({ communityId, commentId }: { commentId: number; communityId: number }) =>
+    ({ communityId, commentId }: { communityId: number; commentId: number }) =>
       axios.delete(
         `${ENDPOINT_API}/invest/community-comments/${communityId}/${commentId}`
       )
@@ -38,9 +38,27 @@ const commentCreateMutation = () =>
       data
     )
   );
+const commentUpdateMutation = () =>
+  useMutation(
+    ({
+      communityId,
+      commentId,
+      data,
+    }: {
+      communityId: number;
+      commentId: number;
+      data: any;
+    }) =>
+      axios.put(
+        `${ENDPOINT_API}/invest/community-comments/${communityId}/${commentId}`,
+        data
+      )
+  );
+
 export {
   useCommunity,
   getCommunityList,
   commentDeleteMutation,
   commentCreateMutation,
+  commentUpdateMutation,
 };
