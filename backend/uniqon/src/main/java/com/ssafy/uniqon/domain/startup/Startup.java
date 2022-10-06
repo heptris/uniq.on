@@ -63,7 +63,7 @@ public class Startup extends BaseEntity {
 
     private String rejectReason;
 
-    private String tokenURI;
+    private String tokenUri;
 
     @Lob
     private String metadata;
@@ -96,5 +96,9 @@ public class Startup extends BaseEntity {
 
     public void changePlanPaperImg(String imgUrl) {
         this.planPaperImg = imgUrl;
+    }
+
+    public void addMetadata(String metadata){
+        this.metadata = metadata;
     }
 }

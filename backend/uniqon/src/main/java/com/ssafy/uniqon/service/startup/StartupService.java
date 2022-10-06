@@ -29,8 +29,12 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -74,9 +78,30 @@ public class StartupService {
                 .nftTargetCount(startupRequestDto.getNftTargetCount())
                 .nftDescription(startupRequestDto.getNftDescription())
                 .isFinished(false)
+                .tokenUri(startupRequestDto.getTokenURI())
                 .enrollStatus(PENDING)
                 .isGoal(false)
                 .build();
+
+        BufferedReader in = null;
+        StringBuilder sb = new StringBuilder();
+
+        try {
+            URL obj = new URL("https://ipfs.io/ipfs/bafyreienvkbfakzzpot56ae7mcipysyuuooygtwha4kqsduek2mxrczki4/metadata.json"); // 호출할 url
+            HttpURLConnection con = (HttpURLConnection)obj.openConnection();
+            con.setRequestMethod("GET");
+            in = new BufferedReader(new InputStreamReader(con.getInputStream(), "UTF-8"));
+            String line;
+            while((line = in.readLine()) != null) { // response를 차례대로 출력
+                sb.append(line);
+            }
+        } catch(Exception e) {
+            e.printStackTrace();
+        } finally {
+            if(in != null) try { in.close(); } catch(Exception e) { e.printStackTrace(); }
+        }
+
+        startup.addMetadata(sb.toString());
 
         Startup savedStartup = startupRepository.save(startup);
         AwsS3 awsS3 = new AwsS3();
