@@ -34,7 +34,7 @@ public class AlarmService {
         List<AlarmDto> alarmDtoList = new ArrayList<>();
         for (Alarm alarm : allAlarmList) {
             alarmDtoList.add(new AlarmDto(alarm.getId(), alarm.getContent(), alarm.getIsRead(),alarm.getTokenId(), alarm.getInvestCount()
-            , alarm.getNftPrice()));
+            , alarm.getNftPrice(), alarm.getTokenURI()));
         }
 
         return alarmDtoList;
@@ -46,7 +46,7 @@ public class AlarmService {
         List<AlarmDto> alarmDtoList = new ArrayList<>();
         for (Alarm alarm : alarmList) {
             alarmDtoList.add(new AlarmDto(alarm.getId(), alarm.getContent(), alarm.getIsRead(),alarm.getTokenId(), alarm.getInvestCount()
-            , alarm.getNftPrice()));
+            , alarm.getNftPrice(), alarm.getTokenURI()));
         }
 
         return alarmDtoList;

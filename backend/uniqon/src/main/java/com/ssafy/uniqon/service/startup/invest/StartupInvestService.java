@@ -94,6 +94,7 @@ public class StartupInvestService {
                                     .investCount(startup.getNftReserveCount())
                                     .content(startup.getStartupName() + " 투자 유치에 성공했습니다. NFT 토큰을 발급해주세요")
                                     .nftPrice(startup.getNftPrice())
+                                    .tokenURI(startup.getTokenUri())
                                     .build();
                             alarmList.add(alarmToStartup);
 

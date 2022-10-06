@@ -24,4 +24,6 @@ public class AlarmDto {
 
     private Double nftPrice;
 
+    private String tokenURI;
+
 }
