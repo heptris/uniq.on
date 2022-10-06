@@ -61,6 +61,7 @@ public class MemberService {
         Member member = memberRepository.findById(memberId).orElseThrow(() -> new CustomException(MEMBER_NOT_FOUND));
 
         return MemberProfileDto.builder()
+                .memberId(memberId)
                 .walletAddress(member.getWalletAddress())
                 .nickName(member.getNickname())
                 .email(member.getEmail())
