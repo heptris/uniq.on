@@ -36,6 +36,7 @@ export type IR = {
 };
 
 export type NFTItem = {
+  nftTargetCount: number;
   nftReserveCount: number;
   nftDescription: string;
   startupId: number;
@@ -45,6 +46,7 @@ export type NFTItem = {
 };
 
 export type FAVItem = {
+  nftTargetCount: number;
   nftReserveCount: number;
   isFav: boolean;
   startupId: number;
@@ -56,6 +58,7 @@ export type FAVItem = {
 };
 
 export type RSRVItem = {
+  nftTargetCount: number;
   startupId: number;
   nftDescription: string;
   nftImage: string | StaticImageData;
@@ -65,6 +68,7 @@ export type RSRVItem = {
 };
 
 export type APPLYItem = {
+  nftTargetCount: number;
   nftReserveCount: number;
   nftDescription: string;
   startupId: number;

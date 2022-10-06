@@ -71,7 +71,7 @@ function NFTItemCard<T extends ElementType = "div">(
             font-weight: 600;
           `}
         >
-          {startupName} #{nftReserveCount}
+          {startupName} #{startupId}
         </Text>
         <Text
           role="corp-name"

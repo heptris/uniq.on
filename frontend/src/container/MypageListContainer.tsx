@@ -41,6 +41,7 @@ const MypageListContainer = ({
       {favs?.map((fav: FAVItem) => (
         <FAVItemCard
           key={fav.startupId}
+          progress={(fav.nftReserveCount / fav.nftTargetCount) * 100}
           nftReserveCount={fav.nftReserveCount}
           startupId={fav.startupId}
           isFav={fav.isFav}
@@ -57,7 +58,9 @@ const MypageListContainer = ({
       {rsrvs?.map((rsrv: RSRVItem) => (
         <RSRVItemCard
           key={rsrv.startupId}
+          progress={(rsrv.nftReserveCount / rsrv.nftTargetCount) * 100}
           nftImage={rsrv.nftImage}
+          startupId={rsrv.startupId}
           startupName={rsrv.startupName}
           nftPrice={rsrv.nftPrice}
           nftReserveCount={rsrv.nftReserveCount}

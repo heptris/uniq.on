@@ -41,6 +41,7 @@ function FAVItemCard<T extends ElementType>(
   ref: Ref<any>
 ) {
   const {
+    nftTargetCount,
     nftReserveCount,
     startupId,
     nftImage,
@@ -81,7 +82,7 @@ function FAVItemCard<T extends ElementType>(
   };
 
   return (
-    <Card style={{ height: "fit-content" }} ref={ref} {...rest}>
+    <Card ref={ref} {...rest}>
       <ImageContainer onClick={() => handleModalOpen(favItem)}>
         <Image
           src={nftImage}
@@ -100,7 +101,7 @@ function FAVItemCard<T extends ElementType>(
               font-weight: 600;
             `}
           >
-            {startupName} #{nftReserveCount}
+            {startupName} #{startupId}
           </Text>
           <Text
             as="h1"
@@ -111,7 +112,7 @@ function FAVItemCard<T extends ElementType>(
               margin-bottom: 0.5rem;
             `}
           >
-            {nftDescription}
+            {startupName}
           </Text>
           <Text
             as="div"
@@ -132,17 +133,6 @@ function FAVItemCard<T extends ElementType>(
               icon={faEthereum}
             />
             {nftPrice} {UNIQON_TOKEN}
-          </Text>
-          <Text
-            role="due-date"
-            css={css`
-              color: ${theme.color.text.sub};
-              font-weight: 600;
-              font-size: 0.8rem;
-              margin-bottom: 0.5rem;
-            `}
-          >
-            마감기한 : {dueDate}
           </Text>
           <Text
             role="status"
@@ -174,7 +164,7 @@ function FAVItemCard<T extends ElementType>(
             )}
           </Text>
         </InfoContainer>
-        <FavContainer onClick={handleNftFav}>
+        {/* <FavContainer onClick={handleNftFav}>
           <FontAwesomeIcon
             css={css`
               width: 1.5rem;
@@ -186,7 +176,7 @@ function FAVItemCard<T extends ElementType>(
             `}
             icon={faHeart}
           />
-        </FavContainer>
+        </FavContainer> */}
       </FavInfoContainer>
     </Card>
   );
@@ -195,7 +185,6 @@ const FavInfoContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  margin: 0.5rem;
 `;
 const InfoContainer = styled.div`
   padding: 0.5rem 1rem;
@@ -203,7 +192,6 @@ const InfoContainer = styled.div`
   flex-direction: column;
   justify-content: center;
 `;
-
 const FavContainer = styled.div`
   display: flex;
   justify-content: center;

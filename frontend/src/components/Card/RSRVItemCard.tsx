@@ -16,7 +16,7 @@ import { UNIQON_TOKEN } from "@/constants";
 
 type RSRVItemCardProps =
   | {
-      nftReserveCount?: number;
+      progress?: number;
     }
   | RSRVItem;
 
@@ -46,6 +46,8 @@ function RSRVItemCard<T extends ElementType = "div">(
     startupName,
     nftPrice,
     nftReserveCount,
+    nftTargetCount,
+    progress,
     ...rest
   } = props;
 
@@ -70,7 +72,7 @@ function RSRVItemCard<T extends ElementType = "div">(
             font-weight: 600;
           `}
         >
-          {startupName} #{nftReserveCount}
+          {startupName} #{startupId}
         </Text>
         <Text
           role="corp-name"
@@ -111,13 +113,13 @@ function RSRVItemCard<T extends ElementType = "div">(
             align-items: center;
           `}
         >
-          {nftReserveCount !== undefined && (
+          {progress !== undefined && (
             <>
               <ProgressBar
                 css={css`
                   margin-right: 5px;
                 `}
-                progress={nftReserveCount}
+                progress={progress}
                 type={"blue"}
               />
               <Text
@@ -126,7 +128,7 @@ function RSRVItemCard<T extends ElementType = "div">(
                   font-weight: 600;
                 `}
               >
-                {nftReserveCount}%
+                {progress}%
               </Text>
             </>
           )}

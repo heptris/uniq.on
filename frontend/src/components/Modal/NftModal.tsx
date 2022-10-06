@@ -21,10 +21,10 @@ export default function NftModal(props: NftModalType) {
       <Avatar
         image={modalContent.nftImage}
         css={css`
-          margin-left: 1vw;
           width: 6rem;
           height: 6rem;
           margin-bottom: 2rem;
+
           @media (${minTabletWidth}) {
             width: 10rem;
             height: 10rem;
@@ -35,7 +35,6 @@ export default function NftModal(props: NftModalType) {
         role="corp-name"
         css={css`
           font-weight: 600;
-          margin-bottom: 2rem;
         `}
       >
         {modalContent.startupName} #{modalContent.nftReserveCount}
@@ -79,7 +78,6 @@ const ModalWrapper = styled.div`
   justify-content: center;
   align-items: center;
 `;
-
 const ButtonWrapper = styled.div`
   width: 100%;
   display: flex;
