@@ -2,7 +2,7 @@ import axios from "axios";
 import { NextApiRequest, NextApiResponse } from "next";
 
 import { ENDPOINT_AUTH } from "@/api/endpoints";
-import { ACCESS_TOKEN, apiSessionStorage } from "@/api/utils";
+import { ACCESS_TOKEN, REFRESH_TOKEN } from "@/api/utils";
 
 import { setCookie } from "cookies-next";
 
@@ -24,8 +24,15 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       accessToken,
       accessTokenExpiresIn,
     };
-    apiSessionStorage.set(accessToken, refreshToken);
+
     setCookie(ACCESS_TOKEN, accessToken, {
+      req,
+      res,
+      httpOnly: true,
+      secure: true,
+      sameSite: "strict",
+    });
+    setCookie(REFRESH_TOKEN, refreshToken, {
       req,
       res,
       httpOnly: true,
@@ -55,11 +62,17 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       break;
     // 토큰 재발행 케이스
     case "GET":
+      const arr: [string, string][] | undefined = req.headers.cookie
+        ?.split(";")
+        .map((el) => {
+          const tmp = el.trim().split("=");
+          return [tmp[0], tmp[1]];
+        });
+
+      const cookieMap = new Map<string, unknown>(arr);
       const accessToken = req.headers.authorization?.split(" ")[1];
-
-      const refreshToken = apiSessionStorage.get(accessToken ?? "");
-      refreshToken && apiSessionStorage.delete(accessToken ?? "");
-
+      const refreshToken = cookieMap.get(REFRESH_TOKEN);
+      console.log(cookieMap);
       await axios
         .post(`${ENDPOINT_AUTH}/reissue`, {
           accessToken,
@@ -75,7 +88,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         .catch((e) => {
           const { response } = e;
           const { status, data } = response;
-          console.log(data);
+          console.log(status, data);
           res.status(status).json(data);
         });
       break;
