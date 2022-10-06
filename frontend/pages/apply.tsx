@@ -30,7 +30,7 @@ const initialApplyState = {
   discordUrl: "",
   businessPlanFile: null,
   roadMapFile: null,
-  nftTargetCount: 10,
+  nftTargetCount: 1,
   nftPrice: 0,
   nftDescription: "",
   nftImageFile: null,
@@ -107,7 +107,7 @@ export default function apply() {
   //3단계 정보
 
   const onSubmit = async () => {
-    console.log(form, axios.defaults.headers.common);
+    // console.log(form, axios.defaults.headers.common);
     if (!isChecked) {
       handleAlertOpen(2000, "개인정보 동의를 체크해주세요", false);
     } else {
@@ -117,19 +117,6 @@ export default function apply() {
       businessPlanFile && formData.append("plan_paper", businessPlanFile);
       nftImageFile && formData.append("nft_image", nftImageFile);
       roadMapFile && formData.append("road_map", roadMapFile);
-      const data = {
-        title,
-        dueDate,
-        description,
-        discordUrl,
-        nftTargetCount,
-        nftPrice,
-        nftDescription,
-      };
-      formData.append(
-        "startupRequestDto",
-        new Blob([JSON.stringify(data)], { type: "application/json" })
-      );
 
       const config = {
         headers: {
@@ -149,7 +136,20 @@ export default function apply() {
         handleAlertOpen(2000, "NFT 업로드 실패", false);
       } else {
         const url = "https://ipfs.io/ipfs/" + token.url.split("://")[1];
-        formData.append("tokenURI", url);
+        const data = {
+          title,
+          dueDate,
+          description,
+          discordUrl,
+          nftTargetCount,
+          nftPrice,
+          nftDescription,
+          tokenURI: url,
+        };
+        formData.append(
+          "startupRequestDto",
+          new Blob([JSON.stringify(data)], { type: "application/json" })
+        );
 
         axios
           .post(`${ENDPOINT_API}/invest/regist`, formData, config)
@@ -240,6 +240,7 @@ export default function apply() {
             }
             value={nftTargetCount}
           >
+            <option value="1">1</option>
             <option value="10">10</option>
             <option value="20">20</option>
             <option value="30">30</option>
