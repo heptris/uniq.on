@@ -49,7 +49,7 @@ function InvestmentDetail(props: IDProps) {
     nftReserveCount,
     nftTargetCount,
     planPaperImg,
-    roadmap,
+    roadMap,
     startupId,
     startupName,
   } = InvestmentRequest;
@@ -201,7 +201,7 @@ function InvestmentDetail(props: IDProps) {
 
           <Text as="h1">투자 보상 로드맵</Text>
           <ImageContainer>
-            <img src={roadmap} width={"100%"} />
+            <img src={roadMap} width={"100%"} />
           </ImageContainer>
 
           {/* <Text as="h1">Q&A</Text>

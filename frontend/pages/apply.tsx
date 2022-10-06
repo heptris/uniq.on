@@ -235,12 +235,24 @@ export default function apply() {
           />
           <FileUpload
             type="pdf"
-            text="투자 보상 로드맵 (png, jpg, gif)"
+            text="투자 보상 로드맵 (pdf, 최대 5MB)"
             onFileSelectSuccess={(file: any) =>
               setForm({ ...form, roadMapFile: file })
             }
             onFileSelectError={({ error }) => alert(error)}
           />
+          <Text
+            css={css`
+              align-self: flex-start;
+            `}
+          >
+            <LoadmapLink
+              href="https://themetakongz.com/kr.html#sec_roadmap"
+              target="_blank"
+            >
+              투자 보상 로드맵 예시
+            </LoadmapLink>
+          </Text>
           <Button css={ButtonStyle} onClick={onFirstNextHandler}>
             다음단계
           </Button>
@@ -301,18 +313,6 @@ export default function apply() {
             onFileSelectError={({ error }) => alert(error)}
           />
 
-          <Text
-            css={css`
-              align-self: flex-start;
-            `}
-          >
-            <LoadmapLink
-              href="https://themetakongz.com/kr.html#sec_roadmap"
-              target="_blank"
-            >
-              투자 보상 로드맵 예시
-            </LoadmapLink>
-          </Text>
           <Button css={ButtonStyle} onClick={onSecondNextHandler}>
             다음단계
           </Button>

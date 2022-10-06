@@ -23,7 +23,7 @@ export type IR = {
   nftPrice: number;
   dueDate: string;
   planPaperImg: string;
-  roadmap: string;
+  roadMap: string;
   nftImage: string | StaticImageData;
   nftDescription: string;
   isFinished: boolean;
