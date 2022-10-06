@@ -93,78 +93,78 @@ function FAVItemCard<T extends ElementType>(
           `}
         />
       </ImageContainer>
-      <FavInfoContainer>
-        <InfoContainer onClick={() => handleModalOpen(favItem)}>
-          <Text
-            role="corp-name"
+      {/* <FavInfoContainer> */}
+      <InfoContainer onClick={() => handleModalOpen(favItem)}>
+        <Text
+          role="corp-name"
+          css={css`
+            font-weight: 600;
+          `}
+        >
+          {startupName} #{startupId}
+        </Text>
+        <Text
+          as="h1"
+          role="token-name"
+          css={css`
+            color: ${theme.color.text.sub};
+            font-size: 0.7rem;
+            margin-bottom: 0.5rem;
+          `}
+        >
+          {startupName}
+        </Text>
+        <Text
+          as="div"
+          role="price"
+          css={css`
+            display: flex;
+            align-items: center;
+            font-weight: 500;
+            font-size: 0.8rem;
+            margin-bottom: 0.5rem;
+          `}
+        >
+          <FontAwesomeIcon
             css={css`
-              font-weight: 600;
+              width: 0.6rem;
+              margin-right: 0.5rem;
             `}
-          >
-            {startupName} #{startupId}
-          </Text>
-          <Text
-            as="h1"
-            role="token-name"
-            css={css`
-              color: ${theme.color.text.sub};
-              font-size: 0.7rem;
-              margin-bottom: 0.5rem;
-            `}
-          >
-            {startupName}
-          </Text>
-          <Text
-            as="div"
-            role="price"
-            css={css`
-              display: flex;
-              align-items: center;
-              font-weight: 500;
-              font-size: 0.8rem;
-              margin-bottom: 0.5rem;
-            `}
-          >
-            <FontAwesomeIcon
-              css={css`
-                width: 0.6rem;
-                margin-right: 0.5rem;
-              `}
-              icon={faEthereum}
-            />
-            {nftPrice} {UNIQON_TOKEN}
-          </Text>
-          <Text
-            role="status"
-            css={css`
-              font-size: 0.8rem;
-              display: flex;
-              justify-content: start;
-              align-items: center;
-            `}
-          >
-            {progress !== undefined && (
-              <>
-                <ProgressBar
-                  css={css`
-                    margin-right: 5px;
-                  `}
-                  progress={progress}
-                  type={"blue"}
-                />
-                <Text
-                  css={css`
-                    font-size: 0.7rem;
-                    font-weight: 600;
-                  `}
-                >
-                  {progress}%
-                </Text>
-              </>
-            )}
-          </Text>
-        </InfoContainer>
-        {/* <FavContainer onClick={handleNftFav}>
+            icon={faEthereum}
+          />
+          {nftPrice} {UNIQON_TOKEN}
+        </Text>
+        <Text
+          role="status"
+          css={css`
+            font-size: 0.8rem;
+            display: flex;
+            justify-content: start;
+            align-items: center;
+          `}
+        >
+          {progress !== undefined && (
+            <>
+              <ProgressBar
+                css={css`
+                  margin-right: 5px;
+                `}
+                progress={progress}
+                type={"blue"}
+              />
+              <Text
+                css={css`
+                  font-size: 0.7rem;
+                  font-weight: 600;
+                `}
+              >
+                {progress}%
+              </Text>
+            </>
+          )}
+        </Text>
+      </InfoContainer>
+      {/* <FavContainer onClick={handleNftFav}>
           <FontAwesomeIcon
             css={css`
               width: 1.5rem;
@@ -177,7 +177,7 @@ function FAVItemCard<T extends ElementType>(
             icon={faHeart}
           />
         </FavContainer> */}
-      </FavInfoContainer>
+      {/* </FavInfoContainer> */}
     </Card>
   );
 }

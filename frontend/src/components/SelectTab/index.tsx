@@ -36,7 +36,6 @@ function SelectTab<T extends ElementType = "div">(
       css={css`
         width: 100%;
         white-space: nowrap;
-        overflow: auto;
       `}
     >
       <SelectTabContainer colorMap={colorMap} type={type} ref={ref} {...rest}>
@@ -75,9 +74,10 @@ type SCProps = {
 };
 
 const SelectTabContainer = styled.div<SCProps>`
-  width: max-content;
+  width: 100%;
   display: flex;
   flex-wrap: nowrap;
+  overflow: auto;
 
   input[type="radio"] {
     display: none;
