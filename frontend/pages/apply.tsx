@@ -37,7 +37,7 @@ const initialApplyState = {
   isChecked: false,
 };
 
-const { LOGIN } = ROUTES;
+const { LOGIN, HOME } = ROUTES;
 const { MY_USER_INFO } = QUERY_KEYS;
 
 export default function apply() {
@@ -137,27 +137,33 @@ export default function apply() {
         },
       };
 
-      axios
-        .post(`${ENDPOINT_API}/invest/regist`, formData, config)
-        .then((res) => {
-          console.log(res);
-          handleAlertOpen(2000, "투자 신청이 완료되었습니다.", true);
-        })
-        .catch((err) => {
-          console.log(err);
-          handleAlertOpen(2000, "투자 신청이 실패했습니다.", false);
-        });
-      // console.log(
-      //   await storeNFT({
-      //     startupId: 1,
-      //     nftImage: nftImageFile,
-      //     startupName,
-      //     nftPrice,
-      //   })
-      // );
+      const token = await storeNFT({
+        startupId,
+        nftImage: nftImageFile,
+        startupName,
+        nftPrice,
+        nftDescription,
+      });
 
-      router.push("/list");
-      setForm(initialApplyState);
+      if (!token) {
+        handleAlertOpen(2000, "NFT 업로드 실패", false);
+      } else {
+        const url = "https://ipfs.io/ipfs/" + token.url.split("://")[1];
+        formData.append("tokenURI", url);
+
+        axios
+          .post(`${ENDPOINT_API}/invest/regist`, formData, config)
+          .then((res) => {
+            console.log(res);
+            handleAlertOpen(2000, "투자 신청이 완료되었습니다.", true);
+            router.push(HOME);
+          })
+          .catch((err) => {
+            console.log(err);
+            handleAlertOpen(2000, "투자 신청이 실패했습니다.", false);
+            setForm(initialApplyState);
+          });
+      }
     }
   };
 
