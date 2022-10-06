@@ -1,7 +1,7 @@
 import { FileUploadProps } from "@/types/props";
 import { css, useTheme } from "@emotion/react";
 import styled from "@emotion/styled";
-import { faUpload } from "@fortawesome/free-solid-svg-icons";
+import { faFile, faUpload } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ElementType, forwardRef, Ref, useRef, useState } from "react";
 import LabelInput from "../LabelInput";
@@ -63,11 +63,11 @@ function FileUpload<T extends ElementType = "div">(
         ) : (
           <>
             <FontAwesomeIcon
-              icon={faUpload}
+              icon={faFile}
               css={css`
-                width: 1.5rem;
+                width: 0.8rem;
                 color: ${theme.color.text.main};
-                margin-right: 2rem;
+                margin-right: 1rem;
               `}
             />
             <Text
@@ -75,7 +75,7 @@ function FileUpload<T extends ElementType = "div">(
                 font-size: 0.8rem;
               `}
             >
-              파일올리기
+              파일 업로드
             </Text>
           </>
         )}
@@ -93,16 +93,18 @@ const FileUploadWrapper = styled.div`
 
 const FileUploadBtn = styled.button`
   display: flex;
-  width: 20rem;
+  width: 100%;
   height: 3rem;
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  border-radius: 4px;
+  border: 0;
+  border-radius: 8px;
   background-color: ${({ theme }) => theme.color.background.item};
+
   &:hover {
     cursor: pointer;
-    color: ${({ theme }) => theme.color.text.hover};
+    box-shadow: 0 0 0 2px ${({ theme }) => theme.color.hover.main};
   }
 `;
 

@@ -22,6 +22,7 @@ import contracts from "@/contracts/utils";
 
 import { QUERY_KEYS } from "@/api/query_key_schema";
 import { Member } from "@/types/api_responses";
+import { minDesktopWidth } from "@/styles/utils";
 
 const initialApplyState = {
   title: "",
@@ -168,35 +169,42 @@ export default function apply() {
   };
 
   return (
-    <ContainWrapper>
+    <ApplyContainer>
       <Text
         as="h1"
+        role="page-header"
         css={css`
-          font-size: 1.5rem;
-          margin: 5rem 0 1rem;
+          font-size: 2rem;
+          font-weight: 700;
+          margin-bottom: 2rem;
+          align-self: start;
         `}
       >
         투자받기
       </Text>
       <CircleBar current={current} total={3} />
       {current === 1 && (
-        <>
+        <div
+          css={css`
+            width: 100%;
+          `}
+        >
           <LabelInput
             css={LabelInputStyle}
-            labelText="투자자 모집 제목"
+            labelText="펀딩 제목"
             name="title"
             onChange={onChangeForm}
           />
           <LabelInput
             css={LabelInputStyle}
-            labelText="회사 소개글"
+            labelText="기업 소개"
             name="description"
             onChange={onChangeForm}
           />
           <LabelInput
             type="date"
             css={LabelInputStyle}
-            labelText="투자 마감일"
+            labelText="펀딩 마감일"
             min={today}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               setForm({ ...form, dueDate: e.target.value + "T23:59:59.999Z" })
@@ -210,7 +218,7 @@ export default function apply() {
           />
           <FileUpload
             type="pdf"
-            text="사업소개서 및 프로젝트 소개서(파일용량 5MB까지)"
+            text="사업소개서 및 프로젝트 소개서 (pdf, 최대 5MB)"
             onFileSelectSuccess={(file: any) =>
               setForm({ ...form, businessPlanFile: file })
             }
@@ -218,7 +226,7 @@ export default function apply() {
           />
           <FileUpload
             type="pdf"
-            text="NFT 투자혜택 로드맵을 제출해주세요."
+            text="투자 보상 로드맵 (png, jpg, gif)"
             onFileSelectSuccess={(file: any) =>
               setForm({ ...form, roadMapFile: file })
             }
@@ -227,12 +235,16 @@ export default function apply() {
           <Button css={ButtonStyle} onClick={onFirstNextHandler}>
             다음단계
           </Button>
-        </>
+        </div>
       )}
 
       {current === 2 && (
-        <>
-          <SelectInputTitle>토큰 발행 개수</SelectInputTitle>
+        <div
+          css={css`
+            width: 100%;
+          `}
+        >
+          {/* <SelectInputTitle>토큰 발행 개수</SelectInputTitle>
           <SelectInput
             id="토큰 발행 개수"
             onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
@@ -244,24 +256,36 @@ export default function apply() {
             <option value="10">10</option>
             <option value="20">20</option>
             <option value="30">30</option>
-          </SelectInput>
+          </SelectInput> */}
           <LabelInput
             css={LabelInputStyle}
-            labelText={`토큰 개당 가격(${UNIQON_TOKEN})`}
+            labelText={`최소 발행 토큰 수`}
             type="number"
+            min="1"
+            max="30"
+            name="nftPrice"
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              setForm({ ...form, nftTargetCount: +e.target.value })
+            }
+          />
+          <LabelInput
+            css={LabelInputStyle}
+            labelText={`토큰 개당 가격 (${UNIQON_TOKEN})`}
+            type="number"
+            min="0"
             name="nftPrice"
             onChange={onChangeForm}
           />
           <LabelInput
             css={LabelInputStyle}
-            labelText="토큰 정보"
+            labelText="NFT 소개"
             name="nftDescription"
             onChange={onChangeForm}
           />
 
           <FileUpload
             type="img"
-            text="NFT 이미지 파일을 첨부해주세요."
+            text="NFT 이미지 (png, jpg, gif)"
             onFileSelectSuccess={(file: any) =>
               setForm({ ...form, nftImageFile: file })
             }
@@ -277,13 +301,13 @@ export default function apply() {
               href="https://themetakongz.com/kr.html#sec_roadmap"
               target="_blank"
             >
-              NFT 투자혜택 로드맵 예시 링크(메타콩즈)
+              투자 보상 로드맵 예시
             </LoadmapLink>
           </Text>
           <Button css={ButtonStyle} onClick={onSecondNextHandler}>
             다음단계
           </Button>
-        </>
+        </div>
       )}
 
       {current === 3 && (
@@ -332,32 +356,37 @@ export default function apply() {
           </Button>
         </>
       )}
-    </ContainWrapper>
+    </ApplyContainer>
   );
 }
 
-const ContainWrapper = styled.form`
+const ApplyContainer = styled.form`
+  padding-top: 5rem;
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  color: ${({ theme }) => theme.color.text.main};
+
+  @media (${minDesktopWidth}) {
+    width: 33.33%;
+  }
 `;
 
 const LabelInputStyle = css`
-  width: 20rem;
-  height: 2.5rem;
+  height: 3rem;
   margin-bottom: 1rem;
   color: ${uniqonThemes.darkTheme.color.text.main};
 `;
 
 const ButtonStyle = css`
   margin: 2rem 0 0;
-  width: 20rem;
+  width: 100%;
+  height: 3rem;
 `;
 
 const InfoAgreeBox = styled.div`
-  width: 20rem;
+  width: 100%;
   height: 9rem;
   padding: 0.5rem;
   margin: 1rem 0;
@@ -366,7 +395,7 @@ const InfoAgreeBox = styled.div`
 `;
 
 const AgreeCheckBox = styled.div`
-  width: 20rem;
+  width: 100%;
   display: flex;
   align-items: center;
 `;

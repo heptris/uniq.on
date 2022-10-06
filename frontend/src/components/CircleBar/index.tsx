@@ -88,7 +88,7 @@ const Circle = styled.div`
 `;
 
 const Line = styled.div`
-  width: 5rem;
+  width: 100%;
   height: 0;
   border-top: 1px solid ${({ theme }) => theme.color.text.main};
   margin-bottom: 3.5rem;
