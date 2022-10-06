@@ -30,7 +30,7 @@ public class AlarmService {
     @Transactional
     public List<AlarmDto> alarmList(Long memberId){
 
-        List<Alarm> allAlarmList = alarmRepository.findAllByMemberId(memberId);
+        List<Alarm> allAlarmList = alarmRepository.findAllByMemberIdOrderByIdDesc(memberId);
         List<AlarmDto> alarmDtoList = new ArrayList<>();
         for (Alarm alarm : allAlarmList) {
             alarmDtoList.add(new AlarmDto(alarm.getId(), alarm.getContent(), alarm.getIsRead(),alarm.getTokenId(), alarm.getInvestCount()
@@ -42,7 +42,7 @@ public class AlarmService {
     @Transactional
     public List<AlarmDto> unReadAlarmList(Long memberId){
 
-        List<Alarm> alarmList = alarmRepository.findAllByMemberIdAndIsRead(memberId, false);
+        List<Alarm> alarmList = alarmRepository.findAllByMemberIdAndIsReadOrderByIdDesc(memberId, false);
         List<AlarmDto> alarmDtoList = new ArrayList<>();
         for (Alarm alarm : alarmList) {
             alarmDtoList.add(new AlarmDto(alarm.getId(), alarm.getContent(), alarm.getIsRead(),alarm.getTokenId(), alarm.getInvestCount()

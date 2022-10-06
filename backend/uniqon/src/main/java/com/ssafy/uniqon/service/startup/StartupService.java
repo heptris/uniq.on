@@ -16,6 +16,7 @@ import com.ssafy.uniqon.repository.startup.fav.StartupFavoriteRepository;
 // import com.ssafy.uniqon.service.ipfs.IpfsService;
 import com.ssafy.uniqon.service.s3.AwsS3Service;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.rendering.ImageType;
 import org.apache.pdfbox.rendering.PDFRenderer;
@@ -41,7 +42,9 @@ import java.util.Optional;
 
 import static com.ssafy.uniqon.domain.startup.EnrollStatus.*;
 import static com.ssafy.uniqon.exception.ex.ErrorCode.*;
+import static jdk.nashorn.internal.runtime.regexp.joni.Config.log;
 
+@Slf4j
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
 @Service
@@ -62,6 +65,7 @@ public class StartupService {
     @Transactional
     public Long investRegist(Long memberId, StartupRequestDto startupRequestDto, MultipartFile plan_paper
     , MultipartFile nft_image, MultipartFile road_map) {
+        log.info("tokenURI = {}", startupRequestDto.getTokenURI());
         Member member = memberRepository.findById(memberId).orElseThrow(
                 () -> new CustomException(MEMBER_NOT_FOUND)
         );
@@ -133,14 +137,18 @@ public class StartupService {
         }
 
         if (road_map != null) {
-            try {
-                awsS3 = awsS3Service.upload(road_map, "startup");
-            }catch (IOException e){
-                throw new CustomException(FILE_UPLOAD_ERROR);
+//            try {
+//                awsS3 = awsS3Service.upload(road_map, "startup");
+//            }catch (IOException e){
+//                throw new CustomException(FILE_UPLOAD_ERROR);
+//            }
+//
+//            String roadMapUrl = awsS3.getPath();
+//            savedStartup.changeRoadMap(roadMapUrl);
+            if("application/pdf".equals(road_map.getContentType())) {
+                String imgUrl = awsS3Service.pdfToImg(road_map);
+                savedStartup.changeRoadMap(imgUrl);
             }
-
-            String roadMapUrl = awsS3.getPath();
-            savedStartup.changeRoadMap(roadMapUrl);
         }
         return savedStartup.getId();
     }
