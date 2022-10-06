@@ -9,4 +9,5 @@ export const QUERY_KEYS = {
   INVEST_LIST: "investmentList",
   IR_DETAIL: "investmentRequest",
   ALARM_LIST: "alarmList",
+  MY_COMMUNITY_LIST: "myCommunityList",
 };
