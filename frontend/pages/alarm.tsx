@@ -1,4 +1,6 @@
 import { GetServerSideProps } from "next";
+import axios from "axios";
+import contracts from "@/contracts/utils";
 
 import { css, useTheme } from "@emotion/react";
 import styled from "@emotion/styled";
@@ -21,6 +23,7 @@ import {
 import { AlarmItem } from "@/types/api_responses";
 import { AlarmProps } from "@/types/props";
 import { ACCESS_TOKEN } from "@/api/utils";
+import { ENDPOINT_API } from "@/api/endpoints";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const config = {
@@ -46,9 +49,53 @@ export default function alarm(props: AlarmProps) {
   const { selectedMenu, onSelectHandler } = useSelectTab(menus);
   const { handleAlertOpen } = useAlert();
 
-  const handleAlarmRead = (alarmId: number) => {
+  const { mintUniqonNFTContract } = contracts.useWeb3();
+  const { mintToken, buyToken } = contracts.useContract();
+  const getAlarmType = (alarm: AlarmItem) => {
+    if (alarm.investCount) return "MINT";
+    if (alarm.tokenId) return "BUY";
+    return "TEXT";
+  };
+  const handleAlarmRead = async (alarm: AlarmItem) => {
+    const { alarmId } = alarm;
+    const alarmType = getAlarmType(alarm);
     // nft 구매 로직 or
     // nft 발행 로직
+    if (alarmType === "MINT") {
+      const res = await mintToken({
+        tokenURI: alarm.tokenURI!, // 추가해야할 부분
+        totalAmount: alarm.investCount!,
+        price: alarm.nftPrice!,
+      });
+      const lastTokenId: number = await mintUniqonNFTContract?.methods
+        .current()
+        .call();
+      console.log([`mintToken result: ${res}`, `lastTokenId: ${lastTokenId}`]);
+
+      const data = { lastTokenId };
+      axios
+        .post(ENDPOINT_API + `/alarm/mintSuccess/${alarmId}`, data)
+        .then((res) => {
+          console.log(`axios result: ${res}`);
+        })
+        .catch((err) => console.error(err));
+    } else if (alarmType === "BUY") {
+      const res = await buyToken(alarm.tokenId!);
+      console.log(`buyToken result: ${res}`);
+
+      if (!res) {
+        await axios.post(ENDPOINT_API + `/alarm/investFail/${alarmId}`);
+        return;
+      }
+
+      axios
+        .post(ENDPOINT_API + `/alarm/investSuccess/${alarmId}`)
+        .then((res) => {
+          console.log(`axios result: ${res}`);
+        })
+        .catch((err) => console.error(err));
+    }
+
     mutateAlarmRead(
       { alarmId },
       {
@@ -108,7 +155,7 @@ export default function alarm(props: AlarmProps) {
             <Button
               disabled={read}
               onClick={() => {
-                read || handleAlarmRead(alarmId);
+                read || handleAlarmRead(alarm);
               }}
             >
               {read ? "읽음" : "확인"}

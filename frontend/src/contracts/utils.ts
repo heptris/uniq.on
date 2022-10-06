@@ -7,6 +7,7 @@ import { NFTStorage } from "nft.storage";
 import type { AbiItem } from "web3-utils";
 import type { Maybe } from "@metamask/providers/dist/utils";
 import type { StoreNFTParams } from "@/types/api_requests";
+import type { Transaction } from "@/types/contracts";
 import { useAppDispatch, useAppSelector } from "@/hooks";
 import { _setAccount } from "@/store";
 
@@ -146,7 +147,7 @@ const contracts = {
 
     const buyToken = async (tokenId: number) => {
       if (!mintUniqonNFTContract || !uniqonTokenContract) return;
-      const res = new Array(3);
+      const res = new Array<Transaction | number>(3);
 
       res[0] = await uniqonTokenContract.methods.balanceOf(account).call();
       res[1] = await uniqonTokenContract.methods
@@ -160,7 +161,9 @@ const contracts = {
       res[2] = await mintUniqonNFTContract.methods
         .purchaseUniqonToken(tokenId)
         .send({ from: account });
+
       console.log(res);
+      return res;
     };
 
     const mintToken = async ({
@@ -173,10 +176,12 @@ const contracts = {
       price: number;
     }) => {
       if (!mintUniqonNFTContract || !uniqonTokenContract) return;
-      const res = await mintUniqonNFTContract.methods
+      const res: Transaction = await mintUniqonNFTContract.methods
         .create(account, tokenURI, totalAmount, price)
         .send({ from: account });
+
       console.log(res);
+      return res;
     };
 
     return { checkBalance, buyToken, mintToken };

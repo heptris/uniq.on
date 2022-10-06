@@ -1,5 +1,5 @@
 import { MetaMaskInpageProvider } from "@metamask/providers";
-import { Contract } from "web3-eth-contract";
+import { Contract, EventData } from "web3-eth-contract";
 
 declare global {
   interface Window {
@@ -21,3 +21,19 @@ interface UniqonContract {
 declare module "web3-eth-contract" {
   export interface Contract extends UniqonContract {}
 }
+
+export type Transaction = {
+  blockHash: string;
+  blockNumber: number;
+  contractAddress: string | null;
+  cumulativeGasUsed: number;
+  effectiveGasPrice: number;
+  events: EventData[];
+  from: string;
+  gasUsed: number;
+  logsBloom: string;
+  status: boolean;
+  to: string;
+  transactionHash: string;
+  transactionIndex: string;
+};
