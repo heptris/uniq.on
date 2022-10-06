@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class MemberProfileDto {
 
+    private Long memberId;
     private String walletAddress;
     private String nickName;
     private String email;

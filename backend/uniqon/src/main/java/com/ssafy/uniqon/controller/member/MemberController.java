@@ -96,5 +96,14 @@ public class MemberController {
                 new ResponseDto(HttpStatus.OK.value(), "스타트업이 투자 신청한 내역", memberService.findStartupInvestedList(memberId))
         );
     }
+    @ApiOperation(value = "마이페이지(USER) 보유 NFT 목록")
+    @GetMapping("/mypage/own-nft")
+    public ResponseEntity findOwnNftList(){
+        Long memberId = SecurityUtil.getCurrentMemberId();
+
+        return ResponseEntity.status(HttpStatus.OK).body(
+                new ResponseDto(HttpStatus.OK.value(), "보유 NFT 목록", memberService.findMemberOwnNftList(memberId))
+        );
+    }
 
 }

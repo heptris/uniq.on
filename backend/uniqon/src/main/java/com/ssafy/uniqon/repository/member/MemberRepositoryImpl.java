@@ -2,19 +2,15 @@ package com.ssafy.uniqon.repository.member;
 
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.ssafy.uniqon.domain.invest.InvestStatus;
-import com.ssafy.uniqon.domain.invest.QInvest_history;
-import com.ssafy.uniqon.domain.member.QMember;
-import com.ssafy.uniqon.domain.startup.QStartup;
-import com.ssafy.uniqon.domain.startup.QStartupFavorite;
 import com.ssafy.uniqon.dto.member.MemberFavStartupDto;
 import com.ssafy.uniqon.dto.member.MemberInvestedStartupDto;
+import com.ssafy.uniqon.dto.member.MemberOwnNftDto;
 import com.ssafy.uniqon.dto.member.StartupInvestedListDto;
 
 import javax.persistence.EntityManager;
 import java.util.List;
 
-import static com.ssafy.uniqon.domain.invest.InvestStatus.INVESTING;
+import static com.ssafy.uniqon.domain.invest.InvestStatus.INVESTED;
 import static com.ssafy.uniqon.domain.invest.QInvest_history.invest_history;
 import static com.ssafy.uniqon.domain.member.QMember.member;
 import static com.ssafy.uniqon.domain.startup.QStartup.startup;
@@ -116,5 +112,22 @@ public class MemberRepositoryImpl implements MemberRepositoryCustom{
                 .fetch();
 
         return startupInvestedListDtoList;
+    }
+
+    @Override
+    public List<MemberOwnNftDto> findOwnNftList(Long memberId) {
+        return queryFactory
+                .select(Projections.constructor(MemberOwnNftDto.class,
+                        startup.id,
+                        startup.startupName,
+                        startup.nftPrice,
+                        startup.nftDescription,
+                        startup.metadata
+                ))
+                .from(member)
+                .innerJoin(member.investHistoryList, invest_history)
+                .innerJoin(invest_history.startup, startup)
+                .where(member.id.eq(memberId).and(invest_history.investStatus.eq(INVESTED)))
+                .fetch();
     }
 }

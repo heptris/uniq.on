@@ -22,4 +22,8 @@ public class AlarmDto {
 
     private Integer investCount;
 
+    private Double nftPrice;
+
+    private String tokenURI;
+
 }
