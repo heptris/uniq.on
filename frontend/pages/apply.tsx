@@ -139,10 +139,12 @@ export default function apply() {
         const url = "https://ipfs.io/ipfs/" + token.url.split("://")[1];
         // console.log(dueDate); // 2022-10-07T23:59:59.999Z
         let [date, time] = dueDate.split("T");
-        const tmp = Date().split(" ");
+        const dt = new Date();
+        dt.setMinutes(dt.getMinutes() + 2);
+        const tmp = dt.toString().split(" ");
         time = tmp[tmp.length - 4];
-        const [hh, mm, ss] = time.split(":");
-        const newDueDate = date + `T${hh}:${parseInt(mm) + 2}:${ss}.999Z`;
+
+        const newDueDate = date + `T${time}.999Z`;
 
         const data = {
           title,
