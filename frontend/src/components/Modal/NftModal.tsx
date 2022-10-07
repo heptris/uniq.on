@@ -37,7 +37,7 @@ export default function NftModal(props: NftModalType) {
           font-weight: 600;
         `}
       >
-        {modalContent.startupName} #{modalContent.nftReserveCount}
+        {modalContent.startupName} #{modalContent.startupId}
       </Text>
 
       <Text
