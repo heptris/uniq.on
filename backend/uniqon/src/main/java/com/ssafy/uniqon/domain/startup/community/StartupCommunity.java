@@ -29,6 +29,7 @@ public class StartupCommunity extends BaseEntity {
 
     @Lob
     private String content;
+    private int hit;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
@@ -63,6 +64,10 @@ public class StartupCommunity extends BaseEntity {
     public void changePost(String title, String content){
         this.title = title;
         this.content = content;
+    }
+
+    public void updateHit(){
+        this.hit++;
     }
 
 }

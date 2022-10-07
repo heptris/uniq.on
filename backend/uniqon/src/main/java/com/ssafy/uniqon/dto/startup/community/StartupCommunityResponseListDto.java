@@ -12,8 +12,12 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class StartupCommunityResponseListDto {
+    private Long communityId;
+    private String startupName;
     private String title;
     private String nickName;
+    private String discordUrl;
+    private Integer hit;
     private Integer commentsCount;
     private LocalDateTime createdDate;
 }

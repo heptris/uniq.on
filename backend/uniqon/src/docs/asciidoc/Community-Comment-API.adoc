@@ -1,0 +1,15 @@
+[[Startup-Community-Comment-API]]
+== 9. Startup Community Comment API
+
+[[스타트업_커뮤니티_댓글_등록]]
+=== 9.1. Startup 커뮤니티 댓글 등록
+operation::community-comment-controller-test/스타트업_커뮨니티_댓글_등록[snippets='http-request,http-response,path-parameters,request-fields']
+
+[[스타트업_커뮤니티_댓글_수정]]
+=== 9.2. Startup 커뮤니티 댓글 수정
+operation::community-comment-controller-test/스타트업_커뮤니티_댓글_수정[snippets='http-request,http-response,path-parameters,request-fields']
+
+[[스타트업_커뮤니티_댓글_삭제]]
+=== 9.3. Startup 커뮤니티 댓글 삭제
+operation::community-comment-controller-test/스타트업_커뮤니티_댓글_삭제[snippets='http-request,http-response,path-parameters']
+

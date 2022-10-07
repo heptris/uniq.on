@@ -34,6 +34,7 @@ public class StartupAnswer extends BaseEntity {
     @JoinColumn(name = "parent_id")
     private StartupAnswer parent;
 
+    @Builder.Default
     @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL)
     private List<StartupAnswer> children = new ArrayList<>();
 

@@ -25,6 +25,8 @@ public class CommunityCommentResponseDto {
     private LocalDateTime createdDate;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
     private LocalDateTime updateDate;
+
+    @Builder.Default
     private List<CommunityCommentChildrenResponseDto> children = new ArrayList<>();
 
     public CommunityCommentResponseDto(Long parentId, Long commentId, String content, String nickName, boolean myComment, LocalDateTime createdDate, LocalDateTime updateDate){

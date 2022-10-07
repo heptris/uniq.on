@@ -1,0 +1,24 @@
+[[Startup-Community-API]]
+== 8. Startup Community API
+
+[[스타트업_커뮤니티_글_등록]]
+=== 8.1. Startup 커뮤니티 글 등록
+operation::startup-community-controller-test/스타트업_커뮤니티_등록[snippets='http-request,http-response,path-parameters,request-fields']
+
+[[스타트업_커뮤니티_글_수정]]
+=== 8.2. Startup 커뮤니티 글 수정
+operation::startup-community-controller-test/스타트업_커뮤니티_수정[snippets='http-request,http-response,path-parameters,request-fields']
+
+[[스타트업_커뮤니티_글_삭제]]
+=== 8.3. Startup 커뮤니티 글 삭제
+operation::startup-community-controller-test/스타트업_커뮤니티_삭제[snippets='http-request,http-response,path-parameters']
+
+[[스타트업_커뮤니티_리스트_조회]]
+=== 8.4. Startup 커뮤니티 리스트 조회
+operation::startup-community-controller-test/스타트업_커뮤니티_조회[snippets='http-request,http-response,path-parameters']
+
+[[스타트업_커뮤니티_상세_조회]]
+=== 8.5. Startup 커뮤니티 상세 조회
+operation::startup-community-controller-test/스타트업_커뮤니티_상세정보조회[snippets='http-request,http-response,path-parameters']
+
+

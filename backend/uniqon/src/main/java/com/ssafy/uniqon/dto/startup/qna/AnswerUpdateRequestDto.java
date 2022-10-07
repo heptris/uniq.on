@@ -11,6 +11,5 @@ import lombok.NoArgsConstructor;
 @Data
 public class AnswerUpdateRequestDto {
 
-    private Long startupAnswerId;
     private String answer;
 }

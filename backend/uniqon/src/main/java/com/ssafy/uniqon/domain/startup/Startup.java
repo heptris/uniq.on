@@ -1,6 +1,7 @@
 package com.ssafy.uniqon.domain.startup;
 
 import com.ssafy.uniqon.domain.BaseEntity;
+import com.ssafy.uniqon.domain.invest.Invest_history;
 import com.ssafy.uniqon.domain.member.Member;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,6 +10,8 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @NoArgsConstructor
 @Builder
@@ -26,41 +29,44 @@ public class Startup extends BaseEntity {
     @JoinColumn(name = "member_id")
     private Member member;
 
+    @Builder.Default
+    @OneToMany(mappedBy = "startup", cascade = CascadeType.ALL)
+    private List<Invest_history> investHistoryList = new ArrayList<>();
+
     private String startupName;
-
-    private String managerName; // 담당자 이름
-    private String managerEmail; // 담당자 이메일
-    private String managerNumber; // 담당자 연락처
-
-    private String businessPlan;
-
+    @Lob
+    private String planPaper;
+    @Lob
+    private String planPaperImg;
+    @Lob
     private String roadMap;
 
     private String title;
 
     private String description;
 
-    private LocalDateTime endDate;
+    private LocalDateTime dueDate;
 
-    private String imageNft;
+    @Lob
+    private String nftImage;
 
-    private Double goalPrice;
+    private Integer nftTargetCount;
+    private Integer nftReserveCount;
 
-    private Double curTotalPrice;
+    private double nftPrice;
 
-    private Integer nftCount;
-
-    private Integer investCount;
-
-    private double pricePerNft;
-
+    private String nftDescription;
     private Boolean isFinished;
-
     private Boolean isGoal;
 
     private String discordUrl;
 
     private String rejectReason;
+
+    private String tokenUri;
+
+    @Lob
+    private String metadata;
 
     @Enumerated(EnumType.STRING)
     private EnrollStatus enrollStatus;
@@ -68,12 +74,31 @@ public class Startup extends BaseEntity {
     public void changeId(Long startupId) {
         this.id = startupId;
     }
-
-    public void changeBusinessPlan(String businessPlan) {
-        this.businessPlan = businessPlan;
+    public void changeNftImage(String nftImage) {
+        this.nftImage = nftImage;
+    }
+    public void changeRoadMap(String roadMap){
+        this.roadMap = roadMap;
+    }
+    public void nftReserveCountIncrement() {
+        this.nftReserveCount += 1;
+    }
+    public void changeIsGoal() {
+        this.isGoal = Boolean.TRUE;
+    }
+    public void changeIsFinish() {
+        this.isFinished = Boolean.TRUE;
     }
 
-    public void changeImageNft(String imageNft) {
-        this.imageNft = imageNft;
+    public void changePlanPaper(String plan_paper_url) {
+        this.planPaper = plan_paper_url;
+    }
+
+    public void changePlanPaperImg(String imgUrl) {
+        this.planPaperImg = imgUrl;
+    }
+
+    public void addMetadata(String metadata){
+        this.metadata = metadata;
     }
 }

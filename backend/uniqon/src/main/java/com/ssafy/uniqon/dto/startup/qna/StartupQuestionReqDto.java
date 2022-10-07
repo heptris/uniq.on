@@ -11,6 +11,5 @@ import lombok.NoArgsConstructor;
 @Data
 public class StartupQuestionReqDto {
 
-    private Long startupId;
     private String question;
 }

@@ -30,6 +30,7 @@ public class CommunityComment extends BaseEntity {
     @JoinColumn(name = "parent_id")
     private CommunityComment parent;
 
+    @Builder.Default
     @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL)
     private List<CommunityComment> children = new ArrayList<>();
 
@@ -41,20 +42,31 @@ public class CommunityComment extends BaseEntity {
     @JoinColumn(name = "member_id")
     private Member member;
 
-    public static CommunityComment createCommunityComment(String content, StartupCommunity startupCommunity){
+    public static CommunityComment createCommunityComment(String content, CommunityComment parent, Member member, StartupCommunity startupCommunity){
         CommunityComment communityComment = CommunityComment.builder()
                 .content(content)
                 .build();
 
         communityComment.addStartupCommunity(startupCommunity);
+        communityComment.addParent(parent);
+        communityComment.addMember(member);
         return communityComment;
     }
 
     public void addStartupCommunity(StartupCommunity startupCommunity){
         this.startupCommunity = startupCommunity;
     }
+    public void addMember(Member member){
+        this.member = member;
+    }
+    public void addParent(CommunityComment parent){
+        this.parent = parent;
+    }
 
     public void changeContent(String content){
         this.content = content;
+    }
+    public void changeId(Long id){
+        this.id = id;
     }
 }

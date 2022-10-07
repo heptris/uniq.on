@@ -1,0 +1,38 @@
+[[Alarm-API]]
+== 3. Alarm API
+
+[[전체_알람_조회]]
+=== 3.1. 전체 알람 조회
+operation::alarm-controller-test/전체_알람_조회[snippets='http-request,http-response']
+
+[[안읽은_알람_조회]]
+=== 3.2. 안읽은 알람 조회
+operation::alarm-controller-test/안읽은_알림_조회[snippets='http-request,http-response']
+
+[[알람_읽기]]
+=== 3.3.1. 알람 읽기
+operation::alarm-controller-test/알람_읽기[snippets='http-request,http-response,path-parameters']
+
+[[알람_읽기_실패]]
+=== 3.3.2. 알람 읽기 실패
+operation::alarm-controller-test/알람_읽기_실패[snippets='http-request,http-response,path-parameters']
+
+[[스타트업_NFT_민팅_성공후_알람_읽기]]
+=== 3.4.1. 스타트업 NFT 민팅 성공 후 알람 읽기
+operation::alarm-controller-test/스타트업_nft_민팅_성공_알람_읽기[snippets='http-request,http-response,path-parameters,request-fields']
+
+[[스타트업_NFT_민팅_성공후_알람_읽기_오류]]
+=== 3.4.2. 스타트업 NFT 민팅 성공 후 알람 읽기 오류
+operation::alarm-controller-test/스타트업_nft_민팅_성공_알람_읽기_실패1[snippets='http-request,http-response,path-parameters,request-fields']
+
+[[투자자_NFT_구매_성공후_알람_읽기]]
+=== 3.5.1. 투자자 NFT 구매 성공 후 알람 읽기
+operation::alarm-controller-test/투자자_nft_구매_성공_알람_읽기[snippets='http-request,http-response,path-parameters']
+
+[[투자자_NFT_구매_성공후_알람_읽기_실패]]
+=== 3.5.2. 투자자 NFT 구매 성공 후 알람 읽기 실패
+operation::alarm-controller-test/투자자_nft_구매_성공_알람_읽기_실패[snippets='http-request,http-response,path-parameters']
+
+[[투자자_NFT_구매_실패후_알람_읽기]]
+=== 3.6.1. 투자자 NFT 구매 실패 후 알람 읽기
+operation::alarm-controller-test/투자자_nft_구매_실패_알람_읽기[snippets='http-request,http-response,path-parameters']

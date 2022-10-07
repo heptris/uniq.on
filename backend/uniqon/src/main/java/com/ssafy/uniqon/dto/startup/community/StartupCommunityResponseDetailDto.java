@@ -19,13 +19,18 @@ public class StartupCommunityResponseDetailDto {
     private String title;
     private String content;
     private String nickName;
+    private String startupName;
+    private Integer hit;
+    private Integer commentsCount;
     private List<CommunityCommentResponseDto> commentList;
     private LocalDateTime createdDate;
 
-    public StartupCommunityResponseDetailDto(String title, String content, String nickName, LocalDateTime createdDate){
+    public StartupCommunityResponseDetailDto(String title, String content, String nickName, String startupName, Integer hit, LocalDateTime createdDate){
         this.title = title;
         this.content = content;
         this.nickName = nickName;
+        this.startupName = startupName;
+        this.hit = hit;
         this.createdDate = createdDate;
     }
 }

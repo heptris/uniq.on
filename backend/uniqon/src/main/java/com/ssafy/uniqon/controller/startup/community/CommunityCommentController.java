@@ -12,7 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/invest")
+@RequestMapping("/app/invest/community-comments")
 @RequiredArgsConstructor
 public class CommunityCommentController {
 

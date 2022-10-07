@@ -1,0 +1,291 @@
+{
+	"compiler": {
+		"version": "0.8.7+commit.e28d00a7"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_mintUniqonTokenAddress",
+						"type": "address"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "constructor"
+			},
+			{
+				"inputs": [],
+				"name": "getOnSaleUniqonToken",
+				"outputs": [
+					{
+						"internalType": "uint256[]",
+						"name": "",
+						"type": "uint256[]"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_uniqonTokenId",
+						"type": "uint256"
+					}
+				],
+				"name": "getTokenPrice",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "mintUniqonTokenAddress",
+				"outputs": [
+					{
+						"internalType": "contract MintUniqonToken",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"name": "onSaleUniqonToken",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_uniqonTokenId",
+						"type": "uint256"
+					}
+				],
+				"name": "purchaseUniqonToken",
+				"outputs": [],
+				"stateMutability": "payable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_uniqonTokenId",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_price",
+						"type": "uint256"
+					}
+				],
+				"name": "setForSaleUniqonToken",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"name": "uniqonTokenPrices",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"contracts/SaleFactory.sol": "SaleFactory"
+		},
+		"evmVersion": "london",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"contracts/MintUniqonToken.sol": {
+			"keccak256": "0xa13e1961d03ce0670fab1bb53f009f6634b52612a9ec9ec6705ac68ed554f9f4",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://b42571f6d689222567c3ec3ae8509b9118327a9e57fd4df281f38195ade66857",
+				"dweb:/ipfs/QmSX4bjjYacE9ELnyeT9HHvXuKF9THGfbh2ySeQJeavDy8"
+			]
+		},
+		"contracts/SaleFactory.sol": {
+			"keccak256": "0xfe3fbdda5e6987a7c02a388ddfa7a1a15e40115f32d8c78b797dd059bcc21411",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://e81cd9f0575a4eae37ed175d9f3489f3c7333feff314471419a62ea22ba8c41a",
+				"dweb:/ipfs/QmToYPYv666DVTtwDm77y7ggxTBqp9XpS9wMxzDNL9K3wo"
+			]
+		},
+		"contracts/token/ERC20/ERC20.sol": {
+			"keccak256": "0x40d568bcce1ee4f5ebb7d05ecb93b55eae3546df2c2215268072be7bf360ecc2",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://11e2f55e55d44bfdff043eaa22ace9d4751acd8a203446ed008e235d84a80faf",
+				"dweb:/ipfs/QmQqFU1N6Z5qKhLW2eeNdXWXkJ35i4wj1Uyac4fbowJ9Cv"
+			]
+		},
+		"contracts/token/ERC20/IERC20.sol": {
+			"keccak256": "0x74ae1a773c1ce27b59c22903469389a6aeb2c882c2485e014aaf50710b9bc32c",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://c399a2b2bcac88e61c5c617ef7f1341429fa589aba5a9563df6f422996a48b76",
+				"dweb:/ipfs/QmWEdyWLZLUy8aMSyYk4E4mD2WhPvrvtxC2KvA5pjBAzXn"
+			]
+		},
+		"contracts/token/ERC20/extensions/IERC20Metadata.sol": {
+			"keccak256": "0x625b87cf2c51463b99de1dda2afd18075618faafac512850ee78c205c82d1f93",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://02d72e8ea6e5c90e628b3b9391947658561c90809e4f9f18c76037ed2b3f61a9",
+				"dweb:/ipfs/QmXtdaEkMFehAN5C4F8TEW2HknLBhxfDzqorn3R1ZaGZaK"
+			]
+		},
+		"contracts/token/ERC721/ERC721.sol": {
+			"keccak256": "0x3ee1ebbf74486490dcfa4e45dff048584e8d5cde3c5723286f6e81080f82d7b2",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://97614ac56be976bdb6b33eb46ea4d96ee1535140adde8325149b5c1ca9fd7f39",
+				"dweb:/ipfs/QmatcCMKgrufopQtsH583n1NsNkEmvCCtpf7cwN8sDZsp6"
+			]
+		},
+		"contracts/token/ERC721/IERC721.sol": {
+			"keccak256": "0xbe5a0882b2aa9ed1316003b00e8a9f1de439444b62aeb7cfac11944ea756a3c6",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://81acaea6a3eef739fdd1ed4a061632c077c88b0680a4e338a77adbce2add6b85",
+				"dweb:/ipfs/Qma9nHQMEiWDc3SyttdEjsc54j4EGAdb9xo6AnKFgVDaTM"
+			]
+		},
+		"contracts/token/ERC721/IERC721Receiver.sol": {
+			"keccak256": "0xf519c884616195e754dcc17993b01095b97ee7c63f695a8b99d351a143195201",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://31d5c889c1bc19d04642d2d6cd3b58bc557f594b9fa67ec05d896366da5f51a4",
+				"dweb:/ipfs/QmVVn4QxiSBBw1hgM7wuA5np2kGiVnn3P59zowzEuhqbyR"
+			]
+		},
+		"contracts/token/ERC721/extensions/ERC721Enumerable.sol": {
+			"keccak256": "0xc9b48f17aa49b3dea367669d4ef094d6349e3ddf5d5d58cbde01319c521a7cf4",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://a2b5145da7b10288dc929ad3223d87a22ceda503310d2c3d8abe2ad7002650f3",
+				"dweb:/ipfs/QmUokbX5zXDrkqdH5YBLy6SigvDh8co1ey77TShSNzu1wG"
+			]
+		},
+		"contracts/token/ERC721/extensions/IERC721Enumerable.sol": {
+			"keccak256": "0x921634b2b0f35058d8b2fbefef4147fabb966e2a9688282452e291cb5e6972a7",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://5ab75c38ea2d78b8f5b40f383b16e1f6311253410675f5b2f67636be30ad0b00",
+				"dweb:/ipfs/QmaPijzBtBPX52xYT3pCLy1PFhTWLaFTwrAh2k2QaciawC"
+			]
+		},
+		"contracts/token/ERC721/extensions/IERC721Metadata.sol": {
+			"keccak256": "0xb61391c8adec70c983c47cff53d490d8ddc71bf37a12da18dc053b45b4d813ae",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://5d08e865414ac6e52f1a61c93acc173079fb3471db5138e3a2c23db2550114cd",
+				"dweb:/ipfs/QmUhQ71H29HyjX9GnSWXdZ1Lnh4EPWAbXPhMyuWgSrDxby"
+			]
+		},
+		"contracts/utils/Address.sol": {
+			"keccak256": "0x4cdad91fcb345358c77f4c752b2b3983f783fb6bcd4c6f7f42dba588612907be",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://678c1bfbb9fc26b0aaa34d404adbe08aa36b88b51c9eba6eba13389dac8580b7",
+				"dweb:/ipfs/QmZdv53JrE4MtTR915KRpDjao32uCg6TPAXs3p95HMFvw1"
+			]
+		},
+		"contracts/utils/Context.sol": {
+			"keccak256": "0xdb19f5cb22f6551fbb03ba38b8af9e543e26deb4d23788f2946f25c091256ca3",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://9381d108c93f3fdd1e5a4580834362f20d0f5e919d97820afd55be553ef10c19",
+				"dweb:/ipfs/QmWjioeW1kKfZHtmgrpxDYhwF2sVZ8gXoWTA9mKZvWvZot"
+			]
+		},
+		"contracts/utils/Strings.sol": {
+			"keccak256": "0x90bf9a67cda8539274966706149096a2c6df1c5504aa1a4c36e8be275db822e8",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://29937e4bb514219e1873d0b765e9980c86d2815e521e2b8608c981e284e808cd",
+				"dweb:/ipfs/QmeJTbsBXFsdkL1KQERnwr1GPqsqci2dB4jzzcVrgGtBHi"
+			]
+		},
+		"contracts/utils/introspection/ERC165.sol": {
+			"keccak256": "0xf0389fb699481b09fe24019d5a53d6a9e4af3c3fb5d0083eed137aed8020ff69",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://ddebb3d549798a232d7e7c74547a802f7fd075a6e4f02a7560e902b5e6f6d995",
+				"dweb:/ipfs/QmP1XhRy71vYxiU5eZfo3D4zZvzxgb4VjGhfjm6N4sK683"
+			]
+		},
+		"contracts/utils/introspection/IERC165.sol": {
+			"keccak256": "0xe09bdf91dde6872fa597c6554ced17e679727988578019bf8aa7954e4479ef76",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://d262e8e7efe5037ade4db603f32b45e320609777241d01498b988acbad81c8e4",
+				"dweb:/ipfs/Qme5ngXzkphT96C1qKWz7XP7yFhYboiP9tVt8AMQHBEkYZ"
+			]
+		}
+	},
+	"version": 1
+}
