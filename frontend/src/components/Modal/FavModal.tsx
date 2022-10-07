@@ -64,7 +64,11 @@ export default function FavModal(props: FavModalType) {
             font-weight: 600;
           `}
         >
-          {(modalContent.nftReserveCount / modalContent.nftTargetCount!) * 100}%
+          {(
+            (modalContent.nftReserveCount / modalContent.nftTargetCount!) *
+            100
+          ).toFixed(0)}
+          %
         </Text>
       </ProgressWrapper>
       <Link href={`/list/${encodeURIComponent(modalContent.startupId)}`}>
