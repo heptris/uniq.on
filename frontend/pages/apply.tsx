@@ -23,6 +23,7 @@ import contracts from "@/contracts/utils";
 import { QUERY_KEYS } from "@/api/query_key_schema";
 import { Member } from "@/types/api_responses";
 import { minDesktopWidth } from "@/styles/utils";
+import Loading from "@/components/Loading";
 
 const initialApplyState = {
   title: "",
@@ -50,6 +51,7 @@ export default function apply() {
   const { form, onChangeForm, setForm } =
     useForm<ApplyFormType>(initialApplyState);
   const { storeNFT } = contracts;
+  const [isLoading, setIsLoading] = useState(false);
 
   const { data: member, refetch } = useQuery<Member>(
     [MY_USER_INFO],
@@ -114,6 +116,8 @@ export default function apply() {
     } else {
       setCurrent(1);
 
+      setIsLoading(true);
+
       const formData = new FormData();
       businessPlanFile && formData.append("plan_paper", businessPlanFile);
       nftImageFile && formData.append("nft_image", nftImageFile);
@@ -166,11 +170,13 @@ export default function apply() {
           .then((res) => {
             console.log(res);
             handleAlertOpen(2000, "투자 신청이 완료되었습니다.", true);
+            setIsLoading(false);
             router.push(HOME);
           })
           .catch((err) => {
             console.log(err);
             handleAlertOpen(2000, "투자 신청이 실패했습니다.", false);
+            setIsLoading(false);
             setForm(initialApplyState);
           });
       }
@@ -179,6 +185,7 @@ export default function apply() {
 
   return (
     <ApplyContainer>
+      {isLoading && <Loading />}
       <Text
         as="h1"
         role="page-header"
