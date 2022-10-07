@@ -59,7 +59,11 @@ const MypageListContainer = ({
       {rsrvs?.map((rsrv: RSRVItem) => (
         <RSRVItemCard
           key={rsrv.startupId}
-          progress={(rsrv.nftReserveCount / rsrv.nftTargetCount) * 100}
+          progress={
+            ((rsrv.nftReserveCount / rsrv.nftTargetCount) * 100).toFixed(
+              0
+            ) as unknown as number
+          }
           nftImage={rsrv.nftImage}
           startupId={rsrv.startupId}
           startupName={rsrv.startupName}
