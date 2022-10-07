@@ -1,8 +1,16 @@
 /* 추상화된 컴포넌트들의 props 타입 */
 
-import { ElementType, ReactElement } from "react";
+import { ElementType } from "react";
 import { CombineElementProps, OverridableProps } from "@/types/utils";
 import { StaticImageData } from "next/image";
+import {
+  AlarmItem,
+  APPLYItem,
+  FAVItem,
+  Member,
+  NFTItem,
+  RSRVItem,
+} from "./api_responses";
 
 export type TextBaseProps = {
   typography?: "content";
@@ -36,8 +44,27 @@ export type GridProps<T extends ElementType> = OverridableProps<
   GridBaseProps
 >;
 
-export type CardBaseProps = {};
+export type CardBaseProps = {
+  clickable?: boolean;
+};
 export type CardProps<T extends ElementType> = OverridableProps<
+  T,
+  CardBaseProps
+>;
+
+export type FAVItemCardBaseProps = {
+  favItem: FAVItem;
+  handleModalOpen: (type: MypageListType) => void;
+  tokenId: number;
+  startupId: number;
+  nftImage: string | StaticImageData;
+  startupName: string;
+  dueDate: string;
+  nftDescription: string;
+  nftPrice: number;
+  isFav: boolean;
+};
+export type FAVItemCardProps<T extends ElementType> = OverridableProps<
   T,
   CardBaseProps
 >;
@@ -53,7 +80,7 @@ export type AvatarProps<T extends ElementType> = OverridableProps<
 
 export type AlertBaseProps = {
   isSuccess: boolean;
-  message?: string;
+  message: string;
 };
 export type AlertProps<T extends ElementType> = OverridableProps<
   T,
@@ -72,6 +99,9 @@ export type SelectTabProps<T extends ElementType> = CombineElementProps<
 
 export type FileUploadBaseProps = {
   text: string;
+  type?: "img" | "pdf";
+  onFileSelectSuccess(file: File): void;
+  onFileSelectError(error: any): void;
 };
 export type FileUploadProps<T extends ElementType> = CombineElementProps<
   T,
@@ -117,9 +147,22 @@ export type LabelInputProps<T extends ElementType> = OverridableProps<
 >;
 
 export type CarouselItem = {
-  corpName: string;
+  startupName: string;
   image: string | StaticImageData;
 };
 export type CarouselProps = {
   items: CarouselItem[];
+};
+
+// export type MypageListType = "APPLY" | "NFT" | "FAVOTIRES" | "RESERVE";
+export type MypageListType = NFTItem | FAVItem | RSRVItem | APPLYItem;
+export type MyPageProps = {
+  member: Member;
+  applyList: APPLYItem[];
+  favoriteList: FAVItem[];
+  reserveList: RSRVItem[];
+  nftList: NFTItem[];
+};
+export type AlarmProps = {
+  alarmList: AlarmItem[];
 };

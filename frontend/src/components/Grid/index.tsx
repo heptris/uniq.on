@@ -22,7 +22,7 @@ function Grid<T extends ElementType = "div">(
         width: 100%;
         display: grid;
         grid-template-columns: repeat(1, 1fr);
-        gap: 2vw;
+        gap: 3vw;
         ${column === "double" &&
         `
           grid-template-columns: repeat(2, 1fr);
@@ -30,10 +30,10 @@ function Grid<T extends ElementType = "div">(
 
         @media (${minTabletWidth}) {
           grid-template-columns: repeat(2, 1fr);
+          gap: 1vw;
         }
         @media (${minDesktopWidth}) {
           grid-template-columns: repeat(3, 1fr);
-          gap: 1vw;
           ${column === "double" &&
           `
           grid-template-columns: repeat(4, 1fr);

@@ -32,7 +32,12 @@ function SelectTab<T extends ElementType = "div">(
   };
 
   return (
-    <>
+    <div
+      css={css`
+        width: 100%;
+        white-space: nowrap;
+      `}
+    >
       <SelectTabContainer colorMap={colorMap} type={type} ref={ref} {...rest}>
         {menus.map((menu, i) => (
           <label key={i}>
@@ -59,7 +64,7 @@ function SelectTab<T extends ElementType = "div">(
         ))}
       </SelectTabContainer>
       <Hr />
-    </>
+    </div>
   );
 }
 
@@ -71,6 +76,8 @@ type SCProps = {
 const SelectTabContainer = styled.div<SCProps>`
   width: 100%;
   display: flex;
+  flex-wrap: nowrap;
+  overflow: auto;
 
   input[type="radio"] {
     display: none;
@@ -101,7 +108,6 @@ const Selects = styled.div`
   }
 `;
 const Hr = styled.hr`
-  width: 100%;
   border: 1px solid ${({ theme }) => theme.color.background.card};
   margin-bottom: 1rem;
 `;

@@ -5,14 +5,14 @@ import { css, useTheme } from "@emotion/react";
 import { cssConvex } from "@/styles/utils";
 
 /**
- * @props
- * @return `ReactElement`
+ * @params
+ * @returns `ReactElement`
  */
 function Card<T extends ElementType = "div">(
   props: CardProps<T>,
   ref: Ref<any>
 ) {
-  const { as, children, ...rest } = props;
+  const { as, children, clickable = false, ...rest } = props;
   const target = as ?? "div";
   const Component = target;
 
@@ -28,6 +28,14 @@ function Card<T extends ElementType = "div">(
         overflow: hidden;
         background-color: ${theme.color.background.card};
         z-index: 0;
+
+        ${clickable &&
+        `
+          &:hover {
+            cursor: pointer;
+            filter: brightness(80%);
+          }
+        `}
       `}
       ref={ref}
       {...rest}

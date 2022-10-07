@@ -1,81 +1,253 @@
-import Text from "@/components/Text";
+import axios from "axios";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+
 import { css, useTheme } from "@emotion/react";
 import styled from "@emotion/styled";
-import { useState } from "react";
+import { uniqonThemes } from "@/styles/theme";
+
+import Text from "@/components/Text";
 import Button from "@/components/Button";
 import LabelInput from "@/components/LabelInput";
 import CircleBar from "@/components/CircleBar";
-import { uniqonThemes } from "@/styles/theme";
 import FileUpload from "@/components/FileUpload";
-import { useRouter } from "next/router";
+
+import { getUserInfo, useAlert, useAuth, useForm } from "@/hooks";
+
+import { ENDPOINT_API } from "@/api/endpoints";
+import { ApplyFormType } from "@/types/api_requests";
+import { ROUTES, UNIQON_TOKEN } from "@/constants";
+import contracts from "@/contracts/utils";
+
+import { QUERY_KEYS } from "@/api/query_key_schema";
+import { Member } from "@/types/api_responses";
+import { minDesktopWidth } from "@/styles/utils";
+import Loading from "@/components/Loading";
+
+const initialApplyState = {
+  title: "",
+  dueDate: "",
+  description: "",
+  discordUrl: "",
+  businessPlanFile: null,
+  roadMapFile: null,
+  nftTargetCount: 1,
+  nftPrice: 0,
+  nftDescription: "",
+  nftImageFile: null,
+  isChecked: false,
+};
+
+const { LOGIN, HOME } = ROUTES;
+const { MY_USER_INFO } = QUERY_KEYS;
 
 export default function apply() {
-  const theme = useTheme();
+  const { isLogined } = useAuth();
   const router = useRouter();
+  const theme = useTheme();
+  const { handleAlertOpen } = useAlert();
   const [current, setCurrent] = useState(1);
-  const [isChecked, setIsChecked] = useState(false);
-  const currentUpHandler = () => {
-    setCurrent(current + 1);
+  const { form, onChangeForm, setForm } =
+    useForm<ApplyFormType>(initialApplyState);
+  const { storeNFT } = contracts;
+  const [isLoading, setIsLoading] = useState(false);
+
+  const { data: member, refetch } = useQuery<Member>(
+    [MY_USER_INFO],
+    getUserInfo,
+    { initialData: {} as Member }
+  );
+
+  const { nickname: startupName, id: startupId } = member;
+
+  useEffect(() => {
+    isLogined
+      ? refetch()
+      : (() => {
+          handleAlertOpen(2000, "로그인이 필요한 서비스입니다", false);
+          router.push(LOGIN);
+        })();
+  }, []);
+
+  const {
+    businessPlanFile,
+    description,
+    discordUrl,
+    dueDate,
+    isChecked,
+    nftDescription,
+    nftImageFile,
+    nftPrice,
+    nftTargetCount,
+    roadMapFile,
+    title,
+  } = form;
+
+  //1단계 정보
+
+  const onFirstNextHandler = () => {
+    title &&
+    dueDate &&
+    description &&
+    discordUrl &&
+    businessPlanFile &&
+    roadMapFile
+      ? setCurrent(current + 1)
+      : handleAlertOpen(2000, "모든 칸을 채워주세요.", false);
   };
-  const submitHandler = () => {
+
+  const today = new Date().toISOString().slice(0, 10);
+
+  //2단계 정보
+
+  const onSecondNextHandler = () => {
+    nftTargetCount && nftPrice && nftDescription && nftImageFile
+      ? setCurrent(current + 1)
+      : handleAlertOpen(2000, "모든 칸을 채워주세요.", false);
+  };
+
+  //3단계 정보
+
+  const onSubmit = async () => {
+    // console.log(form, axios.defaults.headers.common);
     if (!isChecked) {
-      alert("개인정보 동의를 체크해주세요");
+      handleAlertOpen(2000, "개인정보 동의를 체크해주세요", false);
     } else {
-      alert("신청이 완료되었습니다.");
       setCurrent(1);
-      setIsChecked(false);
-      router.push("/");
+
+      setIsLoading(true);
+
+      const formData = new FormData();
+      businessPlanFile && formData.append("plan_paper", businessPlanFile);
+      nftImageFile && formData.append("nft_image", nftImageFile);
+      roadMapFile && formData.append("road_map", roadMapFile);
+
+      const config = {
+        headers: {
+          "content-type": "multipart/form-data;charset=UTF-8;",
+        },
+      };
+
+      const token = await storeNFT({
+        startupId,
+        nftImage: nftImageFile,
+        startupName,
+        nftPrice,
+        nftDescription,
+      });
+
+      if (!token) {
+        handleAlertOpen(2000, "NFT 업로드 실패", false);
+      } else {
+        const url = "https://ipfs.io/ipfs/" + token.url.split("://")[1];
+        // console.log(dueDate); // 2022-10-07T23:59:59.999Z
+        let [date, time] = dueDate.split("T");
+        const dt = new Date();
+        dt.setMinutes(dt.getMinutes() + 2);
+        const tmp = dt.toString().split(" ");
+        time = tmp[tmp.length - 4];
+
+        const newDueDate = date + `T${time}.999Z`;
+
+        const data = {
+          title,
+          dueDate: newDueDate,
+          description,
+          discordUrl,
+          nftTargetCount,
+          nftPrice,
+          nftDescription,
+          tokenURI: url,
+        };
+        formData.append(
+          "startupRequestDto",
+          new Blob([JSON.stringify(data)], { type: "application/json" })
+        );
+
+        axios
+          .post(`${ENDPOINT_API}/invest/regist`, formData, config)
+          .then((res) => {
+            console.log(res);
+            handleAlertOpen(2000, "투자 신청이 완료되었습니다.", true);
+            setIsLoading(false);
+            router.push(HOME);
+          })
+          .catch((err) => {
+            console.log(err);
+            handleAlertOpen(2000, "투자 신청이 실패했습니다.", false);
+            setIsLoading(false);
+            setForm(initialApplyState);
+          });
+      }
     }
-  };
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    e.target.checked ? setIsChecked(true) : setIsChecked(false);
   };
 
   return (
-    <ContainWrapper>
+    <ApplyContainer>
+      {isLoading && <Loading />}
       <Text
         as="h1"
+        role="page-header"
         css={css`
-          font-size: 1.5rem;
-          margin: 5rem 0 1rem;
+          font-size: 2rem;
+          font-weight: 700;
+          margin-bottom: 2rem;
+          align-self: start;
         `}
       >
         투자받기
       </Text>
       <CircleBar current={current} total={3} />
       {current === 1 && (
-        <>
-          <LabelInput css={LabelInputStyle} labelText="기업명" />
-          <LabelInput css={LabelInputStyle} labelText="담당자 이름/직함" />
-          <LabelInput css={LabelInputStyle} labelText="담당자 이메일" />
-          <LabelInput css={LabelInputStyle} labelText="담당자 연락처" />
-          <Button css={ButtonStyle} onClick={currentUpHandler}>
-            다음단계
-          </Button>
-        </>
-      )}
-      {current === 2 && (
-        <>
-          <LabelInput css={LabelInputStyle} labelText="희망 모집 금액(SSH)" />
+        <div
+          css={css`
+            width: 100%;
+          `}
+        >
+          <LabelInput
+            css={LabelInputStyle}
+            labelText="펀딩 제목"
+            name="title"
+            onChange={onChangeForm}
+          />
+          <LabelInput
+            css={LabelInputStyle}
+            labelText="기업 소개"
+            name="description"
+            onChange={onChangeForm}
+          />
           <LabelInput
             type="date"
             css={LabelInputStyle}
-            labelText="투자 마감일"
+            labelText="펀딩 마감일"
+            min={today}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              setForm({ ...form, dueDate: e.target.value + "T23:59:59.999Z" })
+            }
           />
-          <SelectInputTitle>토큰 발행 개수</SelectInputTitle>
-          <SelectInput id="토큰 발행 개수">
-            <option>10</option>
-            <option>20</option>
-            <option>30</option>
-          </SelectInput>
-
-          <LabelInput css={LabelInputStyle} labelText="디스코드 주소" />
-          <LabelInput css={LabelInputStyle} labelText="회사 소개글" />
-          <LabelInput css={LabelInputStyle} labelText="투자자 모집 제목" />
-          <FileUpload text="사업소개서 및 프로젝트 소개서(파일용량 50MB까지)" />
-          <FileUpload text="NFT 이미지 파일을 첨부해주세요." />
-          <FileUpload text="NFT 투자혜택 로드맵을 제출해주세요." />
-
+          <LabelInput
+            css={LabelInputStyle}
+            labelText="디스코드 주소"
+            name="discordUrl"
+            onChange={onChangeForm}
+          />
+          <FileUpload
+            type="pdf"
+            text="사업소개서 및 프로젝트 소개서 (pdf, 최대 5MB)"
+            onFileSelectSuccess={(file: any) =>
+              setForm({ ...form, businessPlanFile: file })
+            }
+            onFileSelectError={({ error }) => alert(error)}
+          />
+          <FileUpload
+            type="pdf"
+            text="투자 보상 로드맵 (pdf, 최대 5MB)"
+            onFileSelectSuccess={(file: any) =>
+              setForm({ ...form, roadMapFile: file })
+            }
+            onFileSelectError={({ error }) => alert(error)}
+          />
           <Text
             css={css`
               align-self: flex-start;
@@ -85,15 +257,75 @@ export default function apply() {
               href="https://themetakongz.com/kr.html#sec_roadmap"
               target="_blank"
             >
-              NFT 투자혜택 로드맵 예시 링크(메타콩즈)
+              투자 보상 로드맵 예시
             </LoadmapLink>
           </Text>
-
-          <Button css={ButtonStyle} onClick={currentUpHandler}>
+          <Button css={ButtonStyle} onClick={onFirstNextHandler}>
             다음단계
           </Button>
-        </>
+        </div>
       )}
+
+      {current === 2 && (
+        <div
+          css={css`
+            width: 100%;
+          `}
+        >
+          {/* <SelectInputTitle>토큰 발행 개수</SelectInputTitle>
+          <SelectInput
+            id="토큰 발행 개수"
+            onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
+              setForm({ ...form, nftTargetCount: +e.target.value })
+            }
+            value={nftTargetCount}
+          >
+            <option value="1">1</option>
+            <option value="10">10</option>
+            <option value="20">20</option>
+            <option value="30">30</option>
+          </SelectInput> */}
+          <LabelInput
+            css={LabelInputStyle}
+            labelText={`최소 발행 토큰 수`}
+            type="number"
+            min="1"
+            max="30"
+            name="nftPrice"
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              setForm({ ...form, nftTargetCount: +e.target.value })
+            }
+          />
+          <LabelInput
+            css={LabelInputStyle}
+            labelText={`토큰 개당 가격 (${UNIQON_TOKEN})`}
+            type="number"
+            min="0"
+            name="nftPrice"
+            onChange={onChangeForm}
+          />
+          <LabelInput
+            css={LabelInputStyle}
+            labelText="NFT 소개"
+            name="nftDescription"
+            onChange={onChangeForm}
+          />
+
+          <FileUpload
+            type="img"
+            text="NFT 이미지 (png, jpg, gif)"
+            onFileSelectSuccess={(file: any) =>
+              setForm({ ...form, nftImageFile: file })
+            }
+            onFileSelectError={({ error }) => alert(error)}
+          />
+
+          <Button css={ButtonStyle} onClick={onSecondNextHandler}>
+            다음단계
+          </Button>
+        </div>
+      )}
+
       {current === 3 && (
         <>
           <Text
@@ -106,61 +338,72 @@ export default function apply() {
           <InfoAgreeBox>
             <Text
               css={css`
-                font-size: 0.5rem;
+                font-size: 0.8rem;
               `}
             >
-              uniq.on(이하 유니콘)은 펀딩 정보제공 목적으로 개인정보(성명,
+              {"  "}uniq.on(이하 유니콘)은 펀딩 정보제공 목적으로 개인정보(성명,
               이메일, 연락처)를 수집하고자 하며, 수집된 개인정보는 수집 및
               이용목적이 달성된 후에는 지체 없이 파기합니다.
-              <br /> 개인 정보 수집 및 이용에 대하여 동의를 거부할 수 있으나,
+              <br />
+              {"  "}개인 정보 수집 및 이용에 대하여 동의를 거부할 수 있으나,
               거부할 시 uniq.on 정보제공 신청이 완료되지 않음에 유의하시기
               바랍니다.
             </Text>
           </InfoAgreeBox>
           <AgreeCheckBox>
-            <LabelInput id="infoAgree" type="checkbox" onChange={onChange} />
+            <LabelInput
+              id="infoAgree"
+              type="checkbox"
+              name="isChecked"
+              onChange={onChangeForm}
+            />
             <label
               htmlFor="infoAgree"
               css={css`
-                font-size: 0.5rem;
+                font-size: 0.8rem;
                 color: ${theme.color.text.main};
               `}
             >
               개인정보 수집 및 이용에 동의합니다.
             </label>
           </AgreeCheckBox>
-          <Button css={ButtonStyle} onClick={submitHandler}>
+          <Button css={ButtonStyle} onClick={onSubmit}>
             제출완료
           </Button>
         </>
       )}
-    </ContainWrapper>
+    </ApplyContainer>
   );
 }
 
-const ContainWrapper = styled.div`
+const ApplyContainer = styled.form`
+  padding-top: 5rem;
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  color: ${({ theme }) => theme.color.text.main};
+
+  @media (${minDesktopWidth}) {
+    width: 33.33%;
+  }
 `;
 
 const LabelInputStyle = css`
-  width: 20rem;
-  height: 2.5rem;
+  height: 3rem;
   margin-bottom: 1rem;
   color: ${uniqonThemes.darkTheme.color.text.main};
 `;
 
 const ButtonStyle = css`
   margin: 2rem 0 0;
-  width: 20rem;
+  width: 100%;
+  height: 3rem;
 `;
 
 const InfoAgreeBox = styled.div`
-  width: 20rem;
-  height: 7rem;
+  width: 100%;
+  height: 9rem;
   padding: 0.5rem;
   margin: 1rem 0;
   border-radius: 0.5rem;
@@ -168,13 +411,13 @@ const InfoAgreeBox = styled.div`
 `;
 
 const AgreeCheckBox = styled.div`
-  width: 20rem;
+  width: 100%;
   display: flex;
   align-items: center;
 `;
 
 const LoadmapLink = styled.a`
-  font-size: 0.5rem;
+  font-size: 0.8rem;
   color: ${({ theme }) => theme.color.background.emphasis};
   &:hover {
     cursor: pointer;

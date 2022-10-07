@@ -2,21 +2,51 @@ import { useEffect, useState } from "react";
 import Web3 from "web3";
 import { Contract } from "web3-eth-contract";
 
+import { NFTStorage } from "nft.storage";
+
 import type { AbiItem } from "web3-utils";
 import type { Maybe } from "@metamask/providers/dist/utils";
+import type { StoreNFTParams } from "@/types/api_requests";
+import type { Transaction } from "@/types/contracts";
+import { useAppDispatch, useAppSelector } from "@/hooks";
+import { _setAccount } from "@/store";
 
 const contracts = {
+  data: {
+    APIToken: process.env.NFT_STORAGE_API_TOKEN,
+    "ERC-721": "0x29154C9cd166f8df49fC80d900EDC177028710c8",
+  },
+
+  storeNFT: async (params: StoreNFTParams) => {
+    const {
+      startupId,
+      nftImage,
+      startupName,
+      nftPrice: price,
+      nftDescription,
+    } = params;
+    if (!contracts.data.APIToken || !nftImage) return;
+
+    const description = `${startupId}::${price}::${nftDescription}`;
+    const nftstorage = new NFTStorage({ token: contracts.data.APIToken });
+
+    return nftstorage.store({
+      image: nftImage,
+      name: startupName,
+      description,
+    });
+  },
+
   useWeb3: () => {
     const [web3, setWeb3] = useState<Web3>();
-    const [mintUniqonTokenContract, setMintUniqonTokenContract] =
+    const [mintUniqonNFTContract, setMintUniqonNFTContract] =
       useState<Contract>();
-    const [saleUniqonTokenContract, setSaleUniqonTokenContract] =
-      useState<Contract>();
+    const [uniqonTokenContract, setUniqonTokenContract] = useState<Contract>();
 
     const getWeb3 = () => {
       if (!window.ethereum) {
-        alert("Metamask를 설치해주세요!");
-        throw new Error("Metamask is not installed.");
+        alert("MetaMask를 설치해주세요!");
+        throw new Error("MetaMask is not installed.");
       }
 
       setWeb3(new Web3(window.ethereum as any));
@@ -26,28 +56,28 @@ const contracts = {
       if (!web3) return;
 
       const mintContractJSON = require("./MintUniqonToken.json");
-      const mintUniqonTokenContractAbi: AbiItem[] = mintContractJSON.abi;
-      const mintUniqonTokenContractAccount: string =
+      const mintUniqonNFTContractAbi: AbiItem[] = mintContractJSON.abi;
+      const mintUniqonNFTContractAccount: string =
         mintContractJSON.networks[networkId].address;
       const contractInstance = new web3.eth.Contract(
-        mintUniqonTokenContractAbi,
-        mintUniqonTokenContractAccount
+        mintUniqonNFTContractAbi,
+        mintUniqonNFTContractAccount
       );
-      setMintUniqonTokenContract(contractInstance);
+      setMintUniqonNFTContract(contractInstance);
     };
 
-    const getSale = (networkId: number) => {
+    const getToken = (networkId: number) => {
       if (!web3) return;
 
-      const saleContractJSON = require("./SaleUniqonToken.json");
-      const saleUniqonTokenContractAbi: AbiItem[] = saleContractJSON.abi;
-      const saleUniqonTokenContractAccount: string =
-        saleContractJSON.networks[networkId].address;
+      const tokenContractJSON = require("./UniqonToken.json");
+      const uniqonTokenContractAbi: AbiItem[] = tokenContractJSON.abi;
+      const uniqonTokenContractAccount: string =
+        tokenContractJSON.networks[networkId].address;
       const contractInstance = new web3.eth.Contract(
-        saleUniqonTokenContractAbi,
-        saleUniqonTokenContractAccount
+        uniqonTokenContractAbi,
+        uniqonTokenContractAccount
       );
-      setSaleUniqonTokenContract(contractInstance);
+      setUniqonTokenContract(contractInstance);
     };
 
     useEffect(() => {
@@ -56,24 +86,25 @@ const contracts = {
         (async () => {
           const networkId: number = await web3.eth.net.getId();
           getMint(networkId);
-          getSale(networkId);
+          getToken(networkId);
         })();
       }
     }, [web3]);
 
-    return { web3, mintUniqonTokenContract, saleUniqonTokenContract };
+    return { web3, mintUniqonNFTContract, uniqonTokenContract };
   },
 
   useAccount: () => {
-    const [account, _setAccount] = useState("");
+    const { walletAddress: account } = useAppSelector((state) => state.auth);
+    const dispatch = useAppDispatch();
 
-    const connect = () => {
+    const connect = async () => {
       if (!window.ethereum) {
-        alert("Metamask를 설치해주세요!");
-        throw new Error("Metamask is not installed.");
+        alert("MetaMask를 설치해주세요!");
+        throw new Error("MetaMask is not installed.");
       }
 
-      return window.ethereum
+      return await window.ethereum
         .request({
           method: "eth_requestAccounts",
         })
@@ -83,12 +114,12 @@ const contracts = {
         });
     };
 
-    const checkConnection = () => {
+    const checkConnection = async () => {
       if (!window.ethereum) {
         alert("Metamask를 설치해주세요!");
         throw new Error("Metamask is not installed.");
       }
-      return window.ethereum
+      return await window.ethereum
         .request({ method: "eth_accounts" })
         .then(handleAccountsChanged)
         .catch(console.error);
@@ -99,14 +130,71 @@ const contracts = {
 
       // 0이면 지갑 미연결 상태
       if (response.length === 0) return false;
-      // 지갑 연결되어 잇으면 공개주소를 account에 넣고 연결되어 있음 반환
+      // 지갑 연결되어 있으면 공개주소를 account에 넣고 연결되어 있음 반환
       else {
-        _setAccount(response[0]);
+        dispatch(_setAccount(response[0]));
         return true;
       }
     }
 
     return { account, connect, checkConnection };
+  },
+
+  useContract: () => {
+    const { account } = contracts.useAccount();
+    const { web3, mintUniqonNFTContract, uniqonTokenContract } =
+      contracts.useWeb3();
+
+    const checkBalance = async () => {
+      if (!mintUniqonNFTContract || !uniqonTokenContract) return;
+      const res = await uniqonTokenContract.methods.balanceOf(account).call();
+
+      return res;
+    };
+
+    const buyToken = async (tokenId: number) => {
+      if (!mintUniqonNFTContract || !uniqonTokenContract) return;
+      const res = new Array<Transaction | number>(3);
+
+      res[0] = await uniqonTokenContract.methods.balanceOf(account).call();
+      res[1] = await uniqonTokenContract.methods
+        .approve(contracts.data["ERC-721"], res[0])
+        .send({ from: account });
+      if (!res[0] || !res[1]) {
+        alert("토큰 잔액이 부족합니다.");
+        return;
+      }
+
+      res[2] = await mintUniqonNFTContract.methods
+        .purchaseUniqonToken(tokenId)
+        .send({ from: account });
+
+      return res;
+    };
+
+    /**
+     *
+     * @param param0 : token 관련 metadata
+     * @returns
+     */
+    const mintToken = async ({
+      tokenURI,
+      totalAmount,
+      price,
+    }: {
+      tokenURI: string;
+      totalAmount: number;
+      price: number;
+    }) => {
+      if (!mintUniqonNFTContract || !uniqonTokenContract) return;
+      const res: Transaction = await mintUniqonNFTContract.methods
+        .create(account, tokenURI, totalAmount, price)
+        .send({ from: account });
+
+      return res;
+    };
+
+    return { checkBalance, buyToken, mintToken };
   },
 };
 

@@ -1,41 +1,117 @@
-import { css } from "@emotion/react";
-import styled from "@emotion/styled";
+import { useEffect } from "react";
+import { GetServerSideProps } from "next";
 
-import nft1 from "@/assets/nfts/3.png";
+import { css, useTheme } from "@emotion/react";
+import styled from "@emotion/styled";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHeart } from "@fortawesome/free-solid-svg-icons";
+import { cssFontFamily, minDesktopWidth } from "@/styles/utils";
 
 import Grid from "@/components/Grid";
 import Card from "@/components/Card";
-import { cssFontFamily, minDesktopWidth } from "@/styles/utils";
 import NFTItemCard from "@/components/Card/NFTItemCard";
 import Text from "@/components/Text";
 import Button from "@/components/Button";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeart } from "@fortawesome/free-solid-svg-icons";
-import ProgressBar from "@/components/ProgressBar";
 
-function InvestmentDetail() {
-  const menus = [];
+import {
+  getIR,
+  useIR,
+  useNftFavMutation,
+  useNftReserveMutation,
+  useAlert,
+} from "@/hooks";
+
+import { IR } from "@/types/api_responses";
+
+type IDProps = {
+  irInfo: IR;
+  id: string | string[] | undefined;
+};
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const { id } = context.query;
+  const irInfo = await getIR(id);
+  return { props: { irInfo, id } };
+};
+
+function InvestmentDetail(props: IDProps) {
+  const { irInfo, id } = props;
+  const { color } = useTheme();
+  const { handleAlertOpen } = useAlert();
+  const { data: InvestmentRequest, refetch } = useIR(id, irInfo);
+  const {
+    isReserved,
+    isFav,
+    dueDate,
+    nftDescription,
+    nftImage,
+    nftPrice,
+    nftReserveCount,
+    nftTargetCount,
+    planPaperImg,
+    roadMap,
+    startupId,
+    startupName,
+  } = InvestmentRequest;
+
+  useEffect(() => {
+    refetch();
+  }, []);
+
+  const { mutate: mutateNftReserve } = useNftReserveMutation();
+  const { mutate: mutateNftFav } = useNftFavMutation();
+
+  const handleNftReserve = () => {
+    mutateNftReserve(
+      { startupId: id },
+      {
+        onSettled: () => refetch(),
+      }
+    );
+  };
+  const handleNftFav = () => {
+    mutateNftFav(
+      { startupId: id },
+      {
+        onSuccess: () => {
+          handleAlertOpen(
+            2000,
+            isFav ? "즐겨찾기가 해제되었습니다." : "즐겨찾기가 등록되었습니다.",
+            true
+          );
+        },
+        onError() {
+          handleAlertOpen(2000, `즐겨찾기 처리 중 에러가 발생했습니다.`, false);
+        },
+        onSettled: () => refetch(),
+      }
+    );
+  };
 
   return (
     <Grid
       css={css`
         padding-top: 2rem;
+        width: 100%;
 
         @media (${minDesktopWidth}) {
+          width: 70%;
           grid-template-columns: repeat(2, 1fr);
         }
       `}
     >
       <NFTInfo>
         <NFTItemCard
-          nftImage={nft1}
-          tokenId={1}
-          corpName={"Samsung NEXT"}
-          price={0.99}
+          nftDescription={InvestmentRequest.nftDescription}
+          nftReserveCount={InvestmentRequest.nftReserveCount}
+          startupId={startupId}
+          nftImage={nftImage}
+          startupName={startupName}
+          nftPrice={nftPrice}
         />
         <Card
           css={css`
-            margin-top: 0.5rem;
+            margin-top: 1rem;
           `}
         >
           <CardContent>
@@ -47,34 +123,71 @@ function InvestmentDetail() {
               `}
             >
               <Text as="h1">NFT 소개</Text>
-              <FavoriteButton>
-                <FontAwesomeIcon icon={faHeart} width={"1.8rem"} />
-                38
+              <FavoriteButton onClick={handleNftFav}>
+                {isFav ? (
+                  <FontAwesomeIcon
+                    icon={faHeart}
+                    width={"1.4rem"}
+                    css={css`
+                      color: ${color.background.main};
+                      &:hover {
+                        color: ${color.text.main};
+                      }
+                    `}
+                  />
+                ) : (
+                  <FontAwesomeIcon icon={faHeart} width={"1.4rem"} />
+                )}
               </FavoriteButton>
             </div>
-            <Text as="p">이건 이쁜 NFT</Text>
+            <Text as="p">{nftDescription}</Text>
 
             <Text as="h1">상세정보</Text>
-            <Text as="h2">Blockchain</Text>
-            <Text as="p">Ethereum</Text>
-            <Text as="h2">발행 토큰 수</Text>
-            <Text as="p">1000</Text>
-            <Text as="h2">Token Standard</Text>
-            <Text as="p">ERC-721</Text>
-            <Text as="h2">펀딩 마감일</Text>
-            <Text as="p">2022.09.26</Text>
-            <Text as="h2">펀딩 진행률</Text>
-            <Text as="p">50%</Text>
-
-            <Button
-              size="full"
-              css={css`
-                height: 3rem;
-                margin-top: 3rem;
-              `}
-            >
-              구매예약
-            </Button>
+            <InlineInfo>
+              <Text as="h2">블록체인</Text>
+              <Text as="p">Ethereum</Text>
+            </InlineInfo>
+            <InlineInfo>
+              <Text as="h2">최소 발행 토큰 수</Text>
+              <Text as="p">{nftTargetCount}</Text>
+            </InlineInfo>
+            <InlineInfo>
+              <Text as="h2">토큰 표준</Text>
+              <Text as="p">ERC-721</Text>
+            </InlineInfo>
+            <InlineInfo>
+              <Text as="h2">펀딩 마감일</Text>
+              <Text as="p">{dueDate}</Text>
+            </InlineInfo>
+            <InlineInfo>
+              <Text as="h2">펀딩 진행률</Text>
+              <Text as="p">
+                {((nftReserveCount / nftTargetCount) * 100).toFixed(2)}%
+              </Text>
+            </InlineInfo>
+            {isReserved ? (
+              <Button
+                size="full"
+                css={css`
+                  height: 3rem;
+                  margin-top: 3rem;
+                `}
+                disabled={true}
+              >
+                예약완료
+              </Button>
+            ) : (
+              <Button
+                size="full"
+                css={css`
+                  height: 3rem;
+                  margin-top: 3rem;
+                `}
+                onClick={handleNftReserve}
+              >
+                구매예약
+              </Button>
+            )}
           </CardContent>
         </Card>
       </NFTInfo>
@@ -82,46 +195,18 @@ function InvestmentDetail() {
       <Card>
         <CardContent>
           <Text as="h1">기업 소개</Text>
-          <Text>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce
-            semper porttitor facilisis. Sed facilisis diam a nisl venenatis
-            suscipit. Nam vitae consequat dui. Praesent in odio iaculis nibh
-            rhoncus tempus a id ligula. Nullam dignissim neque eu lacinia
-            finibus. In magna nunc, vulputate sed urna vel, dignissim suscipit
-            eros. Duis at sagittis erat. Ut sed eros venenatis, blandit odio ac,
-            ornare felis. Ut odio sapien, fermentum et lacus sed, pharetra
-            elementum velit. Suspendisse dui velit, maximus quis nibh non,
-            rhoncus egestas turpis. Proin eget urna vitae dui tincidunt
-            facilisis. Nulla facilisi. Suspendisse ullamcorper tellus et
-            facilisis eleifend. Vivamus posuere libero suscipit dui dignissim
-            lobortis. Etiam vitae consectetur lacus. Vivamus viverra varius eros
-            dapibus vestibulum. Ut porta, lectus a pretium faucibus, lectus
-            felis sodales metus, ac gravida urna lectus sed neque. Fusce
-            facilisis at nibh et viverra. Sed iaculis varius metus, non
-            consequat lorem pulvinar iaculis. Sed at diam justo. Etiam leo ex,
-            maximus non enim vel, pellentesque pretium nibh. Class aptent taciti
-            sociosqu ad litora torquent per conubia nostra, per inceptos
-            himenaeos. Nullam gravida imperdiet euismod. Maecenas dapibus, dolor
-            vel gravida maximus, arcu nibh cursus sapien, a mollis neque nisi ac
-            urna. Nam sit amet placerat lacus. Fusce aliquet lectus vitae
-            placerat dignissim. Sed imperdiet sagittis metus at fringilla.
-            Aenean semper tellus non sem congue, nec iaculis nunc tincidunt.
-            Donec vel facilisis ipsum. Donec mi sem, ornare sed eros id, aliquam
-            mattis lectus. Donec fermentum nisl elit. Integer libero eros,
-            condimentum id sem ac, accumsan dapibus ipsum. Morbi non tellus
-            ullamcorper, pellentesque massa vehicula, efficitur odio. Nulla
-            finibus nibh non efficitur faucibus. Maecenas velit nulla, sodales
-            in neque ut, fermentum feugiat sem. Maecenas non metus a diam congue
-            fringilla. In id elit orci. Praesent rhoncus quis nisl non
-            vulputate. Aenean molestie et sem id gravida. Vivamus dignissim
-            rhoncus mauris, eu finibus lorem elementum nec. Donec tincidunt
-            lorem vitae molestie hendrerit. Morbi eu scelerisque metus. Vivamus
-            in risus id lorem viverra laoreet. Fusce malesuada nec ipsum a
-            placerat. Aliquam erat volutpat. Aliquam sit amet lacinia ligula.
-            Nullam vestibulum interdum neque at iaculis.
-          </Text>
+          <ImageContainer>
+            <img src={planPaperImg} width={"100%"} />
+          </ImageContainer>
 
-          <Text as="h1">Q&A</Text>
+          <Text as="h1">투자 보상 로드맵</Text>
+          <ImageContainer>
+            <img src={roadMap} width={"100%"} />
+          </ImageContainer>
+
+          {/* <Text as="h1">Q&A</Text>
+
+          <LabelInput placeholder={"NFT 구매 전, 질문을 할 수 있어요."} /> */}
         </CardContent>
       </Card>
     </Grid>
@@ -145,7 +230,6 @@ const CardContent = styled.div`
     font-weight: 600;
   }
   p {
-    margin-bottom: 1rem;
     font-weight: 500;
   }
 `;
@@ -158,12 +242,25 @@ const FavoriteButton = styled.button`
   display: flex;
   gap: 0.5em;
   align-items: center;
+  transition: color 0.3s ease 0s;
+  opacity: 60%;
   ${cssFontFamily}
 
   &:hover {
     cursor: pointer;
-    color: ${({ theme }) => theme.color.background.main};
+    color: ${({ theme }) => theme.color.hover.main};
   }
+`;
+const InlineInfo = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+`;
+const ImageContainer = styled.div`
+  position: relative;
+  width: 100%;
+  height: fit-content;
+  overflow: hidden;
 `;
 
 export default InvestmentDetail;

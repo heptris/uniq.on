@@ -13,39 +13,85 @@ export type Member = {
 };
 /** Investment Request */
 export type IR = {
-  id: number;
-  corpName: string;
-  planPaper: string;
-  roadmap: string;
+  memberId?: number;
+  startupId: number;
+  startupName: string;
+  title: string;
+  description: string;
+  nftTargetCount: number;
+  nftReserveCount: number;
+  nftPrice: number;
+  dueDate: string;
+  planPaperImg: string;
+  roadMap: string;
+  nftImage: string | StaticImageData;
+  nftDescription: string;
+  isFinished: boolean;
+  isGoal: boolean;
+  isFav: boolean;
+  discordUrl: string;
+  enrollStatus?: "PENDING" | "ACCEPT" | "REJECT";
+  rejectReason?: string;
+  isReserved: boolean;
+};
+
+export type NFTItem = {
+  nftTargetCount?: number;
+  nftReserveCount: number;
+  nftDescription: string;
+  startupId: number;
+  nftImage: string | StaticImageData;
+  startupName: string;
+  nftPrice: number;
+};
+
+export type FAVItem = {
+  nftTargetCount: number;
+  nftReserveCount: number;
+  isFav: boolean;
+  startupId: number;
+  nftImage: string | StaticImageData;
+  startupName: string;
+  dueDate: string;
+  nftDescription: string;
+  nftPrice: number;
+};
+
+export type RSRVItem = {
+  nftTargetCount: number;
+  startupId: number;
+  nftDescription: string;
+  nftImage: string | StaticImageData;
+  startupName: string;
+  nftPrice: number;
+  nftReserveCount: number;
+};
+
+export type APPLYItem = {
+  nftTargetCount: number;
+  nftReserveCount: number;
+  nftDescription: string;
+  startupId: number;
+  nftImage: string | StaticImageData;
+  startupName: string;
+  nftPrice: number;
+};
+export type Startup = {
+  startupId: number;
+  startupName: string;
   title: string;
   dueDate: string;
-  targetAmount: number;
-  curTotalAmount: number;
-  nftImage: string | StaticImageData;
-  nftTypeCount: number;
-  nftTokenCount: number;
-  nftPrice: number;
-  isClosed: boolean;
-  isAchieved: boolean;
-  discordUrl: string;
-  enrollStatus: "PENDING" | "ACCEPT" | "REJECT";
-  rejectReason: string;
-  description: string;
-  memberId: number;
+  nftTargetCount: number;
+  nftReserveCount: number;
+  profileImage: string | StaticImageData;
 };
-export type NFTItem = {
-  companyId: number;
-  nftImage: string | StaticImageData;
-  tokenId: number;
-  corpName: string;
-  price: number;
-  progress: number;
-  discordUrl?: string;
-};
-export type Corp = {
-  corpName: string;
-  corpAvatar: string | StaticImageData;
-  title: string;
-  date: string;
-  progress: number;
+// export type MypageItem = Omit<IR> & { planPaper: string };
+export type AlarmItem = {
+  alarmId: number;
+  content: string;
+  tokenURI?: string;
+  investCount?: number;
+  nftPrice?: number;
+  read: boolean;
+  tokenId?: number;
 };

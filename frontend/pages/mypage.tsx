@@ -1,72 +1,75 @@
-import contracts from "@/contracts/utils";
+import { GetServerSideProps } from "next";
 
 import styled from "@emotion/styled";
 import { css, useTheme } from "@emotion/react";
 import { faWallet } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { minTabletWidth } from "@/styles/utils";
 
-import img from "@/assets/nfts/animals/1.png";
-import nft1 from "@/assets/nfts/1.png";
-import nft2 from "@/assets/nfts/2.png";
-import nft3 from "@/assets/nfts/3.png";
-
-import { useNFTModal } from "@/hooks";
+import {
+  useNFTModal,
+  useSelectTab,
+  getApplyList,
+  getFavList,
+  getReserveList,
+  getUserInfo,
+  useUserQueries,
+  getNftList,
+} from "@/hooks";
 
 import Avatar from "@/components/Avatar";
 import Text from "@/components/Text";
-import Grid from "@/components/Grid";
-import NFTItemCard from "@/components/Card/NFTItemCard";
 import SelectTab from "@/components/SelectTab";
 import Modal from "@/components/Modal";
-import Button from "@/components/Button";
+import MypageListContainer from "@/container/MypageListContainer";
 
-import { minTabletWidth } from "@/styles/utils";
-import { useSelectTab } from "@/hooks";
-import { Member, NFTItem } from "@/types/api_responses";
+import { MyPageProps } from "@/types/props";
 
-function MyPage() {
+import FavModal from "@/components/Modal/FavModal";
+import NftModal from "@/components/Modal/NftModal";
+
+import { ACCESS_TOKEN } from "@/api/utils";
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const config = {
+    headers: { authorization: `Bearer ${context.req.cookies[ACCESS_TOKEN]}` },
+  };
+  const member = await getUserInfo(config);
+  const applyList = await getApplyList(config);
+  const favoriteList = await getFavList(config);
+  const reserveList = await getReserveList(config);
+  const nftList = await getNftList(config);
+
+  return { props: { member, applyList, favoriteList, reserveList, nftList } };
+};
+
+function MyPage(props: MyPageProps) {
   const theme = useTheme();
-  const { account } = contracts.useAccount();
   const { isShowModal, modalContent, handleModalClose, handleModalOpen } =
     useNFTModal();
-  const menus = ["보유 NFT", "관심목록", "구매내역"];
+
+  const [
+    { data: member, isLoading: isMemberLoading },
+    { data: applyList, isLoading: isApplyLoading },
+    { data: favoriteList, isLoading: isFavLoading },
+    { data: reserveList, isLoading: isReserveLoading },
+    { data: nftList, isLoading: isNftLoading },
+  ] = useUserQueries(props);
+
+  const menus = ["보유 NFT", "관심목록", "예약내역", "투자신청내역"];
   const { selectedMenu, onSelectHandler } = useSelectTab(menus);
 
-  const member: Member = {
-    id: 1,
-    name: "tester",
-    profileImage: img,
-    nickname: "Anonymous",
-    walletAddress: account,
-    email: "test@gmail.com",
-    memberType: "USER",
-  };
-  const nfts: NFTItem[] = [
-    {
-      companyId: 1,
-      nftImage: nft1,
-      tokenId: 1243,
-      corpName: "test",
-      price: 0.99,
-      progress: 60,
-    },
-    {
-      companyId: 2,
-      nftImage: nft2,
-      tokenId: 1243,
-      corpName: "test",
-      price: 0.99,
-      progress: 60,
-    },
-    {
-      companyId: 3,
-      nftImage: nft3,
-      tokenId: 1243,
-      corpName: "test",
-      price: 0.99,
-      progress: 60,
-    },
-  ];
+  if (
+    isMemberLoading ||
+    isApplyLoading ||
+    isFavLoading ||
+    isReserveLoading ||
+    isNftLoading
+  ) {
+    return <div>Loading...</div>;
+  }
+
+  const { nickname, profileImage, walletAddress } = member!;
 
   const handleModalSubmit = () => {
     // 보유 NFT 목록일 경우
@@ -81,12 +84,11 @@ function MyPage() {
       <Background />
       <ProfileContainer>
         <Avatar
-          image={member.profileImage}
+          image={profileImage}
           css={css`
             margin-left: 1vw;
             width: 6rem;
             height: 6rem;
-
             @media (${minTabletWidth}) {
               width: 10rem;
               height: 10rem;
@@ -102,7 +104,7 @@ function MyPage() {
             font-weight: 700;
           `}
         >
-          {member.nickname}
+          {nickname}
         </Text>
         <Text
           as="h2"
@@ -119,9 +121,9 @@ function MyPage() {
               margin-right: 0.5rem;
             `}
           />
-          {member.walletAddress.substring(0, 5) +
+          {walletAddress.substring(0, 5) +
             "..." +
-            member.walletAddress.substring(member.walletAddress.length - 4)}
+            walletAddress.substring(walletAddress.length - 4)}
         </Text>
       </ProfileContainer>
 
@@ -133,32 +135,45 @@ function MyPage() {
         `}
       />
 
-      <Grid column="double">
-        {nfts.map((nft1: NFTItem) => {
-          const { companyId, corpName, nftImage, price, progress, tokenId } =
-            nft1;
-          return (
-            <NFTItemCard
-              key={companyId}
-              nftImage={nftImage}
-              tokenId={tokenId}
-              corpName={corpName}
-              price={price}
-              progress={progress}
-              onClick={() => handleModalOpen(nft1)}
-            />
-          );
-        })}
-      </Grid>
+      {selectedMenu === menus[0] && (
+        <MypageListContainer handleModalOpen={handleModalOpen} nfts={nftList} />
+      )}
+      {selectedMenu === menus[1] && (
+        <MypageListContainer
+          handleModalOpen={handleModalOpen}
+          favs={favoriteList}
+        />
+      )}
+      {selectedMenu === menus[2] && (
+        <MypageListContainer
+          handleModalOpen={handleModalOpen}
+          rsrvs={reserveList}
+        />
+      )}
+      {selectedMenu === menus[3] && (
+        <MypageListContainer
+          handleModalOpen={handleModalOpen}
+          applys={applyList}
+        />
+      )}
+
       <Modal
         isOpen={isShowModal}
         onCancel={handleModalClose}
         onSubmit={handleModalSubmit}
       >
-        <div>
-          {modalContent?.corpName}
-          <Button onClick={handleModalSubmit}>어디로 이동하는 버튼</Button>
-        </div>
+        {modalContent &&
+          (selectedMenu === menus[0] ? (
+            <NftModal
+              handleModalSubmit={handleModalSubmit}
+              modalContent={modalContent}
+            />
+          ) : (
+            <FavModal
+              handleModalSubmit={handleModalSubmit}
+              modalContent={modalContent}
+            />
+          ))}
       </Modal>
     </>
   );

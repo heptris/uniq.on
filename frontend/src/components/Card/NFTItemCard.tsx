@@ -8,40 +8,47 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import type { Combine } from "@/types/utils";
 import type { CardProps } from "@/types/props";
+import type { NFTItem } from "@/types/api_responses";
 import Card from "@/components/Card";
 import Text from "@/components/Text";
 import ProgressBar from "@/components/ProgressBar";
+import { UNIQON_TOKEN } from "@/constants";
 
-type NFTItemCardProps = {
-  nftImage: string | StaticImageData;
-  tokenId: number;
-  corpName: string;
-  price?: number;
-  status?: string;
-  progress?: number;
-};
+type NFTItemCardProps =
+  | {
+      progress?: number;
+    }
+  | NFTItem;
 
 /**
- * @props
+ * @params
  * `nftImage`: `string` | `StaticImageData`
  *
  * `tokenId`: `string`
  *
- * `corpName`: `string`
+ * `startupName`: `string`
  *
  * `price`: `number`
  *
  * `status`: `string`
  *
  * `progress`: `number`
- * @return `ReactElement`
+ * @returns `ReactElement`
  */
 function NFTItemCard<T extends ElementType = "div">(
   props: Combine<NFTItemCardProps, CardProps<T>>,
   ref: Ref<any>
 ) {
-  const { nftImage, tokenId, corpName, price, status, progress, ...rest } =
-    props;
+  const {
+    nftReserveCount,
+    nftDescription,
+    startupId,
+    nftImage,
+    startupName,
+    nftPrice,
+    progress,
+    ...rest
+  } = props;
 
   const theme = useTheme();
 
@@ -64,7 +71,7 @@ function NFTItemCard<T extends ElementType = "div">(
             font-weight: 600;
           `}
         >
-          {corpName} #{tokenId}
+          {startupName} #{startupId}
         </Text>
         <Text
           role="corp-name"
@@ -74,7 +81,7 @@ function NFTItemCard<T extends ElementType = "div">(
             margin-bottom: 0.5rem;
           `}
         >
-          {corpName}
+          {startupName}
         </Text>
         <Text
           as="div"
@@ -94,7 +101,7 @@ function NFTItemCard<T extends ElementType = "div">(
             `}
             icon={faEthereum}
           />
-          {price} ETH
+          {nftPrice} {UNIQON_TOKEN}
         </Text>
         <Text
           role="status"
@@ -109,7 +116,7 @@ function NFTItemCard<T extends ElementType = "div">(
             <>
               <ProgressBar
                 css={css`
-                  margin-right: 10px;
+                  margin-right: 5px;
                 `}
                 progress={progress}
                 type={"blue"}
@@ -117,6 +124,7 @@ function NFTItemCard<T extends ElementType = "div">(
               <Text
                 css={css`
                   font-size: 0.7rem;
+                  font-weight: 600;
                 `}
               >
                 {progress}%

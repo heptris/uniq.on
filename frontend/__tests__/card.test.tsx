@@ -24,10 +24,10 @@ describe("Card", () => {
       <MyApp>
         <CorporationCard
           data-testid="corporation-card"
-          corpName={"Tester"}
-          corpAvatar={corp}
+          startupName={"Tester"}
+          profileImage={corp}
           title={"testTitle"}
-          date={"testDate"}
+          dueDate={"testDate"}
           progress={38}
         />
       </MyApp>
@@ -45,10 +45,8 @@ describe("Card", () => {
         <NFTItemCard
           data-testid="nft-item-card"
           nftImage={nft}
-          tokenId={199}
-          corpName={"Tester"}
-          price={1}
-          status={"망함"}
+          startupName={"Tester"}
+          // price={1}
           progress={38}
         />
       </MyApp>
@@ -56,9 +54,9 @@ describe("Card", () => {
     const nftItemCard = getByTestId(container, "nft-item-card");
 
     expect(nftItemCard).toBeInTheDocument();
-    expect(nftItemCard).toHaveTextContent("Tester #199");
+    // expect(nftItemCard).toHaveTextContent("Tester #199");
     expect(nftItemCard).toHaveTextContent("Tester");
     // expect(nftItemCard).toHaveTextContent("망함");
-    expect(nftItemCard).toHaveTextContent("1");
+    // expect(nftItemCard).toHaveTextContent("1");
   });
 });

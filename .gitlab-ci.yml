@@ -7,8 +7,6 @@
 # Official framework image. Look for the different tagged releases at:
 # https://hub.docker.com/r/library/node/tags/
 stages:
-  - spring-build
-  - spring-dockerize
   - react-test
   - react-dockerize
   - deploy
@@ -87,6 +85,7 @@ react-dockerize:
   only:
     - master
     - develop
+    - frontend
 
 deploy:
   image: docker:latest
@@ -108,4 +107,5 @@ deploy:
   only:
     - master
     - develop
+    - frontend
     - backend

@@ -1,12 +1,6 @@
-import React, {
-  ComponentPropsWithoutRef,
-  forwardRef,
-  Ref,
-  useEffect,
-  useState,
-} from "react";
+import Link from "next/link";
+import { ComponentPropsWithoutRef, forwardRef, Ref, useState } from "react";
 import Image from "next/image";
-import logo from "@/assets/logo.png";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -19,10 +13,14 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { css, Theme, useTheme } from "@emotion/react";
 import styled from "@emotion/styled";
-import Link from "next/link";
-import contracts from "@/contracts/utils";
+
+import logo from "@/assets/logo.png";
+
 import Text from "../Text";
-import { useAuth } from "@/hooks";
+import { useAuth, useServer } from "@/hooks";
+import { HEADER_HEIGHT, ROUTES } from "@/constants";
+
+const { ALARM, APPLY, HOME, LIST, LOGIN, MYPAGE } = ROUTES;
 
 /**
  * @params
@@ -33,19 +31,21 @@ function Navbar(
   ref: Ref<any>
 ) {
   const { isLogined } = useAuth();
+  const theme = useTheme();
+
+  const { hasUnreadAlarm } = useServer();
+
   const [active, setActive] = useState(false);
   const activeHandler = () => {
     setActive(!active);
   };
 
-  const theme = useTheme();
-
   return (
     <HeaderWrapper theme={theme} ref={ref} {...props}>
       <HeaderContainer>
-        <HeaderIcon>
-          <Link href="/">
-            <LogoText onClick={() => setActive(false)}>
+        <Link href={HOME}>
+          <HeaderIcon>
+            <Text css={LogoText} onClick={() => setActive(false)}>
               <Text
                 css={css`
                   color: ${theme.color.background.main};
@@ -54,31 +54,30 @@ function Navbar(
                 uniq
               </Text>
               .on
-            </LogoText>
-          </Link>
-          <LogoImage onClick={() => setActive(false)}>
-            <Image src={logo} alt="logo" width={30} height={40} />
-          </LogoImage>
-        </HeaderIcon>
+            </Text>
+            <LogoImage onClick={() => setActive(false)}>
+              <Image src={logo} alt="logo" width={30} height={40} />
+            </LogoImage>
+          </HeaderIcon>
+        </Link>
         <HeaderList>
           <nav
             className={active ? "main-navigation active" : "main-navigation"}
           >
-            <Link href="/list">
+            <Link href={LIST}>
               <Text css={ListTextStyle({ theme })} onClick={activeHandler}>
                 투자리스트
               </Text>
             </Link>
-            <Link href="/apply">
-              <Text css={ListTextStyle({ theme })} onClick={activeHandler}>
-                투자신청
-              </Text>
-            </Link>
-            <Link href="/question">
-              <Text css={ListTextStyle({ theme })} onClick={activeHandler}>
-                자주하는질문
-              </Text>
-            </Link>
+            {isLogined ? (
+              <Link href={APPLY}>
+                <Text css={ListTextStyle({ theme })} onClick={activeHandler}>
+                  투자신청
+                </Text>
+              </Link>
+            ) : (
+              <></>
+            )}
           </nav>
           {isLogined ? (
             <HeaderIcon
@@ -86,49 +85,59 @@ function Navbar(
                 padding-left: 50px;
               `}
             >
-              <Link href="/mypage">
+              <Link href={MYPAGE}>
                 <FontAwesomeIcon
                   onClick={() => setActive(false)}
                   icon={faCircleUser}
                   css={css`
                     width: 1.5rem;
                     color: ${theme.color.text.main};
-                    margin-right: 2rem;
-
+                    margin-right: 26px;
                     &:hover {
                       color: ${theme.color.text.hover};
                     }
                   `}
+                  size={"2xl"}
                 />
               </Link>
-              <Link href="/alarm">
-                <FontAwesomeIcon
+              <Link href={ALARM}>
+                <HeaderIcon
                   onClick={() => setActive(false)}
-                  icon={faBell}
                   css={css`
-                    width: 1.3rem;
-                    color: ${theme.color.text.main};
-                    &:hover {
-                      color: ${theme.color.text.hover};
-                    }
+                    position: relative;
                   `}
-                />
-              </Link>
-              <Link href="/alarm">
-                <FontAwesomeIcon
-                  onClick={() => setActive(false)}
-                  icon={faCircle}
-                  css={css`
-                    width: 7px;
-                    color: ${theme.color.status.fail};
-                    transform: translate(-6px, -12px);
-                  `}
-                />
+                >
+                  <FontAwesomeIcon
+                    icon={faBell}
+                    css={css`
+                      width: 1.3rem;
+                      color: ${theme.color.text.main};
+                      &:hover {
+                        color: ${theme.color.text.hover};
+                      }
+                    `}
+                    size={"2xl"}
+                  />
+                  {hasUnreadAlarm ? (
+                    <FontAwesomeIcon
+                      icon={faCircle}
+                      css={css`
+                        position: absolute;
+                        right: -0.4rem;
+                        width: 7px;
+                        color: ${theme.color.status.fail};
+                        transform: translate(-6px, -12px);
+                      `}
+                    />
+                  ) : (
+                    <></>
+                  )}
+                </HeaderIcon>
               </Link>
             </HeaderIcon>
           ) : (
-            <HeaderIcon>
-              <Link href="/login">
+            <Link href={LOGIN}>
+              <HeaderIcon>
                 <FontAwesomeIcon
                   onClick={() => setActive(false)}
                   icon={faWallet}
@@ -137,8 +146,8 @@ function Navbar(
                     margin-left: 2rem;
                   `}
                 />
-              </Link>
-            </HeaderIcon>
+              </HeaderIcon>
+            </Link>
           )}
           <MoreBtn
             className="more-btn"
@@ -175,7 +184,7 @@ const HeaderWrapper = styled.header`
   top: 0;
   left: 0;
   width: 100%;
-  height: 80px;
+  height: ${HEADER_HEIGHT};
   padding: 20px 10px;
   z-index: 9960;
   border-bottom: 1px solid ${({ theme }) => theme.color.background.item};
@@ -245,7 +254,7 @@ const HeaderIcon = styled.div`
   }
 `;
 
-const LogoText = styled.div`
+const LogoText = css`
   font-weight: bold;
   font-size: 27px;
   position: absolute;
