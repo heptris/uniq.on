@@ -23,13 +23,13 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
 type CommunityListProps = {
   discordUrl: string;
-  title?: string;
-  nickName?: string;
-  hit?: number;
-  communityId?: number;
-  startupName?: string;
-  commentsCount?: number;
-  createdDate?: string;
+  title: string;
+  nickName: string;
+  hit: number;
+  communityId: number;
+  startupName: string;
+  commentsCount: number;
+  createdDate: string;
 };
 type InvestProps = {
   CommunityRequest: CommunityListProps[];
@@ -77,7 +77,15 @@ export default function CommunityList(props: InvestProps) {
           글작성
         </Button>
       </Link>
-      {CommunityList?.length == 0 && "첫 게시글을 작성해주세요"}
+      {CommunityList?.length == 0 && (
+        <Text
+          css={css`
+            color: ${theme.color.text.sub};
+          `}
+        >
+          첫 게시글을 작성해주세요
+        </Text>
+      )}
       {CommunityList?.map((community, i) => (
         <Link
           href={`/community/detail/${community.communityId}/${startupId}`}
@@ -125,7 +133,7 @@ export default function CommunityList(props: InvestProps) {
               >
                 {community.nickName}
               </Text>
-              {/* <Text
+              <Text
                 as="p"
                 role="community-date"
                 css={css`
@@ -134,7 +142,7 @@ export default function CommunityList(props: InvestProps) {
                 `}
               >
                 {community.createdDate.substring(0, 10)}
-              </Text> */}
+              </Text>
             </TextContainer>
             <div
               css={css`
@@ -181,7 +189,7 @@ const CommunityHeader = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin: 0rem 1rem 3rem;
+  margin: 0rem 0rem 3rem;
   justify-content: space-between;
 `;
 const TextContainer = styled.div`
