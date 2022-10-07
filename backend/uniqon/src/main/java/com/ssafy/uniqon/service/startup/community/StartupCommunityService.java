@@ -33,10 +33,13 @@ public class StartupCommunityService {
 
     public List<StartupCommunityResponseListDto> communityList(Long startupId){
         List<StartupCommunity> communityList = startupCommunityRepository.findAllByStartupId(startupId);
+        Startup startup = startupRepository.findById(startupId).orElseThrow(() -> new CustomException(STARTUP_NOT_FOUND));
         List<StartupCommunityResponseListDto> responseDtoList = new ArrayList<>();
 
+        responseDtoList.add(new StartupCommunityResponseListDto(null, startup.getStartupName(), null, null, startup.getDiscordUrl(), null, null, null));
+
         for(StartupCommunity sc : communityList){
-            responseDtoList.add(new StartupCommunityResponseListDto(sc.getId(), sc.getStartup().getStartupName(), sc.getTitle(), sc.getMember().getNickname(), sc.getHit(), sc.getCommunityCommentList().size(), sc.getCreatedDate()));
+            responseDtoList.add(new StartupCommunityResponseListDto(sc.getId(), sc.getStartup().getStartupName(), sc.getTitle(), sc.getMember().getNickname(), null, sc.getHit(), sc.getCommunityCommentList().size(), sc.getCreatedDate()));
         }
 
         return responseDtoList;

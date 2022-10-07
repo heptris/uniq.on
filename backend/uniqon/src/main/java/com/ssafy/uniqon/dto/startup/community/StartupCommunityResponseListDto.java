@@ -16,6 +16,7 @@ public class StartupCommunityResponseListDto {
     private String startupName;
     private String title;
     private String nickName;
+    private String discordUrl;
     private Integer hit;
     private Integer commentsCount;
     private LocalDateTime createdDate;
