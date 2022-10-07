@@ -28,7 +28,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
     method: "get",
     url: `${ENDPOINT_API}/invest`,
     params: {
-      size: 10,
+      size: 100,
       page: 0,
     },
   }).then(({ data }) => data.data);
