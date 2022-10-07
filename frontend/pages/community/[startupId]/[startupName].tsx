@@ -22,13 +22,14 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 };
 
 type CommunityListProps = {
-  title: string;
-  nickName: string;
-  hit: number;
-  communityId: number;
-  startupName: string;
-  commentsCount: number;
-  createdDate: string;
+  discordUrl: string;
+  title?: string;
+  nickName?: string;
+  hit?: number;
+  communityId?: number;
+  startupName?: string;
+  commentsCount?: number;
+  createdDate?: string;
 };
 type InvestProps = {
   CommunityRequest: CommunityListProps[];
@@ -38,7 +39,13 @@ type InvestProps = {
 
 export default function CommunityList(props: InvestProps) {
   const theme = useTheme();
-  const { CommunityRequest, startupId, startupName } = props;
+  const { CommunityRequest, startupId } = props;
+  const { startupName, discordUrl } = CommunityRequest[0];
+  const CommunityList = CommunityRequest?.splice(
+    1,
+    CommunityRequest?.length - 1
+  );
+
   return (
     <CommunityContainer>
       <CommunityHeader>
@@ -55,7 +62,9 @@ export default function CommunityList(props: InvestProps) {
             background-color: #5a67ee;
           `}
         >
-          디스코드 입장
+          <a href={discordUrl} target="_blank">
+            디스코드 입장
+          </a>
         </Button>
       </CommunityHeader>
       <Link href={`/community/write/${startupId}/${startupName}`}>
@@ -68,8 +77,8 @@ export default function CommunityList(props: InvestProps) {
           글작성
         </Button>
       </Link>
-      {CommunityRequest?.length == 0 && "첫 게시글을 작성해주세요"}
-      {CommunityRequest?.map((community, i) => (
+      {CommunityList?.length == 0 && "첫 게시글을 작성해주세요"}
+      {CommunityList?.map((community, i) => (
         <Link
           href={`/community/detail/${community.communityId}/${startupId}`}
           key={i}
@@ -116,7 +125,7 @@ export default function CommunityList(props: InvestProps) {
               >
                 {community.nickName}
               </Text>
-              <Text
+              {/* <Text
                 as="p"
                 role="community-date"
                 css={css`
@@ -125,7 +134,7 @@ export default function CommunityList(props: InvestProps) {
                 `}
               >
                 {community.createdDate.substring(0, 10)}
-              </Text>
+              </Text> */}
             </TextContainer>
             <div
               css={css`
