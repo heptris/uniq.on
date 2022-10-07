@@ -3,9 +3,12 @@ package com.ssafy.uniqon.config;
 import com.ssafy.uniqon.config.jwt.JwtAccessDeniedHandler;
 import com.ssafy.uniqon.config.jwt.JwtAuthenticationEntryPoint;
 import com.ssafy.uniqon.config.jwt.TokenProvider;
+import com.ssafy.uniqon.util.NoPasswordEncoder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -28,9 +31,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
 
     @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+    PasswordEncoder passwordEncoder() {
+        return new NoPasswordEncoder();
     }
+
+    @Bean
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
+    }
+
+//    @Override
+//    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+//        auth.userDetailsService(userDetailsService()).passwordEncoder(passwordEncoder());
+//    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -52,9 +66,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // 로그인, 회원가입 API 는 토큰이 없는 상태에서 요청이 들어오기 때문에 permitAll 설정
                 .and()
                 .authorizeRequests()
-                .antMatchers("/api/member/**", "/api/invest/**", "/api/startup/**")
+                .antMatchers( "/api/invest/question/{startupId}/page"
+                ,"/api/invest", "/api/invest/{startupId}").permitAll()
+                .antMatchers("/api/member/**", "/api/invest/**",
+                        "/api/mypage/**", "/api/alarm/**")
                 .authenticated()
-                .antMatchers("/**").permitAll()
 
                 // JwtFilter 를 addFilterBefore 로 등록했던 JwtSecurityConfig 클래스를 적용
                 .and()
@@ -66,8 +82,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         CorsConfiguration configuration = new CorsConfiguration();
 
-        configuration.addAllowedOrigin("http://localhost:5442");
-        configuration.addAllowedOrigin("https://j7a507.p.ssafy.io:5442");
+        configuration.addAllowedOrigin("http://localhost:3000");
+        configuration.addAllowedOrigin("https://j7a507.p.ssafy.io:3000");
+        configuration.addAllowedOrigin("https://j7a507.p.ssafy.io:80");
         configuration.addAllowedOrigin("https://j7a507.p.ssafy.io");
         configuration.addAllowedHeader("*");
         configuration.addAllowedMethod("*");

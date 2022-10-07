@@ -17,7 +17,7 @@ import javax.persistence.*;
 public class Alarm extends BaseEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JoinColumn(name = "alarm_id")
+    @Column(name = "alarm_id")
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -25,6 +25,19 @@ public class Alarm extends BaseEntity {
     private Member member;
 
     private String content;
+    private Boolean isRead;
 
-    private boolean isRead;
+    private Long startupId;
+
+    private Integer investCount;
+
+    private Integer tokenId;
+
+    private Double nftPrice;
+
+    private String tokenURI;
+
+    public void changeIsRead(){
+        this.isRead = true;
+    }
 }

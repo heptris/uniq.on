@@ -32,4 +32,8 @@ public class Invest_history extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     private InvestStatus investStatus;
+
+    public void changeInvestStatus(InvestStatus investStatus) {
+        this.investStatus = investStatus;
+    }
 }

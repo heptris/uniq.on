@@ -1,0 +1,38 @@
+[[Member-API]]
+== 2. Member API
+
+[[마이페이지_관심_목록]]
+=== 2.1. 마이페이지 관심 목록
+operation::member-controller-test/마이페이지_관심_목록[snippets='http-request,http-response']
+
+[[마이페이지_스타트업_투자_신청_목록]]
+=== 2.2 마이페이지 스타트업 투자 신청 목록
+operation::member-controller-test/마이페이지_스타트업_투자_신청_목록[snippets='http-request,http-response']
+
+[[마이페이지_투자자_투자한_스타트업_목록]]
+=== 2.3. 마이페이지 투자자 투자한 스타트업 목록
+operation::member-controller-test/마이페이지_투자자_투자한_스타트업_목록[snippets='http-request,http-response']
+
+[[마이페이지_보유_NFT_목록]]
+=== 2.4. 마이페이지 보유 NFT 목록
+operation::member-controller-test/마이페이지_보유_nft_목록[snippets='http-request,http-response']
+
+[[회원_프로필_조회]]
+=== 2.5. 회원 프로필 조회
+operation::member-controller-test/회원_프로필_조회[snippets='http-request,http-response']
+
+[[회원_프로필_수정]]
+=== 2.6.1. 회원 프로필 수정
+operation::member-controller-test/회원_프로필_수정[snippets='http-request,http-response,request-parts,request-part-memberUpdateDto-fields']
+
+[[회원_프로필_수정_실패]]
+=== 2.6.2. 회원 프로필 수정 실패
+operation::member-controller-test/회원_프로필_수정_실패[snippets='http-request,http-response,request-parts,request-part-memberUpdateDto-fields']
+
+[[회원_프로필_수정_실패_파일업로드시]]
+=== 2.6.3. 회원 프로필 수정 실패(파일업로드 시)
+operation::member-controller-test/회원_프로필_수정_파일업로드_실패[snippets='http-request,http-response,request-parts,request-part-memberUpdateDto-fields']
+
+[[회원_탈퇴]]
+=== 2.7. 회원 탈퇴
+operation::member-controller-test/회원_탈퇴[snippets='http-request,http-response']

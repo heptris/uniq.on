@@ -27,5 +27,9 @@ public class StartupFavorite extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
+    private Boolean isFav;
 
+    public void toggle() {
+        this.isFav = !this.isFav;
+    }
 }

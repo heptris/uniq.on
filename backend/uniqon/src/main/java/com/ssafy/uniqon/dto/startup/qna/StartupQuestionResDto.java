@@ -24,9 +24,9 @@ public class StartupQuestionResDto {
     private LocalDateTime createDate;
     private Long startupQuestionId;
     private String question;
-
     private Boolean myQuestion;
 
+    @Builder.Default
     private List<AnswerParentResponseDto> answerParentResponseDtoList = new ArrayList<>();
         public StartupQuestionResDto(String nickname, Long memberId, LocalDateTime createDate,
                                      Long startupQuestionId, String question, Boolean myQuestion) {

@@ -16,17 +16,13 @@ import java.util.List;
 @Data
 public class StartupRequestDto {
 
-    private String startupName;
-    private String managerName;
-    private String managerEmail;
-    private String managerNumber;
-
-    private Integer goalPrice; // 희망 모집 금액
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
-    private LocalDateTime endDate; // 투자 마감일
-    private Integer nftCount; // 토큰 발행 개수
+    private LocalDateTime dueDate; // 투자 마감일
     private String discordUrl;
     private String description; // 회사 소개글
     private String title; // 제목
 
+    private Integer nftTargetCount; // 토큰 목표 발행 개수
+    private Double nftPrice;    // NFT 1개당 가격
+    private String nftDescription;
+    private String tokenURI; // ipfs uri : metadata
 }
